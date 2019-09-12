@@ -18,6 +18,8 @@ function App() {
 
     <Route path = '/Restaurante' component = {Restaurante}/>
 
+    
+
     <Route path = '/Operador' component = {Operador} />
 
 
