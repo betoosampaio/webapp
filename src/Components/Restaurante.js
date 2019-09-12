@@ -26,7 +26,9 @@ const Restaurante = props =>{
 
             <input type='text' placeholder='Rua' name='rua' />
 
+
             <p></p>
+
 
             <input type='text' placeholder='Número' name='numero_endereco' />
 
@@ -109,7 +111,6 @@ const Restaurante = props =>{
 
 
         <p></p>
-
 
 
 
