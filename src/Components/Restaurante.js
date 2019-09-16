@@ -69,8 +69,7 @@ class Restaurante extends React.Component {
 
     cadastrarRestaurante = async (event) => {
         console.log(this.state.formulario);
-
-
+       
         try {
             let res = await fetch('http://localhost:3001/restaurante/insert', {
                 method: 'POST',
@@ -84,7 +83,6 @@ class Restaurante extends React.Component {
             alert('ERRO NO CADASTRO');
             console.log(error);
         }
-
     }
 
     formChange = (event) => {
@@ -93,11 +91,9 @@ class Restaurante extends React.Component {
         this.setState({ formulario: formNewState });
     }
 
-    formChangeSelect = name => value => {
-        console.log(name);
-        console.log(value[name]);
+    formChangeSelect = (name, propName) => value => {
         let formNewState = Object.assign({}, this.state.formulario);
-        formNewState[name] = value[name];
+        formNewState[name] = value[propName];
         this.setState({ formulario: formNewState });
     }
 
@@ -110,24 +106,25 @@ class Restaurante extends React.Component {
     }
 
     render() {
+        const {selected_banco} = this.state.formulario.codigo_banco;
+        const {selected_uf} = this.state.formulario.uf;
+        const {selected_municipio} = this.state.formulario.municipio;
+        const {selected_tipoConta} = this.state.formulario.id_tipo_conta;
+        const {selected_tipoCadastroConta} = this.state.formulario.id_tipo_cadastro_conta;
+
         return (
             <div>
                 <form>
 
-                                    <h2>Registrar Restaurante</h2>
+                    <h2>Registrar Restaurante</h2>
 
-
-
-
-
-
-
-
-
-
-<MaskedInput  value={this.state.formulario.cnpj} onChange={this.formChange} name='cnpj'    placeholder='CNPJ'
-mask={[/[1-9]/,/\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]} guide={true}
-  />
+                    <MaskedInput
+                        value={this.state.formulario.cnpj}
+                        onChange={this.formChange}
+                        name='cnpj'
+                        placeholder='CNPJ'
+                        mask={[/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
+                    />
 
                     <p></p>
 
@@ -136,16 +133,20 @@ mask={[/[1-9]/,/\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\
                         placeholder='Nome Fantasia'
                         name='nome_Fantasia'
                         onChange={this.formChange}
+                        value={this.state.formulario.nome_fantasia}
                     />
-
 
                     <p></p>
 
-<MaskedInput  value={this.state.formulario.cep}  onChange={this.formChange} name='cep'     placeholder='Cep'
-mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
-  />
+                    <MaskedInput
+                        value={this.state.formulario.cep}
+                        onChange={this.formChange}
+                        name='cep'
+                        placeholder='Cep'
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
+                        guide={true}
+                    />
 
-{/*
                     <p></p>
 
                     <input
@@ -153,6 +154,7 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         placeholder='Logradouro'
                         name='rua'
                         onChange={this.formChange}
+                        value={this.state.formulario.logradouro}
                     />
 
                     <p></p>
@@ -162,7 +164,7 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         placeholder='Número'
                         name='numero_endereco'
                         onChange={this.formChange}
-                        
+                        value={this.state.formulario.numero}
                     />
 
                     <p></p>
@@ -192,19 +194,21 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         options={this.state.municipios}
                         getOptionLabel={option => option.municipio}
                         getOptionValue={option => option.municipio}
-                        value={this.state.formulario.cidade}
-                        onChange={this.formChangeSelect('municipio')}
+                        value={selected_municipio}
+                        onChange={this.formChangeSelect('municipio', 'municipio')}
                     />
 
                     <p></p>
+
+                    
 
                     <Select
                         name="uf"
                         options={this.state.estados}
                         getOptionLabel={option => option.estado}
                         getOptionValue={option => option.uf}
-                        value={this.state.formulario.estado}
-                        onChange={this.formChangeSelect('uf')}
+                        value={selected_uf}
+                        onChange={this.formChangeSelect('uf', 'uf')}
                     />
 
                     <p></p>
@@ -213,9 +217,9 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                     <MaskedInput placeholder='Celular'
                         name='celular'
                         value={this.state.formulario.celular}
-                        onChange={this.formChange}  mask={['(',/\d/,/\d/,')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/,/\d/,/\d/,/\d/, ]} guide={true}/>
+                        onChange={this.formChange} mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]} guide={true} />
 
-                  
+
                     <p></p>
 
                     <input
@@ -233,8 +237,8 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         options={this.state.tipoCadastroConta}
                         getOptionLabel={option => option.tipo_cadastro_conta}
                         getOptionValue={option => option.id_tipo_cadastro_conta}
-                        value={this.state.formulario.id_tipo_cadastro_conta}
-                        onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
+                        value={selected_tipoConta}
+                        onChange={this.formChangeSelect('id_tipo_cadastro_conta', 'id_tipo_cadastro_conta')}
                     />
 
                     <p></p>
@@ -244,8 +248,8 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         options={this.state.bancos}
                         getOptionLabel={option => option.nome}
                         getOptionValue={option => option.codigo}
-                        value={this.state.formulario.codigo_banco}
-                        onChange={this.formChangeSelect('codigo_banco')}
+                        value={selected_banco}
+                        onChange={this.formChangeSelect('codigo_banco', 'codigo')}
                     />
 
                     <p></p>
@@ -255,8 +259,8 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         options={this.state.tipoConta}
                         getOptionLabel={option => option.tipo_conta}
                         getOptionValue={option => option.id_tipo_conta}
-                        value={this.state.formulario.id_tipo_conta}
-                        onChange={this.formChangeSelect('id_tipo_conta')}
+                        value={selected_tipoCadastroConta}
+                        onChange={this.formChangeSelect('id_tipo_conta', 'id_tipo_conta')}
                     />
 
                     <p></p>
@@ -278,30 +282,28 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         value={this.state.formulario.conta}
                         onChange={this.formChange}
                     />
-                    -
-                    
-                     <input
-                     id="digito"
-                      size="1"
-                      maxlength="1"
-                       type='text'
-                        
+
+
+                    <input
+                        id="digito"
+                        size="1"
+                        maxLength="1"
+                        type='text'
                         name='digito'
                         value={this.state.formulario.digito}
                         onChange={this.formChange}
-                       
                     />
-                   
 
                     <p></p>
 
-
-
-                    <p></p>
-
-
-                    <MaskedInput onChange={this.formChange} value={this.state.formulario.cpf_administrador} placeholder='CPF Administrador' name='cpf_administrador'   mask={[/\d/,/\d/, /\d/,'.', /\d/, /\d/,/\d/,'.', /\d/, /\d/,  /\d/, '-', /\d/,/\d/, ]} guide={true}
-  />
+                    <MaskedInput
+                        onChange={this.formChange}
+                        value={this.state.formulario.cpf_administrador}
+                        placeholder='CPF Administrador'
+                        name='cpf_administrador'
+                        mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
+                        guide={true}
+                    />
 
 
                     <p></p>
@@ -310,8 +312,8 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         type='text'
                         placeholder='Nome Administrador'
                         name='nome_Administrador'
-                        
                         onChange={this.formChange}
+                        value={this.state.formulario.nome_administrador}
                     />
 
                     <p></p>
@@ -334,7 +336,7 @@ mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
                         onChange={this.formChange}
                     />
 
-*/}
+
 
                     <p></p>
 
