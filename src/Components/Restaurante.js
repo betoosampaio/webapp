@@ -1,6 +1,8 @@
 import React from 'react';
 import Select from 'react-select';
 
+import MaskedInput from 'react-text-mask'
+
 class Restaurante extends React.Component {
 
     state = {
@@ -10,24 +12,24 @@ class Restaurante extends React.Component {
         tipoConta: [],
         tipoCadastroConta: [],
         formulario: {
-            cnpj: 0,
+            cnpj: '',
             nome_fantasia: '',
-            cep: 0,
+            cep: '',
             logradouro: '',
-            numero: 0,
+            numero: '',
             bairro: '',
             municipio: '',
             uf: '',
             complemento: '',
-            celular: 0,
+            celular: '',
             email: '',
             codigo_banco: 0,
             id_tipo_cadastro_conta: 0,
             id_tipo_conta: 0,
             agencia: 0,
-            conta: 0,
-            digito: 0,
-            cpf_administrador: 0,
+            conta: '',
+            digito: '',
+            cpf_administrador: '',
             nome_administrador: '',
             login: '',
             senha: '',
@@ -68,7 +70,7 @@ class Restaurante extends React.Component {
     cadastrarRestaurante = async (event) => {
         console.log(this.state.formulario);
 
-        
+
         try {
             let res = await fetch('http://localhost:3001/restaurante/insert', {
                 method: 'POST',
@@ -82,7 +84,7 @@ class Restaurante extends React.Component {
             alert('ERRO NO CADASTRO');
             console.log(error);
         }
-        
+
     }
 
     formChange = (event) => {
@@ -111,47 +113,60 @@ class Restaurante extends React.Component {
         return (
             <div>
                 <form>
-                    <h2>Registrar Restaurante</h2>
-                    <input
-                        type='text'
-                        placeholder='CNPJ'
-                        name='cnpj'
-                        value={this.state.formulario.cnpj}
-                        onChange={this.formChange}
-                    />
+
+                                    <h2>Registrar Restaurante</h2>
+
+
+
+
+
+
+
+
+
+
+<MaskedInput  value={this.state.formulario.cnpj} onChange={this.formChange} name='cnpj'    placeholder='CNPJ'
+mask={[/[1-9]/,/\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, ]} guide={true}
+  />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Nome Fantasia'
                         name='nome_Fantasia'
-                        value={this.state.formulario.nome_fantasia}
                         onChange={this.formChange}
                     />
+
+
                     <p></p>
-                    <input
-                        type='text'
-                        placeholder='Cep'
-                        name='cep'
-                        value={this.state.formulario.cep}
-                        onChange={this.formChange}
-                    />
+
+<MaskedInput  value={this.state.formulario.cep}  onChange={this.formChange} name='cep'     placeholder='Cep'
+mask={[/\d/,/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, ]} guide={true}
+  />
+
+{/*
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Logradouro'
                         name='rua'
-                        value={this.state.formulario.logradouro}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Número'
                         name='numero_endereco'
-                        value={this.state.formulario.numero}
                         onChange={this.formChange}
+                        
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Complemento'
@@ -159,7 +174,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.complemento}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Bairro'
@@ -167,7 +184,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.bairro}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <Select
                         name="municipio"
                         options={this.state.municipios}
@@ -176,7 +195,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.cidade}
                         onChange={this.formChangeSelect('municipio')}
                     />
+
                     <p></p>
+
                     <Select
                         name="uf"
                         options={this.state.estados}
@@ -185,15 +206,18 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.estado}
                         onChange={this.formChangeSelect('uf')}
                     />
+
                     <p></p>
-                    <input
-                        type='text'
-                        placeholder='Celular'
+
+
+                    <MaskedInput placeholder='Celular'
                         name='celular'
                         value={this.state.formulario.celular}
-                        onChange={this.formChange}
-                    />
+                        onChange={this.formChange}  mask={['(',/\d/,/\d/,')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/,/\d/,/\d/,/\d/, ]} guide={true}/>
+
+                  
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='E-mail'
@@ -201,7 +225,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.email}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <Select
                         name="id_tipo_cadastro_conta"
                         options={this.state.tipoCadastroConta}
@@ -210,7 +236,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.id_tipo_cadastro_conta}
                         onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
                     />
+
                     <p></p>
+
                     <Select
                         name="codigo_banco"
                         options={this.state.bancos}
@@ -219,7 +247,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.codigo_banco}
                         onChange={this.formChangeSelect('codigo_banco')}
                     />
+
                     <p></p>
+
                     <Select
                         name="id_tipo_conta"
                         options={this.state.tipoConta}
@@ -228,7 +258,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.id_tipo_conta}
                         onChange={this.formChangeSelect('id_tipo_conta')}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Agência'
@@ -236,7 +268,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.agencia}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Conta'
@@ -244,31 +278,44 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.conta}
                         onChange={this.formChange}
                     />
-                    <p></p>
-                    <input
-                        type='text'
-                        placeholder='Digito'
+                    -
+                    
+                     <input
+                     id="digito"
+                      size="1"
+                      maxlength="1"
+                       type='text'
+                        
                         name='digito'
                         value={this.state.formulario.digito}
                         onChange={this.formChange}
+                       
                     />
+                   
+
                     <p></p>
-                    <input
-                        type='text'
-                        placeholder='CPF Administrador'
-                        name='cpf_administrador'
-                        value={this.state.formulario.cpf_administrador}
-                        onChange={this.formChange}
-                    />
+
+
+
                     <p></p>
+
+
+                    <MaskedInput onChange={this.formChange} value={this.state.formulario.cpf_administrador} placeholder='CPF Administrador' name='cpf_administrador'   mask={[/\d/,/\d/, /\d/,'.', /\d/, /\d/,/\d/,'.', /\d/, /\d/,  /\d/, '-', /\d/,/\d/, ]} guide={true}
+  />
+
+
+                    <p></p>
+
                     <input
                         type='text'
                         placeholder='Nome Administrador'
                         name='nome_Administrador'
-                        value={this.state.formulario.nome_administrador}
+                        
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Login'
@@ -276,7 +323,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.login}
                         onChange={this.formChange}
                     />
+
                     <p></p>
+
                     <input
                         type='text'
                         placeholder='Senha'
@@ -284,9 +333,15 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.senha}
                         onChange={this.formChange}
                     />
+
+*/}
+
                     <p></p>
+
                     <p></p>
+
                     <button type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+
                 </form>
             </div>
         )

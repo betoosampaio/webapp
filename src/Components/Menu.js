@@ -8,7 +8,7 @@ return(
     <li> <Link to = '/' >Inicio</Link></li>
     <li> <Link to = '/Restaurante' >Cadastro Restaurante</Link></li>
     <li> <Link to = '/Operador' >Cadastro Operador</Link></li>
-    <li> <Link to = '/Cardápio' >Cadastro Cardápio</Link></li>
+    <li> <Link to = '/Cardapio' >Cadastro Cardápio</Link></li>
     </ul>
     </nav>
 

@@ -10,10 +10,17 @@ border-radius: 1em;
 form div + div {
 margin-top: 1em;
 }
+#digito{
+ 
+    width:30px;
+  font-size: 13px" 
+ 
+}
+
 label {
 /*Para ter certeza que todas as labels tem o mesmo tamanho e estão propriamente alinhadas */
 display: inline-block;
-width: 150px;
+width: 10px;
 text-align: right;
 }
 input, textarea {

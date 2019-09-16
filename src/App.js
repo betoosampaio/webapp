@@ -6,6 +6,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Menu from './Components/Menu';
 import Operador from './Components/Operador';
 import Restaurante from './Components/Restaurante'
+import Cardapio from './Components/Cardapio'
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
     
 
     <Route path = '/Operador' component = {Operador} />
+
+    <Route path = '/Cardapio' component = {Cardapio} />
 
 
  
