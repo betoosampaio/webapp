@@ -68,20 +68,22 @@ class Restaurante extends React.Component {
     }
 
     cadastrarRestaurante = async (event) => {
-        console.log(this.state.formulario);
+        //console.log(this.state.formulario);
 
-        try {
-            let res = await fetch('http://localhost:3001/restaurante/insert', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(this.state.formulario)
-            });
+        let res = await fetch('http://localhost:3001/restaurante/insert', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.formulario)
+        });
+        let sucess = await res.ok;
+        
+        if (sucess) {
             alert('CADASTRADO COM SUCESSO!');
-        } catch (error) {
-            alert('ERRO NO CADASTRO');
-            console.log(error);
+        } else {
+            let err = await res.json();
+            alert('ERRO NO CADASTRO: ' + err.msg);
         }
     }
 
@@ -267,7 +269,6 @@ class Restaurante extends React.Component {
                     <p></p>
 
                     <MaskedInput
-                        type='text'
                         placeholder='Agência'
                         name='agencia'
                         value={this.state.formulario.agencia}
@@ -278,23 +279,20 @@ class Restaurante extends React.Component {
                     <p></p>
 
                     <MaskedInput
-                        type='text'
                         placeholder='Conta'
                         name='conta'
                         value={this.state.formulario.conta}
                         onChange={this.formChange}
-                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
                     />
 
 
                     <MaskedInput
-                        id="digito"
-                        size="1"
-                        type='text'
                         name='digito'
+                        placeholder='Dígito'
                         value={this.state.formulario.digito}
                         onChange={this.formChange}
-                        mask={[/\d/]}
+                        mask={[/\d/, /\d/]}
                     />
 
                     <p></p>
