@@ -16,43 +16,14 @@ class Operador extends React.Component {
         },
     };
 
-    obterBancos = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/banco/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ bancos: await res.json() });
-    }
-    obterEstados = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/estado/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ estados: await res.json() });
-    }
-    obterMunicipios = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/municipio/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ municipios: await res.json() });
-    }
-    obtertipoConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoConta: await res.json() });
-    }
-    obtertipoCadastroConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoCadastroConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoCadastroConta: await res.json() });
-    }
+   
 
-    cadastrarRestaurante = async (event) => {
+    cadastrarOperador = async (event) => {
         console.log(this.state.formulario);
 
         
         try {
-            let res = await fetch('http://localhost:3001/restaurante/insert', {
+            let res = await fetch('http://localhost:3001/operador/insert', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,8 +75,8 @@ class Operador extends React.Component {
                     <input
                         type='text'
                         placeholder='Perfil'
-                        name='Perfil'
-                        value={this.state.formulario.login}
+                        name='perfil'
+                        value={this.state.formulario.perfil}
                         onChange={this.formChange}
                     />
 
@@ -125,8 +96,8 @@ class Operador extends React.Component {
                     <input
                         type='text'
                         placeholder='Senha'
-                        name='senha'
-                        value={this.state.formulario.senha}
+                        name='senha_Operador'
+                        value={this.state.formulario.senha_Operador}
                         onChange={this.formChange}
                     />
 
@@ -134,7 +105,7 @@ class Operador extends React.Component {
 
                     <p></p>
 
-                    <button type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                    <button type='button' onClick={this.cadastrarOperador}>Submit</button>
 
                 </form>
             </div>

@@ -6,53 +6,27 @@ import MaskedInput from 'react-text-mask'
 class Cardapio extends React.Component {
 
     state = {
-       
+        
         formulario: {
-            nome_Operador: '',
-            perfil: '',
-            login_Operador: '',
-            senha_Operador: '',
+            nome_Produto: '',
+            descricao: '',
+            preco: '',
+            menu: '',
+            visivel: '',
+            promocao: '',
+            imagem: '',
       
         },
     };
 
-    obterBancos = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/banco/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ bancos: await res.json() });
-    }
-    obterEstados = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/estado/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ estados: await res.json() });
-    }
-    obterMunicipios = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/municipio/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ municipios: await res.json() });
-    }
-    obtertipoConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoConta: await res.json() });
-    }
-    obtertipoCadastroConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoCadastroConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoCadastroConta: await res.json() });
-    }
+   
 
-    cadastrarRestaurante = async (event) => {
+    cadastrarCardapio = async (event) => {
         console.log(this.state.formulario);
 
         
         try {
-            let res = await fetch('http://localhost:3001/restaurante/insert', {
+            let res = await fetch('http://localhost:3001/cardapio/insert', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -87,7 +61,7 @@ class Cardapio extends React.Component {
             <div>
                 <form>
 
-                                    <h2>Registrar Cardapio</h2>
+                                    <h2>Registrar Cardápio</h2>
 
 
 
@@ -104,8 +78,8 @@ class Cardapio extends React.Component {
                     <input
                         type='text'
                         placeholder='Descrição do Produto'
-                        name='descricao_Produto'
-                        value={this.state.formulario.descricao_Produto}
+                        name='descricao'
+                        value={this.state.formulario.descricao}
                         onChange={this.formChange}
                     />
 
@@ -114,54 +88,52 @@ class Cardapio extends React.Component {
                     
                     <input
                         type='text'
-                        placeholder='Preço'
-                        name='Preco'
+                        placeholder='preco'
+                        name='preco'
                         value={this.state.formulario.preco}
                         onChange={this.formChange}
                     />
 
-                    <p></p>
+                    <p></p> 
 
                     <input
                         type='text'
-                        placeholder='Menu'
+                        placeholder='menu'
                         name='menu'
                         value={this.state.formulario.menu}
                         onChange={this.formChange}
                     />
 
                     <p></p>
-                    <p>Visivel</p>
-                
 
-                <p></p>
-              
-                <input type="radio" value="1" name="visivel" />Sim<br />
-                <input type="radio" value="0" name="visivel" />Não<br />
-         
 
-                <p></p>
-
-                    <p>Promoção</p>
-                
-
-                    <p></p>
-                  
-                    <input type="radio" value="1" name="promocao" />Sim<br />
-                    <input type="radio" value="0" name="promocao" />Não<br />
-             
+                    <input
+                        type='text'
+                        placeholder='visivel'
+                        name='visivel'
+                        value={this.state.formulario.visivel}
+                        onChange={this.formChange}
+                    />
 
                     <p></p>
 
-                    <input name="imagem" type="file" size="30"></input>
-
-                  
-
-                    
+                    <input
+                        type='text'
+                        placeholder='Promoção'
+                        name='promocao'
+                        value={this.state.formulario.promocao}
+                        onChange={this.formChange}
+                    />
 
                     <p></p>
 
-                    <button type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                   <input type='file' name='imagem'/>
+
+                    <p></p>
+
+                    <p></p>
+
+                    <button type='button' onClick={this.cadastrarCardapio}>Submit</button>
 
                 </form>
             </div>
