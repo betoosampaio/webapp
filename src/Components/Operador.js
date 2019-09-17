@@ -106,6 +106,7 @@ class Operador extends React.Component {
                     <p></p>
 
                     <button type='button' onClick={this.cadastrarOperador}>Submit</button>
+                    <a href="http://localhost:3000/showOperador">Operador Cadastrado</a>
 
                 </form>
             </div>

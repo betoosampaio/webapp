@@ -343,6 +343,8 @@ class Restaurante extends React.Component {
                     <p></p>
 
                     <button type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                    <p></p>
+                    <a href="http://localhost:3000/showRestaurante">Restaurante Cadastrado</a>
 
                 </form>
             </div>
