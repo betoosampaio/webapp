@@ -26,7 +26,7 @@ class Restaurante extends React.Component {
             codigo_banco: 0,
             id_tipo_cadastro_conta: 0,
             id_tipo_conta: 0,
-            agencia: 0,
+            agencia: '',
             conta: '',
             digito: '',
             cpf_administrador: '',
@@ -131,7 +131,7 @@ class Restaurante extends React.Component {
                     <input
                         type='text'
                         placeholder='Nome Fantasia'
-                        name='nome_Fantasia'
+                        name='nome_fantasia'
                         onChange={this.formChange}
                         value={this.state.formulario.nome_fantasia}
                     />
@@ -152,7 +152,7 @@ class Restaurante extends React.Component {
                     <input
                         type='text'
                         placeholder='Logradouro'
-                        name='rua'
+                        name='logradouro'
                         onChange={this.formChange}
                         value={this.state.formulario.logradouro}
                     />
@@ -162,7 +162,7 @@ class Restaurante extends React.Component {
                     <input
                         type='text'
                         placeholder='Número'
-                        name='numero_endereco'
+                        name='numero'
                         onChange={this.formChange}
                         value={this.state.formulario.numero}
                     />
@@ -311,7 +311,7 @@ class Restaurante extends React.Component {
                     <input
                         type='text'
                         placeholder='Nome Administrador'
-                        name='nome_Administrador'
+                        name='nome_administrador'
                         onChange={this.formChange}
                         value={this.state.formulario.nome_administrador}
                     />
@@ -329,7 +329,7 @@ class Restaurante extends React.Component {
                     <p></p>
 
                     <input
-                        type='text'
+                        type='password'
                         placeholder='Senha'
                         name='senha'
                         value={this.state.formulario.senha}
