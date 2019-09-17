@@ -69,7 +69,7 @@ class Restaurante extends React.Component {
 
     cadastrarRestaurante = async (event) => {
         console.log(this.state.formulario);
-       
+
         try {
             let res = await fetch('http://localhost:3001/restaurante/insert', {
                 method: 'POST',
@@ -106,11 +106,11 @@ class Restaurante extends React.Component {
     }
 
     render() {
-        const {selected_banco} = this.state.formulario.codigo_banco;
-        const {selected_uf} = this.state.formulario.uf;
-        const {selected_municipio} = this.state.formulario.municipio;
-        const {selected_tipoConta} = this.state.formulario.id_tipo_conta;
-        const {selected_tipoCadastroConta} = this.state.formulario.id_tipo_cadastro_conta;
+        const { selected_banco } = this.state.formulario.codigo_banco;
+        const { selected_uf } = this.state.formulario.uf;
+        const { selected_municipio } = this.state.formulario.municipio;
+        const { selected_tipoConta } = this.state.formulario.id_tipo_conta;
+        const { selected_tipoCadastroConta } = this.state.formulario.id_tipo_cadastro_conta;
 
         return (
             <div>
@@ -159,12 +159,13 @@ class Restaurante extends React.Component {
 
                     <p></p>
 
-                    <input
+                    <MaskedInput
                         type='text'
                         placeholder='Número'
                         name='numero'
                         onChange={this.formChange}
                         value={this.state.formulario.numero}
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
                     />
 
                     <p></p>
@@ -200,7 +201,7 @@ class Restaurante extends React.Component {
 
                     <p></p>
 
-                    
+
 
                     <Select
                         name="uf"
@@ -265,33 +266,35 @@ class Restaurante extends React.Component {
 
                     <p></p>
 
-                    <input
+                    <MaskedInput
                         type='text'
                         placeholder='Agência'
                         name='agencia'
                         value={this.state.formulario.agencia}
                         onChange={this.formChange}
+                        mask={[/\d/, /\d/, /\d/, /\d/]}
                     />
 
                     <p></p>
 
-                    <input
+                    <MaskedInput
                         type='text'
                         placeholder='Conta'
                         name='conta'
                         value={this.state.formulario.conta}
                         onChange={this.formChange}
+                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
                     />
 
 
-                    <input
+                    <MaskedInput
                         id="digito"
                         size="1"
-                        maxLength="1"
                         type='text'
                         name='digito'
                         value={this.state.formulario.digito}
                         onChange={this.formChange}
+                        mask={[/\d/]}
                     />
 
                     <p></p>
