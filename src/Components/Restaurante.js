@@ -16,8 +16,8 @@ class Restaurante extends React.Component {
             logradouro: '',
             numero: '',
             bairro: '',
-            municipio: '',
-            uf: '',
+            municipio: 0,
+            uf: 0,
             complemento: '',
             celular: '',
             email: '',
@@ -72,8 +72,18 @@ class Restaurante extends React.Component {
         this.setState({ tipoCadastroConta: await res.json() });
     }
     cadastrarRestaurante = async (event) => {
-        //console.log(this.state.formulario);
 
+        let formulario = this.state.formulario;
+        // ajustando os valores dos Select
+        formulario.uf = formulario.uf.uf;
+        formulario.id_tipo_cadastro_conta = formulario.id_tipo_cadastro_conta.id_tipo_cadastro_conta;
+        formulario.id_tipo_conta = formulario.id_tipo_conta.id_tipo_conta;
+        formulario.codigo_banco = formulario.codigo_banco.codigo;
+        formulario.municipio = formulario.municipio.municipio;
+
+        console.log(formulario);
+
+        /*
         let res = await fetch('http://localhost:3001/restaurante/insert', {
             method: 'POST',
             headers: {
@@ -89,15 +99,16 @@ class Restaurante extends React.Component {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);
         }
+        */
     }
     formChange = (event) => {
         let formNewState = Object.assign({}, this.state.formulario);
         formNewState[event.target.name] = event.target.value;
         this.setState({ formulario: formNewState });
     }
-    formChangeSelect = (name, propName) => value => {
+    formChangeSelect = name => value => {
         let formNewState = Object.assign({}, this.state.formulario);
-        formNewState[name] = value[propName];
+        formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
     validarCampoVazio = (event) => {
@@ -212,35 +223,29 @@ class Restaurante extends React.Component {
         newState['cep'] = msg;
         this.setState({ validacao: newState });
 
-        if(val.length == 8){
+        if (val.length == 8) {
             let res = await fetch('http://viacep.com.br/ws/' + val + '/json/');
             let dados = await res.json();
             if (!dados['erro']) {
                 let formNewState = Object.assign({}, this.state.formulario);
                 formNewState['logradouro'] = dados.logradouro;
-                formNewState['bairro'] = dados.bairro;                
-                formNewState['munincipio'] = dados.localidade;     
-                formNewState['uf'] = dados.uf;      
+                formNewState['bairro'] = dados.bairro;
+                formNewState['munincipio'] = this.state.municipios.find(m => m.municipio == dados.localidade);
+                formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
                 this.setState({ formulario: formNewState });
             }
-            else{
+            else {
                 let formNewState = Object.assign({}, this.state.formulario);
                 formNewState['logradouro'] = '';
-                formNewState['bairro'] = '';                
+                formNewState['bairro'] = '';
                 formNewState['munincipio'] = '';
-                formNewState['uf'] = '';                
+                formNewState['uf'] = '';
                 this.setState({ formulario: formNewState });
             }
         }
     }
 
     render() {
-        const { selected_banco } = this.state.formulario.codigo_banco;
-        const { selected_uf } = this.state.formulario.uf;
-        const { selected_municipio } = this.state.formulario.municipio;
-        const { selected_tipoConta } = this.state.formulario.id_tipo_conta;
-        const { selected_tipoCadastroConta } = this.state.formulario.id_tipo_cadastro_conta;
-
         return (
             <div>
                 <form>
@@ -329,8 +334,8 @@ class Restaurante extends React.Component {
                         options={this.state.estados}
                         getOptionLabel={option => option.estado}
                         getOptionValue={option => option.uf}
-                        value={selected_uf}
-                        onChange={this.formChangeSelect('uf', 'uf')}
+                        value={this.state.formulario.uf}
+                        onChange={this.formChangeSelect('uf')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.uf}</span>
                     <p></p>
@@ -340,8 +345,8 @@ class Restaurante extends React.Component {
                         options={this.state.municipios}
                         getOptionLabel={option => option.municipio}
                         getOptionValue={option => option.municipio}
-                        value={selected_municipio}
-                        onChange={this.formChangeSelect('municipio', 'municipio')}
+                        value={this.state.formulario.municipio}
+                        onChange={this.formChangeSelect('municipio')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.municipio}</span>
                     <p></p>
@@ -373,8 +378,8 @@ class Restaurante extends React.Component {
                         options={this.state.tipoCadastroConta}
                         getOptionLabel={option => option.tipo_cadastro_conta}
                         getOptionValue={option => option.id_tipo_cadastro_conta}
-                        value={selected_tipoConta}
-                        onChange={this.formChangeSelect('id_tipo_cadastro_conta', 'id_tipo_cadastro_conta')}
+                        value={this.state.formulario.id_tipo_cadastro_conta}
+                        onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta}</span>
                     <p></p>
@@ -384,8 +389,8 @@ class Restaurante extends React.Component {
                         options={this.state.bancos}
                         getOptionLabel={option => option.nome}
                         getOptionValue={option => option.codigo}
-                        value={selected_banco}
-                        onChange={this.formChangeSelect('codigo_banco', 'codigo')}
+                        value={this.state.formulario.codigo_banco}
+                        onChange={this.formChangeSelect('codigo_banco')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco}</span>
                     <p></p>
@@ -395,8 +400,8 @@ class Restaurante extends React.Component {
                         options={this.state.tipoConta}
                         getOptionLabel={option => option.tipo_conta}
                         getOptionValue={option => option.id_tipo_conta}
-                        value={selected_tipoCadastroConta}
-                        onChange={this.formChangeSelect('id_tipo_conta', 'id_tipo_conta')}
+                        value={this.state.formulario.id_tipo_conta}
+                        onChange={this.formChangeSelect('id_tipo_conta')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta}</span>
                     <p></p>
