@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-
+import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 
 class showOperador extends React.Component {
@@ -31,12 +31,17 @@ class showOperador extends React.Component {
             <div>
 
 
-         <table border="1">
-        <thead>
+        
+<Table striped bordered hover>
+  <thead>
             <tr>
-                <td>cnpj</td>                
-                <td>Nome Fantasia</td>               
-              
+                <th>Id Operador</th>
+                <th>Nome Operador</th>
+                <th>Perfil</th>
+                <th>Login Operador</th>
+                <th>Senha</th>
+
+
 
             </tr>
         </thead>
@@ -47,20 +52,21 @@ class showOperador extends React.Component {
     this.state.listaOperador.map(function(obj){
       return (
         <tr>
-          <td>{obj.login}</td>
+          <td>{obj.Id_Operador}</td>
+          <td>{obj.nome_Operador}</td>
           <td>{obj.perfil}</td>
-     
-        
+          <td>{obj.login_Operador}</td>
+          <td>{obj.senha_Operador}</td>
+
+
           <td><a href="">Editar</a> - <a href="">Deletar</a></td>
         </tr>
       );
     })
-  }
+}
+</tbody>
+</Table>
 
-        </tbody>
-        <button><a href="/">Voltar</a></button>
-
-</table>
             </div>
         )
     }

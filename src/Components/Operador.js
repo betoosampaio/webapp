@@ -1,25 +1,47 @@
 import React from 'react';
 import Select from 'react-select';
-
 import MaskedInput from 'react-text-mask'
 
 class Operador extends React.Component {
 
     state = {
-        
-        formulario: {
+        restaurantes: [],
+
+            formulario: {
             nome_Operador: '',
             perfil: '',
             login_Operador: '',
             senha_Operador: '',
-      
+            id_restaurante:'',
+
         },
     };
+    componentDidMount() {
+        this.obterIdRestaurantes();
+ 
+    }
 
-   
+    obterIdRestaurantes = async function () {
+        let res = await fetch('http://localhost:3001/restaurante/selectAll', {
+            method: 'POST',
+        });
+        this.setState({ restaurantes: await res.json() });
+    }
+
+
+
+
+
 
     cadastrarOperador = async (event) => {
         console.log(this.state.formulario);
+
+        let formulario = this.state.formulario;
+        // ajustando os valores dos Select
+        formulario.id_restaurante = formulario.id_restaurante.id_restaurante;
+     
+ 
+
 
         
         try {
@@ -45,12 +67,12 @@ class Operador extends React.Component {
     }
 
     formChangeSelect = name => value => {
-        console.log(name);
-        console.log(value[name]);
         let formNewState = Object.assign({}, this.state.formulario);
-        formNewState[name] = value[name];
+        formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
+
+    
 
 
     render() {
@@ -69,6 +91,17 @@ class Operador extends React.Component {
                         value={this.state.formulario.nome_Operador}
                         onChange={this.formChange}
                     />
+                       <p></p>
+                       <Select
+                        name="id_restaurante"
+                        options={this.state.restaurantes}
+                        getOptionLabel={option => option.nome_fantasia}
+                        getOptionValue={option => option.id_restaurante}
+                        value={this.state.formulario.id_restaurante}
+                        onChange={this.formChangeSelect('id_restaurante')}
+                    />
+                   
+                 
 
                     <p></p>
 
