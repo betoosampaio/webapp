@@ -15,30 +15,92 @@ listaRestaurante: [],
         });
         this.setState({ listaRestaurante: await res.json() });
     }
+
     
+
     componentDidMount() {
         this.mostrarConteudo();
-       
+
     }
+
+
 
     render() {
         return (
+
             <div>
 
-        <table border="1">
+<p>{JSON.stringify(this.state.listaRestaurante)}</p>
+
+
+<tbody>
+  { 
+    this.state.listaRestaurante.map(function(obj){
+      return (
+        <tr>
+          <td>{obj.cnpj}</td>
+          <td>{obj.email}</td>
+        </tr>
+      );
+    })
+  }
+</tbody>
+
+
+         <table border="1">
         <thead>
             <tr>
-                <td>Nome</td>
-                <td>Sobrenome</td>
+                <td>cnpj</td>
+                <td>Nome Fantasia</td>
+                <td>Cep</td>
+                <td>Logradouro</td>
+                <td>Número</td>
+                <td>Bairro</td>
+                <td>Municipio</td>
+                <td>UF</td>
+                <td>Complemento</td>
+                <td>Celular</td>
+                <td>email</td>
+                <td>Banco</td>
+                <td>Tipo da Conta</td>
+                <td>Tipo CONTA</td>
+                <td>Agência</td>
+                <td>Conta</td>
+                <td>Digito</td>
+                <td>Cpf Administrador</td>
+                <td>Login</td>
+                <td>Senha</td>
+
             </tr>
         </thead>
         <tbody>
-        <% data.forEach(function(details) { %>
+
             <tr>
-                <td><%= details.name %></td>
-                <td></td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                <td>teste</td>
+                
+
+
             </tr>
-            <% }) %>
+           
         </tbody>
         <button><a href="/">Voltar</a></button>
 
