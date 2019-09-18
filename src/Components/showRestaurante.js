@@ -33,12 +33,14 @@ listaRestaurante: [],
             </tr>
         </thead>
         <tbody>
+            {/* 
         <% data.forEach(function(details) { %>
             <tr>
                 <td><%= details.name %></td>
                 <td></td>
             </tr>
             <% }) %>
+        */}
         </tbody>
         <button><a href="/">Voltar</a></button>
 
