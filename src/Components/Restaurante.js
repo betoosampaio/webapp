@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
-import MaskedInput from 'react-text-mask'
+import MaskedInput from 'react-text-mask';
+import Autosuggest from 'react-autosuggest';
 
 class Restaurante extends React.Component {
     state = {
@@ -9,6 +10,7 @@ class Restaurante extends React.Component {
         municipios: [],
         tipoConta: [],
         tipoCadastroConta: [],
+        suggestions: [],
         formulario: {
             cnpj: '',
             nome_fantasia: '',
@@ -16,7 +18,7 @@ class Restaurante extends React.Component {
             logradouro: '',
             numero: '',
             bairro: '',
-            municipio: 0,
+            municipio: '',
             uf: 0,
             complemento: '',
             celular: '',
@@ -102,9 +104,11 @@ class Restaurante extends React.Component {
 
     }
     formChange = (event) => {
-        let formNewState = Object.assign({}, this.state.formulario);
-        formNewState[event.target.name] = event.target.value;
-        this.setState({ formulario: formNewState });
+        if(event.target.name){
+            let formNewState = Object.assign({}, this.state.formulario);
+            formNewState[event.target.name] = event.target.value;
+            this.setState({ formulario: formNewState });
+        }      
     }
     formChangeSelect = name => value => {
         let formNewState = Object.assign({}, this.state.formulario);
@@ -230,7 +234,7 @@ class Restaurante extends React.Component {
                 let formNewState = Object.assign({}, this.state.formulario);
                 formNewState['logradouro'] = dados.logradouro;
                 formNewState['bairro'] = dados.bairro;
-                formNewState['munincipio'] = this.state.municipios.find(m => m.municipio == dados.localidade);
+                formNewState['municipio'] = dados.localidade;
                 formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
                 this.setState({ formulario: formNewState });
             }
@@ -238,7 +242,7 @@ class Restaurante extends React.Component {
                 let formNewState = Object.assign({}, this.state.formulario);
                 formNewState['logradouro'] = '';
                 formNewState['bairro'] = '';
-                formNewState['munincipio'] = '';
+                formNewState['municipio'] = '';
                 formNewState['uf'] = '';
                 this.setState({ formulario: formNewState });
             }
@@ -278,6 +282,40 @@ class Restaurante extends React.Component {
             }
         }
     }
+
+
+    getSuggestions = value => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+
+        return inputLength === 0 ? [] : this.state.municipios.filter(lang =>
+            lang.municipio.toLowerCase().slice(0, inputLength) === inputValue
+        );
+    };
+
+    getSuggestionValue = suggestion => {      
+        let formNewState = Object.assign({}, this.state.formulario);
+        formNewState['municipio'] = suggestion.municipio;
+        this.setState({ formulario: formNewState });
+    };
+
+    renderSuggestion = suggestion => (
+        <div>
+            {suggestion.municipio}
+        </div>
+    );
+
+    onSuggestionsFetchRequested = ({ value }) => {
+        this.setState({
+            suggestions: this.getSuggestions(value)
+        });
+    };
+
+    onSuggestionsClearRequested = () => {
+        this.setState({
+            suggestions: []
+        });
+    };
 
     render() {
         return (
@@ -366,14 +404,15 @@ class Restaurante extends React.Component {
                     <Select
                         name="uf"
                         options={this.state.estados}
-                        getOptionLabel={option => option.estado}
+                        getOptionLabel={option => option.uf}
                         getOptionValue={option => option.uf}
                         value={this.state.formulario.uf}
                         onChange={this.formChangeSelect('uf')}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.uf}</span>
                     <p></p>
-
+                    
+                    {/* 
                     <Select
                         name="municipio"
                         options={this.state.municipios}
@@ -382,6 +421,24 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.municipio}
                         onChange={this.formChangeSelect('municipio')}
                     />
+                    */}
+
+                    <Autosuggest
+                        suggestions={this.state.suggestions}
+                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                        getSuggestionValue={this.getSuggestionValue}
+                        renderSuggestion={this.renderSuggestion}
+                        inputProps={{
+                            type: 'text',
+                            placeholder: 'Município',
+                            name: 'municipio',
+                            value: this.state.formulario.municipio,
+                            onChange: this.formChange,
+                            onBlur: this.validarCampoVazio
+                        }}
+                    />
+
                     <span style={{ color: 'red' }}>{this.state.validacao.municipio}</span>
                     <p></p>
 
