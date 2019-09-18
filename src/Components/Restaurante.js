@@ -83,7 +83,7 @@ class Restaurante extends React.Component {
 
         console.log(formulario);
 
-        /*
+        
         let res = await fetch('http://localhost:3001/restaurante/insert', {
             method: 'POST',
             headers: {
@@ -99,7 +99,7 @@ class Restaurante extends React.Component {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);
         }
-        */
+        
     }
     formChange = (event) => {
         let formNewState = Object.assign({}, this.state.formulario);
@@ -481,7 +481,8 @@ class Restaurante extends React.Component {
                     <span style={{ color: 'red' }}>{this.state.validacao.senha}</span>
                     <p></p>
 
-                    <button type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                    <button class="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                    
                     <p></p>
 
                     <a href="http://localhost:3000/showRestaurante">Restaurante Cadastrado</a>

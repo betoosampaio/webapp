@@ -6,33 +6,61 @@ import MaskedInput from 'react-text-mask'
 class showOperador extends React.Component {
 
     state = {
-listaResutanrate: []
+        listaOperador: [],
     }
 
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/selectall', {
+        let res = await fetch('http://localhost:3001/operador/selectall', {
             method: 'POST',
         });
-        this.setState({ listaResutanrate: await res.json() });
+        this.setState({ listaOperador: await res.json() });
     }
 
     
+
     componentDidMount() {
         this.mostrarConteudo();
-       
+
     }
+
+
 
     render() {
         return (
+
             <div>
 
 
-                                    <h2>DADOS DO OPERADOR</h2>
+         <table border="1">
+        <thead>
+            <tr>
+                <td>cnpj</td>                
+                <td>Nome Fantasia</td>               
+              
 
-<p>{this.state.listaResutanrate}</p>
+            </tr>
+        </thead>
+        <tbody>
 
+        {
 
+    this.state.listaOperador.map(function(obj){
+      return (
+        <tr>
+          <td>{obj.login}</td>
+          <td>{obj.perfil}</td>
+     
+        
+          <td><a href="">Editar</a> - <a href="">Deletar</a></td>
+        </tr>
+      );
+    })
+  }
 
+        </tbody>
+        <button><a href="/">Voltar</a></button>
+
+</table>
             </div>
         )
     }
