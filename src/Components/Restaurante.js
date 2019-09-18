@@ -83,7 +83,7 @@ class Restaurante extends React.Component {
 
         console.log(formulario);
 
-        
+
         let res = await fetch('http://localhost:3001/restaurante/insert', {
             method: 'POST',
             headers: {
@@ -99,7 +99,7 @@ class Restaurante extends React.Component {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);
         }
-        
+
     }
     formChange = (event) => {
         let formNewState = Object.assign({}, this.state.formulario);
@@ -241,6 +241,40 @@ class Restaurante extends React.Component {
                 formNewState['munincipio'] = '';
                 formNewState['uf'] = '';
                 this.setState({ formulario: formNewState });
+            }
+        }
+    }
+    validarLogin = async (event) => {
+        let msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 6) {
+            msg = 'Login precisar ter 6 ou mais caracteres';
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState['login'] = msg;
+        this.setState({ validacao: newState });
+
+
+
+        if (val.length >= 6) {
+            console.log(JSON.stringify({ login: val }));
+            let res = await fetch('http://localhost:3001/restaurante/checkIfLoginExists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ login: val })
+            });
+            let json = await res.json();
+            if (json.exists) {
+                msg = 'Este login já existe';
+                let newState = Object.assign({}, this.state.validacao);
+                newState['login'] = msg;
+                this.setState({ validacao: newState });
             }
         }
     }
@@ -466,6 +500,7 @@ class Restaurante extends React.Component {
                         name='login'
                         value={this.state.formulario.login}
                         onChange={this.formChange}
+                        onBlur={this.validarLogin}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.login}</span>
                     <p></p>
@@ -482,7 +517,7 @@ class Restaurante extends React.Component {
                     <p></p>
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
-                    
+
                     <p></p>
 
                     <a href="http://localhost:3000/showRestaurante">Restaurante Cadastrado</a>
