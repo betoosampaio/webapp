@@ -65,8 +65,9 @@ listaRestaurante: [],
 this.state.listaRestaurante.map(function(obj){
   return (
     <tr>
+      <td>{obj.id_restaurante}</td>
       <td>{obj.cnpj}</td>
-      <td>{obj.nome_Fantasia}</td>
+      <td>{obj.nome_fantasia}</td>
       <td>{obj.cep}</td>
       <td>{obj.logradouro}</td>
       <td>{obj.numero}</td>
