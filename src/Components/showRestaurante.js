@@ -96,11 +96,10 @@ listaRestaurante: [],
                 <td>teste</td>
                 <td>teste</td>
                 <td>teste</td>
-                
+
 
 
             </tr>
-           
         </tbody>
         <button><a href="/">Voltar</a></button>
 
