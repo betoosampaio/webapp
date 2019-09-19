@@ -156,7 +156,7 @@ class Restaurante extends React.Component {
         newState[event.target.name].msg = msg;
         this.setState({ validacao: newState });
     }
-    validarCNPJ = (event) => {
+    validarCNPJ = async (event) => {
         let ok = false, msg = '';
         let val = event.target.value.replace(/\D/g, '');
         if (!val) {
@@ -173,6 +173,23 @@ class Restaurante extends React.Component {
         newState.cnpj.ok = ok;
         newState.cnpj.msg = msg;
         this.setState({ validacao: newState });
+
+        if (val.length == 14) {
+            let res = await fetch('http://localhost:3001/restaurante/checkIfCNPJExists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cnpj: val })
+            });
+            let json = await res.json();
+            if (json.exists) {
+                let newState = Object.assign({}, this.state.validacao);
+                newState.cnpj.ok = false;
+                newState.cnpj.msg = 'Este CNPJ já está cadastrado';
+                this.setState({ validacao: newState });
+            }
+        }
     }
     validarCelular = (event) => {
         let ok = false, msg = '';
@@ -234,8 +251,11 @@ class Restaurante extends React.Component {
         if (!val) {
             msg = 'Campo obrigatório';
         }
-        else if (val.length < 6) {
-            msg = 'Senha deve conter 6 dígitos';
+        else if (val.length < 8) {
+            msg = 'Senha deve conter 8 dígitos';
+        }
+        else if(!(/^(?=.*[a-zA-Z])(?=.*[0-9])/).test(val)){
+            msg = 'Senha deve conter letras e números';
         }
         else {
             ok = true;
