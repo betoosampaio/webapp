@@ -4,6 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 
 
 import Menu from './Components/Menu/Menu';
+import Main from './Components/Main/Main';
 import Operador from './Components/Operador/cadOperador';
 import Restaurante from './Components/Restaurante/cadRestaurante'
 import Cardapio from './Components/Cardapio/cadCardapio'
@@ -19,6 +20,8 @@ function App() {
 
 
     <Route path ='/' component = {Menu} />
+    
+    <Route path ='/' component = {Main} />
 
     <Route path = '/Restaurante/cadRestaurante' component = {Restaurante}/>    
 
