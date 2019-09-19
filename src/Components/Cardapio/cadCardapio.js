@@ -78,15 +78,14 @@ class Cardapio extends React.Component {
                                     <h2>Registrar Cardápio</h2>
 
 
-                                    <Select
+                       <Select
                         name="id_restaurante"
                         options={this.state.restaurantes}
                         getOptionLabel={option => option.nome_fantasia}
                         getOptionValue={option => option.id_restaurante}
-                        value={this.state.formulario.id_restaurante}
+                        value={this.state.formulario.restaurante}
                         onChange={this.formChangeSelect('id_restaurante')}
-                    />
-                    <p></p>
+                        />
 
 
                     <input
@@ -118,7 +117,7 @@ class Cardapio extends React.Component {
                         onChange={this.formChange}
                     />
 
-                    <p></p> 
+                    <p></p>
 
                     <input
                         type='text'
