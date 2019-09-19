@@ -35,6 +35,7 @@ class showCardapio extends React.Component {
 <Table striped bordered hover>
   <thead>
             <tr>
+                <th>Id Restaurante</th>
                 <th>Nome do Prato</th>
                 <th>Descrição</th>
                 <th>Preço</th>
@@ -54,6 +55,7 @@ class showCardapio extends React.Component {
     this.state.listaCardapio.map(function(obj){
       return (
         <tr>
+          <td>{obj.id_restaurante}</td>
           <td>{obj.nome_Produto}</td>
           <td>{obj.descricao}</td>
           <td>{obj.preco}</td>
