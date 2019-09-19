@@ -1,19 +1,22 @@
 import React from 'react';
 import Select from 'react-select';
+
 import MaskedInput from 'react-text-mask'
 
-class Operador extends React.Component {
+class Cardapio extends React.Component {
 
     state = {
         restaurantes: [],
-
-            formulario: {
-            nome_Operador: '',
-            perfil: '',
-            login_Operador: '',
-            senha_Operador: '',
+        formulario: {
+            nome_Produto: '',
+            descricao: '',
+            preco: '',
+            menu: '',
+            visivel: '',
+            promocao: '',
+            imagem: '',
             id_restaurante:'',
-
+      
         },
     };
     componentDidMount() {
@@ -27,25 +30,20 @@ class Operador extends React.Component {
         });
         this.setState({ restaurantes: await res.json() });
     }
+   
 
-
-
-
-
-
-    cadastrarOperador = async (event) => {
+    cadastrarCardapio = async (event) => {
         console.log(this.state.formulario);
+
 
         let formulario = this.state.formulario;
         // ajustando os valores dos Select
         formulario.id_restaurante = formulario.id_restaurante.id_restaurante;
      
  
-
-
         
         try {
-            let res = await fetch('http://localhost:3001/operador/insert', {
+            let res = await fetch('http://localhost:3001/cardapio/insert', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -65,14 +63,11 @@ class Operador extends React.Component {
         formNewState[event.target.name] = event.target.value;
         this.setState({ formulario: formNewState });
     }
-
     formChangeSelect = name => value => {
         let formNewState = Object.assign({}, this.state.formulario);
         formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
-
-    
 
 
     render() {
@@ -80,19 +75,10 @@ class Operador extends React.Component {
             <div>
                 <form>
 
-                                    <h2>Registrar Operador</h2>
+                                    <h2>Registrar Cardápio</h2>
 
 
-
-                    <input
-                        type='text'
-                        placeholder='Nome Operador'
-                        name='nome_Operador'
-                        value={this.state.formulario.nome_Operador}
-                        onChange={this.formChange}
-                    />
-                       <p></p>
-                       <Select
+                                    <Select
                         name="id_restaurante"
                         options={this.state.restaurantes}
                         getOptionLabel={option => option.nome_fantasia}
@@ -100,16 +86,24 @@ class Operador extends React.Component {
                         value={this.state.formulario.id_restaurante}
                         onChange={this.formChangeSelect('id_restaurante')}
                     />
-                   
-                 
+                    <p></p>
+
+
+                    <input
+                        type='text'
+                        placeholder='Nome Produto'
+                        name='nome_Produto'
+                        value={this.state.formulario.nome_Produto}
+                        onChange={this.formChange}
+                    />
 
                     <p></p>
 
                     <input
                         type='text'
-                        placeholder='Perfil'
-                        name='perfil'
-                        value={this.state.formulario.perfil}
+                        placeholder='Descrição do Produto'
+                        name='descricao'
+                        value={this.state.formulario.descricao}
                         onChange={this.formChange}
                     />
 
@@ -118,9 +112,30 @@ class Operador extends React.Component {
                     
                     <input
                         type='text'
-                        placeholder='Login Operador'
-                        name='login_Operador'
-                        value={this.state.formulario.login_Operador}
+                        placeholder='preco'
+                        name='preco'
+                        value={this.state.formulario.preco}
+                        onChange={this.formChange}
+                    />
+
+                    <p></p> 
+
+                    <input
+                        type='text'
+                        placeholder='menu'
+                        name='menu'
+                        value={this.state.formulario.menu}
+                        onChange={this.formChange}
+                    />
+
+                    <p></p>
+
+
+                    <input
+                        type='text'
+                        placeholder='visivel'
+                        name='visivel'
+                        value={this.state.formulario.visivel}
                         onChange={this.formChange}
                     />
 
@@ -128,18 +143,23 @@ class Operador extends React.Component {
 
                     <input
                         type='text'
-                        placeholder='Senha'
-                        name='senha_Operador'
-                        value={this.state.formulario.senha_Operador}
+                        placeholder='Promoção'
+                        name='promocao'
+                        value={this.state.formulario.promocao}
                         onChange={this.formChange}
                     />
 
                     <p></p>
 
+                   <input type='file' name='imagem'/>
+
                     <p></p>
 
-                    <button type='button' onClick={this.cadastrarOperador}>Submit</button>
-                    <a href="http://localhost:3000/showOperador">Operador Cadastrado</a>
+                    <p></p>
+
+                    <button class="btn btn-primary" type='button' onClick={this.cadastrarCardapio}>Submit</button>
+                    <p></p>
+                    <a href="http://localhost:3000/Cardapio/showCardapio">Cardapio Cadastrado</a>
 
                 </form>
             </div>
@@ -147,4 +167,4 @@ class Operador extends React.Component {
     }
 }
 
-export default Operador;
+export default Cardapio;

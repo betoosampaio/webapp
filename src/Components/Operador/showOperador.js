@@ -35,14 +35,13 @@ class showOperador extends React.Component {
 <Table striped bordered hover>
   <thead>
             <tr>
+                <th>ID Restaurante</th>
                 <th>Id Operador</th>
                 <th>Nome Operador</th>
                 <th>Perfil</th>
                 <th>Login Operador</th>
                 <th>Senha</th>
-
-
-
+                
             </tr>
         </thead>
         <tbody>
@@ -52,6 +51,7 @@ class showOperador extends React.Component {
     this.state.listaOperador.map(function(obj){
       return (
         <tr>
+          <td>{obj.id_restaurante}</td>
           <td>{obj.Id_Operador}</td>
           <td>{obj.nome_Operador}</td>
           <td>{obj.perfil}</td>

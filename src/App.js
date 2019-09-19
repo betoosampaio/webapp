@@ -3,13 +3,13 @@ import {BrowserRouter, Route} from 'react-router-dom';
 
 
 
-import Menu from './Components/Menu';
-import Operador from './Components/Operador';
-import Restaurante from './Components/Restaurante'
-import Cardapio from './Components/Cardapio'
-import showOperador from './Components/showOperador'
-import showRestaurante from './Components/showRestaurante'
-import showCardapio from './Components/showCardapio'
+import Menu from './Components/Menu/Menu';
+import Operador from './Components/Operador/cadOperador';
+import Restaurante from './Components/Restaurante/cadRestaurante'
+import Cardapio from './Components/Cardapio/cadCardapio'
+import showOperador from './Components/Operador/showOperador'
+import showRestaurante from './Components/Restaurante/showRestaurante'
+import showCardapio from './Components/Cardapio/showCardapio'
 
 function App() {
   return (
@@ -20,17 +20,17 @@ function App() {
 
     <Route path ='/' component = {Menu} />
 
-    <Route path = '/Restaurante' component = {Restaurante}/>    
+    <Route path = '/Restaurante/cadRestaurante' component = {Restaurante}/>    
 
-    <Route path = '/Operador' component = {Operador} />
+    <Route path = '/Operador/cadOperador' component = {Operador} />
 
-    <Route path = '/Cardapio' component = {Cardapio} />
+    <Route path = '/Cardapio/cadCardapio' component = {Cardapio} />
 
-    <Route path = '/showCardapio' component = {showCardapio} />
+    <Route path = '/Cardapio/showCardapio' component = {showCardapio} />
 
-    <Route path = '/showRestaurante' component = {showRestaurante} />
+    <Route path = '/Restaurante/showRestaurante' component = {showRestaurante} />
 
-    <Route path = '/showOperador' component = {showOperador} />
+    <Route path = '/Operador/showOperador' component = {showOperador} />
 
 
  
