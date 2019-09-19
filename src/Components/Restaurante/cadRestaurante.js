@@ -34,7 +34,29 @@ class Restaurante extends React.Component {
             login: '',
             senha: '',
         },
-        validacao: {}
+        validacao: {
+            cnpj: { ok: false, msg: '*' },
+            nome_fantasia: { ok: false, msg: '*' },
+            cep: { ok: false, msg: '*' },
+            logradouro: { ok: false, msg: '*' },
+            numero: { ok: false, msg: '*' },
+            bairro: { ok: false, msg: '*' },
+            municipio: { ok: false, msg: '*' },
+            uf: { ok: false, msg: '*' },
+            complemento: { ok: true },
+            celular: { ok: false, msg: '*' },
+            email: { ok: false, msg: '*' },
+            codigo_banco: { ok: false, msg: '*' },
+            id_tipo_cadastro_conta: { ok: false, msg: '*' },
+            id_tipo_conta: { ok: false, msg: '*' },
+            agencia: { ok: false, msg: '*' },
+            conta: { ok: false, msg: '*' },
+            digito: { ok: false, msg: '*' },
+            cpf_administrador: { ok: false, msg: '*' },
+            nome_administrador: { ok: false, msg: '*' },
+            login: { ok: false, msg: '*' },
+            senha: { ok: false, msg: '*' }
+        }
     };
     componentDidMount() {
         this.obterBancos();
@@ -42,6 +64,38 @@ class Restaurante extends React.Component {
         this.obterMunicipios();
         this.obtertipoConta();
         this.obtertipoCadastroConta();
+    }
+    cadastrarRestaurante = async (event) => {
+
+        for (let p in this.state.validacao) {
+            if(!this.state.validacao[p].ok){
+                alert('Preencha todos os campos corretamente');
+                return false;
+            }
+        }
+
+        let formulario = Object.assign({}, this.state.formulario);
+        // ajustando os valores dos Select
+        formulario.uf = formulario.uf.uf;
+        formulario.id_tipo_cadastro_conta = formulario.id_tipo_cadastro_conta.id_tipo_cadastro_conta;
+        formulario.id_tipo_conta = formulario.id_tipo_conta.id_tipo_conta;
+        formulario.codigo_banco = formulario.codigo_banco.codigo;
+        
+        let res = await fetch('http://localhost:3001/restaurante/insert', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formulario)
+        });
+        let sucess = await res.ok;
+
+        if (sucess) {
+            alert('CADASTRADO COM SUCESSO!');
+        } else {
+            let err = await res.json();
+            alert('ERRO NO CADASTRO: ' + err.msg);
+        }       
     }
     obterBancos = async function () {
         let res = await fetch('http://localhost:3001/tabelasVariaveis/banco/selectAll', {
@@ -73,69 +127,55 @@ class Restaurante extends React.Component {
         });
         this.setState({ tipoCadastroConta: await res.json() });
     }
-    cadastrarRestaurante = async (event) => {
-
-        let formulario = this.state.formulario;
-        // ajustando os valores dos Select
-        formulario.uf = formulario.uf.uf;
-        formulario.id_tipo_cadastro_conta = formulario.id_tipo_cadastro_conta.id_tipo_cadastro_conta;
-        formulario.id_tipo_conta = formulario.id_tipo_conta.id_tipo_conta;
-        formulario.codigo_banco = formulario.codigo_banco.codigo;
-
-        let res = await fetch('http://localhost:3001/restaurante/insert', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.formulario)
-        });
-        let sucess = await res.ok;
-
-        if (sucess) {
-            alert('CADASTRADO COM SUCESSO!');
-        } else {
-            let err = await res.json();
-            alert('ERRO NO CADASTRO: ' + err.msg);
-        }
-
-    }
     formChange = (event) => {
-        if(event.target.name){
+        if (event.target.name) {
             let formNewState = Object.assign({}, this.state.formulario);
             formNewState[event.target.name] = event.target.value;
             this.setState({ formulario: formNewState });
-        }      
+        }
     }
     formChangeSelect = name => value => {
         let formNewState = Object.assign({}, this.state.formulario);
         formNewState[name] = value;
         this.setState({ formulario: formNewState });
+
+        let ValidnewState = Object.assign({}, this.state.validacao);
+        ValidnewState[name].ok = true;
+        this.setState({ validacao: ValidnewState });
     }
     validarCampoVazio = (event) => {
-        let msg = '';
+        let ok = false, msg = '';
 
         if (!event.target.value)
             msg = 'Campo obrigatório';
+        else
+            ok = true;
 
         let newState = Object.assign({}, this.state.validacao);
-        newState[event.target.name] = msg;
+        newState[event.target.name].ok = ok;
+        newState[event.target.name].msg = msg;
         this.setState({ validacao: newState });
     }
     validarCNPJ = (event) => {
-        let msg = '';
+        let ok = false, msg = '';
         let val = event.target.value.replace(/\D/g, '');
         if (!val) {
             msg = 'Campo obrigatório';
         }
-        else if (val.length < 14) {
-            msg = 'CNPJ incompleto';
+        else if (!this.testarCNPJ(val)) {
+            msg = 'CNPJ incorreto';
         }
+        else {
+            ok = true;
+        }
+
         let newState = Object.assign({}, this.state.validacao);
-        newState['cnpj'] = msg;
+        newState.cnpj.ok = ok;
+        newState.cnpj.msg = msg;
         this.setState({ validacao: newState });
     }
     validarCelular = (event) => {
-        let msg = '';
+        let ok = false, msg = '';
         let val = event.target.value.replace(/\D/g, '');
         if (!val) {
             msg = 'Campo obrigatório';
@@ -143,12 +183,17 @@ class Restaurante extends React.Component {
         else if (val.length < 11) {
             msg = 'Celular incompleto';
         }
+        else {
+            ok = true;
+        }
+
         let newState = Object.assign({}, this.state.validacao);
-        newState['celular'] = msg;
+        newState.celular.ok = ok;
+        newState.celular.msg = msg;
         this.setState({ validacao: newState });
     }
     validarEmail = (event) => {
-        let msg = '';
+        let ok = false, msg = '';
         let val = event.target.value;
         if (!val) {
             msg = 'Campo obrigatório';
@@ -156,13 +201,17 @@ class Restaurante extends React.Component {
         else if (!/.+@.+\..+/.test(val)) {
             msg = 'Email incorreto';
         }
+        else {
+            ok = true;
+        }
 
         let newState = Object.assign({}, this.state.validacao);
-        newState['email'] = msg;
+        newState.email.ok = ok;
+        newState.email.msg = msg;
         this.setState({ validacao: newState });
     }
     validarCPF = (event) => {
-        let msg = '';
+        let ok = false, msg = '';
         let val = event.target.value.replace(/\D/g, '');
         if (!val) {
             msg = 'Campo obrigatório';
@@ -170,10 +219,180 @@ class Restaurante extends React.Component {
         else if (!this.testarCPF(val)) {
             msg = 'CPF incorreto';
         }
+        else {
+            ok = true;
+        }
 
         let newState = Object.assign({}, this.state.validacao);
-        newState['cpf_administrador'] = msg;
+        newState.cpf_administrador.ok = ok;
+        newState.cpf_administrador.msg = msg;
         this.setState({ validacao: newState });
+    }
+    validarSenha = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 6) {
+            msg = 'Senha deve conter 6 dígitos';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.senha.ok = ok;
+        newState.senha.msg = msg;
+        this.setState({ validacao: newState });
+    }
+    validarCEP = async (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 8) {
+            msg = 'CEP Incompleto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.cep.ok = ok;
+        newState.cep.msg = msg;
+        this.setState({ validacao: newState });
+
+        if (val.length == 8) {
+            let res = await fetch('http://viacep.com.br/ws/' + val + '/json/');
+            let dados = await res.json();
+            if (!dados['erro']) {
+                let formNewState = Object.assign({}, this.state.formulario);
+                formNewState['logradouro'] = dados.logradouro;
+                formNewState['bairro'] = dados.bairro;
+                formNewState['municipio'] = dados.localidade;
+                formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
+                this.setState({ formulario: formNewState });
+
+                let ValidnewState = Object.assign({}, this.state.validacao);
+                ValidnewState.logradouro.ok = true;
+                ValidnewState.logradouro.msg = '';
+                ValidnewState.bairro.ok = true;
+                ValidnewState.bairro.msg = '';
+                ValidnewState.municipio.ok = true;
+                ValidnewState.municipio.msg = '';
+                ValidnewState.uf.ok = true;
+                ValidnewState.uf.msg = '';
+                this.setState({ validacao: ValidnewState });
+            }
+            else {
+                let formNewState = Object.assign({}, this.state.formulario);
+                formNewState['logradouro'] = '';
+                formNewState['bairro'] = '';
+                formNewState['municipio'] = '';
+                formNewState['uf'] = '';
+                this.setState({ formulario: formNewState });
+
+                let ValidnewState = Object.assign({}, this.state.validacao);
+                ValidnewState.logradouro.ok = false;
+                ValidnewState.logradouro.msg = 'Campo obrigatório';
+                ValidnewState.bairro.ok = false;
+                ValidnewState.bairro.msg = 'Campo obrigatório';
+                ValidnewState.municipio.ok = false;
+                ValidnewState.municipio.msg = 'Campo obrigatório';
+                ValidnewState.uf.ok = false;
+                ValidnewState.uf.msg = 'Campo obrigatório';
+                this.setState({ validacao: ValidnewState });
+            }
+        }
+    }
+    validarLogin = async (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 6) {
+            msg = 'Login precisar ter 6 ou mais caracteres';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.login.ok = ok;
+        newState.login.msg = msg;
+        this.setState({ validacao: newState });
+
+        if (val.length >= 6) {
+            let res = await fetch('http://localhost:3001/restaurante/checkIfLoginExists', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ login: val })
+            });
+            let json = await res.json();
+            if (json.exists) {
+                let newState = Object.assign({}, this.state.validacao);
+                newState.login.ok = false;
+                newState.login.msg = 'Este login já existe';
+                this.setState({ validacao: newState });
+            }
+        }
+    }
+
+    testarCNPJ = (cnpj) => {
+        cnpj = cnpj.replace(/[^\d]+/g, '');
+
+        if (cnpj == '') return false;
+
+        if (cnpj.length != 14)
+            return false;
+
+        // Elimina CNPJs invalidos conhecidos
+        if (cnpj == "00000000000000" ||
+            cnpj == "11111111111111" ||
+            cnpj == "22222222222222" ||
+            cnpj == "33333333333333" ||
+            cnpj == "44444444444444" ||
+            cnpj == "55555555555555" ||
+            cnpj == "66666666666666" ||
+            cnpj == "77777777777777" ||
+            cnpj == "88888888888888" ||
+            cnpj == "99999999999999")
+            return false;
+
+        // Valida DVs
+        let tamanho = cnpj.length - 2
+        let numeros = cnpj.substring(0, tamanho);
+        let digitos = cnpj.substring(tamanho);
+        let soma = 0;
+        let pos = tamanho - 7;
+        for (let i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(0))
+            return false;
+
+        tamanho = tamanho + 1;
+        numeros = cnpj.substring(0, tamanho);
+        soma = 0;
+        pos = tamanho - 7;
+        for (let i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                pos = 9;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+        if (resultado != digitos.charAt(1))
+            return false;
+
+        return true;
     }
     testarCPF = (strCPF) => {
         var Soma;
@@ -195,89 +414,6 @@ class Restaurante extends React.Component {
         if (Resto != parseInt(strCPF.substring(10, 11))) return false;
         return true;
     }
-    validarSenha = (event) => {
-        let msg = '';
-        let val = event.target.value;
-        if (!val) {
-            msg = 'Campo obrigatório';
-        }
-        else if (val.length < 6) {
-            msg = 'Senha deve conter 6 dígitos';
-        }
-
-        let newState = Object.assign({}, this.state.validacao);
-        newState['senha'] = msg;
-        this.setState({ validacao: newState });
-    }
-    validarCEP = async (event) => {
-        let msg = '';
-        let val = event.target.value.replace(/\D/g, '');
-        if (!val) {
-            msg = 'Campo obrigatório';
-        }
-        else if (val.length < 8) {
-            msg = 'CEP Incompleto';
-        }
-
-        let newState = Object.assign({}, this.state.validacao);
-        newState['cep'] = msg;
-        this.setState({ validacao: newState });
-
-        if (val.length == 8) {
-            let res = await fetch('http://viacep.com.br/ws/' + val + '/json/');
-            let dados = await res.json();
-            if (!dados['erro']) {
-                let formNewState = Object.assign({}, this.state.formulario);
-                formNewState['logradouro'] = dados.logradouro;
-                formNewState['bairro'] = dados.bairro;
-                formNewState['municipio'] = dados.localidade;
-                formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
-                this.setState({ formulario: formNewState });
-            }
-            else {
-                let formNewState = Object.assign({}, this.state.formulario);
-                formNewState['logradouro'] = '';
-                formNewState['bairro'] = '';
-                formNewState['municipio'] = '';
-                formNewState['uf'] = '';
-                this.setState({ formulario: formNewState });
-            }
-        }
-    }
-    validarLogin = async (event) => {
-        let msg = '';
-        let val = event.target.value;
-        if (!val) {
-            msg = 'Campo obrigatório';
-        }
-        else if (val.length < 6) {
-            msg = 'Login precisar ter 6 ou mais caracteres';
-        }
-
-        let newState = Object.assign({}, this.state.validacao);
-        newState['login'] = msg;
-        this.setState({ validacao: newState });
-
-
-
-        if (val.length >= 6) {
-            console.log(JSON.stringify({ login: val }));
-            let res = await fetch('http://localhost:3001/restaurante/checkIfLoginExists', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ login: val })
-            });
-            let json = await res.json();
-            if (json.exists) {
-                msg = 'Este login já existe';
-                let newState = Object.assign({}, this.state.validacao);
-                newState['login'] = msg;
-                this.setState({ validacao: newState });
-            }
-        }
-    }
 
 
     getSuggestions = value => {
@@ -288,25 +424,21 @@ class Restaurante extends React.Component {
             lang.municipio.toLowerCase().slice(0, inputLength) === inputValue
         );
     };
-
-    getSuggestionValue = suggestion => {      
+    getSuggestionValue = suggestion => {
         let formNewState = Object.assign({}, this.state.formulario);
         formNewState['municipio'] = suggestion.municipio;
         this.setState({ formulario: formNewState });
     };
-
     renderSuggestion = suggestion => (
         <div>
             {suggestion.municipio}
         </div>
     );
-
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
             suggestions: this.getSuggestions(value)
         });
     };
-
     onSuggestionsClearRequested = () => {
         this.setState({
             suggestions: []
@@ -327,7 +459,7 @@ class Restaurante extends React.Component {
                         placeholder='CNPJ'
                         mask={[/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.cnpj}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
                     <p></p>
 
                     <input
@@ -338,7 +470,7 @@ class Restaurante extends React.Component {
                         onBlur={this.validarCampoVazio}
                         value={this.state.formulario.nome_fantasia}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.nome_fantasia}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.nome_fantasia.msg}</span>
                     <p></p>
 
                     <MaskedInput
@@ -350,7 +482,7 @@ class Restaurante extends React.Component {
                         mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
                         guide={true}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.cep}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
                     <p></p>
 
                     <input
@@ -361,7 +493,7 @@ class Restaurante extends React.Component {
                         onBlur={this.validarCampoVazio}
                         value={this.state.formulario.logradouro}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.logradouro}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
                     <p></p>
 
                     <MaskedInput
@@ -374,14 +506,14 @@ class Restaurante extends React.Component {
                         mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
                         guide={false}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.numero}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
                     <p></p>
 
                     <input
                         type='text'
                         placeholder='Complemento'
                         name='complemento'
-                        value={this.state.formulario.complemento}
+                        value={this.state.formulario.complemento.msg}
                         onChange={this.formChange}
                     />
                     <p></p>
@@ -394,7 +526,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         onBlur={this.validarCampoVazio}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.bairro}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
                     <p></p>
 
                     <Select
@@ -405,9 +537,9 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.uf}
                         onChange={this.formChangeSelect('uf')}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.uf}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
                     <p></p>
-                    
+
                     <Autosuggest
                         suggestions={this.state.suggestions}
                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -424,7 +556,7 @@ class Restaurante extends React.Component {
                         }}
                     />
 
-                    <span style={{ color: 'red' }}>{this.state.validacao.municipio}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>
                     <p></p>
 
                     <MaskedInput placeholder='Celular'
@@ -435,7 +567,7 @@ class Restaurante extends React.Component {
                         mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
                         guide={true}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.celular}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
                     <p></p>
 
                     <input
@@ -446,7 +578,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         onBlur={this.validarEmail}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.email}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
                     <p></p>
 
                     <Select
@@ -457,7 +589,7 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.id_tipo_cadastro_conta}
                         onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta.msg}</span>
                     <p></p>
 
                     <Select
@@ -468,7 +600,7 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.codigo_banco}
                         onChange={this.formChangeSelect('codigo_banco')}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco.msg}</span>
                     <p></p>
 
                     <Select
@@ -479,7 +611,7 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.id_tipo_conta}
                         onChange={this.formChangeSelect('id_tipo_conta')}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta.msg}</span>
                     <p></p>
 
                     <MaskedInput
@@ -489,7 +621,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         mask={[/\d/, /\d/, /\d/, /\d/]}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.agencia}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
                     <p></p>
 
                     <MaskedInput
@@ -507,10 +639,10 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.digito}
                         onChange={this.formChange}
                         onBlur={this.validarCampoVazio}
-                        mask={[/\d/, /\d/]}
+                        mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
                         guide={false}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.conta}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.conta.msg}</span>
                     <p></p>
 
                     <MaskedInput
@@ -522,7 +654,7 @@ class Restaurante extends React.Component {
                         mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
                         guide={true}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
                     <p></p>
 
                     <input
@@ -533,7 +665,7 @@ class Restaurante extends React.Component {
                         onBlur={this.validarCampoVazio}
                         value={this.state.formulario.nome_administrador}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
                     <p></p>
 
                     <input
@@ -544,7 +676,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         onBlur={this.validarLogin}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.login}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
                     <p></p>
 
                     <input
@@ -555,7 +687,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         onBlur={this.validarSenha}
                     />
-                    <span style={{ color: 'red' }}>{this.state.validacao.senha}</span>
+                    <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
                     <p></p>
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
