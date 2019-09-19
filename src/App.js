@@ -21,7 +21,7 @@ function App() {
 
     <Route path ='/' component = {Menu} />
     
-    <Route path ='/' component = {Main} />
+    <Route path ='/Main/Main' component = {Main} />
 
     <Route path = '/Restaurante/cadRestaurante' component = {Restaurante}/>    
 
