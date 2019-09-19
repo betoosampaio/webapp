@@ -81,10 +81,6 @@ class Restaurante extends React.Component {
         formulario.id_tipo_cadastro_conta = formulario.id_tipo_cadastro_conta.id_tipo_cadastro_conta;
         formulario.id_tipo_conta = formulario.id_tipo_conta.id_tipo_conta;
         formulario.codigo_banco = formulario.codigo_banco.codigo;
-        formulario.municipio = formulario.municipio.municipio;
-
-        console.log(formulario);
-
 
         let res = await fetch('http://localhost:3001/restaurante/insert', {
             method: 'POST',
@@ -412,17 +408,6 @@ class Restaurante extends React.Component {
                     <span style={{ color: 'red' }}>{this.state.validacao.uf}</span>
                     <p></p>
                     
-                    {/* 
-                    <Select
-                        name="municipio"
-                        options={this.state.municipios}
-                        getOptionLabel={option => option.municipio}
-                        getOptionValue={option => option.municipio}
-                        value={this.state.formulario.municipio}
-                        onChange={this.formChangeSelect('municipio')}
-                    />
-                    */}
-
                     <Autosuggest
                         suggestions={this.state.suggestions}
                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
