@@ -33,6 +33,7 @@ class Restaurante extends React.Component {
             nome_administrador: '',
             login: '',
             senha: '',
+            enderecoDisabled: false,
         },
         validacao: {
             cnpj: { ok: false, msg: '*' },
@@ -56,7 +57,7 @@ class Restaurante extends React.Component {
             nome_administrador: { ok: false, msg: '*' },
             login: { ok: false, msg: '*' },
             senha: { ok: false, msg: '*' }
-        }
+        },
     };
     componentDidMount() {
         this.obterBancos();
@@ -66,20 +67,25 @@ class Restaurante extends React.Component {
         this.obtertipoCadastroConta();
     }
     cadastrarRestaurante = async (event) => {
-
+/* 
         for (let p in this.state.validacao) {
             if(!this.state.validacao[p].ok){
                 alert('Preencha todos os campos corretamente');
                 return false;
             }
         }
-
+*/
         let formulario = Object.assign({}, this.state.formulario);
         // ajustando os valores dos Select
         formulario.uf = formulario.uf.uf;
         formulario.id_tipo_cadastro_conta = formulario.id_tipo_cadastro_conta.id_tipo_cadastro_conta;
         formulario.id_tipo_conta = formulario.id_tipo_conta.id_tipo_conta;
         formulario.codigo_banco = formulario.codigo_banco.codigo;
+        // ajustando os valores com mascara
+        formulario.cnpj = formulario.cnpj.replace(/\D/g, '');
+        formulario.cep = formulario.cep.replace(/\D/g, '');
+        formulario.cpf_administrador = formulario.cpf_administrador.replace(/\D/g, '')
+        formulario.celular = formulario.celular.replace(/\D/g, '')
         
         let res = await fetch('http://localhost:3001/restaurante/insert', {
             method: 'POST',
@@ -293,6 +299,7 @@ class Restaurante extends React.Component {
                 formNewState['bairro'] = dados.bairro;
                 formNewState['municipio'] = dados.localidade;
                 formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
+                formNewState['enderecoDisabled'] = true;                
                 this.setState({ formulario: formNewState });
 
                 let ValidnewState = Object.assign({}, this.state.validacao);
@@ -312,6 +319,7 @@ class Restaurante extends React.Component {
                 formNewState['bairro'] = '';
                 formNewState['municipio'] = '';
                 formNewState['uf'] = '';
+                formNewState['enderecoDisabled'] = false;
                 this.setState({ formulario: formNewState });
 
                 let ValidnewState = Object.assign({}, this.state.validacao);
@@ -364,8 +372,6 @@ class Restaurante extends React.Component {
     }
 
     testarCNPJ = (cnpj) => {
-        cnpj = cnpj.replace(/[^\d]+/g, '');
-
         if (cnpj == '') return false;
 
         if (cnpj.length != 14)
@@ -512,6 +518,7 @@ class Restaurante extends React.Component {
                         onChange={this.formChange}
                         onBlur={this.validarCampoVazio}
                         value={this.state.formulario.logradouro}
+                        disabled={this.state.formulario.enderecoDisabled}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
                     <p></p>
@@ -545,6 +552,7 @@ class Restaurante extends React.Component {
                         value={this.state.formulario.bairro}
                         onChange={this.formChange}
                         onBlur={this.validarCampoVazio}
+                        disabled={this.state.formulario.enderecoDisabled}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
                     <p></p>
@@ -556,6 +564,7 @@ class Restaurante extends React.Component {
                         getOptionValue={option => option.uf}
                         value={this.state.formulario.uf}
                         onChange={this.formChangeSelect('uf')}
+                        isDisabled={this.state.formulario.enderecoDisabled}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
                     <p></p>
@@ -572,7 +581,8 @@ class Restaurante extends React.Component {
                             name: 'municipio',
                             value: this.state.formulario.municipio,
                             onChange: this.formChange,
-                            onBlur: this.validarCampoVazio
+                            onBlur: this.validarCampoVazio,
+                            disabled: this.state.formulario.enderecoDisabled
                         }}
                     />
 
@@ -710,7 +720,7 @@ class Restaurante extends React.Component {
                     <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
                     <p></p>
 
-                    <button class="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
+                    <button className="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
 
                     <p></p>
 
