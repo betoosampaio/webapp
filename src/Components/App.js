@@ -20,13 +20,14 @@ function App() {
     <BrowserRouter>
       <div className="App">
      
+      <Redirect from="/" to="/App/Gerenciamento"/>
 
         <Route path='/Login' component={Login} />
         <Route path='/CadastroRestaurante' component={CadastrarRestaurante} />
 
-        <Route path='/' component={Menu} />
+        <Route path='/App' component={Menu} />
 
-        <Route path='/App/GerenciamentoRestaurante/GerenciamentoRestaurante' component={GerenciamentoRestaurante} />
+        <Route path='/App/Gerenciamento' component={GerenciamentoRestaurante} />
 
         <Route path='/App/Operador/Lista' component={ListaOperador} />
         <Route path='/App/Operador/Cadastrar' component={CadastrarOperador} />

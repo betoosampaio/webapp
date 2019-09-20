@@ -6,7 +6,7 @@ return(
     <nav id="menu">
     <ul>
     
-    <li> <Link to = '/App/GerenciamentoRestaurante/GerenciamentoRestaurante' >Gerenciamento do Restaurante</Link></li>
+    <li> <Link to = '/App/Gerenciamento' >Gerenciamento do Restaurante</Link></li>
     <li> <Link to = '/App/Operador/Lista' >Operadores</Link></li>
     <li> <Link to = '/App/Cardapio/Lista' >Cardapios</Link></li>
     <li style={{float: 'right'}}> <Link to = '/Login' >Login</Link></li>

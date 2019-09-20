@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
+import {Link} from 'react-router-dom'
 
 class showCardapio extends React.Component {
 
@@ -31,7 +32,7 @@ class showCardapio extends React.Component {
             <div>
 
 
-<a href="/App/Cardapio/Cadastrar">Cadastrar Novo Cardapio</a>
+<Link to = '/App/Cardapio/Cadastrar' >Cadastrar novo Cardápio</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>

@@ -3,7 +3,7 @@
     height: 1000px;
     padding: 16px;
    
-    background: #000000;
+   
     color: #ffffff;
 }
 #mesas{
@@ -21,7 +21,7 @@
 #mesa2{
     width: 100px;
     height: 100px;
-    background: #ffffff;
+    background-image: url('./iconemesa.png');
     float: right;
     margin-right: 16px;
 
@@ -29,7 +29,7 @@
 #mesa3{
     width: 100px;
     height: 100px;
-    background: #ffffff;
+    background: #000000;
     float: right;
     margin-right: 16px;
 

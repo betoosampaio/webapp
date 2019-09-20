@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
+import {Link} from 'react-router-dom'
 
 class ListaOperador extends React.Component {
 
@@ -32,7 +33,7 @@ class ListaOperador extends React.Component {
 
 
 
-<a href="/App/Operador/Cadastrar">Cadastrar novo Operador</a>
+<Link to = '/App/Operador/Cadastrar' >Cadastrar novo Operador</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>
