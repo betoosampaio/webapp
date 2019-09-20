@@ -21,7 +21,8 @@
 #mesa2{
     width: 100px;
     height: 100px;
-    background-image: url('./iconemesa.png');
+    background: url('./iconemesa.png');
+ 
     float: right;
     margin-right: 16px;
 

@@ -14,13 +14,17 @@ import CadastrarOperador from './Operador/CadastrarOperador';
 
 import ListaCardapio from './Cardapio/ListaCardapio';
 import CadastrarCardapio from './Cardapio/CadastrarCardapio';
+import Switch from 'react-router-dom/Switch';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
      
-      <Redirect from="/" to="/App/Gerenciamento"/>
+      <Switch>
+    <Route path="App/Gerenciamento" component={GerenciamentoRestaurante} />
+   <Redirect to="/App/Gerenciamento" />
+ </Switch>
 
         <Route path='/Login' component={Login} />
         <Route path='/CadastroRestaurante' component={CadastrarRestaurante} />
