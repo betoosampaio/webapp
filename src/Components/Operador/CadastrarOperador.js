@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import MaskedInput from 'react-text-mask'
 
-class Operador extends React.Component {
+class CadastrarOperador extends React.Component {
 
     state = {
         restaurantes: [],
@@ -142,4 +142,4 @@ class Operador extends React.Component {
     }
 }
 
-export default Operador;
+export default CadastrarOperador;

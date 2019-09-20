@@ -3,7 +3,7 @@ import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 
-class showOperador extends React.Component {
+class ListaOperador extends React.Component {
 
     state = {
         listaOperador: [],
@@ -73,4 +73,4 @@ class showOperador extends React.Component {
 }
 
 
-export default showOperador;
+export default ListaOperador;

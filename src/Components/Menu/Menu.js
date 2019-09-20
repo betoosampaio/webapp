@@ -5,11 +5,12 @@ return(
 
     <nav id="menu">
     <ul>
-    <li> <Link to = '/' >Inicio</Link></li>
-    <li> <Link to = '/Login/Login' >Login</Link></li>
-    <li> <Link to = '/Restaurante/cadRestaurante' >Cadastro Restaurante</Link></li>
-    <li> <Link to = '/Operador/cadOperador' >Cadastro Operador</Link></li>
-    <li> <Link to = '/Cardapio/cadCardapio' >Cadastro Cardápio</Link></li>
+    
+    <li> <Link to = '/App/Gerenciar' >Gerenciamento do Restaurante</Link></li>
+    <li> <Link to = '/App/Operador/Cadastrar' >Operadores</Link></li>
+    <li> <Link to = '/App/Cardapio/Cadastrar' >Cardapios</Link></li>
+    <li style={{float: 'right'}}> <Link to = '/Login' >Login</Link></li>
+    <li style={{float: 'right'}}> <Link to = '/CadastroRestaurante' >CadastroRestaurante</Link></li>
     </ul>
     </nav>
 
