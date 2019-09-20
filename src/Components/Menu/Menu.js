@@ -6,7 +6,7 @@ return(
     <nav id="menu">
     <ul>
     <li> <Link to = '/' >Inicio</Link></li>
-    <li> <Link to = '/Main/Main' >Login</Link></li>
+    <li> <Link to = '/Login/Login' >Login</Link></li>
     <li> <Link to = '/Restaurante/cadRestaurante' >Cadastro Restaurante</Link></li>
     <li> <Link to = '/Operador/cadOperador' >Cadastro Operador</Link></li>
     <li> <Link to = '/Cardapio/cadCardapio' >Cadastro Cardápio</Link></li>
