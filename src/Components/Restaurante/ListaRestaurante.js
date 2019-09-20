@@ -10,7 +10,7 @@ listaRestaurante: [],
     }
 
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/selectall', {
+        let res = await fetch('/CadastroRestaurante', {
             method: 'POST',
         });
         this.setState({ listaRestaurante: await res.json() });

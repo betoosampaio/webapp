@@ -31,7 +31,9 @@ class ListaOperador extends React.Component {
             <div>
 
 
-        
+
+<a href="/App/Operador/Cadastrar">Cadastrar novo Operador</a>
+<p></p>
 <Table striped bordered hover>
   <thead>
             <tr>

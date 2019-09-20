@@ -158,7 +158,7 @@ class Cardapio extends React.Component {
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarCardapio}>Submit</button>
                     <p></p>
-                    <a href="http://localhost:3000/Cardapio/showCardapio">Cardapio Cadastrado</a>
+                    <a href="/App/Cardapio/Lista">Voltar</a>
 
                 </form>
             </div>

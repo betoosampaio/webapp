@@ -6,9 +6,9 @@ return(
     <nav id="menu">
     <ul>
     
-    <li> <Link to = '/App/Gerenciar' >Gerenciamento do Restaurante</Link></li>
-    <li> <Link to = '/App/Operador/Cadastrar' >Operadores</Link></li>
-    <li> <Link to = '/App/Cardapio/Cadastrar' >Cardapios</Link></li>
+    <li> <Link to = '/App/GerenciamentoRestaurante/GerenciamentoRestaurante' >Gerenciamento do Restaurante</Link></li>
+    <li> <Link to = '/App/Operador/Lista' >Operadores</Link></li>
+    <li> <Link to = '/App/Cardapio/Lista' >Cardapios</Link></li>
     <li style={{float: 'right'}}> <Link to = '/Login' >Login</Link></li>
     <li style={{float: 'right'}}> <Link to = '/CadastroRestaurante' >CadastroRestaurante</Link></li>
     </ul>

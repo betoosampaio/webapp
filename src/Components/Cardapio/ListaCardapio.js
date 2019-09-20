@@ -31,7 +31,8 @@ class showCardapio extends React.Component {
             <div>
 
 
-        
+<a href="/App/Cardapio/Cadastrar">Cadastrar Novo Cardapio</a>
+<p></p>
 <Table striped bordered hover>
   <thead>
             <tr>

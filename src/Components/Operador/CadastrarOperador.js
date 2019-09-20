@@ -134,7 +134,7 @@ class CadastrarOperador extends React.Component {
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Submit</button>
                     <p></p>
-                    <a href="http://localhost:3000/Operador/showOperador">Operador Cadastrado</a>
+                    <a href="/App/Operador/Lista">Voltar</a>
 
                 </form>
             </div>
