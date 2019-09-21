@@ -1,78 +1,91 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 
-class Main extends React.Component {
+class Login extends React.Component {
 
   state = {
-        formulario: {
-        login: '',
-        senha: '',
-      
+    formulario: {
+      login: '',
+      login_operador: '',
+      senha_operador: '',
+
     },
-};
+  };
 
-
-
-verificarLogin = async (event) => {
+  verificarLogin = async (event) => {
     console.log(this.state.formulario);
 
+    let res = await fetch('http://localhost:3001/restaurante/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state.formulario)
+    });
+    let sucess = await res.ok;
 
-    try {
-        let res = await fetch('http://localhost:3001/restaurante/checkIfLoginOk', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state.formulario)
-        });
-       
-    } catch (error) {
-        alert('ERRO NO CADASTRO');
-        console.log(error);
+    if (sucess) {
+      alert('LOGADO COM SUCESSO!');
+    } else {
+      let err = await res.json();
+      alert('ERRO AO LOGAR: ' + err.msg);
     }
-    
-}
 
-formChange = (event) => {
+  }
+
+  formChange = (event) => {
     let formNewState = Object.assign({}, this.state.formulario);
     formNewState[event.target.name] = event.target.value;
     this.setState({ formulario: formNewState });
+  }
+
+  render() {
+    return (
+
+      <Form>
+        <h1> Login </h1>
+        <p></p>
+        <Form.Group>
+          <Form.Label>LoginRestaurante</Form.Label>
+          <Form.Control
+            type="text"
+            name="login"
+            value={this.state.formulario.login}
+            onChange={this.formChange}
+            placeholder="Login do Restaurante" />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Login</Form.Label>
+          <Form.Control
+            type="text"
+            name="login_operador"
+            value={this.state.formulario.login_operador}
+            onChange={this.formChange}
+            placeholder="Login" />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Senha</Form.Label>
+          <Form.Control
+            type="password"
+            name="senha_operador"
+            value={this.state.formulario.senha_operador}
+            onChange={this.formChange}
+            placeholder="Password" />
+        </Form.Group>
+
+        <button
+          class="btn btn-primary"
+          onClick={this.verificarLogin}
+          variant="primary"
+          type="button">
+          Submit
+        </button>
+
+      </Form>
+
+    )
+  }
 }
-
-formChangeSelect = name => value => {
-    let formNewState = Object.assign({}, this.state.formulario);
-    formNewState[name] = value;
-    this.setState({ formulario: formNewState });
-}
-
-
-    render() {
-        return (
-
-<Form>
-<h1> Login </h1>
-<p></p>
-  <Form.Group controlId="formBasicEmail">
-
-    <Form.Label>Email</Form.Label>
-    <Form.Control type="email" name="login" value={this.state.formulario.login} onChange={this.formChange} placeholder="Enter email" />
-
-  </Form.Group>
-
-  <Form.Group controlId="formBasicPassword">
-
-    <Form.Label>Senha</Form.Label>
-    <Form.Control type="password" name="senha" value={this.state.formulario.senha} onChange={this.formChange} placeholder="Password" />
-
-  </Form.Group>
-  
-  <button class="btn btn-primary" onClick={this.verificarLogin} variant="primary" type="submit">
-    Submit
-  </button>
-
-</Form>
-
-)
-        }
-}
-export default Main
+export default Login
