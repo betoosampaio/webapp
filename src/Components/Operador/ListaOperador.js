@@ -33,7 +33,7 @@ class ListaOperador extends React.Component {
 
 
 
-<Link to = '/App/Operador/Cadastrar' >Cadastrar novo Operador</Link>
+<Link to = '/Operador/Cadastrar' >Cadastrar novo Operador</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>

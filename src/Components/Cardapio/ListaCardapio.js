@@ -32,7 +32,7 @@ class showCardapio extends React.Component {
             <div>
 
 
-<Link to = '/App/Cardapio/Cadastrar' >Cadastrar novo Cardápio</Link>
+<Link to = '/Cardapio/Cadastrar' >Cadastrar novo Cardápio</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>
