@@ -67,14 +67,14 @@ class SignIn extends React.Component {
         this.obtertipoCadastroConta();
     }
     cadastrarRestaurante = async (event) => {
-/* 
+
         for (let p in this.state.validacao) {
             if(!this.state.validacao[p].ok){
                 alert('Preencha todos os campos corretamente');
                 return false;
             }
         }
-*/
+
         let formulario = Object.assign({}, this.state.formulario);
         // ajustando os valores dos Select
         formulario.uf = formulario.uf.uf;
@@ -147,6 +147,7 @@ class SignIn extends React.Component {
 
         let ValidnewState = Object.assign({}, this.state.validacao);
         ValidnewState[name].ok = true;
+        ValidnewState[name].msg = '';
         this.setState({ validacao: ValidnewState });
     }
     validarCampoVazio = (event) => {
@@ -649,6 +650,7 @@ class SignIn extends React.Component {
                         name='agencia'
                         value={this.state.formulario.agencia}
                         onChange={this.formChange}
+                        onBlur={this.validarCampoVazio}
                         mask={[/\d/, /\d/, /\d/, /\d/]}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
