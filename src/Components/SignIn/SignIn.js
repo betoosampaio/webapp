@@ -3,7 +3,7 @@ import Select from 'react-select';
 import MaskedInput from 'react-text-mask';
 import Autosuggest from 'react-autosuggest';
 
-class Restaurante extends React.Component {
+class SignIn extends React.Component {
     state = {
         bancos: [],
         estados: [],
@@ -731,4 +731,4 @@ class Restaurante extends React.Component {
     }
 }
 
-export default Restaurante;
+export default SignIn;
