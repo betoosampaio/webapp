@@ -9,6 +9,7 @@ class EditarOperador extends React.Component {
         listaOperador: [],
         formulario: {
             id_restaurante: '',
+            nome_Operador:'',
        
       
         },
@@ -16,7 +17,29 @@ class EditarOperador extends React.Component {
 
    
 
-    
+    updateOperador = async (event) => {
+        console.log(this.state.formulario);
+
+        let formulario = this.state.formulario;
+        // ajustando os valores dos Select
+        formulario.id_restaurante = formulario.id_restaurante.id_restaurante;
+     
+
+        try {
+            let res = await fetch('http://localhost:3001/operador/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state.formulario)
+            });
+            alert('CADASTRADO COM SUCESSO!');
+        } catch (error) {
+            alert('ERRO NO CADASTRO');
+            console.log(error);
+        }
+        
+    }
 
 
    
@@ -104,6 +127,7 @@ this.state.listaOperador.map(function(obj){
                         type='text'
                         placeholder={"Nome do Operador " + obj.nome_Operador}
                         name='nome_Operador'
+                        
                    
                     />
 
@@ -143,7 +167,7 @@ this.state.listaOperador.map(function(obj){
     })  
 }
 
-<button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Submit</button>
+<button class="btn btn-primary" type='button' onClick={this.updateOperador}>Submit</button>
 </form>
             </div>
         )
