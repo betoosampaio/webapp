@@ -31,6 +31,7 @@ class SignIn extends React.Component {
             digito: '',
             cpf_administrador: '',
             nome_administrador: '',
+            codigo_restaurante: '',
             login: '',
             senha: '',
             enderecoDisabled: false,
@@ -55,6 +56,7 @@ class SignIn extends React.Component {
             digito: { ok: false, msg: '*' },
             cpf_administrador: { ok: false, msg: '*' },
             nome_administrador: { ok: false, msg: '*' },
+            codigo_restaurante: { ok: false, msg: '*' },
             login: { ok: false, msg: '*' },
             senha: { ok: false, msg: '*' }
         },
@@ -87,7 +89,7 @@ class SignIn extends React.Component {
         formulario.cpf_administrador = formulario.cpf_administrador.replace(/\D/g, '')
         formulario.celular = formulario.celular.replace(/\D/g, '')
         
-        let res = await fetch('http://localhost:3001/restaurante/insert', {
+        let res = await fetch('http://localhost:3001/restaurante/cadastrar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -182,7 +184,7 @@ class SignIn extends React.Component {
         this.setState({ validacao: newState });
 
         if (val.length == 14) {
-            let res = await fetch('http://localhost:3001/restaurante/checkIfCNPJExists', {
+            let res = await fetch('http://localhost:3001/restaurante/checarSeCNPJExiste', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -336,14 +338,49 @@ class SignIn extends React.Component {
             }
         }
     }
-    validarLogin = async (event) => {
+    validarCodigoRestaurante = async (event) => {
         let ok = false, msg = '';
         let val = event.target.value;
         if (!val) {
             msg = 'Campo obrigatório';
         }
         else if (val.length < 6) {
-            msg = 'Login precisar ter 6 ou mais caracteres';
+            msg = 'Código do restaurante precisar ter 6 ou mais caracteres';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.codigo_restaurante.ok = ok;
+        newState.codigo_restaurante.msg = msg;
+        this.setState({ validacao: newState });
+
+        if (val.length >= 6) {
+            let res = await fetch('http://localhost:3001/restaurante/checarSeCodigoExiste', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ codigo_restaurante: val })
+            });
+            let json = await res.json();
+            if (json.exists) {
+                let newState = Object.assign({}, this.state.validacao);
+                newState.codigo_restaurante.ok = false;
+                newState.codigo_restaurante.msg = 'Este código já existe';
+                this.setState({ validacao: newState });
+            }
+        }
+    }
+    validarLogin = async (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 4) {
+            msg = 'Login precisar ter 4 ou mais caracteres';
         }
         else {
             ok = true;
@@ -353,23 +390,6 @@ class SignIn extends React.Component {
         newState.login.ok = ok;
         newState.login.msg = msg;
         this.setState({ validacao: newState });
-
-        if (val.length >= 6) {
-            let res = await fetch('http://localhost:3001/restaurante/checkIfLoginExists', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ login: val })
-            });
-            let json = await res.json();
-            if (json.exists) {
-                let newState = Object.assign({}, this.state.validacao);
-                newState.login.ok = false;
-                newState.login.msg = 'Este login já existe';
-                this.setState({ validacao: newState });
-            }
-        }
     }
 
     testarCNPJ = (cnpj) => {
@@ -698,6 +718,17 @@ class SignIn extends React.Component {
                         value={this.state.formulario.nome_administrador}
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
+                    <p></p>
+
+                    <input
+                        type='text'
+                        placeholder='Código Restaurante'
+                        name='codigo_restaurante'
+                        value={this.state.formulario.codigo_restaurante}
+                        onChange={this.formChange}
+                        onBlur={this.validarCodigoRestaurante}
+                    />
+                    <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
                     <p></p>
 
                     <input

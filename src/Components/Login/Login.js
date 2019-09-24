@@ -5,7 +5,7 @@ class Login extends React.Component {
 
   state = {
     formulario: {
-      login: '',
+      codigo_restaurante: '',
       login_operador: '',
       senha_operador: '',
 
@@ -15,7 +15,7 @@ class Login extends React.Component {
   verificarLogin = async (event) => {
     console.log(this.state.formulario);
 
-    let res = await fetch('http://localhost:3001/restaurante/login', {
+    let res = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -46,11 +46,11 @@ class Login extends React.Component {
         <h1> Login </h1>
         <p></p>
         <Form.Group>
-          <Form.Label>LoginRestaurante</Form.Label>
+          <Form.Label>Codigo do Restaurante</Form.Label>
           <Form.Control
             type="text"
             name="login"
-            value={this.state.formulario.login}
+            value={this.state.formulario.codigo_restaurante}
             onChange={this.formChange}
             placeholder="Login do Restaurante" />
         </Form.Group>
