@@ -4,8 +4,10 @@ import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 import GerenciamentoRestaurante from '../Gerenciamento/GerenciamentoRestaurante';
 import ListaOperador from '../Operador/ListaOperador';
 import CadastrarOperador from '../Operador/CadastrarOperador';
+import EditarOperador from '../Operador/EditarOperador';
 import ListaCardapio from '../Cardapio/ListaCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
+
 
 function App() {
     return (
@@ -26,6 +28,7 @@ function App() {
                         <Route path='/Gerenciamento' component={GerenciamentoRestaurante} />
                         <Route path='/Operador/Lista' component={ListaOperador} />
                         <Route path='/Operador/Cadastrar' component={CadastrarOperador} />
+                        <Route path='/Operador/Editar' component={EditarOperador} />
                         <Route path='/Cardapio/Lista' component={ListaCardapio} />
                         <Route path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
                         <Redirect from='*' to='/Gerenciamento' />
