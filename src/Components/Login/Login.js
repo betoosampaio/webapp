@@ -1,5 +1,6 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
+const path = process.env.REACT_APP_SRV_PATH;
 
 class Login extends React.Component {
 
@@ -15,7 +16,7 @@ class Login extends React.Component {
   verificarLogin = async (event) => {
     console.log(this.state.formulario);
 
-    let res = await fetch('http://localhost:3001/login', {
+    let res = await fetch(path + '/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,7 +50,7 @@ class Login extends React.Component {
           <Form.Label>Codigo do Restaurante</Form.Label>
           <Form.Control
             type="text"
-            name="login"
+            name="codigo_restaurante"
             value={this.state.formulario.codigo_restaurante}
             onChange={this.formChange}
             placeholder="Login do Restaurante" />

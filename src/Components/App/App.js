@@ -8,7 +8,6 @@ import EditarOperador from '../Operador/EditarOperador';
 import ListaCardapio from '../Cardapio/ListaCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
 
-
 function App() {
     return (
         <BrowserRouter>
@@ -18,8 +17,8 @@ function App() {
                         <li> <Link to='/Gerenciamento'>Gerenciamento</Link></li>
                         <li> <Link to='/Operador/Lista'>Operadores</Link></li>
                         <li> <Link to='/Cardapio/Lista'>Cardapios</Link></li>
-                        <li style={{float:'right'}}> <a href='/Login'>Login</a></li>
-                        <li style={{float:'right'}}> <a href='/SignIn'>SignIn</a></li>
+                        <li style={{ float: 'right' }}> <a href='/Login'>Login</a></li>
+                        <li style={{ float: 'right' }}> <a href='/SignIn'>SignIn</a></li>
                     </ul>
                 </nav>
 

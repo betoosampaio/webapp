@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import MaskedInput from 'react-text-mask';
 import Autosuggest from 'react-autosuggest';
-
+const path = process.env.REACT_APP_SRV_PATH;
 class SignIn extends React.Component {
     state = {
         bancos: [],
@@ -85,7 +85,7 @@ class SignIn extends React.Component {
         formulario.cpf_administrador = formulario.cpf_administrador.replace(/\D/g, '')
         formulario.celular = formulario.celular.replace(/\D/g, '')
         
-        let res = await fetch('http://localhost:3001/restaurante/cadastrar', {
+        let res = await fetch(path + '/restaurante/cadastrar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ class SignIn extends React.Component {
         }       
     }
     obterVariaveisCadastro = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/obterVariaveisCadastro', {
+        let res = await fetch(path + '/restaurante/obterVariaveisCadastro', {
             method: 'POST',
         });
         let dados = await res.json();
@@ -163,7 +163,7 @@ class SignIn extends React.Component {
         this.setState({ validacao: newState });
 
         if (val.length == 14) {
-            let res = await fetch('http://localhost:3001/restaurante/checarSeCNPJExiste', {
+            let res = await fetch(path + '/restaurante/checarSeCNPJExiste', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -336,7 +336,7 @@ class SignIn extends React.Component {
         this.setState({ validacao: newState });
 
         if (val.length >= 6) {
-            let res = await fetch('http://localhost:3001/restaurante/checarSeCodigoExiste', {
+            let res = await fetch(path + '/restaurante/checarSeCodigoExiste', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
