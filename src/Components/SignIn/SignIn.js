@@ -62,11 +62,7 @@ class SignIn extends React.Component {
         },
     };
     componentDidMount() {
-        this.obterBancos();
-        this.obterEstados();
-        this.obterMunicipios();
-        this.obtertipoConta();
-        this.obtertipoCadastroConta();
+        this.obterVariaveisCadastro();
     }
     cadastrarRestaurante = async (event) => {
 
@@ -105,35 +101,18 @@ class SignIn extends React.Component {
             alert('ERRO NO CADASTRO: ' + err.msg);
         }       
     }
-    obterBancos = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/banco/selectAll', {
+    obterVariaveisCadastro = async function () {
+        let res = await fetch('http://localhost:3001/restaurante/obterVariaveisCadastro', {
             method: 'POST',
         });
-        this.setState({ bancos: await res.json() });
-    }
-    obterEstados = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/estado/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ estados: await res.json() });
-    }
-    obterMunicipios = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/municipio/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ municipios: await res.json() });
-    }
-    obtertipoConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoConta: await res.json() });
-    }
-    obtertipoCadastroConta = async function () {
-        let res = await fetch('http://localhost:3001/tabelasVariaveis/tipoCadastroConta/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ tipoCadastroConta: await res.json() });
+        let dados = await res.json();
+        this.setState({ 
+            bancos: dados[0],
+            municipios: dados[1],
+            estados: dados[2],
+            tipoConta: dados[3],
+            tipoCadastroConta: dados[4]
+         });
     }
     formChange = (event) => {
         if (event.target.name) {
