@@ -2,7 +2,7 @@ import React from 'react';
 import Table from 'react-bootstrap/Table'
 
 
-class EditarOperador extends React.Component {
+class EditarCardapio extends React.Component {
 
     state = { 
         listaOperador: [],
@@ -157,4 +157,4 @@ this.state.listaOperador.map(function(obj){
     }
 }
 
-export default EditarOperador
+export default EditarCardapio

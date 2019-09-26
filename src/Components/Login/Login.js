@@ -13,6 +13,10 @@ class Login extends React.Component {
     },
   };
 
+
+ 
+  
+
   verificarLogin = async (event) => {
     console.log(this.state.formulario);
 
@@ -27,6 +31,10 @@ class Login extends React.Component {
 
     if (sucess) {
       alert('LOGADO COM SUCESSO!');
+      let token = await res.json();
+      localStorage.setItem('token', token);
+      
+
     } else {
       let err = await res.json();
       alert('ERRO AO LOGAR: ' + err.msg);

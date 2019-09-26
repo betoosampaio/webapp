@@ -6,15 +6,23 @@ import {Link} from 'react-router-dom'
 
 class showCardapio extends React.Component {
 
+ 
     state = {
         listaCardapio: [],
     }
 
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/cardapio/selectall', {
+     
+        let res = await fetch('http://localhost:3001/cardapio/listar', {
             method: 'POST',
+            headers: {
+                'token': localStorage.getItem('token')
+            },
         });
+       
+       
         this.setState({ listaCardapio: await res.json() });
+   
     }
 
     
@@ -23,6 +31,8 @@ class showCardapio extends React.Component {
         this.mostrarConteudo();
 
     }
+
+  
 
 
 
@@ -44,7 +54,7 @@ class showCardapio extends React.Component {
                 <th>Menu</th>
                 <th>Visivel</th>
                 <th>promoção</th>
-                <th>Foto</th>
+               
 
 
 
@@ -56,12 +66,13 @@ class showCardapio extends React.Component {
 
     this.state.listaCardapio.map(function(obj){
       return (
+      
         <tr>
           <td>{obj.id_restaurante}</td>
-          <td>{obj.nome_Produto}</td>
+          <td>{obj.nome_produto}</td>
           <td>{obj.descricao}</td>
           <td>{obj.preco}</td>
-          <td>{obj.menu}</td>
+          <td>{obj.id_menu}</td>
           <td>{obj.visivel}</td>
           <td>{obj.promocao}</td>
 

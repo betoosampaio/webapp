@@ -8,10 +8,10 @@ class Cardapio extends React.Component {
     state = {
         restaurantes: [],
         formulario: {
-            nome_Produto: '',
+            nome_produto: '',
             descricao: '',
             preco: '',
-            menu: '',
+            id_menu: '',
             visivel: '',
             promocao: '',
             imagem: '',
@@ -19,17 +19,7 @@ class Cardapio extends React.Component {
       
         },
     };
-    componentDidMount() {
-        this.obterIdRestaurantes();
  
-    }
-
-    obterIdRestaurantes = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ restaurantes: await res.json() });
-    }
    
 
     cadastrarCardapio = async (event) => {
@@ -43,10 +33,11 @@ class Cardapio extends React.Component {
  
         
         try {
-            let res = await fetch('http://localhost:3001/cardapio/insert', {
+            let res = await fetch('http://localhost:3001/cardapio/cadastrar', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify(this.state.formulario)
             });
@@ -78,21 +69,12 @@ class Cardapio extends React.Component {
                                     <h2>Registrar Cardápio</h2>
 
 
-                       <Select
-                        name="id_restaurante"
-                        options={this.state.restaurantes}
-                        getOptionLabel={option => option.nome_fantasia}
-                        getOptionValue={option => option.id_restaurante}
-                        value={this.state.formulario.restaurante}
-                        onChange={this.formChangeSelect('id_restaurante')}
-                        />
-
 
                     <input
                         type='text'
                         placeholder='Nome Produto'
-                        name='nome_Produto'
-                        value={this.state.formulario.nome_Produto}
+                        name='nome_produto'
+                        value={this.state.formulario.nome_produto}
                         onChange={this.formChange}
                     />
 
@@ -122,8 +104,8 @@ class Cardapio extends React.Component {
                     <input
                         type='text'
                         placeholder='menu'
-                        name='menu'
-                        value={this.state.formulario.menu}
+                        name='id_menu'
+                        value={this.state.formulario.id_menu}
                         onChange={this.formChange}
                     />
 
@@ -156,7 +138,7 @@ class Cardapio extends React.Component {
 
                     <p></p>
 
-                    <button class="btn btn-primary" type='button' onClick={this.cadastrarCardapio}>Submit</button>
+                    <button class="btn btn-primary" type='button' onClick={this.cadastrarCardapio}>Cadastrar Cardápio</button>
                     <p></p>
                     <a href="/App/Cardapio/Lista">Voltar</a>
 

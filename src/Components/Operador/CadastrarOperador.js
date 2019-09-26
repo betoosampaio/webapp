@@ -4,44 +4,31 @@ import MaskedInput from 'react-text-mask'
 
 class CadastrarOperador extends React.Component {
 
-    state = {
-        restaurantes: [],
+    state = { 
 
             formulario: {
-            nome_Operador: '',
-            perfil: '',
-            login_Operador: '',
-            senha_Operador: '',
-            id_restaurante:'',
-
+            nome_operador: '',
+            id_perfil: '',
+            login_operador: '',
+            senha_operador: '',
+    
         },
     };
-    componentDidMount() {
-        this.obterIdRestaurantes();
- 
-    }
 
-    obterIdRestaurantes = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/selectAll', {
-            method: 'POST',
-        });
-        this.setState({ restaurantes: await res.json() });
-    }
+
 
 
     cadastrarOperador = async (event) => {
         console.log(this.state.formulario);
 
         let formulario = this.state.formulario;
-        // ajustando os valores dos Select
-        formulario.id_restaurante = formulario.id_restaurante.id_restaurante;
-     
-
+ 
         try {
-            let res = await fetch('http://localhost:3001/operador/insert', {
+            let res = await fetch('http://localhost:3001/operador/cadastrar', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify(this.state.formulario)
             });
@@ -52,6 +39,7 @@ class CadastrarOperador extends React.Component {
         }
         
     }
+
 
     formChange = (event) => {
         let formNewState = Object.assign({}, this.state.formulario);
@@ -66,8 +54,6 @@ class CadastrarOperador extends React.Component {
     }
 
     
-
-
     render() {
         return (
             <div>
@@ -75,35 +61,21 @@ class CadastrarOperador extends React.Component {
 
                                     <h2>Registrar Operador</h2>
 
-
-
                     <input
                         type='text'
                         placeholder='Nome Operador'
-                        name='nome_Operador'
-                        value={this.state.formulario.nome_Operador}
+                        name='nome_operador'
+                        value={this.state.formulario.nome_operador}
                         onChange={this.formChange}
                     />
                        <p></p>
 
-                       <Select
-                        name="id_restaurante"
-                        options={this.state.restaurantes}
-                        getOptionLabel={option => option.nome_fantasia}
-                        getOptionValue={option => option.id_restaurante}
-                        value={this.state.formulario.restaurante}
-                        onChange={this.formChangeSelect('id_restaurante')}
-                        />
-                   
-                 
-
-                    <p></p>
 
                     <input
                         type='text'
                         placeholder='Perfil'
-                        name='perfil'
-                        value={this.state.formulario.perfil}
+                        name='id_perfil'
+                        value={this.state.formulario.id_perfil}
                         onChange={this.formChange}
                     />
 
@@ -113,8 +85,8 @@ class CadastrarOperador extends React.Component {
                     <input
                         type='text'
                         placeholder='Login Operador'
-                        name='login_Operador'
-                        value={this.state.formulario.login_Operador}
+                        name='login_operador'
+                        value={this.state.formulario.login_operador}
                         onChange={this.formChange}
                     />
 
@@ -123,8 +95,8 @@ class CadastrarOperador extends React.Component {
                     <input
                         type='text'
                         placeholder='Senha'
-                        name='senha_Operador'
-                        value={this.state.formulario.senha_Operador}
+                        name='senha_operador'
+                        value={this.state.formulario.senha_operador}
                         onChange={this.formChange}
                     />
 
@@ -132,7 +104,7 @@ class CadastrarOperador extends React.Component {
 
                     <p></p>
 
-                    <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Submit</button>
+                    <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
                     <p></p>
                     <a href="/App/Operador/Lista">Voltar</a>
 
