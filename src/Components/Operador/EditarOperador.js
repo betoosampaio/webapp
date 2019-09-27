@@ -4,21 +4,29 @@ import Table from 'react-bootstrap/Table'
 
 class EditarOperador extends React.Component {
 
-    state = { 
-        listaOperador: [],
-        formulario: {
-        nome_operador: '',
-        id_perfil: '',
-        login_operador: '',
-        senha_operador: '',
+    constructor(props) {
+        super(props);
+        
+          
+        this.state = { 
+            Operador: [],
+            formulario: {
+            nome_operador: '',
+            id_perfil: '',
+            login_operador: '',
+            senha_operador: '',
+         
+        },
+    }
+}
 
-    },
-};
+ 
+
 
    
 
     updateOperador = async (event) => {
-        console.log(this.state.formulario);
+     
 
         let formulario = this.state.formulario;
       
@@ -42,18 +50,20 @@ class EditarOperador extends React.Component {
    
 
     selecionarOperador = async (event) => {
-        console.log(this.state.formulario);
-
-        
+       
         try {
-            let res = await fetch('http://localhost:3001/operador/listar', {
+            let res = await fetch('http://localhost:3001/operador/obter', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
                 },
-                body: JSON.stringify(this.state.formulario)
+                body: JSON.stringify({"id_operador":  this.props.location.id_operador})
             });
-            this.setState({ listaOperador: await res.json() });
+           let data = await res.json();
+          
+           this.setState({ Operador: data[0]});
+           
            
         } catch (error) {
             
@@ -78,25 +88,21 @@ class EditarOperador extends React.Component {
         formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
-x
+
 
    
     render() {
         return (
            
        <div>
-
-                <form>
+{/*
+    
+    <form>
 
                     <h3>Operadores Cadastrado</h3>
                     <p></p>
 
-{
-    
-this.state.listaOperador.map(function(obj){
-    
-    
-  return (
+
     <tr>
 
         
@@ -117,7 +123,7 @@ this.state.listaOperador.map(function(obj){
 
             <input
                         type='text'
-                        placeholder={obj.id_perfil}
+                        placeholder={obj.id_operador}
                         name='id_perfil'
                      
                     />
@@ -145,13 +151,10 @@ this.state.listaOperador.map(function(obj){
       <p></p>
                               
         </tr>
-        
-      );
-    })  
-}
 
 <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
 </form>
+*/}
             </div>
         )
     }

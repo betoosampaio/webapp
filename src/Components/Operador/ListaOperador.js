@@ -2,69 +2,64 @@ import React from 'react';
 import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class ListaOperador extends React.Component {
 
-    state = {
-        listaOperador: [],
-    }
+  state = {
+    listaOperador: [],
+}
 
-    mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/operador/listar', {
-            method: 'POST',
-            headers: {
-                'token': localStorage.getItem('token')
-            },
-        });
-     
-       
-        this.setState({ listaOperador: await res.json() });
+removerOperador = async (id_operador) => {
+
+
+  try {
+    let res = await fetch('http://localhost:3001/operador/remover', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
+      },
+      body: JSON.stringify({ "id_operador": id_operador })
+    });
+    alert('Removido com sucesso !');
+    this.mostrarConteudo();
+  } catch (error) {
+    alert('ERRO AO REMOVER');
+    console.log(error);
+  }
+
+}
+
+mostrarConteudo = async function () {
+    let res = await fetch('http://localhost:3001/operador/listar', {
+        method: 'POST',
+        headers: {
+            'token': localStorage.getItem('token')
+        },
+    });
+ 
    
-    }
+    this.setState({ listaOperador: await res.json() });
 
-    
-
-    componentDidMount() {
-        this.mostrarConteudo();
-
-    }
+}
 
 
 
-    editarOperador = async (event) => {
-        console.log(this.state.formulario);
-    
-        let res = await fetch('http://localhost:3001/operador/obter', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(this.state.formulario)
-        });
-        let sucess = await res.ok;
-    
-        if (sucess) {
-          alert('LOGADO COM SUCESSO!');
-          let id_operador = await res.json();
-          localStorage.setItem('idOperador', id_operador);
-          
-    
-        } else {
-          let err = await res.json();
-          alert('ERRO AO LOGAR: ' + err.msg);
-        }
-    
-      }
+componentDidMount() {
+    this.mostrarConteudo();
+
+}
 
 
-     
 
 
-    render() {
-        return (
 
-            <div>
+
+render() {
+    return (
+
+        <div>
 
 
 
@@ -73,40 +68,47 @@ class ListaOperador extends React.Component {
 <Link to = '/Operador/Editar' >Editar Operador</Link>
 <p></p>
 <Table striped bordered hover>
-  <thead>
-            <tr>
-                <th>ID Restaurante</th>
-                <th>Id Operador</th>
-                <th>Nome Operador</th>
-                <th>Perfil</th>
-                <th>Login Operador</th>
-                <th>Senha</th>
-                
-                
-            </tr>
-        </thead>
-        <tbody>
-
-     
-    
+<thead>
         <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>{this.state.tipo_perfil}</td>
-          <td>{this.state.listaOperador.map.login_operador}</td>
-          <td></td>
-          <td><button onClick={(id_operador)=>this.removerOperador()} className="myListButton">remove </button></td>
+            <th>ID Restaurante</th>
+            <th>Id Operador</th>
+            <th>Nome Operador</th>
+            <th>Perfil</th>
+            <th>Login Operador</th>
+            <th>Excluir</th>
+            <th>Editar</th>
+           
+            
         </tr>
+    </thead>
+    <tbody>
 
+    {
 
+this.state.listaOperador.map((obj) =>{
+  return (
+    <tr>
+      <td>{obj.id_restaurante}</td>
+      <td>{obj.id_operador}</td>
+      <td>{obj.nome_operador}</td>
+      <td>{obj.tipo_perfil}</td>
+      <td>{obj.login_operador}</td>
+     
+
+      <td><button  type='button' onClick={()=>this.removerOperador(obj.id_operador)}>Excluir </button></td>
+      <td><Link to={{pathname:'/Operador/Editar',id_operador: obj.id_operador}}>Editar</Link></td>
+                 
+
+    </tr>
+  );
+})
+}
 </tbody>
-
 </Table>
 
-            </div>
-        )
-    }
+        </div>
+    )
+}
 }
 
 

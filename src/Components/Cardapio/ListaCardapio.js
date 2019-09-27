@@ -68,25 +68,21 @@ class showCardapio extends React.Component {
 
         {
 
-    this.state.listaCardapio.map(function(obj){
-      return (
-      
-        <tr>
-          <td>{obj.id_restaurante}</td>
-          <td>{obj.nome_produto}</td>
-          <td>{obj.descricao}</td>
-          <td>{obj.preco.toString().replace('.',',')}</td>
-          <td>{obj.ds_menu}</td>
-          <td>{obj.visivel ? 'sim' : 'não'}</td>
-          <td>{obj.promocao ? 'sim' : 'não'}</td>
+this.state.listaOperador.map(function(obj){
+  return (
+    <tr>
+      <td>{obj.id_restaurante}</td>
+      <td>{obj.id_operador}</td>
+      <td>{obj.nome_operador}</td>
+      <td>{obj.id_perfil}</td>
+      <td>{obj.login_operador}</td>
+      <td>{obj.senha_operador}</td>
 
- 
-          
 
-          <td><a href="">Editar</a> - <a href="">Deletar</a></td>
-        </tr>
-      );
-    })
+      <td><a href="">Editar</a> - <a href="">Deletar</a></td>
+    </tr>
+  );
+})
 }
 </tbody>
 </Table>
