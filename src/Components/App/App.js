@@ -6,6 +6,7 @@ import ListaOperador from '../Operador/ListaOperador';
 import CadastrarOperador from '../Operador/CadastrarOperador';
 import EditarOperador from '../Operador/EditarOperador';
 import ListaCardapio from '../Cardapio/ListaCardapio';
+import EditarCardapio from '../Cardapio/EditarCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                         <Route path='/Operador/Editar' component={EditarOperador} />
                         <Route path='/Cardapio/Lista' component={ListaCardapio} />
                         <Route path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
+                        <Route path='/Cardapio/Editar' component={EditarCardapio} />
                         <Redirect from='*' to='/Gerenciamento' />
                     </Switch>
                 </div>

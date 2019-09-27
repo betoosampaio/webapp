@@ -5,12 +5,16 @@ import Table from 'react-bootstrap/Table'
 class EditarCardapio extends React.Component {
 
     state = { 
-        listaOperador: [],
+        listaCardapio: [],
         formulario: {
-        nome_operador: '',
-        id_perfil: '',
-        login_operador: '',
-        senha_operador: '',
+            nome_produto: '',
+            descricao: '',
+            preco: '',
+            id_menu: '',
+            visivel: '',
+            promocao: '',
+            imagem: '',
+            id_restaurante:'',
 
     },
 };
@@ -46,14 +50,14 @@ class EditarCardapio extends React.Component {
 
         
         try {
-            let res = await fetch('http://localhost:3001/operador/listar', {
+            let res = await fetch('http://localhost:3001/cardapio/listar', {
                 method: 'POST',
                 headers: {
                     'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            this.setState({ listaOperador: await res.json() });
+            this.setState({ listaCardapio: await res.json() });
            
         } catch (error) {
             
@@ -88,37 +92,32 @@ x
 
                 <form>
 
-                    <h3>Operadores Cadastrado</h3>
+                    <h3>Cardápio Cadastrado</h3>
                     <p></p>
 
-{
-    
-this.state.listaOperador.map(function(obj){
-    
-    
-  return (
     <tr>
 
         
              <input
                         type='text'
-                        placeholder={obj.id_restaurante}
+                        placeholder=''
                         name='id_restaurante'
-                        
+                        value={this.state.formulario.id_restaurante}
+                        onChange={this.formChange}
               />
 
              <input
                         type='text'
-                        placeholder={obj.nome_operador}
-                        name='nome_operador'  
+                        placeholder=''
+                        name='descricao'  
                            
               />
 
 
             <input
                         type='text'
-                        placeholder={obj.id_perfil}
-                        name='id_perfil'
+                        placeholder=''
+                        name='preco'
                      
                     />
 
@@ -127,8 +126,8 @@ this.state.listaOperador.map(function(obj){
 
             <input
                         type='text'
-                        placeholder={obj.login_operador}
-                        name='login_operador'
+                        placeholder=''
+                        name='id_menu'
                    
                     />
 
@@ -136,19 +135,25 @@ this.state.listaOperador.map(function(obj){
  
             <input
                         type='text'
-                        placeholder={obj.senha_operador}
-                        name='senha_operador'
+                        placeholder=''
+                        name='visivel'
                     
-                    />                       
+                    />    
+
+                         <input
+                        type='text'
+                        placeholder=''
+                        name='promocao'
+                    
+                    />                    
                                        
                            
       <p></p>
                               
         </tr>
         
-      );
-    })  
-}
+      
+
 
 <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
 </form>

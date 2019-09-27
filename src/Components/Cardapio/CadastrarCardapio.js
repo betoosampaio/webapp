@@ -6,7 +6,7 @@ import MaskedInput from 'react-text-mask'
 class Cardapio extends React.Component {
 
     state = {
-        restaurantes: [],
+        menu: [],
         formulario: {
             nome_produto: '',
             descricao: '',
@@ -20,7 +20,21 @@ class Cardapio extends React.Component {
         },
     };
  
-   
+    componentDidMount() {
+        this.obterMenu();
+ 
+    }
+
+    obterMenu = async function () {
+        let res = await fetch('http://localhost:3001/menu/listar', {
+            method: 'POST',
+            headers: {
+                'token': localStorage.getItem('token')
+            },
+        });
+        this.setState({ id_menu: await res.json() });
+    }
+
 
     cadastrarCardapio = async (event) => {
         console.log(this.state.formulario);
@@ -28,7 +42,7 @@ class Cardapio extends React.Component {
 
         let formulario = this.state.formulario;
         // ajustando os valores dos Select
-        formulario.id_restaurante = formulario.id_restaurante.id_restaurante;
+        formulario.id_menu = formulario.id_menu.id_menu;
      
  
         
@@ -101,13 +115,14 @@ class Cardapio extends React.Component {
 
                     <p></p>
 
-                    <input
-                        type='text'
-                        placeholder='menu'
-                        name='id_menu'
-                        value={this.state.formulario.id_menu}
-                        onChange={this.formChange}
-                    />
+                    <Select
+                        name="id_menu"
+                        options={this.state.id_menu}
+                        getOptionLabel={option => option.ds_menu}
+                        getOptionValue={option => option.id_menu}
+                        value={this.state.formulario.menu}
+                        onChange={this.formChangeSelect('id_menu')}
+                        />
 
                     <p></p>
 

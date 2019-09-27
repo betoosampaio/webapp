@@ -32,7 +32,7 @@ class showCardapio extends React.Component {
 
     }
 
-  
+
 
 
 
@@ -43,6 +43,8 @@ class showCardapio extends React.Component {
 
 
 <Link to = '/Cardapio/Cadastrar' >Cadastrar novo Cardápio</Link>
+<p></p>
+<Link to = '/Cardapio/Editar' >Editar Operador</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>
@@ -71,10 +73,10 @@ class showCardapio extends React.Component {
           <td>{obj.id_restaurante}</td>
           <td>{obj.nome_produto}</td>
           <td>{obj.descricao}</td>
-          <td>{obj.preco}</td>
-          <td>{obj.id_menu}</td>
-          <td>{obj.visivel}</td>
-          <td>{obj.promocao}</td>
+          <td>{obj.preco.toString().replace('.',',')}</td>
+          <td>{obj.ds_menu}</td>
+          <td>{obj.visivel ? 'sim' : 'não'}</td>
+          <td>{obj.promocao ? 'sim' : 'não'}</td>
 
  
           

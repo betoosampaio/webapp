@@ -5,7 +5,7 @@ import MaskedInput from 'react-text-mask'
 class CadastrarOperador extends React.Component {
 
     state = { 
-
+        perfil: [],
             formulario: {
             nome_operador: '',
             id_perfil: '',
@@ -15,14 +15,27 @@ class CadastrarOperador extends React.Component {
         },
     };
 
+    componentDidMount() {
+        this.obterPerfil();
+ 
+    }
 
+    obterPerfil = async function () {
+        let res = await fetch('http://localhost:3001/perfil/listar', {
+            method: 'POST',
+            headers: {
+                'token': localStorage.getItem('token')
+            },
+        });
+        this.setState({ id_perfil: await res.json() });
+    }
 
 
     cadastrarOperador = async (event) => {
         console.log(this.state.formulario);
 
         let formulario = this.state.formulario;
- 
+        formulario.id_perfil = formulario.id_perfil.id_perfil;
         try {
             let res = await fetch('http://localhost:3001/operador/cadastrar', {
                 method: 'POST',
@@ -71,13 +84,14 @@ class CadastrarOperador extends React.Component {
                        <p></p>
 
 
-                    <input
-                        type='text'
-                        placeholder='Perfil'
-                        name='id_perfil'
-                        value={this.state.formulario.id_perfil}
-                        onChange={this.formChange}
-                    />
+                        <Select
+                        name="id_perfil"
+                        options={this.state.id_perfil}
+                        getOptionLabel={option => option.tipo_perfil}
+                        getOptionValue={option => option.id_perfil}
+                        value={this.state.formulario.perfil}
+                        onChange={this.formChangeSelect('id_perfil')}
+                        />
 
                     <p></p>
 

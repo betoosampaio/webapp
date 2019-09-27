@@ -65,7 +65,7 @@ class ListaOperador extends React.Component {
           <td>{obj.id_restaurante}</td>
           <td>{obj.id_operador}</td>
           <td>{obj.nome_operador}</td>
-          <td>{obj.id_perfil}</td>
+          <td>{obj.tipo_perfil}</td>
           <td>{obj.login_operador}</td>
           <td>{obj.senha_operador}</td>
 
