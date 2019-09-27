@@ -14,8 +14,26 @@ class Login extends React.Component {
   };
 
 
- 
   
+  logout = async (event) => {
+    console.log(this.state.formulario);
+
+    let res = await fetch({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        
+      },
+      body: JSON.stringify(this.state.formulario)
+    });
+    let sucess = await res.ok;
+alert('Você foi deslogado com sucesso !')
+    localStorage.removeItem('token');
+
+
+  }
+
+
 
   verificarLogin = async (event) => {
     console.log(this.state.formulario);
@@ -23,7 +41,8 @@ class Login extends React.Component {
     let res = await fetch(path + '/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        
       },
       body: JSON.stringify(this.state.formulario)
     });
@@ -38,9 +57,13 @@ class Login extends React.Component {
     } else {
       let err = await res.json();
       alert('ERRO AO LOGAR: ' + err.msg);
+      localStorage.removeItem('token');
     }
 
+
   }
+
+
 
   formChange = (event) => {
     let formNewState = Object.assign({}, this.state.formulario);
@@ -90,6 +113,14 @@ class Login extends React.Component {
           variant="primary"
           type="button">
           Submit
+        </button>
+
+        <button
+          class="btn btn-primary"
+          onClick={this.logout}
+          variant="primary"
+          type="button">
+          logout
         </button>
 
       </Form>

@@ -32,6 +32,35 @@ class ListaOperador extends React.Component {
 
 
 
+    editarOperador = async (event) => {
+        console.log(this.state.formulario);
+    
+        let res = await fetch('http://localhost:3001/operador/obter', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(this.state.formulario)
+        });
+        let sucess = await res.ok;
+    
+        if (sucess) {
+          alert('LOGADO COM SUCESSO!');
+          let id_operador = await res.json();
+          localStorage.setItem('idOperador', id_operador);
+          
+    
+        } else {
+          let err = await res.json();
+          alert('ERRO AO LOGAR: ' + err.msg);
+        }
+    
+      }
+
+
+     
+
+
     render() {
         return (
 
@@ -53,29 +82,26 @@ class ListaOperador extends React.Component {
                 <th>Login Operador</th>
                 <th>Senha</th>
                 
+                
             </tr>
         </thead>
         <tbody>
 
-        {
-
-    this.state.listaOperador.map(function(obj){
-      return (
+     
+    
         <tr>
-          <td>{obj.id_restaurante}</td>
-          <td>{obj.id_operador}</td>
-          <td>{obj.nome_operador}</td>
-          <td>{obj.tipo_perfil}</td>
-          <td>{obj.login_operador}</td>
-          <td>{obj.senha_operador}</td>
-
-
-          <td><a href="">Editar</a> - <a href="">Deletar</a></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{this.state.tipo_perfil}</td>
+          <td>{this.state.listaOperador.map.login_operador}</td>
+          <td></td>
+          <td><button onClick={(id_operador)=>this.removerOperador()} className="myListButton">remove </button></td>
         </tr>
-      );
-    })
-}
+
+
 </tbody>
+
 </Table>
 
             </div>

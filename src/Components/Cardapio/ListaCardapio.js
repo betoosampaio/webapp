@@ -46,6 +46,8 @@ class showCardapio extends React.Component {
 <p></p>
 <Link to = '/Cardapio/Editar' >Editar Operador</Link>
 <p></p>
+<Link to = '/Cardapio/Menu' >Cadastrar Menu</Link>
+<p></p>
 <Table striped bordered hover>
   <thead>
             <tr>

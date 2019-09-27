@@ -8,6 +8,7 @@ import EditarOperador from '../Operador/EditarOperador';
 import ListaCardapio from '../Cardapio/ListaCardapio';
 import EditarCardapio from '../Cardapio/EditarCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
+import CadastrarMenu from '../Cardapio/CadastrarMenu';
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                         <Route path='/Cardapio/Lista' component={ListaCardapio} />
                         <Route path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
                         <Route path='/Cardapio/Editar' component={EditarCardapio} />
+                        <Route path='/Cardapio/Menu' component={CadastrarMenu} />
                         <Redirect from='*' to='/Gerenciamento' />
                     </Switch>
                 </div>
