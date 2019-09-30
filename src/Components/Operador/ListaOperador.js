@@ -12,7 +12,6 @@ class ListaOperador extends React.Component {
 
 removerOperador = async (id_operador) => {
 
-
   try {
     let res = await fetch('http://localhost:3001/operador/remover', {
       method: 'POST',
@@ -31,6 +30,7 @@ removerOperador = async (id_operador) => {
 
 }
 
+
 mostrarConteudo = async function () {
     let res = await fetch('http://localhost:3001/operador/listar', {
         method: 'POST',
@@ -45,15 +45,10 @@ mostrarConteudo = async function () {
 }
 
 
-
 componentDidMount() {
     this.mostrarConteudo();
 
 }
-
-
-
-
 
 
 render() {
@@ -64,8 +59,6 @@ render() {
 
 
 <Link to = '/Operador/Cadastrar' >Cadastrar novo Operador</Link>
-<p></p>
-<Link to = '/Operador/Editar' >Editar Operador</Link>
 <p></p>
 <Table striped bordered hover>
 <thead>
@@ -96,7 +89,8 @@ this.state.listaOperador.map((obj) =>{
      
 
       <td><button  type='button' onClick={()=>this.removerOperador(obj.id_operador)}>Excluir </button></td>
-      <td><Link to={{pathname:'/Operador/Editar',id_operador: obj.id_operador}}>Editar</Link></td>
+
+      <td><Link to={{pathname:'/Operador/Editar', id_operador: obj.id_operador}}>Editar</Link></td>
                  
 
     </tr>

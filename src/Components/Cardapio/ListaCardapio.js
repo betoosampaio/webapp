@@ -10,30 +10,47 @@ class showCardapio extends React.Component {
     state = {
         listaCardapio: [],
     }
-
+    
+    removerOperador = async (id_operador) => {
+    
+      try {
+        let res = await fetch('http://localhost:3001/operador/remover', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token')
+          },
+          body: JSON.stringify({ "id_operador": id_operador })
+        });
+        alert('Removido com sucesso !');
+        this.mostrarConteudo();
+      } catch (error) {
+        alert('ERRO AO REMOVER');
+        console.log(error);
+      }
+    
+    }
+    
+    
     mostrarConteudo = async function () {
-     
         let res = await fetch('http://localhost:3001/cardapio/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
             },
         });
-       
+     
        
         this.setState({ listaCardapio: await res.json() });
-   
-    }
-
     
-
+    }
+    
+    
     componentDidMount() {
         this.mostrarConteudo();
-
+    
     }
-
-
-
+    
 
 
     render() {
@@ -59,28 +76,30 @@ class showCardapio extends React.Component {
                 <th>Visivel</th>
                 <th>promoção</th>
                
-
-
-
             </tr>
         </thead>
         <tbody>
 
         {
 
-this.state.listaOperador.map(function(obj){
+this.state.listaCardapio.map((obj) =>{
   return (
+
     <tr>
-      <td>{obj.id_restaurante}</td>
-      <td>{obj.id_operador}</td>
-      <td>{obj.nome_operador}</td>
-      <td>{obj.id_perfil}</td>
-      <td>{obj.login_operador}</td>
-      <td>{obj.senha_operador}</td>
+
+          <td>{obj.id_restaurante}</td>
+          <td>{obj.nome_produto}</td>
+          <td>{obj.descricao}</td>
+          <td>{obj.preco.toString().replace('.',',')}</td>
+          <td>{obj.ds_menu}</td>
+          <td>{obj.visivel ? 'sim' : 'não'}</td>
+          <td>{obj.promocao ? 'sim' : 'não'}</td>
 
 
       <td><a href="">Editar</a> - <a href="">Deletar</a></td>
     </tr>
+
+
   );
 })
 }

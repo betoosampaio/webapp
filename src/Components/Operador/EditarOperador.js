@@ -1,41 +1,37 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table'
+import Select from 'react-select';
 
 
 class EditarOperador extends React.Component {
 
     constructor(props) {
         super(props);
-        
-          
+                  
         this.state = { 
-            Operador: [],
+            perfil: [],
             formulario: {
             nome_operador: '',
             id_perfil: '',
             login_operador: '',
             senha_operador: '',
-         
+            ativo: '1' ,
+            id_operador:this.props.location.id_operador,
         },
     }
 }
 
- 
-
-
-   
 
     updateOperador = async (event) => {
      
-
         let formulario = this.state.formulario;
-      
+        formulario.id_perfil = formulario.id_perfil.id_perfil;
         
-
-        try {
+             try {
             let res = await fetch('http://localhost:3001/operador/editar', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify(this.state.formulario)
@@ -47,7 +43,19 @@ class EditarOperador extends React.Component {
         }
         
     }
-   
+  
+
+    obterPerfil = async function () {
+        let res = await fetch('http://localhost:3001/perfil/listar', {
+            method: 'POST',
+            headers: {
+                'token': localStorage.getItem('token')
+            },
+        });
+        this.setState({ id_perfil: await res.json() });
+    }
+    
+
 
     selecionarOperador = async (event) => {
        
@@ -61,8 +69,8 @@ class EditarOperador extends React.Component {
                 body: JSON.stringify({"id_operador":  this.props.location.id_operador})
             });
            let data = await res.json();
-          
-           this.setState({ Operador: data[0]});
+          console.log(data);
+           this.setState({ formulario: data[0]});
            
            
         } catch (error) {
@@ -73,8 +81,10 @@ class EditarOperador extends React.Component {
 
     componentDidMount() {
         this.selecionarOperador();
+        this.obterPerfil();
  
     }
+
 
 
     formChange = (event) => {
@@ -95,67 +105,64 @@ class EditarOperador extends React.Component {
         return (
            
        <div>
-{/*
-    
+
     <form>
+                    <h3>Editar Operadores</h3>
 
-                    <h3>Operadores Cadastrado</h3>
-                    <p></p>
+        <p></p>
 
+            <input
+              type='text'
+              name='nome_operador'
+              value={this.state.formulario.nome_operador}
+              onChange={this.formChange}
+            />
 
-    <tr>
+        <p></p>
 
-        
-             <input
-                        type='text'
-                        placeholder={obj.id_restaurante}
-                        name='id_restaurante'
-                        
-              />
+            <Select
+                        name="id_perfil"
+                        options={this.state.id_perfil}
+                        getOptionLabel={option => option.tipo_perfil}
+                        getOptionValue={option => option.id_perfil}
+                        value={this.state.formulario.id_perfil}
+                        onChange={this.formChangeSelect('id_perfil')}
+            />
 
-             <input
-                        type='text'
-                        placeholder={obj.nome_operador}
-                        name='nome_operador'  
-                           
-              />
-
+        <p></p>
 
             <input
                         type='text'
-                        placeholder={obj.id_operador}
-                        name='id_perfil'
-                     
-                    />
-
-
-
-
-            <input
-                        type='text'
-                        placeholder={obj.login_operador}
                         name='login_operador'
-                   
-                    />
+                        value={this.state.formulario.login_operador}
+                        onChange={this.formChange}
+            />
 
+        <p></p>
 
- 
+            <input 
+                        type="checkbox"   
+                        name='ativo'
+                        value={this.state.formulario.ativo}
+                        onChange={this.formChange} /> Desativar Usuário
+
+        <p></p>
+
             <input
                         type='text'
-                        placeholder={obj.senha_operador}
                         name='senha_operador'
-                    
-                    />                       
-                                       
-                           
-      <p></p>
-                              
-        </tr>
+                        value={this.state.formulario.senha_operador}
+                        onChange={this.formChange}
+            />
+        <p></p>
 
-<button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+
+
+            <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+
+
 </form>
-*/}
-            </div>
+        </div>
         )
     }
 }
