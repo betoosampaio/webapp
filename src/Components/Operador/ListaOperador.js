@@ -63,11 +63,11 @@ render() {
 <Table striped bordered hover>
 <thead>
         <tr>
-            <th>ID Restaurante</th>
-            <th>Id Operador</th>
+            
             <th>Nome Operador</th>
             <th>Perfil</th>
             <th>Login Operador</th>
+            <th>Status</th>
             <th>Excluir</th>
             <th>Editar</th>
            
@@ -81,11 +81,11 @@ render() {
 this.state.listaOperador.map((obj) =>{
   return (
     <tr>
-      <td>{obj.id_restaurante}</td>
-      <td>{obj.id_operador}</td>
+    
       <td>{obj.nome_operador}</td>
       <td>{obj.tipo_perfil}</td>
       <td>{obj.login_operador}</td>
+      <td>{obj.ativo  ? 'Operador Ativo' : 'Operador Desativado'}</td>
      
 
       <td><button  type='button' onClick={()=>this.removerOperador(obj.id_operador)}>Excluir </button></td>

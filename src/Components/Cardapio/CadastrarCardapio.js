@@ -12,11 +12,10 @@ class Cardapio extends React.Component {
             descricao: '',
             preco: '',
             id_menu: '',
-            visivel: '',
-            promocao: '',
+            visivel: '1',
+            promocao: '0',
             imagem: '',
-            id_restaurante:'',
-      
+              
         },
     };
  
@@ -36,18 +35,15 @@ class Cardapio extends React.Component {
     }
 
 
-    cadastrarCardapio = async (event) => {
+    cadastrarProduto = async (event) => {
         console.log(this.state.formulario);
-
-
+        
         let formulario = this.state.formulario;
         // ajustando os valores dos Select
         formulario.id_menu = formulario.id_menu.id_menu;
-     
- 
-        
+             
         try {
-            let res = await fetch('http://localhost:3001/cardapio/cadastrar', {
+            let res = await fetch('http://localhost:3001/produto/cadastrar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,7 +51,7 @@ class Cardapio extends React.Component {
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('CADASTRADO COM SUCESSO!');
+            alert('PRODUTO CADASTRADO COM SUCESSO!');
         } catch (error) {
             alert('ERRO NO CADASTRO');
             console.log(error);
@@ -124,26 +120,19 @@ class Cardapio extends React.Component {
                         onChange={this.formChangeSelect('id_menu')}
                         />
 
-                    <p></p>
+             
 
-
-                    <input
-                        type='text'
-                        placeholder='visivel'
-                        name='visivel'
-                        value={this.state.formulario.visivel}
-                        onChange={this.formChange}
-                    />
+            
 
                     <p></p>
 
-                    <input
-                        type='text'
-                        placeholder='Promoção'
+
+                    <input 
+                        type="checkbox"   
                         name='promocao'
-                        value={this.state.formulario.promocao}
-                        onChange={this.formChange}
-                    />
+                        value='1'
+                        onChange={this.formChange} />Produto em Promoção
+
 
                     <p></p>
 
@@ -153,7 +142,7 @@ class Cardapio extends React.Component {
 
                     <p></p>
 
-                    <button class="btn btn-primary" type='button' onClick={this.cadastrarCardapio}>Cadastrar Cardápio</button>
+                    <button class="btn btn-primary" type='button' onClick={this.cadastrarProduto}>Cadastrar Cardápio</button>
                     <p></p>
                     <a href="/App/Cardapio/Lista">Voltar</a>
 

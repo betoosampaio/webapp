@@ -15,7 +15,7 @@ class EditarOperador extends React.Component {
             id_perfil: '',
             login_operador: '',
             senha_operador: '',
-            ativo: '1' ,
+            ativo: '' ,
             id_operador:this.props.location.id_operador,
         },
     }
@@ -36,9 +36,9 @@ class EditarOperador extends React.Component {
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('CADASTRADO COM SUCESSO!');
+            alert('OPERADOR EDITADO COM SUCESSO!');
         } catch (error) {
-            alert('ERRO NO CADASTRO');
+            alert('ERRO AO EDITAR');
             console.log(error);
         }
         
@@ -99,6 +99,15 @@ class EditarOperador extends React.Component {
         this.setState({ formulario: formNewState });
     }
 
+  
+    formChangeCheck = (event) => {
+        let formNewState = Object.assign({}, this.state.formulario);
+        formNewState[event.target.name] = event.target.checked ? 1:0;
+        this.setState({ formulario: formNewState });
+    }
+
+
+
 
    
     render() {
@@ -143,8 +152,8 @@ class EditarOperador extends React.Component {
             <input 
                         type="checkbox"   
                         name='ativo'
-                        value={this.state.formulario.ativo}
-                        onChange={this.formChange} /> Desativar Usuário
+                        checked = {this.state.formulario.ativo}
+                        onChange={this.formChangeCheck} /> Ativo
 
         <p></p>
 

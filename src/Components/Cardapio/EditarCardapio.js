@@ -1,11 +1,15 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table'
+import Select from 'react-select';
 
 
-class EditarCardapio extends React.Component {
+class EditarOperador extends React.Component {
 
-    state = { 
-        listaCardapio: [],
+    constructor(props) {
+        super(props);
+                  
+        this.state = { 
+            menu: [],
         formulario: {
             nome_produto: '',
             descricao: '',
@@ -14,50 +18,68 @@ class EditarCardapio extends React.Component {
             visivel: '',
             promocao: '',
             imagem: '',
-            id_restaurante:'',
+            id_produto:'this.props.location.id_protudo',
+        },
+    }
+}
 
-    },
-};
-
-   
 
     updateOperador = async (event) => {
-        console.log(this.state.formulario);
 
-        let formulario = this.state.formulario;
-      
         
+        let formulario = this.state.formulario;
+        formulario.id_menu = formulario.id_menu.id_menu;
 
-        try {
-            let res = await fetch('http://localhost:3001/operador/editar', {
+        
+             try {
+            let res = await fetch('http://localhost:3001/produto/editar', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('CADASTRADO COM SUCESSO!');
+            alert('OPERADOR EDITADO COM SUCESSO!');
         } catch (error) {
-            alert('ERRO NO CADASTRO');
+            alert('ERRO AO EDITAR');
             console.log(error);
         }
+
+    
         
     }
-   
 
-    selecionarOperador = async (event) => {
-        console.log(this.state.formulario);
+ 
+  
 
-        
+    obterMenu = async function () {
+        let res = await fetch('http://localhost:3001/menu/listar', {
+            method: 'POST',
+            headers: {
+                'token': localStorage.getItem('token')
+            },
+        });
+        this.setState({ id_menu: await res.json() });
+    }
+    
+
+
+    selecionarProduto = async (event) => {
+               
         try {
-            let res = await fetch('http://localhost:3001/cardapio/listar', {
+            let res = await fetch('http://localhost:3001/produto/obter', {
                 method: 'POST',
                 headers: {
+                    'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
                 },
-                body: JSON.stringify(this.state.formulario)
+                body: JSON.stringify({"id_produto":  this.props.location.id_produto})
             });
-            this.setState({ listaCardapio: await res.json() });
+           let data = await res.json();
+          console.log(data);
+           this.setState({ formulario: data[0]});
+           
            
         } catch (error) {
             
@@ -66,9 +88,11 @@ class EditarCardapio extends React.Component {
     }
 
     componentDidMount() {
-        this.selecionarOperador();
+        this.selecionarProduto();
+        this.obterMenu();
  
     }
+
 
 
     formChange = (event) => {
@@ -82,7 +106,7 @@ class EditarCardapio extends React.Component {
         formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
-x
+
 
    
     render() {
@@ -90,76 +114,78 @@ x
            
        <div>
 
-                <form>
+    <form>
+                    <h3>Editar Operadores</h3>
 
-                    <h3>Cardápio Cadastrado</h3>
+        <p></p>
+
+            <input
+              type='text'
+              name='nome_produto'
+              value={this.state.formulario.nome_produto}
+              onChange={this.formChange}
+            />
+
+        <p></p>
+
+            <input
+              type='text'
+              name='descricao'
+              value={this.state.formulario.descricao}
+              onChange={this.formChange}
+            />
+
+        <p></p>
+
+        <input
+                        type='text'
+                        name='preco'
+                        value={this.state.formulario.preco}
+                        onChange={this.formChange}
+        />
+
                     <p></p>
 
-    <tr>
+            <Select
+                        name="id_menu"
+                        options={this.state.id_menu}
+                        getOptionLabel={option => option.ds_menu}
+                        getOptionValue={option => option.id_menu}
+                        value={this.state.formulario.menu}
+                        onChange={this.formChangeSelect('id_menu')}
+            />
 
-        
-             <input
+        <p></p>
+
+        <input
                         type='text'
-                        placeholder=''
-                        name='id_restaurante'
-                        value={this.state.formulario.id_restaurante}
-                        onChange={this.formChange}
-              />
-
-             <input
-                        type='text'
-                        placeholder=''
-                        name='descricao'  
-                           
-              />
-
-
-            <input
-                        type='text'
-                        placeholder=''
-                        name='preco'
-                     
-                    />
-
-
-
-
-            <input
-                        type='text'
-                        placeholder=''
-                        name='id_menu'
-                   
-                    />
-
-
- 
-            <input
-                        type='text'
-                        placeholder=''
                         name='visivel'
-                    
-                    />    
+                        value={this.state.formulario.visivel ? 'Produto Visivel' : 'Produto não Visivel'}
+                        onChange={this.formChange}
+                    />
 
-                         <input
-                        type='text'
-                        placeholder=''
+        <p></p>
+
+            <input 
+                        type="checkbox"   
                         name='promocao'
-                    
-                    />                    
-                                       
-                           
-      <p></p>
-                              
-        </tr>
-        
-      
+                        value='0'
+                        onChange={this.formChange} />Produto em Promoção
+
+                    <p></p>
+
+           
+        <p></p>
 
 
-<button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+
+            <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+
+
 </form>
-            </div>
+        </div>
         )
     }
 }
 
-export default EditarCardapio
+export default EditarOperador

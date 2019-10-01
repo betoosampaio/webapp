@@ -107,7 +107,7 @@ class CadastrarOperador extends React.Component {
                     <p></p>
 
                     <input
-                        type='text'
+                        type='password'
                         placeholder='Senha'
                         name='senha_operador'
                         value={this.state.formulario.senha_operador}

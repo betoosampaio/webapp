@@ -52,6 +52,7 @@ alert('Você foi deslogado com sucesso !')
       alert('LOGADO COM SUCESSO!');
       let token = await res.json();
       localStorage.setItem('token', token);
+      window.location.href = "http://localhost:3000"
       
 
     } else {
