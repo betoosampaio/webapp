@@ -40,7 +40,8 @@ class EditarOperador extends React.Component {
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('OPERADOR EDITADO COM SUCESSO!');
+            alert('PRODUTO EDITADO COM SUCESSO!');
+            window.location.href = "http://localhost:3000/cardapio/listar"
         } catch (error) {
             alert('ERRO AO EDITAR');
             console.log(error);
@@ -77,8 +78,12 @@ class EditarOperador extends React.Component {
                 body: JSON.stringify({"id_produto":  this.props.location.id_produto})
             });
            let data = await res.json();
-          console.log(data);
-           this.setState({ formulario: data[0]});
+         
+          
+           let obj = data[0];
+           obj.id_menu = {id_menu: obj.id_menu , ds_menu: obj.ds_menu}
+           this.setState({ formulario: obj});
+         
            
            
         } catch (error) {
@@ -104,9 +109,15 @@ class EditarOperador extends React.Component {
     formChangeSelect = name => value => {
         let formNewState = Object.assign({}, this.state.formulario);
         formNewState[name] = value;
+        
         this.setState({ formulario: formNewState });
     }
 
+    formChangeCheck = (event) => {
+        let formNewState = Object.assign({}, this.state.formulario);
+        formNewState[event.target.name] = event.target.checked ? 1:0;
+        this.setState({ formulario: formNewState });
+    }
 
    
     render() {
@@ -151,26 +162,28 @@ class EditarOperador extends React.Component {
                         options={this.state.id_menu}
                         getOptionLabel={option => option.ds_menu}
                         getOptionValue={option => option.id_menu}
-                        value={this.state.formulario.menu}
+                        value={this.state.formulario.id_menu}
                         onChange={this.formChangeSelect('id_menu')}
             />
 
         <p></p>
 
-        <input
-                        type='text'
+ 
+
+                        <input 
+                        type="checkbox"   
                         name='visivel'
-                        value={this.state.formulario.visivel ? 'Produto Visivel' : 'Produto não Visivel'}
-                        onChange={this.formChange}
-                    />
+                        checked = {this.state.formulario.visivel}
+                        onChange={this.formChangeCheck} /> Produto visivel
+
 
         <p></p>
 
             <input 
                         type="checkbox"   
                         name='promocao'
-                        value='0'
-                        onChange={this.formChange} />Produto em Promoção
+                        checked = {this.state.formulario.promocao}
+                        onChange={this.formChangeCheck} />Produto em Promoção
 
                     <p></p>
 

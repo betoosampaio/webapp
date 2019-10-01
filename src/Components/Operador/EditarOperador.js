@@ -37,6 +37,7 @@ class EditarOperador extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('OPERADOR EDITADO COM SUCESSO!');
+            window.location.href = "http://localhost:3000/operador/lista"
         } catch (error) {
             alert('ERRO AO EDITAR');
             console.log(error);
@@ -69,8 +70,10 @@ class EditarOperador extends React.Component {
                 body: JSON.stringify({"id_operador":  this.props.location.id_operador})
             });
            let data = await res.json();
-          console.log(data);
-           this.setState({ formulario: data[0]});
+                   
+           let obj = data[0];
+           obj.id_perfil = {id_perfil: obj.id_perfil , tipo_perfil: obj.tipo_perfil}
+           this.setState({ formulario: obj});
            
            
         } catch (error) {
