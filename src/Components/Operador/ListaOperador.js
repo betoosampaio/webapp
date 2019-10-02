@@ -60,6 +60,7 @@ render() {
 
 <Link to = '/Operador/Cadastrar' >Cadastrar novo Operador</Link>
 <p></p>
+
 <Table striped bordered hover>
 <thead>
         <tr>
@@ -70,7 +71,7 @@ render() {
             <th>Status</th>
             <th>Excluir</th>
             <th>Editar</th>
-           
+         
             
         </tr>
     </thead>
@@ -90,8 +91,7 @@ this.state.listaOperador.map((obj) =>{
 
       <td><button  type='button' onClick={()=>this.removerOperador(obj.id_operador)}>Excluir </button></td>
 
-      <td><Link to={{pathname:'/Operador/Editar', id_operador: obj.id_operador}}>Editar</Link></td>
-                 
+      <td><Link to={{pathname:'/Operador/Editar', id_operador: obj.id_operador}}>Editar</Link></td>   
 
     </tr>
   );

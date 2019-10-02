@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import { isAuthenticated } from './auth';
 
 import GerenciamentoRestaurante from '../Gerenciamento/GerenciamentoRestaurante';
 import ListaOperador from '../Operador/ListaOperador';
@@ -9,6 +10,24 @@ import ListaCardapio from '../Cardapio/ListaCardapio';
 import EditarCardapio from '../Cardapio/EditarCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
 import CadastrarMenu from '../Cardapio/CadastrarMenu';
+import Login from '../Login/Login';
+import ListaRestaurante from '../Restaurante/PerfilRestaurante';
+import EditarRestaurante from '../Restaurante/EditarRestaurante';
+
+const PrivateRoute = ({component: Component, ...rest}) =>(
+    <Route{...rest} render={props =>(
+  
+      isAuthenticated() ? (
+        <Component { ...props} />
+      ) :(
+        <Redirect to={{pathname: '/Login', state: {from: props.location}}} />
+      )
+  
+    )} />
+  )
+
+
+
 
 function App() {
     return (
@@ -21,19 +40,23 @@ function App() {
                         <li> <Link to='/Cardapio/Lista'>Cardapios</Link></li>
                         <li style={{ float: 'right' }}> <a href='/Login'>Login</a></li>
                         <li style={{ float: 'right' }}> <a href='/SignIn'>SignIn</a></li>
+                        <li style={{ float: 'right' }}> <a href='restaurante/Perfil'>Perfil</a></li>
                     </ul>
                 </nav>
 
                 <div className="content">
                     <Switch>
-                        <Route path='/Gerenciamento' component={GerenciamentoRestaurante} />
-                        <Route path='/Operador/Lista' component={ListaOperador} />
-                        <Route path='/Operador/Cadastrar' component={CadastrarOperador} />
-                        <Route path='/Operador/Editar' component={EditarOperador} />
-                        <Route path='/Cardapio/Lista' component={ListaCardapio} />
-                        <Route path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
-                        <Route path='/Cardapio/Editar' component={EditarCardapio} />
-                        <Route path='/Cardapio/Menu' component={CadastrarMenu} />
+                        <Route exact path='/Login' component={Login} />
+                        <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante}/>
+                        <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante}/>
+                        <PrivateRoute path='/Gerenciamento' component={GerenciamentoRestaurante} />
+                        <PrivateRoute path='/Operador/Lista' component={ListaOperador} />
+                        <PrivateRoute path='/Operador/Cadastrar' component={CadastrarOperador} />
+                        <PrivateRoute path='/Operador/Editar' component={EditarOperador} />
+                        <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />
+                        <PrivateRoute path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
+                        <PrivateRoute path='/Cardapio/Editar' component={EditarCardapio} />
+                        <PrivateRoute path='/Cardapio/Menu' component={CadastrarMenu} />
                         <Redirect from='*' to='/Gerenciamento' />
                     </Switch>
                 </div>
