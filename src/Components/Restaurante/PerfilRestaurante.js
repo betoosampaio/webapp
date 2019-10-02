@@ -12,7 +12,7 @@ class PerfilRestaurante extends React.Component {
     }
 
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/restaurante/listar', {
+        let res = await fetch('http://localhost:3001/restaurante/obter', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
