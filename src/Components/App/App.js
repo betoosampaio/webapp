@@ -9,8 +9,11 @@ import EditarOperador from '../Operador/EditarOperador';
 import ListaCardapio from '../Cardapio/ListaCardapio';
 import EditarCardapio from '../Cardapio/EditarCardapio';
 import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
-import CadastrarMenu from '../Cardapio/CadastrarMenu';
+import CadastrarMenu from '../Cardapio/Menu/CadastrarMenu';
+import ListaMenu from '../Cardapio/Menu/ListaMenu';
+import EditarMenu from '../Cardapio/Menu/EditarMenu';
 import Login from '../Login/Login';
+import Logout from '../Login/Logout'
 import ListaRestaurante from '../Restaurante/PerfilRestaurante';
 import EditarRestaurante from '../Restaurante/EditarRestaurante';
 
@@ -38,6 +41,7 @@ function App() {
                         <li> <Link to='/Gerenciamento'>Gerenciamento</Link></li>
                         <li> <Link to='/Operador/Lista'>Operadores</Link></li>
                         <li> <Link to='/Cardapio/Lista'>Cardapios</Link></li>
+                        <li style={{ float: 'right' }}> <a href='/Logout'>Logout</a></li>
                         <li style={{ float: 'right' }}> <a href='/Login'>Login</a></li>
                         <li style={{ float: 'right' }}> <a href='/SignIn'>SignIn</a></li>
                         <li style={{ float: 'right' }}> <a href='restaurante/Perfil'>Perfil</a></li>
@@ -47,6 +51,7 @@ function App() {
                 <div className="content">
                     <Switch>
                         <Route exact path='/Login' component={Login} />
+                        <Route  path='/Logout' component={Logout} />
                         <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante}/>
                         <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante}/>
                         <PrivateRoute path='/Gerenciamento' component={GerenciamentoRestaurante} />
@@ -56,7 +61,9 @@ function App() {
                         <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />
                         <PrivateRoute path='/Cardapio/Cadastrar' component={CadastrarCardapio} />
                         <PrivateRoute path='/Cardapio/Editar' component={EditarCardapio} />
-                        <PrivateRoute path='/Cardapio/Menu' component={CadastrarMenu} />
+                        <PrivateRoute path='/Menu/Cadastrar' component={CadastrarMenu} />
+                        <PrivateRoute path='/Menu/Lista' component={ListaMenu} />
+                        <PrivateRoute path='/Menu/Editar' component={EditarMenu} />
                         <Redirect from='*' to='/Gerenciamento' />
                     </Switch>
                 </div>

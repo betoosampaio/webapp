@@ -1,26 +1,27 @@
+
 import React from 'react';
 import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import {Link} from 'react-router-dom'
 
-class listaProduto extends React.Component {
 
- 
+class ListaMenu extends React.Component {
+
     state = {
-        listaProduto: [],
+        listaMenu: [],
     }
     
-    removerProduto = async (id_produto) => {
+    removerMenu = async (id_menu) => {
     
       try {
-        let res = await fetch('http://localhost:3001/produto/remover', {
+        let res = await fetch('http://localhost:3001/menu/remover', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'token': localStorage.getItem('token')
           },
-          body: JSON.stringify({ "id_produto": id_produto })
+          body: JSON.stringify({ "id_menu": id_menu })
         });
         alert('Removido com sucesso !');
         this.mostrarConteudo();
@@ -33,7 +34,7 @@ class listaProduto extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/produto/listar', {
+        let res = await fetch('http://localhost:3001/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
@@ -41,7 +42,7 @@ class listaProduto extends React.Component {
         });
      
        
-        this.setState({ listaProduto: await res.json() });
+        this.setState({ listaMenu: await res.json() });
     
     }
     
@@ -52,26 +53,18 @@ class listaProduto extends React.Component {
     }
     
 
-
     render() {
         return (
-
             <div>
-
-
-<Link to = '/Cardapio/Cadastrar' >Cadastrar novo Cardápio</Link>
-<p></p>
-<Link to = '/Menu/Lista' >Lista de Menu</Link>
+                
+           
+<Link to = '/Menu/Cadastrar' >Cadastrar novo Menu</Link>
 <p></p>
 <Table striped bordered hover>
   <thead>
             <tr>
                 <th>Nome do Prato</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Menu</th>
-                <th>Status</th>
-                <th>promoção</th>
+                <th>Status do Menu</th>
                 <th>Excluir</th>
                 <th>Editar</th>
             </tr>
@@ -82,22 +75,18 @@ class listaProduto extends React.Component {
 
         {
 
-this.state.listaProduto.map((obj) =>{
+this.state.listaMenu.map((obj) =>{
   return (
 
     <tr>
 
          
-          <td>{obj.nome_produto}</td>
-          <td>{obj.descricao}</td>
-          <td>{obj.preco.toString().replace('.',',')}</td>
           <td>{obj.ds_menu}</td>
-          <td>{obj.visivel ? 'Ativo' : 'Desativado'}</td>
-          <td>{obj.promocao ? 'sim' : 'não'}</td>
+          <td>{obj.ativo ? 'Menu Ativo':'Menu Desativado'}</td>
 
-          <td><button  type='button' onClick={()=>this.removerProduto(obj.id_produto)}>Excluir </button></td>
+          <td><button  type='button' onClick={()=>this.removerMenu(obj.id_menu)}>Excluir </button></td>
 
-          <td><Link to={{pathname:'/Cardapio/Editar', id_produto: obj.id_produto}}>Editar</Link></td>
+          <td><Link to={{pathname:'/Menu/Editar', id_menu: obj.id_menu}}>Editar</Link></td>
    
 
     </tr>
@@ -108,11 +97,10 @@ this.state.listaProduto.map((obj) =>{
 }
 </tbody>
 </Table>
-
+                                    
             </div>
         )
     }
 }
 
-
-export default listaProduto;
+export default ListaMenu;
