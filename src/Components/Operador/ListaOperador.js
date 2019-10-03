@@ -21,7 +21,7 @@ removerOperador = async (id_operador) => {
       },
       body: JSON.stringify({ "id_operador": id_operador })
     });
-    alert('Removido com sucesso !');
+    alert('OPERADOR REMOVIDO COM SUCESSO!');
     this.mostrarConteudo();
   } catch (error) {
     alert('ERRO AO REMOVER');

@@ -121,7 +121,9 @@ class EditarOperador extends React.Component {
     <form>
                     <h3>Editar Operadores</h3>
 
-        <p></p>
+                    <p></p>
+                       <label>NomeOperador</label>
+                       <p></p>
 
             <input
               type='text'
@@ -130,7 +132,9 @@ class EditarOperador extends React.Component {
               onChange={this.formChange}
             />
 
-        <p></p>
+                        <p></p>
+                       <label>TipoPerfil</label>
+                       <p></p>
 
             <Select
                         name="id_perfil"
@@ -141,7 +145,9 @@ class EditarOperador extends React.Component {
                         onChange={this.formChangeSelect('id_perfil')}
             />
 
-        <p></p>
+                        <p></p>
+                       <label>LoginOperador</label>
+                       <p></p>
 
             <input
                         type='text'
@@ -150,7 +156,7 @@ class EditarOperador extends React.Component {
                         onChange={this.formChange}
             />
 
-        <p></p>
+                <p></p>
 
             <input 
                         type="checkbox"   
@@ -158,10 +164,12 @@ class EditarOperador extends React.Component {
                         checked = {this.state.formulario.ativo}
                         onChange={this.formChangeCheck} /> Ativo
 
-        <p></p>
+                        <p></p>
+                       <label>SenhaOperador</label>
+                       <p></p>
 
             <input
-                        type='text'
+                        type='password'
                         name='senha_operador'
                         value={this.state.formulario.senha_operador}
                         onChange={this.formChange}
@@ -171,7 +179,8 @@ class EditarOperador extends React.Component {
 
 
             <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
-
+<p></p>
+            <a href="/Operador/Lista">Voltar</a>
 
 </form>
         </div>

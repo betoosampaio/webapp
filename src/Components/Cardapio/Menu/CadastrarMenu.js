@@ -32,9 +32,10 @@ class Menu extends React.Component {
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('CADASTRADO COM SUCESSO!');
+            alert('MENU CADASTRADO COM SUCESSO!');
+            window.location.href = "http://localhost:3000/Menu/Lista"
         } catch (error) {
-            alert('ERRO NO CADASTRO');
+            alert('ERRO AO CADASTRAR O MENU');
             console.log(error);
         }
         
@@ -78,6 +79,8 @@ onChange={this.formChange}
 
 
 <button class="btn btn-primary" type='button' onClick={this.cadastrarMenu}>Cadastrar Menu</button>
+<p></p>
+<a href="/Menu/Lista">Voltar</a>
 
 <p></p>
 

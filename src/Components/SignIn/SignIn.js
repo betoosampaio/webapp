@@ -95,7 +95,8 @@ class SignIn extends React.Component {
         let sucess = await res.ok;
 
         if (sucess) {
-            alert('CADASTRADO COM SUCESSO!');
+            alert('RESTAURANTE CADASTRADO COM SUCESSO!');
+            window.location.href = "http://localhost:3000/Login"
         } else {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);
@@ -731,12 +732,11 @@ class SignIn extends React.Component {
                     />
                     <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
                     <p></p>
-
+                    <p></p>
                     <button className="btn btn-primary" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
 
-                    <p></p>
+                   
 
-                    <a href="http://localhost:3000/Restaurante/showRestaurante">Restaurante Cadastrado</a>
                 </form>
             </div>
         )

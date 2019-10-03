@@ -36,10 +36,10 @@ updateMenu = async (event) => {
             },
             body: JSON.stringify(this.state.formulario)
         });
-        alert('OPERADOR EDITADO COM SUCESSO!');
+        alert('MENU EDITADO COM SUCESSO!');
         window.location.href = "http://localhost:3000/menu/lista"
     } catch (error) {
-        alert('ERRO AO EDITAR');
+        alert('ERRO AO EDITAR O MENU');
         console.log(error);
     }
     
@@ -120,6 +120,9 @@ formChangeCheck = (event) => {
           
 
  <button class="btn btn-primary" type='button' onClick={this.updateMenu}>Editar</button>
+ <p></p>
+
+ <a href="/Menu/Lista">Voltar</a>
 
 </form>
 

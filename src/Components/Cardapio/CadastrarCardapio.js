@@ -52,7 +52,8 @@ class Cardapio extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('PRODUTO CADASTRADO COM SUCESSO!');
-        } catch (error) {
+            window.location.href = "http://localhost:3000/Cardapio/Lista"
+                } catch (error) {
             alert('ERRO NO CADASTRO');
             console.log(error);
         }
@@ -79,6 +80,9 @@ class Cardapio extends React.Component {
                                     <h2>Registrar Cardápio</h2>
 
 
+                                    <p></p>
+                       <label>NomeProduto</label>
+                       <p></p>
 
                     <input
                         type='text'
@@ -88,7 +92,10 @@ class Cardapio extends React.Component {
                         onChange={this.formChange}
                     />
 
+                   
                     <p></p>
+                       <label>DescricaoProduto</label>
+                       <p></p>
 
                     <input
                         type='text'
@@ -98,8 +105,10 @@ class Cardapio extends React.Component {
                         onChange={this.formChange}
                     />
 
+                    
                     <p></p>
-
+                       <label>Preco</label>
+                       <p></p>
                     
                     <input
                         type='text'
@@ -109,7 +118,10 @@ class Cardapio extends React.Component {
                         onChange={this.formChange}
                     />
 
+                    
                     <p></p>
+                       <label>Menu</label>
+                       <p></p>
 
                     <Select
                         name="id_menu"
@@ -120,12 +132,8 @@ class Cardapio extends React.Component {
                         onChange={this.formChangeSelect('id_menu')}
                         />
 
-             
-
-            
-
                     <p></p>
-
+                 
 
                     <input 
                         type="checkbox"   
@@ -136,6 +144,11 @@ class Cardapio extends React.Component {
 
                     <p></p>
 
+                       
+                    <p></p>
+                       <label>Imagem</label>
+                       <p></p>
+
                    <input type='file' name='imagem'/>
 
                     <p></p>
@@ -144,7 +157,7 @@ class Cardapio extends React.Component {
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarProduto}>Cadastrar Cardápio</button>
                     <p></p>
-                    <a href="/App/Cardapio/Lista">Voltar</a>
+                    <a href="/Cardapio/Lista">Voltar</a>
 
                 </form>
             </div>

@@ -45,9 +45,10 @@ class CadastrarOperador extends React.Component {
                 },
                 body: JSON.stringify(this.state.formulario)
             });
-            alert('CADASTRADO COM SUCESSO!');
+            alert('OPERADOR CADASTRADO COM SUCESSO!');
+            window.location.href = "http://localhost:3000/Operador/Lista"
         } catch (error) {
-            alert('ERRO NO CADASTRO');
+            alert('ERRO AO CADASTRAR OPERADOR');
             console.log(error);
         }
         
@@ -74,6 +75,8 @@ class CadastrarOperador extends React.Component {
 
                                     <h2>Registrar Operador</h2>
 
+                    <label>NomeOperador</label>
+                    <p></p>
                     <input
                         type='text'
                         placeholder='Nome Operador'
@@ -82,7 +85,8 @@ class CadastrarOperador extends React.Component {
                         onChange={this.formChange}
                     />
                        <p></p>
-
+                       <label>TipoPerfil</label>
+                       <p></p>
 
                         <Select
                         name="id_perfil"
@@ -93,7 +97,9 @@ class CadastrarOperador extends React.Component {
                         onChange={this.formChangeSelect('id_perfil')}
                         />
 
-                    <p></p>
+                       <p></p>
+                       <label>LoginOperador</label>
+                       <p></p>
 
                     
                     <input
@@ -104,7 +110,9 @@ class CadastrarOperador extends React.Component {
                         onChange={this.formChange}
                     />
 
-                    <p></p>
+                       <p></p>
+                       <label>SenhaPerfil</label>
+                       <p></p>
 
                     <input
                         type='password'
@@ -120,7 +128,7 @@ class CadastrarOperador extends React.Component {
 
                     <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
                     <p></p>
-                    <a href="/App/Operador/Lista">Voltar</a>
+                    <a href="/Operador/Lista">Voltar</a>
 
                 </form>
             </div>

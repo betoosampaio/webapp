@@ -13,7 +13,6 @@ import CadastrarMenu from '../Cardapio/Menu/CadastrarMenu';
 import ListaMenu from '../Cardapio/Menu/ListaMenu';
 import EditarMenu from '../Cardapio/Menu/EditarMenu';
 import Login from '../Login/Login';
-import Logout from '../Login/Logout'
 import ListaRestaurante from '../Restaurante/PerfilRestaurante';
 import EditarRestaurante from '../Restaurante/EditarRestaurante';
 
@@ -28,8 +27,24 @@ const PrivateRoute = ({component: Component, ...rest}) =>(
   
     )} />
   )
+  
+ const logout = async (event) => {
+    
+    let res = await fetch({
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',        
+      },
+      
+    });
+    let sucess = await res.ok;
+alert('Você foi deslogado com sucesso !')
+    localStorage.removeItem('token');
+    window.location.href = "http://localhost:3000/Login"
+  }
 
 
+ 
 
 
 function App() {
@@ -41,7 +56,7 @@ function App() {
                         <li> <Link to='/Gerenciamento'>Gerenciamento</Link></li>
                         <li> <Link to='/Operador/Lista'>Operadores</Link></li>
                         <li> <Link to='/Cardapio/Lista'>Cardapios</Link></li>
-                        <li style={{ float: 'right' }}> <a href='/Logout'>Logout</a></li>
+                        <li style={{ float: 'right' }}> <a href='/Login' onClick={logout}>Logout</a></li>
                         <li style={{ float: 'right' }}> <a href='/Login'>Login</a></li>
                         <li style={{ float: 'right' }}> <a href='/SignIn'>SignIn</a></li>
                         <li style={{ float: 'right' }}> <a href='restaurante/Perfil'>Perfil</a></li>
@@ -51,7 +66,6 @@ function App() {
                 <div className="content">
                     <Switch>
                         <Route exact path='/Login' component={Login} />
-                        <Route  path='/Logout' component={Logout} />
                         <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante}/>
                         <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante}/>
                         <PrivateRoute path='/Gerenciamento' component={GerenciamentoRestaurante} />
