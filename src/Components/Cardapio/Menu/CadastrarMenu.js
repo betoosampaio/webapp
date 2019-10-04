@@ -24,7 +24,7 @@ class Menu extends React.Component {
       
             
         try {
-            let res = await fetch('http://localhost:3001/menu/cadastrar', {
+            let res = await fetch('path +/menu/cadastrar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ class Menu extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('MENU CADASTRADO COM SUCESSO!');
-            window.location.href = "http://localhost:3000/Menu/Lista"
+            window.location.href = "pathWeb +/Menu/Lista"
         } catch (error) {
             alert('ERRO AO CADASTRAR O MENU');
             console.log(error);

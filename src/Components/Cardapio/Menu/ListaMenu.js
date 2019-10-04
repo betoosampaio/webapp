@@ -15,7 +15,7 @@ class ListaMenu extends React.Component {
     removerMenu = async (id_menu) => {
     
       try {
-        let res = await fetch('http://localhost:3001/menu/remover', {
+        let res = await fetch('path +/menu/remover', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ class ListaMenu extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/menu/listar', {
+        let res = await fetch('path +/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
