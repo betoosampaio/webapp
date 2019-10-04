@@ -3,6 +3,8 @@ import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import { Link } from 'react-router-dom'
+import Autosuggest from 'react-autosuggest';
+const path = process.env.REACT_APP_SRV_PATH;
 
 
 
@@ -12,31 +14,10 @@ class EditarRestaurante extends React.Component {
         super(props);
                   
         this.state = { 
-           
+            estados: [],
             formulario: {
                 cnpj: '',
-                nome_fantasia: '',
-                cep: '',
-                logradouro: '',
-                numero: '',
-                bairro: '',
-                municipio: '',
-                uf: 0,
-                complemento: '',
-                celular: '',
-                email: '',
-                codigo_banco: 0,
-                id_tipo_cadastro_conta: 0,
-                id_tipo_conta: 0,
-                agencia: '',
-                conta: '',
-                digito: '',
-                cpf_administrador: '',
-                nome_administrador: '',
-                codigo_restaurante: '',
-                login: '',
-                senha: '',
-                enderecoDisabled: false,           
+                         
         },
     }
 }
@@ -73,151 +54,30 @@ componentDidMount() {
 }
 
 
+
+
+
+
 render() {
     return (
 
+        
         <div>
+                <form>
+                    <h2>Registrar Restaurante</h2>
 
-          
-          
+                    <tr>{this.state.formulario.cnpj}</tr>
+                    
+                    <p></p>
 
-<form>
-                    <h3>Editar Restaurante</h3>
-
-                <p></p>
-
-        <label>CNPJ</label>
-
-        <p></p>
-                
-             <MaskedInput
-              name='nome_operador'
-              value={this.state.formulario.cnpj}
-              mask={[/[1-9]/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
-              />
-
-        <p></p>
-
-        <label>Nome Fantasia</label>
-
-        <p></p>
-
-            <input
-            type='text'
-            name='nome_operador'
-            value={this.state.formulario.nome_fantasia}
-            />
-
-<p></p>
-
-        <label>Cep</label>
-        <p></p>
-                <MaskedInput
-                        onChange={this.formChange}
-                        onBlur={this.validarCEP}
-                        name='cep'
-                        value={this.state.formulario.cep}
-                        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
-                        guide={true}
-                />
+                    <tr>{this.state.formulario.nome_fantasia}</tr>
+                    
                   
 
-<p></p>
-
-<label>Rua</label>
-
-<p></p>
-
-    <input
-    type='text'
-    name='nome_operador'
-    value={this.state.formulario.logradouro}
-    />
+                </form>
+            </div>
 
 
-
-<p></p>
-
-<label>Número</label>
-
-<p></p>
-
-    <input
-    type='text'
-    name='nome_operador'
-    value={this.state.formulario.numero}
-    />
-
-    
-<p></p>
-
-<label>Complemento</label>
-
-<p></p>
-
-    <input
-    type='text'
-    name='nome_operador'
-    value={this.state.formulario.complemento}
-    />
-
-<p></p>
-
-<label>Complemento</label>
-
-<p></p>
-
-    <input
-    type='text'
-    name='nome_operador'
-    value={this.state.formulario.celular}
-    />
-
-<p></p>
-
-<label>email</label>
-
-<p></p>
-
-    <input
-    type='text'
-    name='nome_operador'
-    value={this.state.formulario.email}
-    />
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <p></p>
-
-            <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
-
-
-</form>
-
-
-
-
-
-        </div>
     )
 }
 }
