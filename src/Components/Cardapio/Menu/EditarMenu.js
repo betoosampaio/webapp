@@ -28,7 +28,7 @@ updateMenu = async (event) => {
    
     
          try {
-        let res = await fetch('http://localhost:3001/menu/editar', {
+        let res = await fetch('path +/menu/editar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ updateMenu = async (event) => {
             body: JSON.stringify(this.state.formulario)
         });
         alert('MENU EDITADO COM SUCESSO!');
-        window.location.href = "http://localhost:3000/menu/lista"
+        window.location.href = "pathWeb +/menu/lista"
     } catch (error) {
         alert('ERRO AO EDITAR O MENU');
         console.log(error);
@@ -50,7 +50,7 @@ updateMenu = async (event) => {
 selecionarMenu = async (event) => {
        
     try {
-        let res = await fetch('http://localhost:3001/menu/obter', {
+        let res = await fetch('path +/menu/obter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -32,7 +32,7 @@
 
                 
                     try {
-                    let res = await fetch('http://localhost:3001/produto/editar', {
+                    let res = await fetch('path +/produto/editar', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -41,7 +41,7 @@
                         body: JSON.stringify(this.state.formulario)
                     });
                     alert('PRODUTO EDITADO COM SUCESSO!');
-                    window.location.href = "http://localhost:3000/Cardapio/Lista"
+                    window.location.href = "pathWeb +/Cardapio/Lista"
                 } catch (error) {
                     alert('ERRO AO EDITAR');
                     console.log(error);
@@ -55,7 +55,7 @@
         
 
             obterMenu = async function () {
-                let res = await fetch('http://localhost:3001/menu/listar', {
+                let res = await fetch('path +/menu/listar', {
                     method: 'POST',
                     headers: {
                         'token': localStorage.getItem('token')
@@ -69,7 +69,7 @@
             selecionarProduto = async (event) => {
                     
                 try {
-                    let res = await fetch('http://localhost:3001/produto/obter', {
+                    let res = await fetch('path +/produto/obter', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
