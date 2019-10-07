@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './Components/Login/Login'
 import SignIn from './Components/SignIn/SignIn';
+import Socket from './Components/Teste/Socket';
 import App from './Components/App/App';
 
 
@@ -13,6 +14,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path='/SignIn' component={SignIn} />
+        <Route path='/Socket' component={Socket} />
         <Route path='/Login' component={Login} />
         <Route path='/' component={Login} />
         <Route component={App}/>

@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
-
+import CurrencyFormat from 'react-currency-format';
+import CurrencyInput from 'react-currency-input';
 import MaskedInput from 'react-text-mask'
 
 class Cardapio extends React.Component {
@@ -35,6 +36,10 @@ class Cardapio extends React.Component {
     }
 
 
+
+
+
+
     cadastrarProduto = async (event) => {
         console.log(this.state.formulario);
         
@@ -53,6 +58,28 @@ class Cardapio extends React.Component {
             });
             alert('PRODUTO CADASTRADO COM SUCESSO!');
             window.location.href = "pathWeb +/Cardapio/Lista"
+                } catch (error) {
+            alert('ERRO NO CADASTRO');
+            console.log(error);
+        }
+        
+    }
+
+    cadastrarImagem = async (event) => {
+        console.log(this.state.formulario);
+        
+        let formulario = this.state.formulario;
+                   
+        try {
+            let res = await fetch('http://localhost:3001/produto/uploadimg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                },
+                body: JSON.stringify(this.state.formulario)
+            });
+           
                 } catch (error) {
             alert('ERRO NO CADASTRO');
             console.log(error);
@@ -110,13 +137,11 @@ class Cardapio extends React.Component {
                        <label>Preco</label>
                        <p></p>
                     
-                    <input
-                        type='text'
-                        placeholder='preco'
-                        name='preco'
-                        value={this.state.formulario.preco}
-                        onChange={this.formChange}
-                    />
+                     <CurrencyInput  type="text" decimalSeparator="," thousandSeparator="."
+                           value={this.state.formulario.preco}
+                           name='preco'
+                           onChange={this.formChange}
+                       />
 
                     
                     <p></p>
@@ -149,7 +174,12 @@ class Cardapio extends React.Component {
                        <label>Imagem</label>
                        <p></p>
 
-                   <input type='file' name='imagem'/>
+                   <input type='file' name='imagem'
+                   
+                   value={this.state.formulario.imagem}
+                   onChange={this.formChange}
+                   
+                   />
 
                     <p></p>
 
