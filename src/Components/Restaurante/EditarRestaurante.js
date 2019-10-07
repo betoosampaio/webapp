@@ -5,6 +5,7 @@ import MaskedInput from 'react-text-mask'
 import { Link } from 'react-router-dom'
 import Autosuggest from 'react-autosuggest';
 const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 
 
@@ -30,7 +31,7 @@ class EditarRestaurante extends React.Component {
      
         formulario.celular = formulario.celular.replace(/\D/g, '')
         
-        let res = await fetch('http://localhost:3001/restaurante/editar', {
+        let res = await fetch(path + '/restaurante/editar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,7 +42,7 @@ class EditarRestaurante extends React.Component {
 
         if (sucess) {
             alert('RESTAURANTE CADASTRADO COM SUCESSO!');
-            window.location.href = "pathWeb +/Login"
+            window.location.href = pathWeb + '/Login'
         } else {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);
@@ -107,7 +108,7 @@ class EditarRestaurante extends React.Component {
     selecionarRestaurante = async (event) => {
 
         try {
-            let res = await fetch('pathWeb +/restaurante/obter', {
+            let res = await fetch(pathWeb + '/restaurante/obter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

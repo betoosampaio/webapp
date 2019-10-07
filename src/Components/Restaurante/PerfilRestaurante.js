@@ -3,7 +3,7 @@ import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import { Link } from 'react-router-dom'
-
+const path = process.env.REACT_APP_SRV_PATH;
 
 class PerfilRestaurante extends React.Component {
 
@@ -12,7 +12,7 @@ class PerfilRestaurante extends React.Component {
     }
 
     mostrarConteudo = async function () {
-        let res = await fetch('path +/restaurante/obter', {
+        let res = await fetch(path + '/restaurante/obter', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
