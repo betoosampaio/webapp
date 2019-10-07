@@ -96,7 +96,7 @@ class SignIn extends React.Component {
 
         if (sucess) {
             alert('RESTAURANTE CADASTRADO COM SUCESSO!');
-            window.location.href = "http://localhost:3000/Login"
+            window.location.href = "pathWeb +/Login"
         } else {
             let err = await res.json();
             alert('ERRO NO CADASTRO: ' + err.msg);

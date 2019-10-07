@@ -14,7 +14,7 @@ class listaProduto extends React.Component {
     removerProduto = async (id_produto) => {
     
       try {
-        let res = await fetch('http://localhost:3001/produto/remover', {
+        let res = await fetch('path +/produto/remover', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ class listaProduto extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/produto/listar', {
+        let res = await fetch('path +/produto/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')

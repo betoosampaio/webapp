@@ -1,6 +1,8 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
+
 
 class Login extends React.Component {
 
@@ -12,27 +14,6 @@ class Login extends React.Component {
 
     },
   };
-
-
-  
-  logout = async (event) => {
-    console.log(this.state.formulario);
-
-    let res = await fetch({
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify(this.state.formulario)
-    });
-    let sucess = await res.ok;
-alert('Você foi deslogado com sucesso !')
-    localStorage.removeItem('token');
-
-
-  }
-
 
 
   verificarLogin = async (event) => {
@@ -52,12 +33,12 @@ alert('Você foi deslogado com sucesso !')
       alert('LOGADO COM SUCESSO!');
       let token = await res.json();
       localStorage.setItem('token', token);
-      window.location.href = "http://localhost:3000"
+      window.location.href = pathWeb
       
 
     } else {
       let err = await res.json();
-      alert('ERRO AO LOGAR: ' + err.msg);
+      alert('ERRO AO LOGAR: ' + err);
       localStorage.removeItem('token');
     }
 
@@ -116,13 +97,18 @@ alert('Você foi deslogado com sucesso !')
           Submit
         </button>
 
+
+        <a href= "path + /SignIn">
+
         <button
           class="btn btn-primary"
-          onClick={this.logout}
+         
           variant="primary"
           type="button">
-          logout
+          SignIn
         </button>
+
+        </a>
 
       </Form>
 
