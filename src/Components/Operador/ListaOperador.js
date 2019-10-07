@@ -3,6 +3,7 @@ import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import { Link } from 'react-router-dom'
+const path = process.env.REACT_APP_SRV_PATH;
 
 class ListaOperador extends React.Component {
 
@@ -32,7 +33,7 @@ removerOperador = async (id_operador) => {
 
 
 mostrarConteudo = async function () {
-    let res = await fetch('http://localhost:3001/operador/listar', {
+    let res = await fetch(path + '/operador/listar', {
         method: 'POST',
         headers: {
             'token': localStorage.getItem('token')

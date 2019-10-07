@@ -3,6 +3,8 @@ import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import {Link} from 'react-router-dom'
+const path = process.env.REACT_APP_SRV_PATH;
+
 
 class listaProduto extends React.Component {
 

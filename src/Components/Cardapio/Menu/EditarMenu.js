@@ -6,6 +6,9 @@ import MaskedInput from 'react-text-mask'
 import {Link} from 'react-router-dom'
 
 
+const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
+
 class EditarMenu extends React.Component {
 
     constructor(props) {
@@ -28,7 +31,7 @@ updateMenu = async (event) => {
    
     
          try {
-        let res = await fetch('path +/menu/editar', {
+        let res = await fetch(path + '/menu/editar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +40,7 @@ updateMenu = async (event) => {
             body: JSON.stringify(this.state.formulario)
         });
         alert('MENU EDITADO COM SUCESSO!');
-        window.location.href = "pathWeb +/menu/lista"
+        window.location.href = pathWeb + '/menu/lista';
     } catch (error) {
         alert('ERRO AO EDITAR O MENU');
         console.log(error);

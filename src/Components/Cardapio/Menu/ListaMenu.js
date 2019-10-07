@@ -4,6 +4,8 @@ import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import {Link} from 'react-router-dom'
 
+const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 class ListaMenu extends React.Component {
 
@@ -14,7 +16,7 @@ class ListaMenu extends React.Component {
     removerMenu = async (id_menu) => {
     
       try {
-        let res = await fetch('path +/menu/remover', {
+        let res = await fetch(path + '/menu/remover', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ class ListaMenu extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/menu/listar', {
+        let res = await fetch(path + '/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
