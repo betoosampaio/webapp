@@ -1,7 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
-
 import MaskedInput from 'react-text-mask'
+
+const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 class Menu extends React.Component {
 
@@ -24,7 +26,7 @@ class Menu extends React.Component {
       
             
         try {
-            let res = await fetch('path +/menu/cadastrar', {
+            let res = await fetch(path + '/menu/cadastrar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ class Menu extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('MENU CADASTRADO COM SUCESSO!');
-            window.location.href = "pathWeb +/Menu/Lista"
+            window.location.href = pathWeb + '/Menu/Lista';
         } catch (error) {
             alert('ERRO AO CADASTRAR O MENU');
             console.log(error);

@@ -4,6 +4,9 @@ import CurrencyFormat from 'react-currency-format';
 import CurrencyInput from 'react-currency-input';
 import MaskedInput from 'react-text-mask'
 
+const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
+
 class Cardapio extends React.Component {
 
     state = {
@@ -26,7 +29,7 @@ class Cardapio extends React.Component {
     }
 
     obterMenu = async function () {
-        let res = await fetch('path +/menu/listar', {
+        let res = await fetch(path + '/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
@@ -45,7 +48,7 @@ class Cardapio extends React.Component {
         formulario.preco = formulario.preco.replace(',' , '.');
              
         try {
-            let res = await fetch('path +/produto/cadastrar', {
+            let res = await fetch(path + '/produto/cadastrar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +57,7 @@ class Cardapio extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('PRODUTO CADASTRADO COM SUCESSO!');
-            window.location.href = "pathWeb +/Cardapio/Lista"
+            window.location.href = pathWeb + '/Cardapio/Lista';
                 } catch (error) {
             alert('ERRO NO CADASTRO');
             console.log(error);
