@@ -13,10 +13,10 @@ function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-      <Route component={App}/>
+    
         <Route path='/SignIn' component={SignIn} />
         <Route path='/Login' component={Login} />
-        
+        <Route component={App}/>
       </Switch>
     </BrowserRouter>
   );
