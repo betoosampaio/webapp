@@ -36,16 +36,13 @@ class Cardapio extends React.Component {
     }
 
 
-
-
-
-
     cadastrarProduto = async (event) => {
         console.log(this.state.formulario);
         
         let formulario = this.state.formulario;
         // ajustando os valores dos Select
         formulario.id_menu = formulario.id_menu.id_menu;
+        formulario.preco = formulario.preco.replace(',' , '.');
              
         try {
             let res = await fetch('path +/produto/cadastrar', {
@@ -64,28 +61,14 @@ class Cardapio extends React.Component {
         }
         
     }
-
-    cadastrarImagem = async (event) => {
-        console.log(this.state.formulario);
-        
-        let formulario = this.state.formulario;
-                   
-        try {
-            let res = await fetch('http://localhost:3001/produto/uploadimg', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'token': localStorage.getItem('token')
-                },
-                body: JSON.stringify(this.state.formulario)
-            });
-           
-                } catch (error) {
-            alert('ERRO NO CADASTRO');
-            console.log(error);
-        }
-        
+    
+    
+    formChangeInput = name => value => {
+        let formNewState = Object.assign({}, this.state.formulario);
+        formNewState[name] = value;
+        this.setState({ formulario: formNewState });
     }
+  
 
     formChange = (event) => {
         let formNewState = Object.assign({}, this.state.formulario);
@@ -137,10 +120,13 @@ class Cardapio extends React.Component {
                        <label>Preco</label>
                        <p></p>
                     
-                     <CurrencyInput  type="text" decimalSeparator="," thousandSeparator="."
-                           value={this.state.formulario.preco}
-                           name='preco'
-                           onChange={this.formChange}
+                     <CurrencyInput 
+                        type="text"
+                        decimalSeparator=","
+                        thousandSeparator="."
+                        value={this.state.formulario.preco}
+                        name="preco"
+                        onChange={this.formChangeInput('preco')}
                        />
 
                     

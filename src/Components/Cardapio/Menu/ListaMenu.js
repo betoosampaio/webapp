@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Select from 'react-select';
 import Table from 'react-bootstrap/Table'
@@ -34,7 +33,7 @@ class ListaMenu extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('path +/menu/listar', {
+        let res = await fetch('http://localhost:3001/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')

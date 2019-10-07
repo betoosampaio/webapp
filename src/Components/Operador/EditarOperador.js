@@ -28,7 +28,7 @@ class EditarOperador extends React.Component {
         formulario.id_perfil = formulario.id_perfil.id_perfil;
         
              try {
-            let res = await fetch('http://localhost:3001/operador/editar', {
+            let res = await fetch('path +/operador/editar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ class EditarOperador extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('OPERADOR EDITADO COM SUCESSO!');
-            window.location.href = "http://localhost:3000/operador/lista"
+            window.location.href = "pathWeb +/operador/lista"
         } catch (error) {
             alert('ERRO AO EDITAR');
             console.log(error);
@@ -47,7 +47,7 @@ class EditarOperador extends React.Component {
   
 
     obterPerfil = async function () {
-        let res = await fetch('http://localhost:3001/perfil/listar', {
+        let res = await fetch('path +/perfil/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
@@ -61,7 +61,7 @@ class EditarOperador extends React.Component {
     selecionarOperador = async (event) => {
        
         try {
-            let res = await fetch('http://localhost:3001/operador/obter', {
+            let res = await fetch('path +/operador/obter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

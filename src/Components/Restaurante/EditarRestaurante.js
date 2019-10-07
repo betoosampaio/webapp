@@ -16,7 +16,7 @@ class EditarRestaurante extends React.Component {
         this.state = {
             estados: [],
             formulario: {
-                cnpj: '',
+                celular: '',
 
             },
         }
@@ -27,7 +27,7 @@ class EditarRestaurante extends React.Component {
     selecionarRestaurante = async (event) => {
 
         try {
-            let res = await fetch('http://localhost:3001/restaurante/obter', {
+            let res = await fetch('pathWeb +/restaurante/obter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -128,7 +128,10 @@ class EditarRestaurante extends React.Component {
                     <label>celular</label>
                     <p></p>
                     <input
+                        type='text'
+                        name='celular'
                         value={this.state.formulario.celular}
+                        onChange={this.formChange}
                     />
 
                     <p></p>
@@ -151,56 +154,49 @@ class EditarRestaurante extends React.Component {
                     <label>Banco</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.id_tipo_cadastro_conta}
+                        value={this.state.formulario.id_tipo_cadastro_conta}
                     />
 
                     <p></p>
                     <label>TipodeConta</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.id_tipo_cadastro_conta}
+                        value={this.state.formulario.id_tipo_cadastro_conta}
                     />
 
                     <p></p>
                     <label>Agencia</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.agencia}
+                        value={this.state.formulario.agencia}
                     />
-                
+
                     <p></p>
                     <label>Conta</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.conta}
+                        value={this.state.formulario.conta}
                     />
 
                     <p></p>
                     <label>Digito</label>
                     <p></p>
                     <input
-                    value= {this.state.formulario.digito}
+                        value={this.state.formulario.digito}
                     />
 
                     <p></p>
                     <label>Cpf</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.cpf_administrador}
+                        value={this.state.formulario.cpf_administrador}
                     />
 
                     <p></p>
                     <label>NomeAdministrador</label>
                     <p></p>
                     <input
-                    value={this.state.formulario.nome_administrador}
-                    />
-
-                    <p></p>
-                    <label>login</label>
-                    <p></p>
-                    <input
-                    value={this.state.formulario.login}
+                        value={this.state.formulario.nome_administrador}
                     />
 
                     <p></p>
