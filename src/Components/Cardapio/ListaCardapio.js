@@ -33,7 +33,7 @@ class listaProduto extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('http://localhost:3001/produto/listar', {
+        let res = await fetch('path +/produto/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')

@@ -57,7 +57,7 @@ class Login extends React.Component {
     return (
 
       <Form>
-        <h1> Login </h1>
+       <h1> Login </h1>
         <p></p>
         <Form.Group>
           <Form.Label>Codigo do Restaurante</Form.Label>

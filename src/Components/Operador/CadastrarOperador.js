@@ -21,7 +21,7 @@ class CadastrarOperador extends React.Component {
     }
 
     obterPerfil = async function () {
-        let res = await fetch('http://localhost:3001/perfil/listar', {
+        let res = await fetch('path +/perfil/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
@@ -37,7 +37,7 @@ class CadastrarOperador extends React.Component {
         let formulario = this.state.formulario;
         formulario.id_perfil = formulario.id_perfil.id_perfil;
         try {
-            let res = await fetch('http://localhost:3001/operador/cadastrar', {
+            let res = await fetch('path +/operador/cadastrar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ class CadastrarOperador extends React.Component {
                 body: JSON.stringify(this.state.formulario)
             });
             alert('OPERADOR CADASTRADO COM SUCESSO!');
-            window.location.href = "http://localhost:3000/Operador/Lista"
+            window.location.href = "pathWeb +/Operador/Lista"
         } catch (error) {
             alert('ERRO AO CADASTRAR OPERADOR');
             console.log(error);

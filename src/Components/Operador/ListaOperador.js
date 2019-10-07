@@ -13,7 +13,7 @@ class ListaOperador extends React.Component {
 removerOperador = async (id_operador) => {
 
   try {
-    let res = await fetch('http://localhost:3001/operador/remover', {
+    let res = await fetch('path +/operador/remover', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ removerOperador = async (id_operador) => {
 
 
 mostrarConteudo = async function () {
-    let res = await fetch('http://localhost:3001/operador/listar', {
+    let res = await fetch('path +/operador/listar', {
         method: 'POST',
         headers: {
             'token': localStorage.getItem('token')

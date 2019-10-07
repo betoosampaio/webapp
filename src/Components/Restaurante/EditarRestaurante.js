@@ -107,7 +107,7 @@ class EditarRestaurante extends React.Component {
     selecionarRestaurante = async (event) => {
 
         try {
-            let res = await fetch('http://localhost:3001/restaurante/obter', {
+            let res = await fetch('pathWeb +/restaurante/obter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
