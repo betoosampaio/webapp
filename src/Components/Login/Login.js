@@ -57,6 +57,9 @@ class Login extends React.Component {
     return (
 
       <Form>
+        <head>
+          <link rel="sylesheet" href="style.css" media="screen" />
+        </head>
         <h1> Login </h1>
         <p></p>
         <Form.Group>
