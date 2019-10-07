@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table'
 import Select from 'react-select';
 import CurrencyFormat from 'react-currency-format';
 import CurrencyInput from 'react-currency-input';
+const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 
 class EditarOperador extends React.Component {
@@ -57,7 +59,7 @@ class EditarOperador extends React.Component {
 
 
     obterMenu = async function () {
-        let res = await fetch('pathWeb/menu/listar', {
+        let res = await fetch(pathWeb + '/menu/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')
@@ -71,7 +73,7 @@ class EditarOperador extends React.Component {
     selecionarProduto = async (event) => {
 
         try {
-            let res = await fetch('path +/produto/obter', {
+            let res = await fetch(path + '/produto/obter', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

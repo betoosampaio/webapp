@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import MaskedInput from 'react-text-mask'
 import {Link} from 'react-router-dom'
 const path = process.env.REACT_APP_SRV_PATH;
+const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 
 class listaProduto extends React.Component {
@@ -16,7 +17,7 @@ class listaProduto extends React.Component {
     removerProduto = async (id_produto) => {
     
       try {
-        let res = await fetch('path +/produto/remover', {
+        let res = await fetch(path + '/produto/remover', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ class listaProduto extends React.Component {
     
     
     mostrarConteudo = async function () {
-        let res = await fetch('path +/produto/listar', {
+        let res = await fetch(path + '/produto/listar', {
             method: 'POST',
             headers: {
                 'token': localStorage.getItem('token')

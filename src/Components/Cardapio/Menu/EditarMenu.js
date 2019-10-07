@@ -53,7 +53,7 @@ updateMenu = async (event) => {
 selecionarMenu = async (event) => {
        
     try {
-        let res = await fetch('path +/menu/obter', {
+        let res = await fetch(path + '/menu/obter', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
