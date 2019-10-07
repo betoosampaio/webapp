@@ -14,14 +14,94 @@ class EditarRestaurante extends React.Component {
         super(props);
 
         this.state = {
-            estados: [],
+           
             formulario: {
                 celular: '',
 
             },
         }
     }
+    
 
+
+    updateRestaurante = async (event) => {
+
+        let formulario = Object.assign({}, this.state.formulario);
+     
+        formulario.celular = formulario.celular.replace(/\D/g, '')
+        
+        let res = await fetch('http://localhost:3001/restaurante/editar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formulario)
+        });
+        let sucess = await res.ok;
+
+        if (sucess) {
+            alert('RESTAURANTE CADASTRADO COM SUCESSO!');
+            window.location.href = "pathWeb +/Login"
+        } else {
+            let err = await res.json();
+            alert('ERRO NO CADASTRO: ' + err.msg);
+        }       
+    }
+    validarCNPJ = async (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (!this.testarCNPJ(val)) {
+            msg = 'CNPJ incorreto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.cnpj.ok = ok;
+        newState.cnpj.msg = msg;
+        this.setState({ validacao: newState });
+
+        if (val.length == 14) {
+            let res = await fetch(path + '/restaurante/checarSeCNPJExiste', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cnpj: val })
+            });
+            let json = await res.json();
+            if (json.exists) {
+                let newState = Object.assign({}, this.state.validacao);
+                newState.cnpj.ok = false;
+                newState.cnpj.msg = 'Este CNPJ já está cadastrado';
+                this.setState({ validacao: newState });
+            }
+        }
+    }
+    validarCelular = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 11) {
+            msg = 'Celular incompleto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.celular.ok = ok;
+        newState.celular.msg = msg;
+        this.setState({ validacao: newState });
+    }
+    
+    
 
 
     selecionarRestaurante = async (event) => {
@@ -56,6 +136,13 @@ class EditarRestaurante extends React.Component {
 
 
 
+
+
+    formChange = (event) => {
+        let formNewState = Object.assign({}, this.state.formulario);
+        formNewState[event.target.name] = event.target.value;
+        this.setState({ formulario: formNewState });
+    }
 
 
     render() {
@@ -203,6 +290,8 @@ class EditarRestaurante extends React.Component {
                     <label>Senha</label>
                     <tr>{this.state.formulario.senha}</tr>
 
+
+                    <button class="btn btn-primary" type='button' onClick={this.updateRestaurante}>Editar</button>
 
                 </form>
             </div>
