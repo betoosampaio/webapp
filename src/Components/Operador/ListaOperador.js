@@ -32,7 +32,7 @@ removerOperador = async (id_operador) => {
 
 
 mostrarConteudo = async function () {
-    let res = await fetch('path +/operador/listar', {
+    let res = await fetch('http://localhost:3001/operador/listar', {
         method: 'POST',
         headers: {
             'token': localStorage.getItem('token')

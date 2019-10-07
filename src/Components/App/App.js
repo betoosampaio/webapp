@@ -40,7 +40,7 @@ const PrivateRoute = ({component: Component, ...rest}) =>(
     let sucess = await res.ok;
 alert('Você foi deslogado com sucesso !')
     localStorage.removeItem('token');
-    window.location.href = "pathWeb +/Login"
+    window.location.href = "http://localhost:3000/Login"
   }
 
 
