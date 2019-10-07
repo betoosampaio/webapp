@@ -98,7 +98,7 @@ class Login extends React.Component {
           onClick={this.verificarLogin}
           variant="primary"
           type="button">
-          Submit
+          Entrar
         </button>
 
         
