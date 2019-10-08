@@ -36,7 +36,7 @@ class EditarOperador extends React.Component {
         formulario.preco = formulario.preco.replace(',', '.');
 
         try {
-            let res = await fetch('path +/produto/editar', {
+            let res = await fetch(path + '/produto/editar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

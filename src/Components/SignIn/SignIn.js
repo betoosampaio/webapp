@@ -2,6 +2,11 @@ import React from 'react';
 import Select from 'react-select';
 import MaskedInput from 'react-text-mask';
 import Autosuggest from 'react-autosuggest';
+import styles from './StyleSignIn.css';
+
+
+
+
 const path = process.env.REACT_APP_SRV_PATH;
 class SignIn extends React.Component {
     state = {

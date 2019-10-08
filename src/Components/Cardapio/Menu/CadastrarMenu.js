@@ -1,7 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
 import MaskedInput from 'react-text-mask'
-
 const path = process.env.REACT_APP_SRV_PATH;
 const pathWeb = process.env.REACT_APP_WEB_PATH;
 

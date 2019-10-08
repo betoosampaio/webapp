@@ -1,5 +1,9 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
+import styles from './StyleLogin.css';
+
+
+
 const path = process.env.REACT_APP_SRV_PATH;
 const pathWeb = process.env.REACT_APP_WEB_PATH;
 
@@ -23,7 +27,7 @@ class Login extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        
+
       },
       body: JSON.stringify(this.state.formulario)
     });
@@ -34,7 +38,7 @@ class Login extends React.Component {
       let token = await res.json();
       localStorage.setItem('token', token);
       window.location.href = pathWeb
-      
+
 
     } else {
       let err = await res.json();
@@ -56,61 +60,57 @@ class Login extends React.Component {
   render() {
     return (
 
-      <Form>
-       <h1> Login </h1>
-        <p></p>
-        <Form.Group>
-          <Form.Label>Codigo do Restaurante</Form.Label>
-          <Form.Control
+      <form>
+
+        <div class="input-block">
+
+          <label for="login-email">Insira o código do Restaurante</label>
+
+          <input
             type="text"
             name="codigo_restaurante"
             value={this.state.formulario.codigo_restaurante}
             onChange={this.formChange}
             placeholder="Login do Restaurante" />
-        </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Login</Form.Label>
-          <Form.Control
+
+          <label for="login-email">Email</label>
+
+          <input
             type="text"
             name="login_operador"
             value={this.state.formulario.login_operador}
             onChange={this.formChange}
-            placeholder="Login" />
-        </Form.Group>
+            placeholder="example@email.com" />
 
-        <Form.Group>
-          <Form.Label>Senha</Form.Label>
-          <Form.Control
-            type="password"
+        </div>
+
+
+        <div class="input-block">
+            <label for="login-password">Password</label>
+            <input  type="password"
             name="senha_operador"
             value={this.state.formulario.senha_operador}
             onChange={this.formChange}
-            placeholder="Password" />
-        </Form.Group>
+            placeholder="Password"/>
+        </div>
+        
 
         <button
-          class="btn btn-primary"
+          class="btn-login"
           onClick={this.verificarLogin}
           variant="primary"
           type="button">
-          Submit
+          Entrar
         </button>
 
-
-        <a href= "path + /SignIn">
-
-        <button
-          class="btn btn-primary"
+        
+        <p class="message">Não tem cadastro?
+        <a href= '/SignIn'> Criar conta</a></p>
+            
+        
          
-          variant="primary"
-          type="button">
-          SignIn
-        </button>
-
-        </a>
-
-      </Form>
+      </form>
 
     )
   }
