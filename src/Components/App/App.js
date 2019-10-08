@@ -56,9 +56,9 @@ function App() {
                         <li> <Link to='/Gerenciamento'>Gerenciamento</Link></li>
                         <li> <Link to='/Operador/Lista'>Operadores</Link></li>
                         <li> <Link to='/Cardapio/Lista'>Cardapios</Link></li>
-                        <li style={{ float: 'right' }}> <a href='/Login' onClick={logout}>Logout</a></li>
-                        <li style={{ float: 'right' }}> <a href='/Login'>Login</a></li>
-                        <li style={{ float: 'right' }}> <a href='/SignIn'>SignIn</a></li>
+                        <li style={{ float: 'right' }}> <a href='/Login' onClick={logout}>Sair</a></li>
+                        <li style={{ float: 'right' }}> <a href='/Login'>Entrar</a></li>
+                        <li style={{ float: 'right' }}> <a href='/SignIn'>Cadastrar-se</a></li>
                         <li style={{ float: 'right' }}> <a href='restaurante/Perfil'>Perfil</a></li>
                     </ul>
                 </nav>

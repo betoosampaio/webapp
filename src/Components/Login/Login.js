@@ -78,7 +78,7 @@ class Login extends React.Component {
             name="login_operador"
             value={this.state.formulario.login_operador}
             onChange={this.formChange}
-            placeholder="Login" />
+            placeholder="example@email.com" />
 
         </div>
 
