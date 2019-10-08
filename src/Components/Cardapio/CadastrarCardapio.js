@@ -39,6 +39,34 @@ class Cardapio extends React.Component {
     }
 
 
+    uploadImagem = async(event) =>{
+        console.log(this.state.formulario);
+
+        let formulario = this.state.formulario;
+
+        try {
+            let res = await fetch(path + '/produto/uploadimg', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                },
+                body: JSON.stringify(this.state.formulario)
+            });
+            
+        
+                } catch (error) {
+          
+            console.log(error);
+        }
+        
+    }
+
+    
+
+    
+
+
     cadastrarProduto = async (event) => {
         console.log(this.state.formulario);
         
@@ -83,6 +111,8 @@ class Cardapio extends React.Component {
         formNewState[name] = value;
         this.setState({ formulario: formNewState });
     }
+
+    
 
 
     render() {

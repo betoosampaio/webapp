@@ -16,6 +16,8 @@ import Login from '../Login/Login';
 import ListaRestaurante from '../Restaurante/PerfilRestaurante';
 import EditarRestaurante from '../Restaurante/EditarRestaurante';
 
+
+
 const PrivateRoute = ({component: Component, ...rest}) =>(
     <Route{...rest} render={props =>(
   
@@ -59,12 +61,14 @@ function App() {
                         <li style={{ float: 'right' }}> <a href='/Login' onClick={logout}>Sair</a></li>
                         <li style={{ float: 'right' }}> <a href='/Login'>Entrar</a></li>
                         <li style={{ float: 'right' }}> <a href='/SignIn'>Cadastrar-se</a></li>
+                        <li style={{ float: 'right' }}> <a href='/web/home'>Home</a></li>
                         <li style={{ float: 'right' }}> <a href='restaurante/Perfil'>Perfil</a></li>
                     </ul>
                 </nav>
 
                 <div className="content">
                     <Switch>
+                      
                         <Route exact path='/Login' component={Login} />
                         <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante}/>
                         <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante}/>
@@ -79,6 +83,7 @@ function App() {
                         <PrivateRoute path='/Menu/Lista' component={ListaMenu} />
                         <PrivateRoute path='/Menu/Editar' component={EditarMenu} />
                         <Redirect from='*' to='/Gerenciamento' />
+                    
                     </Switch>
                 </div>
             </div>
