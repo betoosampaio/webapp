@@ -24,7 +24,9 @@ class Socket extends React.Component {
     }
 
     async componentDidMount() {
-        await this.setState(JSON.parse(localStorage.getItem('socketConfig')));
+        let config = JSON.parse(localStorage.getItem('socketConfig'));
+        config.history = [];
+        await this.setState(config);
         this.conectar();
     }
 
@@ -38,14 +40,19 @@ class Socket extends React.Component {
 
         let opt;
         try { opt = JSON.parse(this.state.opt) } catch{ }
-        
-        this.socket = socketIOClient(this.state.host, {query: opt});
+
+        this.socket = socketIOClient(this.state.host, { query: opt });
 
         this.socket.on('connect', () => {
             this.setState({ conectado: this.socket.connected });
         });
         this.socket.on('disconnect', () => {
             this.setState({ conectado: this.socket.connected });
+        });
+        this.socket.on('error', (error) => {
+            let h = new Date().toLocaleTimeString();
+            let history = { header: `[${h}] ERRO`, body: error };
+            this.setState({ history: [history, ...this.state.history] });
         });
         // adicionar listeners
         for (let eventName of this.state.listen) {
@@ -72,11 +79,20 @@ class Socket extends React.Component {
 
     adicionarListen = () => {
         this.setState({ listen: [...this.state.listen, this.state.addListen] });
+
+        let eventName = this.state.addListen;
+        this.socket.on(eventName, (dados) => {
+            let h = new Date().toLocaleTimeString();
+            let history = { header: `[${h}] ${eventName}`, body: JSON.stringify(dados) };
+            this.setState({ history: [history, ...this.state.history] });
+        });
     }
 
     removerListen = (listen) => {
         let filteredArray = this.state.listen.filter(item => item !== listen)
         this.setState({ listen: filteredArray });
+
+        this.socket.off(listen);
     }
 
     adicionarEmit = () => {
@@ -84,8 +100,10 @@ class Socket extends React.Component {
     }
 
     removerEmit = (emit) => {
-        let filteredArray = this.state.emit.filter(item => item !== emit)
-        this.setState({ emit: filteredArray });
+        let filteredArray = this.state.emit.filter(item => item !== emit);
+        let emitText = Object.assign({}, this.state.emitText);
+        delete emitText[emit];
+        this.setState({ emit: filteredArray, emitText: emitText });
     }
 
     formChange = (event) => {
