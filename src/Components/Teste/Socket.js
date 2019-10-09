@@ -7,14 +7,19 @@ class Socket extends React.Component {
     constructor() {
         super();
         this.state = {
-            conectado: false,
+            status: "Desconectado",
             host: "http://localhost:3002",
-            opt: '{ "token": "123" }',
-            listen: ["atualizacao"],
-            emit: ["mesa/cadastrar"],
-            history: [],
+            opt: '{ opt1: "opt1" }',
+            listen: ["listen1", "listen2", "listen3"],
+            emit: ["emit1", "emit2"],
+            history: [
+                { header: "[22:05] Listen 1", body: '{"key": "value"}' },
+                { header: "[22:01] Listen 3", body: '{"key": "value"}' },
+                { header: "[22:00] Listen 2", body: '{"key": "value"}' }
+            ],
             emitText: {
-                'mesa/cadastrar': '{"n": "1"}',
+                "emit1": "{'emit1': 'emit1'}",
+                "emit2": "{'emit2': 'emit2'}"
             },
             addListen: "",
             addEmit: "",
@@ -23,97 +28,38 @@ class Socket extends React.Component {
         };
     }
 
-    async componentDidMount() {
-        let config = JSON.parse(localStorage.getItem('socketConfig'));
-        config.history = [];
-        await this.setState(config);
-        this.conectar();
+    componentDidMount() {
+        //this.socket = socketIOClient(this.state.host, this.state.opt);
+        //this.socket.on("atualizacao", (dados) => {
+        //    this.setState({ restaurante: dados });
+        //})
+        //this.socket.emit("mesa/cadastrar", { n: this.state.formulario.n_mesa });
     }
 
-    componentDidUpdate() {
-        localStorage.setItem('socketConfig', JSON.stringify(this.state));
-    }
-
-    conectar = () => {
-        if (this.socket && this.socket.connected)
-            this.socket.disconnect();
-
-        let opt;
-        try { opt = JSON.parse(this.state.opt) } catch{ }
-
-        this.socket = socketIOClient(this.state.host, { query: opt });
-
-        this.socket.on('connect', () => {
-            this.setState({ conectado: this.socket.connected });
-        });
-        this.socket.on('disconnect', () => {
-            this.setState({ conectado: this.socket.connected });
-        });
-        this.socket.on('error', (error) => {
-            let h = new Date().toLocaleTimeString();
-            let history = { header: `[${h}] ERRO`, body: error };
-            this.setState({ history: [history, ...this.state.history] });
-        });
-        // adicionar listeners
-        for (let eventName of this.state.listen) {
-            this.socket.on(eventName, (dados) => {
-                let h = new Date().toLocaleTimeString();
-                let history = { header: `[${h}] ${eventName}`, body: JSON.stringify(dados) };
-                this.setState({ history: [history, ...this.state.history] });
-            });
-        }
-    }
-
-    desconectar = () => {
-        this.socket.disconnect();
-    }
-
-    emitir = () => {
-        let data = JSON.parse(this.state.emitSelectedText);
-        this.socket.emit(this.state.emitSelected, data);
-    }
-
-    limparHistorico = () => {
+    limparHistorico = (event) => {
         this.setState({ history: [] });
     }
 
-    adicionarListen = () => {
+    adicionarListen = (listen) => {
         this.setState({ listen: [...this.state.listen, this.state.addListen] });
-
-        let eventName = this.state.addListen;
-        this.socket.on(eventName, (dados) => {
-            let h = new Date().toLocaleTimeString();
-            let history = { header: `[${h}] ${eventName}`, body: JSON.stringify(dados) };
-            this.setState({ history: [history, ...this.state.history] });
-        });
     }
 
     removerListen = (listen) => {
         let filteredArray = this.state.listen.filter(item => item !== listen)
         this.setState({ listen: filteredArray });
-
-        this.socket.off(listen);
     }
 
-    adicionarEmit = () => {
+    adicionarEmit = (event) => {
         this.setState({ emit: [...this.state.emit, this.state.addEmit] });
     }
 
     removerEmit = (emit) => {
-        let filteredArray = this.state.emit.filter(item => item !== emit);
-        let emitText = Object.assign({}, this.state.emitText);
-        delete emitText[emit];
-        this.setState({ emit: filteredArray, emitText: emitText });
+        let filteredArray = this.state.emit.filter(item => item !== emit)
+        this.setState({ emit: filteredArray });
     }
 
     formChange = (event) => {
         this.setState({ [event.target.name]: event.target.value });
-    }
-
-    formChangeEmitSelectedText = (event) => {
-        let emitText = Object.assign({}, this.state.emitText);
-        emitText[this.state.emitSelected] = event.target.value;
-        this.setState({ [event.target.name]: event.target.value, emitText: emitText });
     }
 
     handleKeyDown(event) {
@@ -146,9 +92,9 @@ class Socket extends React.Component {
                                 onChange={this.formChange}
                                 value={this.state.opt} />
                             <InputGroup.Append>
-                                <Button variant="outline-success" onClick={this.conectar}>Conectar</Button>
-                                <Button variant="outline-danger" onClick={this.desconectar}>Desconectar</Button>
-                                <InputGroup.Text>{this.state.conectado ? "Conectado" : "Desconectado"}</InputGroup.Text>
+                                <Button variant="outline-success">Conectar</Button>
+                                <Button variant="outline-danger">Desconectar</Button>
+                                <InputGroup.Text>Conectado</InputGroup.Text>
                             </InputGroup.Append>
                         </InputGroup>
                     </Col>
@@ -262,7 +208,7 @@ class Socket extends React.Component {
                                                 name="emitSelected"
                                                 onChange={this.formChange}
                                                 value={this.state.emitSelected} />
-                                            <Button variant="outline-secondary" onClick={this.emitir}>Enviar</Button>
+                                            <Button variant="outline-secondary">Enviar</Button>
                                         </InputGroup.Append>
                                         <br></br>
                                         <Form.Control
@@ -271,8 +217,8 @@ class Socket extends React.Component {
                                             ref="input"
                                             name="emitSelectedText"
                                             onKeyDown={this.handleKeyDown.bind(this)}
-                                            onChange={this.formChangeEmitSelectedText}
-                                            value={this.state.emitSelectedText ? this.state.emitSelectedText : ""}>
+                                            onChange={this.formChange}
+                                            value={this.state.emitSelectedText}>
                                         </Form.Control>
                                     </Col>
                                 </InputGroup>

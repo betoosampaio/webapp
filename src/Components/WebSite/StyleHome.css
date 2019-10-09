@@ -13321,3 +13321,14 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+
+
+
+
+
+#teste  {
+    background-image: url("images/1234.jpg");
+    data-stellar-background-ratio: "0.5"; 
+
+}

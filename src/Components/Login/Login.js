@@ -1,8 +1,5 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
-import styles from './StyleLogin.css';
-
-
 
 const path = process.env.REACT_APP_SRV_PATH;
 const pathWeb = process.env.REACT_APP_WEB_PATH;
@@ -107,7 +104,7 @@ class Login extends React.Component {
         
         <p class="message">Não tem cadastro?
         <a href= '/SignIn'> Criar conta</a></p>
-            
+        
         
          
       </form>
