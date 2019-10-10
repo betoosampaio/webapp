@@ -29,14 +29,7 @@ import EditarRestaurante from '../Restaurante/EditarRestaurante';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route{...rest} render={props => (
-
-    isAuthenticated() ? (
-      <Component {...props} />
-    ) : (
-        <Redirect to={{ pathname: '/Login', state: { from: props.location } }} />
-      )
-
-  )} />
+    isAuthenticated() ? (<Component {...props} />) : window.location.href = "http://localhost:3000/Login")} />
 )
 
 const logout = async (event) => {
@@ -79,7 +72,7 @@ function App() {
           <Switch>
 
             <Route exact path='/Login' component={Login} />
-          
+
 
 
             <PrivateRoute path='/Gerenciamento' component={GerenciamentoRestaurante} />
@@ -91,7 +84,7 @@ function App() {
 
             <PrivateRoute path='/Operador/Lista' component={ListaOperador} />
             <PrivateRoute path='/Operador/Cadastrar' component={CadastrarOperador} />
-            
+
 
 
             <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />
