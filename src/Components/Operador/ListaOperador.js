@@ -1,9 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
-import Table from 'react-bootstrap/Table'
+import { Table, Modal, Button } from 'react-bootstrap'
 import MaskedInput from 'react-text-mask'
 
-import Popup from "reactjs-popup";
+
+
 
 import { Link } from 'react-router-dom'
 
@@ -12,24 +13,26 @@ const pathWeb = process.env.REACT_APP_WEB_PATH;
 
 class ListaOperador extends React.Component {
 
-  state = { 
+  state = {
+    editarAberto: false,
+    cadastrarAberto: false,
     perfil: [],
     listaOperador: [],
     formulario: {
-    nome_operador: '',
-    id_perfil: '',
-    login_operador: '',
-    senha_operador: '',
-    ativo: '',
-  },
-  formulario_editar: {
-    nome_operador: '',
-    id_perfil: '',
-    login_operador: '',
-    senha_operador: '',
-    ativo: '',
-  },
-    };
+      nome_operador: '',
+      id_perfil: '',
+      login_operador: '',
+      senha_operador: '',
+      ativo: '',
+    },
+    formulario_editar: {
+      nome_operador: '',
+      id_perfil: '',
+      login_operador: '',
+      senha_operador: '',
+      ativo: '',
+    },
+  };
 
 
   componentDidMount() {
@@ -53,8 +56,8 @@ class ListaOperador extends React.Component {
       let data = await res.json();
 
       let obj = data[0];
-      obj.id_perfil = { id_perfil: obj.id_perfil, tipo_perfil: obj.tipo_perfil};
-      this.setState({ formulario_editar: obj });
+      obj.id_perfil = { id_perfil: obj.id_perfil, tipo_perfil: obj.tipo_perfil };
+      this.setState({ formulario_editar: obj, editarAberto: true });
 
 
     } catch (error) {
@@ -124,7 +127,7 @@ class ListaOperador extends React.Component {
 
   }
 
- 
+
 
 
   obterPerfil = async function () {
@@ -185,12 +188,18 @@ class ListaOperador extends React.Component {
     formNewState[event.target.name] = event.target.value;
     this.setState({ formulario_editar: formNewState });
   }
-  
+
   formChangeSelectEditar = name => value => {
     let formNewState = Object.assign({}, this.state.formulario_editar);
     formNewState[name] = value;
     this.setState({ formulario_editar: formNewState });
   }
+
+
+
+
+
+
 
 
 
@@ -200,76 +209,183 @@ class ListaOperador extends React.Component {
       <div>
 
 
-        <Popup
-          trigger={<button className="button"> Cadastrar novo Operador </button>}
-          modal
-          closeOnDocumentClick
+
+
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={this.state.editarAberto}
+          onHide={() => { this.setState({ editarAberto: false }) }}
+          backdrop='static'
         >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Editar Operador
+        </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+
+
+            <form>
+             
+
+              <p></p>
+              <label>NomeOperador</label>
+              <p></p>
+
+              <input
+                type='text'
+                name='nome_operador'
+                value={this.state.formulario_editar.nome_operador}
+                onChange={this.formChangeEditar}
+              />
+
+              <p></p>
+              <label>TipoPerfil</label>
+              <p></p>
+
+              <Select
+                name="id_perfil"
+                options={this.state.id_perfil}
+                getOptionLabel={option => option.tipo_perfil}
+                getOptionValue={option => option.id_perfil}
+                value={this.state.formulario_editar.id_perfil}
+                onChange={this.formChangeSelectEditar('id_perfil')}
+              />
+
+              <p></p>
+              <label>LoginOperador</label>
+              <p></p>
+
+              <input
+                type='text'
+                name='login_operador'
+                value={this.state.formulario_editar.login_operador}
+                onChange={this.formChangeEditar}
+              />
+
+              <p></p>
+
+              <input
+                type="checkbox"
+                name='ativo'
+                checked={this.state.formulario_editar.ativo}
+                onChange={this.formChangeCheck} /> Ativo
+
+                        <p></p>
+              <label>SenhaOperador</label>
+              <p></p>
+
+              <input
+                type='password'
+                name='senha_operador'
+                value={this.state.formulario_editar.senha_operador}
+                onChange={this.formChange}
+              />
+              <p></p>
+             
+              <p></p>
+            
+            </form>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+          <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+          </Modal.Footer>
+        </Modal>
+
+
+
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={this.state.cadastrarAberto}
+          onHide={() => { this.setState({ cadastrarAberto: false }) }}
+          backdrop='static'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              Editar Operador
+        </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
 
 
           <form>
 
-            <h2>Registrar Operador</h2>
+              <h2>Registrar Operador</h2>
 
-            <label>NomeOperador</label>
-            <p></p>
-            <input
-              type='text'
-              placeholder='Nome Operador'
-              name='nome_operador'
-              value={this.state.formulario.nome_operador}
-              onChange={this.formChange}
-            />
-            <p></p>
-            <label>TipoPerfil</label>
-            <p></p>
+              <label>NomeOperador</label>
+              <p></p>
+              <input
+                type='text'
+                placeholder='Nome Operador'
+                name='nome_operador'
+                value={this.state.formulario.nome_operador}
+                onChange={this.formChange}
+              />
+              <p></p>
+              <label>TipoPerfil</label>
+              <p></p>
 
-            <Select
-              name="id_perfil"
-              options={this.state.id_perfil}
-              getOptionLabel={option => option.tipo_perfil}
-              getOptionValue={option => option.id_perfil}
-              value={this.state.formulario.perfil}
-              onChange={this.formChangeSelect('id_perfil')}
-            />
+              <Select
+                name="id_perfil"
+                options={this.state.id_perfil}
+                getOptionLabel={option => option.tipo_perfil}
+                getOptionValue={option => option.id_perfil}
+                value={this.state.formulario.perfil}
+                onChange={this.formChangeSelect('id_perfil')}
+              />
 
-            <p></p>
-            <label>LoginOperador</label>
-            <p></p>
-
-
-            <input
-              type='text'
-              placeholder='Login Operador'
-              name='login_operador'
-              value={this.state.formulario.login_operador}
-              onChange={this.formChange}
-            />
-
-            <p></p>
-            <label>SenhaPerfil</label>
-            <p></p>
-
-            <input
-              type='password'
-              placeholder='Senha'
-              name='senha_operador'
-              value={this.state.formulario.senha_operador}
-              onChange={this.formChange}
-            />
-
-            <p></p>
-
-            <p></p>
-
-            <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
-            <p></p>
-            <a href="/Operador/Lista">Voltar</a>
-
-          </form>
+              <p></p>
+              <label>LoginOperador</label>
+              <p></p>
 
 
-        </Popup>
+              <input
+                type='text'
+                placeholder='Login Operador'
+                name='login_operador'
+                value={this.state.formulario.login_operador}
+                onChange={this.formChange}
+              />
+
+              <p></p>
+              <label>SenhaPerfil</label>
+              <p></p>
+
+              <input
+                type='password'
+                placeholder='Senha'
+                name='senha_operador'
+                value={this.state.formulario.senha_operador}
+                onChange={this.formChange}
+              />
+
+              <p></p>
+
+              <p></p>
+
+              <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
+              <p></p>
+              <a href="/Operador/Lista">Voltar</a>
+
+            </form>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+          <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+          </Modal.Footer>
+        </Modal>
+
+
+
+
+        <td><button type='button' onClick={() => this.setState({cadastrarAberto: true})} >CAdastrar </button></td>
 
 
 
@@ -307,6 +423,7 @@ class ListaOperador extends React.Component {
 
 
                     <td><button type='button' onClick={() => this.removerOperador(obj.id_operador)}>Excluir </button></td>
+                    <td><button type='button' onClick={() => this.selecionarOperador(obj.id_operador)} >Editar </button></td>
 
 
 
@@ -318,82 +435,6 @@ class ListaOperador extends React.Component {
 
 
 
-                    <Popup
-                      trigger={<button onClick={() => this.selecionarOperador(obj.id_operador)} className="button"> Editar </button>}
-                      modal
-                      closeOnDocumentClick
-                    >
-
-
-                      <form>
-                        <h3>Editar Operadores</h3>
-
-                        <p></p>
-                        <label>NomeOperador</label>
-                        <p></p>
-
-                        <input
-                          type='text'
-                          name='nome_operador'
-                          value={this.state.formulario_editar.nome_operador}
-                          onChange={this.formChangeEditar}
-                        />
-
-                        <p></p>
-                        <label>TipoPerfil</label>
-                        <p></p>
-
-                        <Select
-                          name="id_perfil"
-                          options={this.state.id_perfil}
-                          getOptionLabel={option => option.tipo_perfil}
-                          getOptionValue={option => option.id_perfil}
-                          value={this.state.formulario_editar.id_perfil}
-                          onChange={this.formChangeSelectEditar('id_perfil')}
-                        />
-
-                        <p></p>
-                        <label>LoginOperador</label>
-                        <p></p>
-
-                        <input
-                          type='text'
-                          name='login_operador'
-                          value={this.state.formulario_editar.login_operador}
-                          onChange={this.formChangeEditar}
-                        />
-
-                        <p></p>
-
-                        <input
-                          type="checkbox"
-                          name='ativo'
-                          checked={this.state.formulario_editar.ativo}
-                          onChange={this.formChangeCheck} /> Ativo
-
-                        <p></p>
-                        <label>SenhaOperador</label>
-                        <p></p>
-
-                        <input
-                          type='password'
-                          name='senha_operador'
-                          value={this.state.formulario_editar.senha_operador}
-                          onChange={this.formChange}
-                        />
-                        <p></p>
-
-
-
-                        <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
-                        <p></p>
-                        <a href="/Operador/Lista">Voltar</a>
-
-                      </form>
-
-
-
-                    </Popup>
 
 
 
@@ -411,8 +452,18 @@ class ListaOperador extends React.Component {
                 );
               })
             }
+
+
           </tbody>
         </Table>
+
+
+
+
+
+
+
+
 
       </div>
     )
