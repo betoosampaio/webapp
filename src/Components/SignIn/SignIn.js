@@ -501,7 +501,7 @@ class SignIn extends React.Component {
                         <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
                         <p></p>
 
-                        <label>Nome Fantasia</label>
+                        <label>Razão Social</label>
 
                         <input
                             type='text'
@@ -769,7 +769,7 @@ class SignIn extends React.Component {
                             name='nome_restaurante'
                             value={this.state.formulario.nome_restaurante}
                             onChange={this.formChange}
-                            onBlur={this.validarCodigoRestaurante}
+                            onBlur={this.validarCampoVazio}
                         />
                         <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
                         <p></p>
