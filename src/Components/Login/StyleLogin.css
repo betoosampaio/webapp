@@ -1,9 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
+
+html, 
+body {
+background-image: url(../Login/images/fundo.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+padding-top: 0%;
+display: inline;
+font-weight: bold;
+}
+
+h1 {
+  font-size: 25px;
+  font-family: 'Chivo', sans-serif;
+  
+}
+
 #formLogin {
-  width: 350px;
-  margin: auto;
+  width: 280px;
+  margin: 10%;
+  background-size: cover;
   background-color: white;
-  padding: 30px 25px;
-  border-radius: 5px;
+  padding: 15px 15px;
+  border-radius: 25px;
+  color: #000000;
+  
+}
+
+.message {
+  font-size: 12px;
+  text-align: center;
+}
+
+form ::placeholder {
+font-size: 12px;
 }
 
 /* APARIÇÃO DO FORM */
@@ -24,34 +54,32 @@ form {
   }
 }
 
+
 form .btn-login {
   display: inline-block;
   outline: 0;
   min-width: 100px;
   width: 100%;
-  border: 0;
-  background-color: #7159c1;
+  border: 80;
+  background-color: #f56d0a;
   color: white;
-  border-radius: 25px;
+  border-radius: 20px;
   margin: auto;
-  padding: 7px;
+  padding: 5px;
   
   }
 
-  form .input-block {
-    margin-bottom: 20px;
-  }
-  
+    
   form .input-block label {
     font-size: 14px;
-    color: darkslateblue;
+    color: #f56d0a;
   }
   
   form .input-block input {
     width: 100%;
     display: block;
-    margin-top: 8px;
-    padding: 7px;
+    margin-top: -4px;
+    padding: 5px;
     font-size: 16px;
     color: #7159c1;
     border-radius: 2px;
