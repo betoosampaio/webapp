@@ -18,7 +18,7 @@ class SignIn extends React.Component {
         suggestions: [],
         formulario: {
             cnpj: '',
-            nome_fantasia: '',
+            razao_social: '',
             cep: '',
             logradouro: '',
             numero: '',
@@ -37,13 +37,14 @@ class SignIn extends React.Component {
             cpf_administrador: '',
             nome_administrador: '',
             codigo_restaurante: '',
+            nome_restaurante:'',
             login: '',
             senha: '',
             enderecoDisabled: false,
         },
         validacao: {
             cnpj: { ok: false, msg: '*' },
-            nome_fantasia: { ok: false, msg: '*' },
+            razao_social: { ok: false, msg: '*' },
             cep: { ok: false, msg: '*' },
             logradouro: { ok: false, msg: '*' },
             numero: { ok: false, msg: '*' },
@@ -62,6 +63,7 @@ class SignIn extends React.Component {
             cpf_administrador: { ok: false, msg: '*' },
             nome_administrador: { ok: false, msg: '*' },
             codigo_restaurante: { ok: false, msg: '*' },
+            nome_restaurante:{ok: false, msg:'*'},
             login: { ok: false, msg: '*' },
             senha: { ok: false, msg: '*' }
         },
@@ -503,13 +505,13 @@ class SignIn extends React.Component {
 
                         <input
                             type='text'
-                            placeholder='E qual seria o nome fantasia ?'
-                            name='nome_fantasia'
+                            placeholder='E qual seria a sua Razão Social ?'
+                            name='razao_social'
                             onChange={this.formChange}
                             onBlur={this.validarCampoVazio}
-                            value={this.state.formulario.nome_fantasia}
+                            value={this.state.formulario.razao_social}
                         />
-                        <span style={{ color: 'red' }}>{this.state.validacao.nome_fantasia.msg}</span>
+                        <span style={{ color: 'red' }}>{this.state.validacao.razao_social.msg}</span>
                         <p></p>
 
                         <label>Cep</label>
@@ -757,6 +759,19 @@ class SignIn extends React.Component {
                             onBlur={this.validarCodigoRestaurante}
                         />
                         <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
+                        <p></p>
+
+                        <label>Nome do Restaurante</label>
+
+                        <input
+                            type='text'
+                            placeholder='Nome do restaurante'
+                            name='nome_restaurante'
+                            value={this.state.formulario.nome_restaurante}
+                            onChange={this.formChange}
+                            onBlur={this.validarCodigoRestaurante}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
                         <p></p>
 
                         <label>Login do restaurante</label>
