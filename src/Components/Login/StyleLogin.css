@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
  
-body,
-html {
+html, 
+body {
 background-image: url(../Login/images/fundo.jpg);
 background-repeat: no-repeat;
 background-size: cover;
@@ -20,6 +20,7 @@ h1 {
   width: 280px;
   margin: 10%;
   background-size: cover;
+  background-color: white;
   padding: 15px 15px;
   border-radius: 25px;
   color: #000000;
