@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
-
-html, 
-body {
+ 
+body,
+html {
 background-image: url(../Login/images/fundo.jpg);
 background-repeat: no-repeat;
 background-size: cover;
@@ -9,40 +9,39 @@ padding-top: 0%;
 display: inline;
 font-weight: bold;
 }
-
+ 
 h1 {
   font-size: 25px;
   font-family: 'Chivo', sans-serif;
   
 }
-
+ 
 #formLogin {
   width: 280px;
   margin: 10%;
   background-size: cover;
-  background-color: white;
   padding: 15px 15px;
   border-radius: 25px;
   color: #000000;
   
 }
-
+ 
 .message {
   font-size: 12px;
   text-align: center;
 }
-
+ 
 form ::placeholder {
 font-size: 12px;
 }
-
+ 
 /* APARIÇÃO DO FORM */
-
+ 
 form {
   animation-name: freed;
   animation-duration: 700ms;
 }
-
+ 
 @keyframes freed {
   from {
     opacity: 0;
@@ -53,8 +52,7 @@ form {
     transform: scale(1);
   }
 }
-
-
+ 
 form .btn-login {
   display: inline-block;
   outline: 0;
@@ -85,4 +83,3 @@ form .btn-login {
     border: 1px solid #ccddef;
     outline-color: #7159c1;
   }
-  

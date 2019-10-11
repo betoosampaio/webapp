@@ -79,15 +79,13 @@ function App() {
             <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante} />
             <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante} />
 
-
-<<<<<<< HEAD
             <PrivateRoute path='/Operador' component={Operador} />
                        
-=======
-            <PrivateRoute path='/Operador/Lista' component={ListaOperador} />
-            <PrivateRoute path='/Operador/Cadastrar' component={CadastrarOperador} />
 
->>>>>>> 3cfecb2bee0c6d12bcdb2f0eae74da74e168b1a7
+            <PrivateRoute path='/Operador' component={Operador} />
+          
+
+
 
 
             <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />

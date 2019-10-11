@@ -22,7 +22,7 @@
   }
   /* APARIÇÃO DO FORM */
   
-  form {
+ #formCadastrarMenu  form {
     animation-name: freed;
     animation-duration: 700ms;
   }
@@ -38,7 +38,7 @@
     }
   }
   
-  form .btn-login {
+  #formCadastrarMenu form .btn-login {
     display: inline-block;
     outline: 0;
     min-width: 100px;
@@ -52,16 +52,16 @@
     
     }
   
-    form .input-block {
+    #formCadastrarMenu form .input-block {
       margin-bottom: 20px;
     }
     
-    form .input-block label {
+    #formCadastrarMenu form .input-block label {
       font-size: 14px;
       color: darkslateblue;
     }
     
-    form .input-block input {
+   #formCadastrarMenu form .input-block input {
       width: 100%;
       display: block;
       margin-top: 8px;

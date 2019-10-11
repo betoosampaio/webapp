@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 
-import styles from './StyleLogin.css';
+import styles from './StyleLogin.css'
 
 const path = process.env.REACT_APP_SRV_PATH;
 const pathWeb = process.env.REACT_APP_WEB_PATH;
@@ -63,6 +63,7 @@ class Login extends React.Component {
 
   render() {
     return (
+      <div id='Login'>
 
       <form id='formLogin' >
 
@@ -120,7 +121,7 @@ class Login extends React.Component {
 
 
       </form>
-
+      </div>
     )
   }
 }
