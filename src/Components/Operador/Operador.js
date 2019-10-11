@@ -3,6 +3,8 @@ import Select from 'react-select';
 import { Table, Modal, Button } from 'react-bootstrap'
 import MaskedInput from 'react-text-mask'
 
+import styles from './StyleOperador.css'
+
 
 
 
@@ -11,7 +13,7 @@ import { Link } from 'react-router-dom'
 const path = process.env.REACT_APP_SRV_PATH;
 const pathWeb = process.env.REACT_APP_WEB_PATH;
 
-class ListaOperador extends React.Component {
+class Operador extends React.Component {
 
   state = {
     editarAberto: false,
@@ -23,7 +25,6 @@ class ListaOperador extends React.Component {
       id_perfil: '',
       login_operador: '',
       senha_operador: '',
-      ativo: '',
     },
     formulario_editar: {
       nome_operador: '',
@@ -39,7 +40,6 @@ class ListaOperador extends React.Component {
     this.obterPerfil();
     this.mostrarConteudo();
   }
-
 
 
   selecionarOperador = async (id_operador) => {
@@ -65,7 +65,6 @@ class ListaOperador extends React.Component {
       console.log(error);
     }
   }
-
 
 
   removerOperador = async (id_operador) => {
@@ -103,7 +102,6 @@ class ListaOperador extends React.Component {
   }
 
 
-
   updateOperador = async (event) => {
 
     let formulario_editar = this.state.formulario_editar;
@@ -126,8 +124,6 @@ class ListaOperador extends React.Component {
     }
 
   }
-
-
 
 
   obterPerfil = async function () {
@@ -172,15 +168,15 @@ class ListaOperador extends React.Component {
   }
 
   formChangeSelect = name => value => {
-    let formNewState = Object.assign({}, this.state.formulario);
+    let formNewState = Object.assign({}, this.state.formulario_editar);
     formNewState[name] = value;
     this.setState({ formulario: formNewState });
   }
 
   formChangeCheck = (event) => {
-    let formNewState = Object.assign({}, this.state.formulario);
+    let formNewState = Object.assign({}, this.state.formulario_editar);
     formNewState[event.target.name] = event.target.checked ? 1 : 0;
-    this.setState({ formulario: formNewState });
+    this.setState({ formulario_editar: formNewState });
   }
 
   formChangeEditar = (event) => {
@@ -194,11 +190,6 @@ class ListaOperador extends React.Component {
     formNewState[name] = value;
     this.setState({ formulario_editar: formNewState });
   }
-
-
-
-
-
 
 
 
@@ -227,8 +218,8 @@ class ListaOperador extends React.Component {
           <Modal.Body>
 
 
-            <form>
-             
+            <form id='formEditarOperador'>
+
 
               <p></p>
               <label>NomeOperador</label>
@@ -284,18 +275,17 @@ class ListaOperador extends React.Component {
                 onChange={this.formChange}
               />
               <p></p>
-             
+
               <p></p>
-            
+
             </form>
 
 
           </Modal.Body>
           <Modal.Footer>
-          <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+            <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
           </Modal.Footer>
         </Modal>
-
 
 
         <Modal
@@ -308,16 +298,15 @@ class ListaOperador extends React.Component {
         >
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-              Editar Operador
+              Cadastrar Operador
         </Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
 
-          <form>
+            <form id='formCadastrarOperador'>
 
-              <h2>Registrar Operador</h2>
-
+             
               <label>NomeOperador</label>
               <p></p>
               <input
@@ -369,30 +358,26 @@ class ListaOperador extends React.Component {
 
               <p></p>
 
-              <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
-              <p></p>
-              <a href="/Operador/Lista">Voltar</a>
 
             </form>
 
 
           </Modal.Body>
           <Modal.Footer>
-          <button class="btn btn-primary" type='button' onClick={this.updateOperador}>Editar</button>
+            <button class="btn btn-primary" type='button' onClick={this.cadastrarOperador}>Cadastrar Operador</button>
           </Modal.Footer>
         </Modal>
 
 
 
 
-        <td><button type='button' onClick={() => this.setState({cadastrarAberto: true})} >CAdastrar </button></td>
 
 
-
-
+ <td><button  class="btn btn-primary" type='button' onClick={() => this.setState({ cadastrarAberto: true })} > Cadastrar </button></td>
 
 
         <p></p>
+
 
         <Table striped bordered hover>
           <thead>
@@ -422,27 +407,8 @@ class ListaOperador extends React.Component {
                     <td>{obj.ativo ? 'Operador Ativo' : 'Operador Desativado'}</td>
 
 
-                    <td><button type='button' onClick={() => this.removerOperador(obj.id_operador)}>Excluir </button></td>
-                    <td><button type='button' onClick={() => this.selecionarOperador(obj.id_operador)} >Editar </button></td>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    <td><button class="btn btn-primary" type='button' onClick={() => this.removerOperador(obj.id_operador)}>Excluir </button></td>
+                    <td><button class="btn btn-primary" type='button' onClick={() => this.selecionarOperador(obj.id_operador)} >Editar </button></td>
 
 
 
@@ -471,4 +437,4 @@ class ListaOperador extends React.Component {
 }
 
 
-export default ListaOperador;
+export default Operador;

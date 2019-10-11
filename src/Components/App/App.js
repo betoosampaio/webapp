@@ -7,8 +7,7 @@ import GerenciamentoRestaurante from '../Gerenciamento/GerenciamentoRestaurante'
 import Login from '../Login/Login';
 
 
-import ListaOperador from '../Operador/ListaOperador';
-import CadastrarOperador from '../Operador/CadastrarOperador';
+import Operador from '../Operador/Operador';
 
 
 import ListaCardapio from '../Cardapio/ListaCardapio';
@@ -17,7 +16,6 @@ import CadastrarCardapio from '../Cardapio/CadastrarCardapio';
 
 
 import ListaMenu from '../Cardapio/Menu/ListaMenu';
-import EditarMenu from '../Cardapio/Menu/EditarMenu';
 
 
 import ListaRestaurante from '../Restaurante/PerfilRestaurante';
@@ -89,9 +87,8 @@ function App() {
             <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante} />
 
 
-            <PrivateRoute path='/Operador/Lista' component={ListaOperador} />
-            <PrivateRoute path='/Operador/Cadastrar' component={CadastrarOperador} />
-            
+            <PrivateRoute path='/Operador' component={Operador} />
+                       
 
 
             <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />
@@ -100,7 +97,7 @@ function App() {
 
 
             <PrivateRoute path='/Menu/Lista' component={ListaMenu} />
-            <PrivateRoute path='/Menu/Editar' component={EditarMenu} />
+           
 
 
             <Redirect from='*' to='/Gerenciamento' />

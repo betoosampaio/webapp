@@ -1,33 +1,86 @@
-.modal {
-    font-size: 12px;
+.modal{
+  overflow-y:hidden;
+}
+
+
+#formCadastrarOperador {
+  width: 600px;
+  margin: auto;
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 5px;
+  overflow-y:hidden;
+}
+
+#formEditarOperador {
+  width: 600px;
+  margin: auto;
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 5px;
+  overflow-y:hidden;
+}
+/* APARIÇÃO DO FORM */
+
+form {
+  animation-name: freed;
+  animation-duration: 700ms;
+}
+
+@keyframes freed {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-  .modal > .header {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+form .btn-login {
+  display: inline-block;
+  outline: 0;
+  min-width: 100px;
+  width: 100%;
+  border: 0;
+  background-color: #7159c1;
+  color: white;
+  border-radius: 25px;
+  margin: auto;
+  padding: 7px;
+  
+  }
+
+  form .input-block {
+    margin-bottom: 20px;
+  }
+  
+  form .input-block label {
+    font-size: 14px;
+    color: darkslateblue;
+  }
+  
+  form .input-block input {
     width: 100%;
-    border-bottom: 1px solid gray;
-    font-size: 18px;
-    text-align: center;
-    padding: 5px;
-  }
-  .modal > .content {
-    width: 100%;
-    padding: 10px 5px;
-  }
-  .modal > .actions {
-    width: 100%;
-    padding: 10px 5px;
-    margin: auto;
-    text-align: center;
-  }
-  .modal > .close {
-    cursor: pointer;
-    position: absolute;
     display: block;
-    padding: 2px 5px;
-    line-height: 20px;
-    right: -10px;
-    top: -10px;
-    font-size: 24px;
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #cfcece;
+    margin-top: 8px;
+    padding: 7px;
+    font-size: 16px;
+    color: #7159c1;
+    border-radius: 2px;
+    border: 1px solid #ccddef;
+    outline-color: #7159c1;
   }
+  
+
+  #formCadastrarOperador label{
+    color: blueviolet;
+    font-weight: bold;
+  }
+  #formEditarOperador label{
+    color: blueviolet;
+    font-weight: bold;
+  }
+
+  

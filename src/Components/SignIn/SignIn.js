@@ -37,7 +37,7 @@ class SignIn extends React.Component {
             cpf_administrador: '',
             nome_administrador: '',
             codigo_restaurante: '',
-            nome_restaurante:'',
+            nome_restaurante: '',
             login: '',
             senha: '',
             enderecoDisabled: false,
@@ -63,7 +63,7 @@ class SignIn extends React.Component {
             cpf_administrador: { ok: false, msg: '*' },
             nome_administrador: { ok: false, msg: '*' },
             codigo_restaurante: { ok: false, msg: '*' },
-            nome_restaurante:{ok: false, msg:'*'},
+            nome_restaurante: { ok: false, msg: '*' },
             login: { ok: false, msg: '*' },
             senha: { ok: false, msg: '*' }
         },
@@ -619,7 +619,7 @@ class SignIn extends React.Component {
                         <p></p>
 
 
-<label>Celular</label>
+                        <label>Celular</label>
 
                         <MaskedInput placeholder='Celular'
                             name='celular'
