@@ -1,17 +1,3 @@
-html,
-body {
-  margin-top: 50px;
-  height: 100px;
-}
-
-body {
-  background-color: #a489fb;
-  font-family: Roboto, Arial, sans-serif;
-}
-
-
-
-
 .modal {
   position: fixed;
   top: 0;
@@ -38,11 +24,6 @@ body {
 .display-none {
   display: none;
 }
-
-
-
-
-
 
 
 /* ESTILO DO MENU  */
