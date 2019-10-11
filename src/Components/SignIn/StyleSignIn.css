@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
+ 
+html, 
+body {
+
+}
+
+h1 {
+  font-size: 40px;
+  font-family: 'Chivo', sans-serif;
+  
+  
+  
+}
+
+h2 {
+  font-size: 15px;
+  font-family: 'Chivo', sans-serif;
+  
+  
+}
+
 #formSignin {
   width: 600px;
   margin: auto;
@@ -30,7 +52,7 @@ form .btn-login {
   min-width: 100px;
   width: 100%;
   border: 0;
-  background-color: #7159c1;
+  background-color: #f56d0a;
   color: white;
   border-radius: 25px;
   margin: auto;
@@ -44,7 +66,7 @@ form .btn-login {
   
   form .input-block label {
     font-size: 14px;
-    color: darkslateblue;
+    color: #f56d0a;
   }
   
   form .input-block input {
@@ -53,15 +75,15 @@ form .btn-login {
     margin-top: 8px;
     padding: 7px;
     font-size: 16px;
-    color: #7159c1;
+    color: #f56d0a;
     border-radius: 2px;
     border: 1px solid #ccddef;
-    outline-color: #7159c1;
+    outline-color: #f56d0a;
   }
   
 
   #formSignin label{
-    color: blueviolet;
+    color: #f56d0a;
     font-weight: bold;
   }
 

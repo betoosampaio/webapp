@@ -483,6 +483,7 @@ class SignIn extends React.Component {
         return (
             <div>
                 <form id='formSignin'>
+                    <h1>Bem-vindo ao Freed.</h1>
                     <h2>Cadastre seu restaurante</h2>
 
 
