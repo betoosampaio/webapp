@@ -68,12 +68,12 @@ form .btn-login {
   
   }
     
-  form .input-block label {
+  form .input-block-Login label {
     font-size: 14px;
     color: #f56d0a;
   }
   
-  form .input-block input {
+  form .input-block-Login input {
     width: 100%;
     display: block;
     margin-top: -4px;

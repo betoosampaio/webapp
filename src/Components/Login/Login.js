@@ -69,7 +69,7 @@ class Login extends React.Component {
 
         <h1>Bem-vindo ao Freed</h1>
 
-        <div class="input-block">
+        <div class="input-block-Login">
 
           <label for="login-email">Código do restaurante</label>
 
@@ -96,7 +96,7 @@ class Login extends React.Component {
         </div>
 
 
-        <div class="input-block">
+        <div class="input-block-Login">
           <label for="login-password">Senha</label>
           <input type="password"
             name="senha_operador"
