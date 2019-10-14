@@ -105,11 +105,11 @@ class Login extends React.Component {
             placeholder="Digite sua senha" />
         </div>
 
+<p></p>
 
         <button
-          class="btn-login"
+          class="botaoLogar"
           onClick={this.verificarLogin}
-          variant="primary"
           type="button">
           Entrar
         </button>

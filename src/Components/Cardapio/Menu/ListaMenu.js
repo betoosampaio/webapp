@@ -32,7 +32,6 @@ class ListaMenu extends React.Component {
 
     let formulario = this.state.formulario;
 
-
     try {
       let res = await fetch(path + '/menu/editar', {
         method: 'POST',

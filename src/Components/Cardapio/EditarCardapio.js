@@ -52,21 +52,8 @@ class EditarOperador extends React.Component {
         }
 
 
-
     }
 
-
-
-
-    obterMenu = async function () {
-        let res = await fetch(pathWeb + '/menu/listar', {
-            method: 'POST',
-            headers: {
-                'token': localStorage.getItem('token')
-            },
-        });
-        this.setState({ id_menu: await res.json() });
-    }
 
 
 
