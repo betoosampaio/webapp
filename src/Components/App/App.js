@@ -79,13 +79,10 @@ function App() {
             <PrivateRoute path='/Restaurante/Perfil' component={ListaRestaurante} />
             <PrivateRoute path='/Restaurante/Editar' component={EditarRestaurante} />
 
+
+
             <PrivateRoute path='/Operador' component={Operador} />
                        
-
-            <PrivateRoute path='/Operador' component={Operador} />
-          
-
-
 
 
             <PrivateRoute path='/Cardapio/Lista' component={ListaCardapio} />
