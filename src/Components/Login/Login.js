@@ -65,6 +65,7 @@ class Login extends React.Component {
     return (
       <div id='Login'>
 
+      <div id="TelaDeFundo"></div>
       <form id='formLogin' >
 
         <h1>Bem-vindo ao Freed</h1>

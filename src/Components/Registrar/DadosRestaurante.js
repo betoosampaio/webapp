@@ -41,13 +41,18 @@ export class FormPersonalDetails extends Component {
           <AppBar title="Dados do Restaurante" />
 
           <form className='cadastrar'>
+            <p></p>
+
+            <label>CNPJ</label>
+
+            <p></p>
 
             <MaskedInput
               onChange={handleChange("cnpj")}
               defaultValue={values.cnpj}
               onBlur={this.validarCNPJ}
               name='cnpj'
-              placeholder='Qual o cnpj do restaurante ?'
+              placeholder='Qual é o CNPJ do restaurante?'
               mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
             />
 
@@ -55,9 +60,14 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Razão Social</label>
+
+            <p></p>
+
+
             <input
               type='text'
-              placeholder='E qual seria a sua Razão Social ?'
+              placeholder='Razão Social do restaurante'
               name='razao_social'
               onBlur={this.validarCampoVazio}
               onChange={handleChange("razao_social")}
@@ -68,9 +78,14 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Informe sua especialidade</label>
+
+            <p></p>
+
+
             <input
               type='text'
-              placeholder='Qual seria a Especialidade ?'
+              placeholder='Qual é a especialidade do restaurante?'
               name='razao_social'
               onBlur={this.validarCampoVazio}
               onChange={handleChange("especialidade")}
@@ -81,12 +96,16 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>CEP</label>
+
+            <p></p>
+
             <MaskedInput
               onChange={handleChange("cep")}
               defaultValue={values.cep}
               onBlur={this.validarCEP}
               name='cep'
-              placeholder='Aqui seria o cep do restaurante !'
+              placeholder='Informe o CEP do restaurante'
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
               guide={true}
             />
@@ -95,9 +114,13 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Endereço</label>
+
+            <p></p>
+
             <input
               type='text'
-              placeholder='Qual seria o Endereço ? '
+              placeholder='Informe o Endereço'
               name='logradouro'
               onBlur={this.validarCampoVazio}
               onChange={handleChange("logradouro")}
@@ -105,6 +128,10 @@ export class FormPersonalDetails extends Component {
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
+
+            <p></p>
+
+            <label>Número</label>
 
             <p></p>
 
@@ -123,6 +150,10 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Complemento (opcional)</label>
+
+            <p></p>
+
             <input
               type='text'
               placeholder='Complemento'
@@ -135,9 +166,13 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Bairro</label>
+
+            <p></p>
+
             <input
               type='text'
-              placeholder='Bairro'
+              placeholder='Bairro do restaurante'
               name='bairro'
               onChange={handleChange("bairro")}
               defaultValue={values.bairro}
@@ -147,9 +182,13 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Estado</label>
+
+            <p></p>
+
             <input
               type='text'
-              placeholder='Estado'
+              placeholder='UF do restaurante'
               name='uf'
               onChange={handleChange("uf")}
               defaultValue={values.uf}
@@ -159,9 +198,13 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+            <label>Munícipio</label>
+
+            <p></p>
+
             <input
               type='text'
-              placeholder='municipio'
+              placeholder='Munícipio do restaurante'
               name='municipio'
               onChange={handleChange("municipio")}
               defaultValue={values.municipio}

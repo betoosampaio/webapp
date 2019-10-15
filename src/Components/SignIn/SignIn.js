@@ -484,7 +484,9 @@ class SignIn extends React.Component {
             <div>
                 <form id='formSignin'>
                     <h1> Bem-vindo ao Freed</h1>
+                    <p></p>
                     <h2>Cadastre seu restaurante</h2>
+                    <p></p>
 
 
                     <div class="input-block">

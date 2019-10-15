@@ -8,16 +8,12 @@ body.SignIn {
 h1 {
   font-size: 40px;
   font-family: 'Chivo', sans-serif;
-  
-  
-  
 }
 
 h2 {
   font-size: 15px;
-  font-family: 'Chivo', sans-serif;
-  
-  
+  font-family: 'Chivo', sans-serif; 
+  color: rgb(189, 189, 189);
 }
 
 #formSignin {
@@ -67,7 +63,8 @@ form .btn-login {
   form .input-block label {
     font-size: 14px;
     color: #f56d0a;
-  }
+
+    }
   
   form .input-block input {
     width: 100%;

@@ -3,7 +3,7 @@ import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import styles from './styles.css'
+import styles from './Styles.css'
 import MaskedInput from 'react-text-mask';
 
 
@@ -33,10 +33,15 @@ export class FormUserDetails extends Component {
         <React.Fragment>
           <AppBar title="Dados do Usuário" />
 
+
           <form className='cadastrar'>
 
             <p></p>
 
+            <label>Nome do Administrador</label>
+
+            <p></p>
+                    
             <input
               type='text'
               placeholder='Nome Administrador'
@@ -46,6 +51,10 @@ export class FormUserDetails extends Component {
               defaultValue={values.nome_administrador}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
+
+            <p></p>
+
+            <label>CPF</label>
 
             <p></p>
 
@@ -63,6 +72,10 @@ export class FormUserDetails extends Component {
 
             <p></p>
 
+            <label>E-mail do Administrador</label>
+
+            <p></p>
+
             <input
               type='text'
               placeholder='E-mail'
@@ -72,6 +85,10 @@ export class FormUserDetails extends Component {
               onBlur={this.validarEmail}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
+
+            <p></p>
+
+            <label>E-mail do Administrador</label>
 
             <p></p>
 
@@ -87,7 +104,7 @@ export class FormUserDetails extends Component {
 
 
             <p></p>
-
+            
             <RaisedButton
               label="Continue"
               primary={true}

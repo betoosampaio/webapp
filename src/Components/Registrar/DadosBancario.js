@@ -4,7 +4,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import MaskedInput from 'react-text-mask';
 import RaisedButton from "material-ui/RaisedButton";
-import styles from './styles.css'
+import styles from './Styles.css'
 export class FormUserDetails extends Component {
   continue = e => {
 
@@ -24,6 +24,11 @@ export class FormUserDetails extends Component {
 
           <form className='cadastrar'>
 
+            <p></p>
+
+            <label>Tipo de conta</label>
+
+            <p></p>
 
             <input
               placeholder='tipo de conta'
@@ -33,12 +38,21 @@ export class FormUserDetails extends Component {
             />
 
             <p></p>
+
+            <label>Código do banco</label>
+
+            <p></p>
+
             <input
               name="codigo_banco"
-            placeholder='codigo_banco'
+              placeholder='Informe o código do banco'
               onChange={handleChange("codigo_banco")}
               defaultValue={values.codigo_banco}
             />
+            <p></p>
+
+            <label>Agência</label>
+
             <p></p>
 
             <MaskedInput
@@ -52,6 +66,10 @@ export class FormUserDetails extends Component {
 
             <p></p>
 
+            <label>Agência</label>
+
+            <p></p>
+
             <MaskedInput
               placeholder='Conta'
               name='conta'
@@ -61,6 +79,10 @@ export class FormUserDetails extends Component {
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
               guide={false}
             />
+
+            <p></p>
+
+            <label>Digito</label>
 
             <p></p>
 

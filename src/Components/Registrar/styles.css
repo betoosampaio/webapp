@@ -12,3 +12,21 @@ html#Cadastrar{
 button: {
     margin: 15
   }
+
+.cadastrar {
+  font-size: 16px;
+  font-family: 'Chivo', sans-serif;
+  color: #DC143C;
+}
+
+form ::placeholder {
+  font-style: 12px;
+  color: gray;
+  font-weight: normal;
+}
+
+form {
+  width: 280px;
+  margin: 10%;
+}
+

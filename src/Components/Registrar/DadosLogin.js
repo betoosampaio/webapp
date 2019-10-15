@@ -3,7 +3,7 @@ import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import styles from './styles.css'
+import styles from './Styles.css'
 export class FormUserDetails extends Component {
   continue = e => {
 
@@ -26,6 +26,12 @@ export class FormUserDetails extends Component {
           <AppBar title="Dados Login" />
 
           <form className='cadastrar'>
+            <p></p>
+
+            <label>Código do restaurante</label>
+
+            <p></p>
+
             <input
               type='text'
               placeholder='Código Restaurante'
@@ -37,7 +43,11 @@ export class FormUserDetails extends Component {
             <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
 
 
-           <p></p>
+            <p></p>
+
+            <label>Nome do restaurante</label>
+
+            <p></p>
 
             <input
               type='text'
@@ -48,7 +58,12 @@ export class FormUserDetails extends Component {
               onBlur={this.validarCampoVazio}
             />
 
-<p></p>
+            <p></p>
+
+            <label>Login</label>
+
+            <p></p>
+
             <input
               type='text'
               placeholder='Login'
@@ -59,17 +74,22 @@ export class FormUserDetails extends Component {
 
             />
 
-<p></p>
+            <p></p>
+
+            <label>Senha</label>
+
+            <p></p>
+
             <input
               type='password'
-              placeholder='Senha'
+              placeholder='Digite sua senha'
               name='senha'
               onChange={handleChange("SenhaRestaurante")}
               defaultValue={values.SenhaRestaurante}
               onBlur={this.validarSenha}
             />
-          
-          <p></p>
+
+            <p></p>
 
             <RaisedButton
               label="Back"
@@ -85,7 +105,7 @@ export class FormUserDetails extends Component {
               style={styles.button}
               onClick={this.continue}
             />
-     
+
 
           </form>
 
