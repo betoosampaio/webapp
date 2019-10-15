@@ -1,15 +1,15 @@
-import React from 'react';
-import Select from 'react-select';
-import MaskedInput from 'react-text-mask';
-import Autosuggest from 'react-autosuggest';
-
-import Form from 'react-bootstrap/Form';
-
-import styles from './StyleSignIn.css';
+import React, { Component } from 'react'
+import DadosUsuario from "./DadosUsuario"
+import DadosRestaurante from "./DadosRestaurante"
+import DadosBancario from "./DadosBancario"
+import DadosLogin from "./DadosLogin"
+import Confirm from './Confirm'
+import Success from './Success'
 
 const path = process.env.REACT_APP_SRV_PATH;
-class SignIn extends React.Component {
+export class UserForms extends Component {
     state = {
+        step: 1,
         bancos: [],
         estados: [],
         municipios: [],
@@ -68,10 +68,13 @@ class SignIn extends React.Component {
             senha: { ok: false, msg: '*' }
         },
     };
+
+
     componentDidMount() {
         this.obterVariaveisCadastro();
     }
-    cadastrarRestaurante = async (event) => {
+
+    validarCampos = async (event) =>{
 
         for (let p in this.state.validacao) {
             if (!this.state.validacao[p].ok) {
@@ -79,6 +82,11 @@ class SignIn extends React.Component {
                 return false;
             }
         }
+
+    }
+
+    cadastrarRestaurante = async (event) => {
+
 
         let formulario = Object.assign({}, this.state.formulario);
         // ajustando os valores dos Select
@@ -477,338 +485,97 @@ class SignIn extends React.Component {
         this.setState({
             suggestions: []
         });
-    };
+    }; 
 
+
+
+
+
+
+
+
+    //proceed to next step
+
+    nextStep = () => {
+        const { step } = this.state//here we are pulling and assigin the state of step to the vaiable
+        this.setState({
+            step: step + 1
+        })
+    }
+
+    //goback to previous page
+
+    prevStep = () => {
+        const { step } = this.state//here we are pulling and assigin the state of step to the vaiable
+        this.setState({
+            step: step - 1
+        })
+    }
+
+    //handle fields change
+    handleChange = input => e => {
+        this.setState({
+            [input]: e.target.value
+        })
+        if (input.length > 0) {
+            //debugger
+            console.log("hey")
+        }
+        else {
+            console.log("hello")
+        }
+    }
     render() {
-        return (
-            <div>
-                <form id='formSignin'>
-                    <h1> Bem-vindo ao Freed</h1>
-                    <h2>Cadastre seu restaurante</h2>
+        const { step } = this.state
+        const { nome_administrador, cpf, email, celular, cnpj, razao_social, cep, logradouro, numero, complemento, bairro, municipio, uf, codigo_banco, id_tipo_cadastro_conta,  id_tipo_conta, agencia, conta, digito, codigo_restaurante, nome_restaurante, login, senha   } = this.state
+        const values = { nome_administrador, cpf, email, celular, cnpj, razao_social, cep, logradouro, numero, complemento, bairro, municipio, uf, codigo_banco, id_tipo_cadastro_conta,  id_tipo_conta, agencia, conta, digito, codigo_restaurante, nome_restaurante, login, senha   }
+        switch (step) {
+            case 1: return (
+                <DadosUsuario
+                    nextStep={this.nextStep}
+                    validarCampos={this.validarCampos}
+                    handleChange={this.handleChange}
+                    values={values} />
+            )
+            case 2: return (
+                <DadosRestaurante
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange={this.handleChange}
+                    values={values}
+                />
+            )
+            case 3: return (
+                <DadosBancario
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    handleChange={this.handleChange}
+                    values={values}
+                />
+            )
+            case 4: return (
+                <DadosLogin
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
+                    show={this.show}
+                    handleChange={this.handleChange}
+                    values={values}
+                />
+            )
+            case 5: return (
+                <Confirm
+                    nextStep={this.nextStep}
+                    prevStep={this.prevStep}
 
-
-                    <div class="input-block">
-
-                        <label>Cnpj</label>
-
-                        <MaskedInput
-                            value={this.state.formulario.cnpj}
-                            onChange={this.formChange}
-                            onBlur={this.validarCNPJ}
-                            name='cnpj'
-                            placeholder='Qual o cnpj do restaurante ?'
-                            mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
-                        <p></p>
-
-                        <label>Razão Social</label>
-
-                        <input
-                            type='text'
-                            placeholder='E qual seria a sua Razão Social ?'
-                            name='razao_social'
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            value={this.state.formulario.razao_social}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.razao_social.msg}</span>
-                        <p></p>
-
-                        <label>Cep</label>
-
-                        <MaskedInput
-                            value={this.state.formulario.cep}
-                            onChange={this.formChange}
-                            onBlur={this.validarCEP}
-                            name='cep'
-                            placeholder='Aqui seria o cep do restaurante !'
-                            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
-                            guide={true}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
-                        <p></p>
-
-                        <label>Endereço</label>
-
-                        <input
-                            type='text'
-                            placeholder='Qual seria o Endereço ? '
-                            name='logradouro'
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            value={this.state.formulario.logradouro}
-                            disabled={this.state.formulario.enderecoDisabled}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
-                        <p></p>
-
-                        <label>Número</label>
-
-                        <MaskedInput
-                            type='text'
-                            placeholder='Número do endereço'
-                            name='numero'
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            value={this.state.formulario.numero}
-                            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-                            guide={false}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
-                        <p></p>
-
-                        <label>Complemento</label>
-
-                        <input
-                            type='text'
-                            placeholder='Complemento'
-                            name='complemento'
-                            value={this.state.formulario.complemento.msg}
-                            onChange={this.formChange}
-                        />
-                        <p></p>
-
-                        <label>Bairro</label>
-
-                        <input
-                            type='text'
-                            placeholder='Bairro'
-                            name='bairro'
-                            value={this.state.formulario.bairro}
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            disabled={this.state.formulario.enderecoDisabled}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
-                        <p></p>
-
-                        <label>Estado</label>
-
-                        <Select
-                            name="uf"
-                            options={this.state.estados}
-                            getOptionLabel={option => option.uf}
-                            getOptionValue={option => option.uf}
-                            value={this.state.formulario.uf}
-                            onChange={this.formChangeSelect('uf')}
-                            isDisabled={this.state.formulario.enderecoDisabled}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
-                        <p></p>
-
-                        <label>Município</label>
-
-                        <Autosuggest
-                            suggestions={this.state.suggestions}
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                            getSuggestionValue={this.getSuggestionValue}
-                            renderSuggestion={this.renderSuggestion}
-                            inputProps={{
-                                type: 'text',
-                                placeholder: 'Município',
-                                name: 'municipio',
-                                value: this.state.formulario.municipio,
-                                onChange: this.formChange,
-                                onBlur: this.validarCampoVazio,
-                                disabled: this.state.formulario.enderecoDisabled
-                            }}
-                        />
-
-                        <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>
-                        <p></p>
-
-
-                        <label>Celular</label>
-
-                        <MaskedInput placeholder='Celular'
-                            name='celular'
-                            value={this.state.formulario.celular}
-                            onChange={this.formChange}
-                            onBlur={this.validarCelular}
-                            mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
-                            guide={true}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
-                        <p></p>
-
-                        <label>E-mail</label>
-
-                        <input
-                            type='text'
-                            placeholder='E-mail'
-                            name='email'
-                            value={this.state.formulario.email}
-                            onChange={this.formChange}
-                            onBlur={this.validarEmail}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
-                        <p></p>
-
-                        <label>Tipo de conta</label>
-
-                        <Select
-                            name="id_tipo_cadastro_conta"
-                            options={this.state.tipoCadastroConta}
-                            getOptionLabel={option => option.tipo_cadastro_conta}
-                            getOptionValue={option => option.id_tipo_cadastro_conta}
-                            value={this.state.formulario.id_tipo_cadastro_conta}
-                            onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta.msg}</span>
-                        <p></p>
-
-                        <label>Banco</label>
-
-                        <Select
-                            name="codigo_banco"
-                            options={this.state.bancos}
-                            getOptionLabel={option => option.nome}
-                            getOptionValue={option => option.codigo}
-                            value={this.state.formulario.codigo_banco}
-                            onChange={this.formChangeSelect('codigo_banco')}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco.msg}</span>
-                        <p></p>
-
-                        <label>Tipo da sua conta</label>
-
-                        <Select
-                            name="id_tipo_conta"
-                            options={this.state.tipoConta}
-                            getOptionLabel={option => option.tipo_conta}
-                            getOptionValue={option => option.id_tipo_conta}
-                            value={this.state.formulario.id_tipo_conta}
-                            onChange={this.formChangeSelect('id_tipo_conta')}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta.msg}</span>
-                        <p></p>
-
-                        <label>Agência</label>
-
-                        <MaskedInput
-                            placeholder='Agência'
-                            name='agencia'
-                            value={this.state.formulario.agencia}
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            mask={[/\d/, /\d/, /\d/, /\d/]}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
-                        <p></p>
-
-                        <label>Conta</label>
-
-                        <MaskedInput
-                            placeholder='Conta'
-                            name='conta'
-                            value={this.state.formulario.conta}
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-                            guide={false}
-                        />
-                        <label>Digito</label>
-                        <MaskedInput
-                            name='digito'
-                            placeholder='Dígito'
-                            value={this.state.formulario.digito}
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
-                            guide={false}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.conta.msg}</span>
-                        <p></p>
-
-                        <label>Cpf</label>
-
-                        <MaskedInput
-                            onChange={this.formChange}
-                            onBlur={this.validarCPF}
-                            value={this.state.formulario.cpf_administrador}
-                            placeholder='CPF Administrador'
-                            name='cpf_administrador'
-                            mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-                            guide={true}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
-                        <p></p>
-
-                        <label>Nome do Administrador</label>
-
-                        <input
-                            type='text'
-                            placeholder='Nome Administrador'
-                            name='nome_administrador'
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                            value={this.state.formulario.nome_administrador}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
-                        <p></p>
-
-                        <label>Código do Restaurante</label>
-
-                        <input
-                            type='text'
-                            placeholder='Código Restaurante'
-                            name='codigo_restaurante'
-                            value={this.state.formulario.codigo_restaurante}
-                            onChange={this.formChange}
-                            onBlur={this.validarCodigoRestaurante}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
-                        <p></p>
-
-                        <label>Nome do Restaurante</label>
-
-                        <input
-                            type='text'
-                            placeholder='Nome do restaurante'
-                            name='nome_restaurante'
-                            value={this.state.formulario.nome_restaurante}
-                            onChange={this.formChange}
-                            onBlur={this.validarCampoVazio}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
-                        <p></p>
-
-                        <label>Login do restaurante</label>
-
-                        <input
-                            type='text'
-                            placeholder='Login'
-                            name='login'
-                            value={this.state.formulario.login}
-                            onChange={this.formChange}
-                            onBlur={this.validarLogin}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
-                        <p></p>
-
-                        <label>Senha do Login</label>
-
-                        <input
-                            type='password'
-                            placeholder='Senha'
-                            name='senha'
-                            value={this.state.formulario.senha}
-                            onChange={this.formChange}
-                            onBlur={this.validarSenha}
-                        />
-                        <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
-                        <p></p>
-                        <p></p>
-                        <button class="btn-login" type='button' onClick={this.cadastrarRestaurante}>Submit</button>
-
-                    </div>
-
-                </form>
-            </div>
-        )
+                    values={values}
+                />
+            )
+            case 4: return (
+                <Success />
+            )
+            default: return true
+        }
     }
 }
-
-export default SignIn;
+//rce is for creat a sample form
+export default UserForms
