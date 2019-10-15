@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
 
 class Login extends Component {
 
@@ -19,11 +18,31 @@ class Login extends Component {
   }
 
   logar = async (event) => {
-    let token = await serverRequest.request('/login', this.state);
-    if (token) {
-      localStorage.setItem('token', token);
-      window.location.href = process.env.REACT_APP_WEB_PATH;
+    event.preventDefault();
+
+    try {
+      let res = await fetch(process.env.REACT_APP_SRV_PATH + '/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
+        },
+        body: JSON.stringify(this.state)
+      });
+
+      if (res.status === 200) {
+        let token = await res.json();
+        localStorage.setItem('token', token);
+        window.location.href = '/';
+      }
+      else {
+        let msgErro = await res.text();
+        alert(`${res.status}: ${msgErro}`);
+      }
+    } catch (err) {
+      alert('Erro de conexão com o servidor');
     }
+
   }
 
   changeInput = (event) => {
@@ -54,7 +73,7 @@ class Login extends Component {
                           autoComplete="codrestaurante"
                           name="codigo_restaurante"
                           value={this.state.codigo_restaurante}
-                          onChange={this.changeInput} />
+                          onChange={this.changeInput} required />
                       </InputGroup>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
@@ -68,7 +87,7 @@ class Login extends Component {
                           autoComplete="usuario"
                           name="login_operador"
                           value={this.state.login_operador}
-                          onChange={this.changeInput} />
+                          onChange={this.changeInput} required />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -82,7 +101,7 @@ class Login extends Component {
                           autoComplete="current-password"
                           name="senha_operador"
                           value={this.state.senha_operador}
-                          onChange={this.changeInput} />
+                          onChange={this.changeInput} required/>
                       </InputGroup>
                       <Row>
                         <Col xs="6">
