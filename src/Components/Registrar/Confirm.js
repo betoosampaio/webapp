@@ -21,28 +21,28 @@ export class FormUserDetails extends Component {
         <React.Fragment>
           <AppBar title="Confirm User Data" />
           <form className='cadastrar'>
-          <List>
-            <h1>Seja muito bem vindo a familia FREED</h1>
-            <ListItem primaryText="First Name" secondaryText={firstName} />
-            <ListItem primaryText="Last Name" secondaryText={lastName} />
-            <ListItem primaryText="Email Id" secondaryText={email} />
-            <ListItem primaryText="Occupation" secondaryText={occupation} />
-            <ListItem primaryText="City" secondaryText={city} />
-            <ListItem primaryText="Bio" secondaryText={bio} />
-          </List>
-          <br />
-          <RaisedButton
-            label="Confirm & Continue"
-            primary={true}
-            style={styles.button}
-            onClick={this.continue}
-          />
-          <RaisedButton
-            label="Back"
-            primary={false}
-            style={styles.button}
-            onClick={this.back}
-          />
+            <List>
+              <h1>Seja muito bem vindo a familia FREED</h1>
+              <ListItem primaryText="First Name" secondaryText={firstName} />
+              <ListItem primaryText="Last Name" secondaryText={lastName} />
+              <ListItem primaryText="Email Id" secondaryText={email} />
+              <ListItem primaryText="Occupation" secondaryText={occupation} />
+              <ListItem primaryText="City" secondaryText={city} />
+              <ListItem primaryText="Bio" secondaryText={bio} />
+            </List>
+            <br />
+            <RaisedButton
+              label="Confirm & Continue"
+              primary={true}
+              style={styles.button}
+              onClick={this.continue}
+            />
+            <RaisedButton
+              label="Back"
+              primary={false}
+              style={styles.button}
+              onClick={this.back}
+            />
           </form>
         </React.Fragment>
       </MuiThemeProvider>

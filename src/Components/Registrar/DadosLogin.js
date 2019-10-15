@@ -2,11 +2,24 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
+import MaskedInput from 'react-text-mask';
 import RaisedButton from "material-ui/RaisedButton";
-import styles from './styles.css'
-export class FormUserDetails extends Component {
-  continue = e => {
 
+export class DadosLogin extends Component {
+  state = {
+    validacao: {
+
+      codigo_restaurante: { ok: false, msg: '*' },
+      nome_restaurante: { ok: false, msg: '*' },
+      login: { ok: false, msg: '*' },
+      senha: { ok: false, msg: '*' },
+  
+   
+
+    },
+  }
+
+  continue = e => {
     e.preventDefault();
     this.props.nextStep();
   };
@@ -14,62 +27,76 @@ export class FormUserDetails extends Component {
     e.preventDefault();
     this.props.prevStep();
   };
-  show = e => {
-    e.preventDefault();
-    this.props.show();
-  };
+
   render() {
     const { values, handleChange } = this.props;
     return (
+
       <MuiThemeProvider>
         <React.Fragment>
-          <AppBar title="Dados Login" />
+          <AppBar title="Dados do Login" />
 
           <form className='cadastrar'>
-            <input
+            <p></p>
+            <label>Código do restaurante</label>
+            <p></p>
+          <input
               type='text'
-              placeholder='Código Restaurante'
+              placeholder='Código Restaurante ?'
               name='codigo_restaurante'
-              onChange={handleChange("Codigo_restaurante")}
-              defaultValue={values.Codigo_restaurante}
-              onBlur={this.validarCodigoRestaurante}
+              onBlur={this.validarCampoVazio}
+              onChange={handleChange("codigo_restaurante")}
+              defaultValue={values.codigo_restaurante}
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
+
+            <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
 
 
-           <p></p>
-
+            <p></p>
+            <label>Nome do restaurante</label>
+            <p></p>
             <input
               type='text'
-              placeholder='Nome do restaurante'
+              placeholder='Qual seria o  nome do restaurante?'
               name='nome_restaurante'
+              onBlur={this.validarCampoVazio}
               onChange={handleChange("nome_restaurante")}
               defaultValue={values.nome_restaurante}
-              onBlur={this.validarCampoVazio}
             />
 
-<p></p>
+            <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
+
+            <p></p>
+            <label>Login do restaurante</label>
+            <p></p>
             <input
               type='text'
-              placeholder='Login'
+              placeholder='Qual seria o Login?'
               name='login'
-              onChange={handleChange("LoginRestaurante")}
-              defaultValue={values.LoginRestaurante}
-              onBlur={this.validarLogin}
-
+              onBlur={this.validarCampoVazio}
+              onChange={handleChange("login")}
+              defaultValue={values.login}
             />
 
-<p></p>
+            <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
+
+            <p></p>
+            <label>Senha do restaurante</label>
+            <p></p>
             <input
-              type='password'
-              placeholder='Senha'
+              type='text'
+              placeholder='Qual seria a senha ? '
               name='senha'
-              onChange={handleChange("SenhaRestaurante")}
-              defaultValue={values.SenhaRestaurante}
-              onBlur={this.validarSenha}
+              onBlur={this.validarCampoVazio}
+              onChange={handleChange("senha")}
+              defaultValue={values.senha}
             />
-          
-          <p></p>
+
+            <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
+
+            <p></p>
+
+         
 
             <RaisedButton
               label="Back"
@@ -78,23 +105,24 @@ export class FormUserDetails extends Component {
               onClick={this.back}
             />
 
-
             <RaisedButton
               label="Continue"
               primary={true}
               style={styles.button}
               onClick={this.continue}
             />
-     
+
 
           </form>
 
         </React.Fragment>
-
       </MuiThemeProvider>
-
     );
   }
 }
-
-export default FormUserDetails;
+const styles = {
+  button: {
+    margin: 15
+  }
+};
+export default DadosLogin;
