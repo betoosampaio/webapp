@@ -61,6 +61,11 @@ class CadastrarProduto extends Component {
                             </InputGroup>
                         </FormGroup>
 
+                        <FormGroup>
+                            <Label>Foto:</Label>
+                            <Input type="file" name="file" id="exampleFile" />
+                        </FormGroup>
+
                     </CardBody>
                     <CardFooter>
                         <Button className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
