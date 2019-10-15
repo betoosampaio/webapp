@@ -70,7 +70,7 @@ export class DadosBancario extends Component {
     componentDidMount() {
         this.obterVariaveisCadastro();
     }
-    
+
     obterVariaveisCadastro = async function () {
         let res = await fetch(path + '/restaurante/obterVariaveisCadastro', {
             method: 'POST',
@@ -78,8 +78,6 @@ export class DadosBancario extends Component {
         let dados = await res.json();
         this.setState({
             bancos: dados[0],
-            municipios: dados[1],
-            estados: dados[2],
             tipoConta: dados[3],
             tipoCadastroConta: dados[4]
         });
@@ -460,81 +458,81 @@ export class DadosBancario extends Component {
 
                     <form className='cadastrar'>
 
-                    <label>Tipo de conta</label>
+                        <label>Tipo de conta</label>
 
-<Select
-    name="id_tipo_cadastro_conta"
-    options={this.state.tipoCadastroConta}
-    getOptionLabel={option => option.tipo_cadastro_conta}
-    getOptionValue={option => option.id_tipo_cadastro_conta}
-    value={this.state.formulario.id_tipo_cadastro_conta}
-    onChange={this.formChangeSelect('id_tipo_cadastro_conta')}
-/>
-<span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta.msg}</span>
-<p></p>
+                        <Select
+                            name="id_tipo_cadastro_conta"
+                            options={this.state.tipoCadastroConta}
+                            getOptionLabel={option => option.tipo_cadastro_conta}
+                            getOptionValue={option => option.id_tipo_cadastro_conta}
+                            onChange={handleChange("id_tipo_cadastro_conta")}
+                            defaultValue={values.id_tipo_cadastro_conta}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta.msg}</span>
+                        <p></p>
 
-<label>Banco</label>
+                        <label>Banco</label>
 
-<Select
-    name="codigo_banco"
-    options={this.state.bancos}
-    getOptionLabel={option => option.nome}
-    getOptionValue={option => option.codigo}
-    value={this.state.formulario.codigo_banco}
-    onChange={this.formChangeSelect('codigo_banco')}
-/>
-<span style={{ color: 'red' }}>{this.state.validacao.codigo_banco.msg}</span>
-<p></p>
+                        <Select
+                            name="codigo_banco"
+                            options={this.state.bancos}
+                            getOptionLabel={option => option.nome}
+                            getOptionValue={option => option.codigo}
+                            onChange={handleChange("codigo_banco")}
+                            defaultValue={values.codigo_banco}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco.msg}</span>
+                        <p></p>
 
-<label>Tipo da sua conta</label>
+                        <label>Tipo da sua conta</label>
 
-<Select
-    name="id_tipo_conta"
-    options={this.state.tipoConta}
-    getOptionLabel={option => option.tipo_conta}
-    getOptionValue={option => option.id_tipo_conta}
-    value={this.state.formulario.id_tipo_conta}
-    onChange={this.formChangeSelect('id_tipo_conta')}
-/>
-<span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta.msg}</span>
-<p></p>
+                        <Select
+                            name="id_tipo_conta"
+                            options={this.state.tipoConta}
+                            getOptionLabel={option => option.tipo_conta}
+                            getOptionValue={option => option.id_tipo_conta}
+                            onChange={handleChange("id_tipo_conta")}
+                            defaultValue={values.id_tipo_conta}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta.msg}</span>
+                        <p></p>
 
-<label>Agência</label>
+                        <label>Agência</label>
 
-<MaskedInput
-    placeholder='Agência'
-    name='agencia'
-    onChange={handleChange("agencia")}
-    defaultValue={values.agencia}
-    onBlur={this.validarCampoVazio}
-    mask={[/\d/, /\d/, /\d/, /\d/]}
-/>
-<span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
-<p></p>
+                        <MaskedInput
+                            placeholder='Agência'
+                            name='agencia'
+                            onChange={handleChange("agencia")}
+                            defaultValue={values.agencia}
+                            onBlur={this.validarCampoVazio}
+                            mask={[/\d/, /\d/, /\d/, /\d/]}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
+                        <p></p>
 
-<label>Conta</label>
+                        <label>Conta</label>
 
-<MaskedInput
-    placeholder='Conta'
-    name='conta'
-    onChange={handleChange("conta")}
-    defaultValue={values.conta}
-    onBlur={this.validarCampoVazio}
-    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-    guide={false}
-/>
-<label>Digito</label>
-<MaskedInput
-    name='digito'
-    placeholder='Dígito'
-    onChange={handleChange("digito")}
-    defaultValue={values.digito}
-    onBlur={this.validarCampoVazio}
-    mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
-    guide={false}
-/>
-<span style={{ color: 'red' }}>{this.state.validacao.conta.msg}</span>
-<p></p>
+                        <MaskedInput
+                            placeholder='Conta'
+                            name='conta'
+                            onChange={handleChange("conta")}
+                            defaultValue={values.conta}
+                            onBlur={this.validarCampoVazio}
+                            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+                            guide={false}
+                        />
+                        <label>Digito</label>
+                        <MaskedInput
+                            name='digito'
+                            placeholder='Dígito'
+                            onChange={handleChange("digito")}
+                            defaultValue={values.digito}
+                            onBlur={this.validarCampoVazio}
+                            mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
+                            guide={false}
+                        />
+                        <span style={{ color: 'red' }}>{this.state.validacao.conta.msg}</span>
+                        <p></p>
 
 
                         <RaisedButton

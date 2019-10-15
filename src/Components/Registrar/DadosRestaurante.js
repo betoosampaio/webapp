@@ -36,22 +36,27 @@ export class FormPersonalDetails extends Component {
       complemento: { ok: true },
     },
   };
+
+
   componentDidMount() {
     this.obterVariaveisCadastro();
-  }
+}
 
-  obterVariaveisCadastro = async function () {
-    let res = await fetch(path + '/restaurante/obterVariaveisCadastro', {
+obterVariaveisCadastro = async function () {
+  let res = await fetch(path + '/restaurante/obterVariaveisCadastro', {
       method: 'POST',
-    });
-    let dados = await res.json();
-    this.setState({
+  });
+  let dados = await res.json();
+  this.setState({
+      
       municipios: dados[1],
       estados: dados[2],
-    });
-  }
+   
+  });
+}
+ 
   formChangeSelect = name => value => {
-    let formNewState = Object.assign({}, this.state.formulario);
+    let formNewState = Object.assign({}, this.state);
     formNewState[name] = value;
     this.setState({ formulario: formNewState });
 
@@ -130,7 +135,7 @@ export class FormPersonalDetails extends Component {
       let res = await fetch('http://viacep.com.br/ws/' + val + '/json/');
       let dados = await res.json();
       if (!dados['erro']) {
-        let formNewState = Object.assign({}, this.state.formulario);
+        let formNewState = Object.assign({}, this.state);
         formNewState['logradouro'] = dados.logradouro;
         formNewState['bairro'] = dados.bairro;
         formNewState['municipio'] = dados.localidade;
@@ -150,7 +155,7 @@ export class FormPersonalDetails extends Component {
         this.setState({ validacao: ValidnewState });
       }
       else {
-        let formNewState = Object.assign({}, this.state.formulario);
+        let formNewState = Object.assign({}, this.state);
         formNewState['logradouro'] = '';
         formNewState['bairro'] = '';
         formNewState['municipio'] = '';
@@ -231,7 +236,7 @@ export class FormPersonalDetails extends Component {
     );
   };
   getSuggestionValue = suggestion => {
-    let formNewState = Object.assign({}, this.state.formulario);
+    let formNewState = Object.assign({}, this.state);
     formNewState['municipio'] = suggestion.municipio;
     this.setState({ formulario: formNewState });
   };
@@ -322,9 +327,9 @@ export class FormPersonalDetails extends Component {
               type='text'
               placeholder='Qual seria o Endereço ? '
               name='logradouro'
-              onChange={this.formChange}
               onBlur={this.validarCampoVazio}
-              value={this.state.formulario.logradouro}
+              defaultValue={values.logradouro}
+              onChange={handleChange("logradouro")}
               disabled={this.state.formulario.enderecoDisabled}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
@@ -348,8 +353,8 @@ export class FormPersonalDetails extends Component {
               type='text'
               placeholder='Complemento'
               name='complemento'
-              value={this.state.formulario.complemento.msg}
-              onChange={this.formChange}
+              defaultValue={values.complemento}
+              onChange={handleChange("complemento")}
             />
             <p></p>
 
@@ -359,8 +364,8 @@ export class FormPersonalDetails extends Component {
               type='text'
               placeholder='Bairro'
               name='bairro'
-              value={this.state.formulario.bairro}
-              onChange={this.formChange}
+              defaultValue={values.bairro}
+              onChange={handleChange("bairro")}
               onBlur={this.validarCampoVazio}
               disabled={this.state.formulario.enderecoDisabled}
             />
@@ -374,8 +379,8 @@ export class FormPersonalDetails extends Component {
               options={this.state.estados}
               getOptionLabel={option => option.uf}
               getOptionValue={option => option.uf}
-              value={this.state.formulario.uf}
-              onChange={this.formChangeSelect('uf')}
+              defaultValue={values.uf}
+              onChange={handleChange("uf")}
               isDisabled={this.state.formulario.enderecoDisabled}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>

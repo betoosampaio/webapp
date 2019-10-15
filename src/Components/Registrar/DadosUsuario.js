@@ -18,6 +18,7 @@ export class FormUserDetails extends Component {
     },
   };
 
+ 
 
   validarCampoVazio = (event) => {
     let ok = false, msg = '';

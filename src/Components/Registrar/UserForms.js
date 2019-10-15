@@ -47,7 +47,26 @@ export class UserForms extends Component {
 
 cadastrarRestaurante = async (event) => {
 
-   console.log(this.state);
+
+
+    let formulario = Object.assign({}, this.state);
+   
+    let res = await fetch(path + '/restaurante/cadastrar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formulario)
+    });
+    let sucess = await res.ok;
+
+    if (sucess) {
+        alert('RESTAURANTE CADASTRADO COM SUCESSO!');
+        window.location.href = "pathWeb +/Login"
+    } else {
+        let err = await res.json();
+        alert('ERRO NO CADASTRO: ' + err.msg);
+    }
 }
 
 
