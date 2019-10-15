@@ -68,7 +68,9 @@ class Login extends React.Component {
       <form id='formLogin' >
 
         <h1>Bem-vindo ao Freed</h1>
+        <h2>Portal do Parceiro</h2>
 
+        
         <div class="input-block-Login">
 
           <label for="login-email">Código do restaurante</label>
