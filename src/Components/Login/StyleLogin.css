@@ -2,28 +2,37 @@
  
 html, 
 body {
-background-image: url(../Login/images/fundo.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-padding-top: 0%;
-display: inline;
-font-weight: bold;
+  background-image: url('../Login/images/fundo.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-image: auto;
+  padding-top: 0%;
+  font-weight: bold;
+  
 }
- 
+
+
 h1 {
   font-size: 25px;
   font-family: 'Chivo', sans-serif;
   
+}
+h2 {
+  font-size: 16px;
+  font-family: 'Chivo', sans-serif;
+  color: #DC143C; 
 }
  
 #formLogin {
   width: 280px;
   margin: 10%;
   background-size: cover;
-  background-color: white;
   padding: 15px 15px;
   border-radius: 25px;
-  color: #000000;
+  color: #DC143C;
+  background-color: rgb(200, 200, 200);
+  position: left;
+
   
 }
  
@@ -34,6 +43,8 @@ h1 {
  
 form ::placeholder {
 font-size: 12px;
+color: gray;
+
 }
  
 /* APARIÇÃO DO FORM */
@@ -68,7 +79,7 @@ form {
   }
     
   form .input-block-Login label {
-    font-size: 14px;
+    font-size: 16px;
     color: #f56d0a;
   }
   
