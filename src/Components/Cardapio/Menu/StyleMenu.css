@@ -1,0 +1,86 @@
+.modal{
+    overflow-y:hidden;
+  }
+  
+  
+  #formCadastrarMenu {
+    width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 30px 25px;
+    border-radius: 5px;
+    overflow-y:hidden;
+  }
+  
+  #formEditarMenu {
+    width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 30px 25px;
+    border-radius: 5px;
+    overflow-y:hidden;
+  }
+  /* APARIÇÃO DO FORM */
+  
+ #formCadastrarMenu  form {
+    animation-name: freed;
+    animation-duration: 700ms;
+  }
+  
+  @keyframes freed {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  #formCadastrarMenu form .btn-login {
+    display: inline-block;
+    outline: 0;
+    min-width: 100px;
+    width: 100%;
+    border: 0;
+    background-color: #7159c1;
+    color: white;
+    border-radius: 25px;
+    margin: auto;
+    padding: 7px;
+    
+    }
+  
+    #formCadastrarMenu form .input-block {
+      margin-bottom: 20px;
+    }
+    
+    #formCadastrarMenu form .input-block label {
+      font-size: 14px;
+      color: darkslateblue;
+    }
+    
+   #formCadastrarMenu form .input-block input {
+      width: 100%;
+      display: block;
+      margin-top: 8px;
+      padding: 7px;
+      font-size: 16px;
+      color: #7159c1;
+      border-radius: 2px;
+      border: 1px solid #ccddef;
+      outline-color: #7159c1;
+    }
+    
+  
+    #formCadastrarMenu label{
+      color: blueviolet;
+      font-weight: bold;
+    }
+    #formEditarMenu label{
+      color: blueviolet;
+      font-weight: bold;
+    }
+  
+    
