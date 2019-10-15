@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
-
+import { AppSwitch } from '@coreui/react';
+import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class EditarProduto extends Component {
     render() {
@@ -54,7 +54,7 @@ class EditarProduto extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input />
+                                <SelectMenu></SelectMenu>
                             </InputGroup>
                         </FormGroup>
 
