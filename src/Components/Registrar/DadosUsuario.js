@@ -10,13 +10,6 @@ const path = process.env.REACT_APP_SRV_PATH;
 export class FormUserDetails extends Component {
   state = {
 
-    formulario: {
-      celular: '',
-      email: '',
-      cpf_administrador: '',
-      nome_administrador: '',
-
-    },
     validacao: {
       celular: { ok: false, msg: '*' },
       email: { ok: false, msg: '*' },
@@ -135,9 +128,9 @@ export class FormUserDetails extends Component {
             <label>Cpf</label>
             <p></p>
             <MaskedInput
-              onChange={this.formChange}
               onBlur={this.validarCPF}
-              value={this.state.formulario.cpf_administrador}
+              onChange={handleChange("cpf_administrador")}
+              defaultValue={values.cpf_administrador}
               placeholder='CPF Administrador'
               name='cpf_administrador'
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
@@ -152,9 +145,9 @@ export class FormUserDetails extends Component {
               type='text'
               placeholder='Nome Administrador'
               name='nome_administrador'
-              onChange={this.formChange}
               onBlur={this.validarCampoVazio}
-              value={this.state.formulario.nome_administrador}
+              onChange={handleChange("nome_administrador")}
+              defaultValue={values.nome_administrador}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
             <p></p>
@@ -164,8 +157,8 @@ export class FormUserDetails extends Component {
             <p></p>
             <MaskedInput placeholder='Celular'
               name='celular'
-              value={this.state.formulario.celular}
-              onChange={this.formChange}
+              onChange={handleChange("celular")}
+              defaultValue={values.celular}
               onBlur={this.validarCelular}
               mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
               guide={true}
@@ -179,8 +172,8 @@ export class FormUserDetails extends Component {
               type='text'
               placeholder='E-mail'
               name='email'
-              value={this.state.formulario.email}
-              onChange={this.formChange}
+              onChange={handleChange("email")}
+              defaultValue={values.email}
               onBlur={this.validarEmail}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>

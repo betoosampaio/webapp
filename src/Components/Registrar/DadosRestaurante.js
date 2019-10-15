@@ -59,7 +59,7 @@ export class FormPersonalDetails extends Component {
     ValidnewState[name].ok = true;
     ValidnewState[name].msg = '';
     this.setState({ validacao: ValidnewState });
-}
+  }
   validarCampoVazio = (event) => {
     let ok = false, msg = '';
 
@@ -108,7 +108,7 @@ export class FormPersonalDetails extends Component {
       }
     }
   }
-   validarCEP = async (event) => {
+  validarCEP = async (event) => {
     let ok = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (!val) {
@@ -171,7 +171,7 @@ export class FormPersonalDetails extends Component {
       }
     }
   }
-    testarCNPJ = (cnpj) => {
+  testarCNPJ = (cnpj) => {
     if (cnpj == '') return false;
 
     if (cnpj.length != 14)
@@ -220,7 +220,7 @@ export class FormPersonalDetails extends Component {
 
     return true;
   }
-  
+
 
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
@@ -305,8 +305,8 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
             <MaskedInput
-              value={this.state.formulario.cep}
-              onChange={this.formChange}
+              defaultValue={values.cep}
+              onChange={handleChange("cep")}
               onBlur={this.validarCEP}
               name='cep'
               placeholder='Aqui seria o cep do restaurante !'
@@ -332,15 +332,12 @@ export class FormPersonalDetails extends Component {
 
             <label>Número</label>
             <p></p>
-            <MaskedInput
+            <input
               type='text'
-              placeholder='Número do endereço'
+              placeholder='Número'
               name='numero'
-              onChange={this.formChange}
-              onBlur={this.validarCampoVazio}
-              value={this.state.formulario.numero}
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-              guide={false}
+              onChange={handleChange("numero")}
+              defaultValue={values.numero}
             />
             <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
             <p></p>

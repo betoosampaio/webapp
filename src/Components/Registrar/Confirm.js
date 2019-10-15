@@ -8,13 +8,19 @@ export class FormUserDetails extends Component {
     e.preventDefault();
     this.props.nextStep();
   };
+  cadastrarRestaurante = e => {
+    e.preventDefault();
+    this.props.cadastrarRestaurante();
+  };
   back = e => {
     e.preventDefault();
     this.props.prevStep();
   };
   render() {
     const {
-      values: { firstName, lastName, email, occupation, city, bio }
+
+      values: { cnpj, razao_social, cep, logradouro, numero, bairro, municipio, uf, complemento, celular, email, codigo_banco, id_tipo_cadastro_conta, id_tipo_conta, agencia, conta, digito, cpf_administrador, nome_administrador, codigo_restaurante, nome_restaurante, login, senha }
+
     } = this.props;
     return (
       <MuiThemeProvider>
@@ -23,20 +29,22 @@ export class FormUserDetails extends Component {
           <form className='cadastrar'>
             <List>
               <h1>Seja muito bem vindo a familia FREED</h1>
-              <ListItem primaryText="First Name" secondaryText={firstName} />
-              <ListItem primaryText="Last Name" secondaryText={lastName} />
-              <ListItem primaryText="Email Id" secondaryText={email} />
-              <ListItem primaryText="Occupation" secondaryText={occupation} />
-              <ListItem primaryText="City" secondaryText={city} />
-              <ListItem primaryText="Bio" secondaryText={bio} />
+              <ListItem primaryText="First Name" secondaryText={cnpj} />
+              <ListItem primaryText="Last Name" secondaryText={razao_social} />
+              <ListItem primaryText="Email Id" secondaryText={cep} />
+              <ListItem primaryText="Occupation" secondaryText={logradouro} />
+              <ListItem primaryText="City" secondaryText={numero} />
+              <ListItem primaryText="Bio" secondaryText={bairro} />
             </List>
             <br />
+
             <RaisedButton
               label="Confirm & Continue"
               primary={true}
               style={styles.button}
-              onClick={this.continue}
+              onClick={this.cadastrarRestaurante}
             />
+
             <RaisedButton
               label="Back"
               primary={false}
