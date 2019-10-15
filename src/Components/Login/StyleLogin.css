@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
  
-html, 
-body {
-  background-image: url('../Login/images/fundo.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-image: auto;
-  padding-top: 0%;
-  font-weight: bold;
-  
+html,
+body#Login {
+background-image: url(../Login/images/fundo.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+padding-top: 0%;
+display: inline;
+font-weight: bold;
+
 }
 
 

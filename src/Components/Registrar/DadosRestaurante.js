@@ -4,7 +4,25 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import MaskedInput from 'react-text-mask';
 import RaisedButton from "material-ui/RaisedButton";
+
 export class FormPersonalDetails extends Component {
+  state = {
+    validacao: {
+
+      cnpj: { ok: false, msg: '*' },
+      razao_social: { ok: false, msg: '*' },
+      especialidade: { ok: false, msg: '*' },
+      cep: { ok: false, msg: '*' },
+      logradouro: { ok: false, msg: '*' },
+      numero: { ok: false, msg: '*' },
+      complemento: { ok: false, msg: '*' },
+      bairro: { ok: false, msg: '*' },
+      uf: { ok: false, msg: '*' },
+      municipio: { ok: false, msg: '*' },
+
+    },
+  }
+
   continue = e => {
     e.preventDefault();
     this.props.nextStep();
@@ -13,9 +31,11 @@ export class FormPersonalDetails extends Component {
     e.preventDefault();
     this.props.prevStep();
   };
+
   render() {
     const { values, handleChange } = this.props;
     return (
+
       <MuiThemeProvider>
         <React.Fragment>
           <AppBar title="Dados do Restaurante" />
@@ -31,9 +51,9 @@ export class FormPersonalDetails extends Component {
               mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
 
             <p></p>
-
 
             <input
               type='text'
@@ -44,6 +64,7 @@ export class FormPersonalDetails extends Component {
               defaultValue={values.razao_social}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.razao_social.msg}</span>
 
             <p></p>
 
@@ -56,9 +77,9 @@ export class FormPersonalDetails extends Component {
               defaultValue={values.especialidade}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.especialidade.msg}</span>
 
             <p></p>
-
 
             <MaskedInput
               onChange={handleChange("cep")}
@@ -70,6 +91,8 @@ export class FormPersonalDetails extends Component {
               guide={true}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
+
             <p></p>
 
             <input
@@ -79,8 +102,9 @@ export class FormPersonalDetails extends Component {
               onBlur={this.validarCampoVazio}
               onChange={handleChange("logradouro")}
               defaultValue={values.logradouro}
-
             />
+
+            <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
 
             <p></p>
 
@@ -95,6 +119,8 @@ export class FormPersonalDetails extends Component {
               guide={false}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
+
             <p></p>
 
             <input
@@ -104,6 +130,8 @@ export class FormPersonalDetails extends Component {
               onChange={handleChange("complemento")}
               defaultValue={values.complemento}
             />
+
+            <span style={{ color: 'red' }}>{this.state.validacao.complemento.msg}</span>
 
             <p></p>
 
@@ -115,6 +143,7 @@ export class FormPersonalDetails extends Component {
               defaultValue={values.bairro}
             />
 
+            <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
 
             <p></p>
 
@@ -124,9 +153,21 @@ export class FormPersonalDetails extends Component {
               name='uf'
               onChange={handleChange("uf")}
               defaultValue={values.uf}
-
-
             />
+
+            <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
+
+            <p></p>
+
+            <input
+              type='text'
+              placeholder='municipio'
+              name='municipio'
+              onChange={handleChange("municipio")}
+              defaultValue={values.municipio}
+            />
+
+            <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>
 
             <p></p>
 

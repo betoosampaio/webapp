@@ -34,6 +34,7 @@ export class FormUserDetails extends Component {
               defaultValue={values.Codigo_restaurante}
               onBlur={this.validarCodigoRestaurante}
             />
+            <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
 
 
            <p></p>
