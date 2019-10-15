@@ -5,18 +5,26 @@ import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 import styles from './styles.css'
 import MaskedInput from 'react-text-mask';
-export class FormUserDetails extends Component {
 
-  validarCampos = e=>{
-    e.preventDefault();
-    this.props.validarCampos();
+
+export class FormUserDetails extends Component {
+  state = {
+    validacao: {
+
+
+      celular: { ok: false, msg: '*' },
+      email: { ok: false, msg: '*' },
+      cpf_administrador: { ok: false, msg: '*' },
+      nome_administrador: { ok: false, msg: '*' },
+
+    },
   }
 
   continue = e => {
-
     e.preventDefault();
     this.props.nextStep();
   };
+  
 
   render() {
     const { values, handleChange } = this.props;
@@ -37,6 +45,7 @@ export class FormUserDetails extends Component {
               onChange={handleChange("nome_administrador")}
               defaultValue={values.nome_administrador}
             />
+            <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
 
             <p></p>
 
@@ -50,6 +59,7 @@ export class FormUserDetails extends Component {
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
             />
+            <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
 
             <p></p>
 
@@ -61,6 +71,7 @@ export class FormUserDetails extends Component {
               defaultValue={values.email}
               onBlur={this.validarEmail}
             />
+            <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
 
             <p></p>
 
@@ -72,6 +83,7 @@ export class FormUserDetails extends Component {
               mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
               guide={true}
             />
+            <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
 
 
             <p></p>
@@ -80,7 +92,7 @@ export class FormUserDetails extends Component {
               label="Continue"
               primary={true}
               style={styles.button}
-              onClick={this.continue}
+              onClick={ this.continue}
             />
 
           </form>

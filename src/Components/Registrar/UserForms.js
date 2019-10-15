@@ -74,16 +74,9 @@ export class UserForms extends Component {
         this.obterVariaveisCadastro();
     }
 
-    validarCampos = async (event) =>{
+   
 
-        for (let p in this.state.validacao) {
-            if (!this.state.validacao[p].ok) {
-                alert('Preencha todos os campos corretamente');
-                return false;
-            }
-        }
-
-    }
+    
 
     cadastrarRestaurante = async (event) => {
 
@@ -533,7 +526,7 @@ export class UserForms extends Component {
             case 1: return (
                 <DadosUsuario
                     nextStep={this.nextStep}
-                    validarCampos={this.validarCampos}
+                    validarCampoVazio={this.validarCampoVazio}
                     handleChange={this.handleChange}
                     values={values} />
             )
