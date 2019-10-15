@@ -1,10 +1,12 @@
-html#Cadastrar{
+html body{
     background: #ffffff;
+    width: auto;
+    height: 1200px;
 }
 .cadastrar{
    
     width: 700px;
-    height: 800px;
+    height: auto;
     margin: auto;
     padding-left: 220px;
 }
