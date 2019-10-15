@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
  
 html,
-body#Login {
+body {
 background-image: url(../Login/images/fundo.jpg);
 background-repeat: no-repeat;
 background-size: cover;
@@ -20,18 +20,8 @@ h2 {
   font-size: 16px;
   font-family: 'Chivo', sans-serif;
   color: #DC143C;
-  opacity: 1;
 }
 
-#TelaDeFundo {
-background-image: url(../Login/images/fundo.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-padding-top: 0%;
-display: inline;
-font-weight: bold;
-
-}
  
 #formLogin {
   width: 280px;
@@ -40,7 +30,7 @@ font-weight: bold;
   padding: 15px 15px;
   border-radius: 25px;
   color: #DC143C;
-  background-color: rgb(200, 200, 200);
+  background-color: white;
   position: left;
 
   

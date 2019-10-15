@@ -1,16 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Chivo:900&display=swap');
+
 html body{
     background: #ffffff;
     width: auto;
     height: 1200px;
 }
-.cadastrar{
-   
-    width: 700px;
-    height: auto;
-    margin: auto;
-    padding-left: 220px;
-}
 
-button: {
-    margin: 15
-  }
+.cadastrar {   
+    padding-top: 10px;
+    padding-left: 3%;
+    
+    
+    
+}
