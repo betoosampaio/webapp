@@ -4,7 +4,10 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import MaskedInput from 'react-text-mask';
 import RaisedButton from "material-ui/RaisedButton";
+
 const path = process.env.REACT_APP_SRV_PATH;
+
+import styles from './Styles.css';
 
 export class DadosLogin extends Component {
   state = {
@@ -497,9 +500,12 @@ onSuggestionsClearRequested = () => {
 
           <form className='cadastrar'>
             <p></p>
+
             <label>Código do restaurante</label>
+
             <p></p>
-          <input
+
+            <input
               type='text'
               placeholder='Código Restaurante ?'
               name='codigo_restaurante'
@@ -510,6 +516,11 @@ onSuggestionsClearRequested = () => {
 
             <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
 
+            <p></p>
+
+            <label>Nome do restaurante</label>
+
+            <p></p>
 
             <p></p>
             <label>Nome do restaurante</label>
@@ -523,11 +534,12 @@ onSuggestionsClearRequested = () => {
               defaultValue={values.nome_restaurante}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
+            <p></p>
+
+            <label>Login</label>
 
             <p></p>
-            <label>Login do restaurante</label>
-            <p></p>
+
             <input
               type='text'
               placeholder='Qual seria o Login?'
@@ -537,25 +549,22 @@ onSuggestionsClearRequested = () => {
               defaultValue={values.login}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
+            <p></p>
+
+            <label>Senha</label>
 
             <p></p>
-            <label>Senha do restaurante</label>
-            <p></p>
+
             <input
-              type='text'
-              placeholder='Qual seria a senha ? '
+              type='password'
+              placeholder='Digite sua senha'
               name='senha'
               onBlur={this.validarCampoVazio}
               onChange={handleChange("senha")}
               defaultValue={values.senha}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
-
             <p></p>
-
-         
 
             <RaisedButton
               label="Back"

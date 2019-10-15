@@ -269,6 +269,11 @@ export class FormPersonalDetails extends Component {
           <AppBar title="Dados do Restaurante" />
 
           <form className='cadastrar'>
+            <p></p>
+
+            <label>CNPJ</label>
+
+            <p></p>
 
             <label>Cnpj</label>
             <p></p>
@@ -278,7 +283,7 @@ export class FormPersonalDetails extends Component {
               defaultValue={values.cnpj}
               onBlur={this.validarCNPJ}
               name='cnpj'
-              placeholder='Qual o cnpj do restaurante ?'
+              placeholder='Qual é o CNPJ do restaurante?'
               mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
             />
 
@@ -287,10 +292,17 @@ export class FormPersonalDetails extends Component {
             <p></p>
 
             <label>Razão Social</label>
+<<<<<<< HEAD
+
             <p></p>
+
+
+=======
+            <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <input
               type='text'
-              placeholder='E qual seria a sua Razão Social ?'
+              placeholder='Razão Social do restaurante'
               name='razao_social'
               onBlur={this.validarCampoVazio}
               onChange={handleChange("razao_social")}
@@ -301,15 +313,40 @@ export class FormPersonalDetails extends Component {
 
             <p></p>
 
+<<<<<<< HEAD
+            <label>Informe sua especialidade</label>
+
+            <p></p>
+
+
+            <input
+              type='text'
+              placeholder='Qual é a especialidade do restaurante?'
+              name='razao_social'
+              onBlur={this.validarCampoVazio}
+              onChange={handleChange("especialidade")}
+              defaultValue={values.especialidade}
+            />
+
+            <span style={{ color: 'red' }}>{this.state.validacao.especialidade.msg}</span>
+
+            <p></p>
+
+            <label>CEP</label>
+
+            <p></p>
+
+=======
             <label>Cep</label>
 
             <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <MaskedInput
               value={this.state.formulario.cep}
               onChange={this.formChange}
               onBlur={this.validarCEP}
               name='cep'
-              placeholder='Aqui seria o cep do restaurante !'
+              placeholder='Informe o CEP do restaurante'
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
               guide={true}
             />
@@ -317,10 +354,16 @@ export class FormPersonalDetails extends Component {
             <p></p>
 
             <label>Endereço</label>
+<<<<<<< HEAD
+
             <p></p>
+
+=======
+            <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <input
               type='text'
-              placeholder='Qual seria o Endereço ? '
+              placeholder='Informe o Endereço'
               name='logradouro'
               onChange={this.formChange}
               onBlur={this.validarCampoVazio}
@@ -331,7 +374,13 @@ export class FormPersonalDetails extends Component {
             <p></p>
 
             <label>Número</label>
+<<<<<<< HEAD
+
             <p></p>
+
+=======
+            <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <MaskedInput
               type='text'
               placeholder='Número do endereço'
@@ -345,8 +394,15 @@ export class FormPersonalDetails extends Component {
             <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
             <p></p>
 
+<<<<<<< HEAD
+            <label>Complemento (opcional)</label>
+
+            <p></p>
+
+=======
             <label>Complemento</label>
             <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <input
               type='text'
               placeholder='Complemento'
@@ -357,10 +413,16 @@ export class FormPersonalDetails extends Component {
             <p></p>
 
             <label>Bairro</label>
+<<<<<<< HEAD
+
             <p></p>
+
+=======
+            <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <input
               type='text'
-              placeholder='Bairro'
+              placeholder='Bairro do restaurante'
               name='bairro'
               value={this.state.formulario.bairro}
               onChange={this.formChange}
@@ -371,6 +433,17 @@ export class FormPersonalDetails extends Component {
             <p></p>
 
             <label>Estado</label>
+<<<<<<< HEAD
+
+            <p></p>
+
+            <input
+              type='text'
+              placeholder='UF do restaurante'
+              name='uf'
+              onChange={handleChange("uf")}
+              defaultValue={values.uf}
+=======
             <p></p>
             <Select
               name="uf"
@@ -380,10 +453,23 @@ export class FormPersonalDetails extends Component {
               value={this.state.formulario.uf}
               onChange={this.formChangeSelect('uf')}
               isDisabled={this.state.formulario.enderecoDisabled}
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             />
             <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
             <p></p>
 
+<<<<<<< HEAD
+            <label>Munícipio</label>
+
+            <p></p>
+
+            <input
+              type='text'
+              placeholder='Munícipio do restaurante'
+              name='municipio'
+              onChange={handleChange("municipio")}
+              defaultValue={values.municipio}
+=======
             <label>Município</label>
             <p></p>
             <Autosuggest
@@ -401,6 +487,7 @@ export class FormPersonalDetails extends Component {
                 onBlur: this.validarCampoVazio,
                 disabled: this.state.formulario.enderecoDisabled
               }}
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>

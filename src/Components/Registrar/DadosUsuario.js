@@ -3,7 +3,7 @@ import AppBar from "material-ui/AppBar";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import styles from './styles.css'
+import styles from './Styles.css'
 import MaskedInput from 'react-text-mask';
 
 const path = process.env.REACT_APP_SRV_PATH;
@@ -128,12 +128,36 @@ export class FormUserDetails extends Component {
         <React.Fragment>
           <AppBar title="Dados do Usuário" />
 
+
           <form className='cadastrar'>
 
             <p></p>
 
+<<<<<<< HEAD
+            <label>Nome do Administrador</label>
+
+            <p></p>
+                    
+            <input
+              type='text'
+              placeholder='Nome Administrador'
+              name='nome_administrador'
+              onBlur={this.validarCampoVazio}
+              onChange={handleChange("nome_administrador")}
+              defaultValue={values.nome_administrador}
+            />
+            <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
+
+            <p></p>
+
+            <label>CPF</label>
+
+            <p></p>
+
+=======
             <label>Cpf</label>
             <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <MaskedInput
               onChange={this.formChange}
               onBlur={this.validarCPF}
@@ -146,8 +170,15 @@ export class FormUserDetails extends Component {
             <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
             <p></p>
 
+<<<<<<< HEAD
+            <label>E-mail do Administrador</label>
+
+            <p></p>
+
+=======
             <label>Nome do Administrador</label>
             <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <input
               type='text'
               placeholder='Nome Administrador'
@@ -159,9 +190,16 @@ export class FormUserDetails extends Component {
             <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
             <p></p>
 
+<<<<<<< HEAD
+            <label>E-mail do Administrador</label>
+
+            <p></p>
+
+=======
 
             <label>Celular</label>
             <p></p>
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <MaskedInput placeholder='Celular'
               name='celular'
               value={this.state.formulario.celular}
@@ -175,6 +213,9 @@ export class FormUserDetails extends Component {
 
             <label>E-mail</label>
             <p></p>
+<<<<<<< HEAD
+            
+=======
             <input
               type='text'
               placeholder='E-mail'
@@ -187,6 +228,7 @@ export class FormUserDetails extends Component {
             <p></p>
 
 
+>>>>>>> 245408ff3855a061f5f4791bb343b749b3ac5e89
             <RaisedButton
               label="Continue"
               primary={true}
