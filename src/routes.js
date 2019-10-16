@@ -24,7 +24,7 @@ const routes = [
   { path: '/cardapio/produto/editar', name: 'Editar', component: EditarProduto },
   { path: '/cardapio/menu', exact: true, name: 'Menu', component: Menu },
   { path: '/cardapio/menu/cadastrar', name: 'Cadastrar', component: CadastrarMenu },
-  { path: '/cardapio/menu/editar', name: 'Editar', component: EditarMenu },
+  { path: '/cardapio/menu/editar/:id', name: 'Editar', component: EditarMenu },
   { path: '/gerenciar', exact: true, name: 'Gerenciar', component: Gerenciar },
   { path: '/gerenciar/detalhemesa', name: 'Detalhe Mesa', component: DetalheMesa },
 ];

@@ -24,15 +24,22 @@ class ListaMenu extends Component {
         }
     }
 
+    remover = async (id) => {
+        let dados = await serverRequest.request('/menu/remover', { "id_menu": id });
+        if (dados) {
+            this.obterLista();
+        }
+    }
+
     render() {
         return (
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
-                        <th>Descrição</th>                      
+                        <th>Descrição</th>
                         <th>Ativo</th>
                         <th>Editar</th>
-                        <th>Excluir</th>                        
+                        <th>Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,14 +50,14 @@ class ListaMenu extends Component {
                                     <td>{obj.ds_menu}</td>
                                     <td>{obj.ativo ? 'Sim' : 'Não'}</td>
                                     <td>
-                                        <Link to="/cardapio/menu/editar">
+                                    <Link to={{ pathname: `/cardapio/menu/editar/${obj.id_menu}` }}>
                                             <Button color="secondary" size="sm">
                                                 <i className="icon-note"></i>
                                             </Button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <Button color="danger" size="sm">
+                                        <Button onClick={() => this.remover(obj.id_menu)} color="danger" size="sm">
                                             <i className="icon-close"></i>
                                         </Button>
                                     </td>
