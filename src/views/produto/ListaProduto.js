@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
+import Foto from '../../components/uploadFoto/Foto';
 
 class ListaProduto extends Component {
 
@@ -24,11 +25,20 @@ class ListaProduto extends Component {
         }
     }
 
+    remover = async (id) => {
+        let dados = await serverRequest.request('/produto/remover', { "id_produto": id });
+        if (dados) {
+            this.obterLista();
+        }
+    }
+
     render() {
         return (
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
+                        <th>ID</th>
+                        <th>Foto</th>
                         <th>Nome do Produto</th>
                         <th>Descrição</th>
                         <th>Preço</th>
@@ -43,7 +53,9 @@ class ListaProduto extends Component {
                     {
                         this.state.lista.map((obj) => {
                             return (
-                                <tr>
+                                <tr key={obj.id_produto}>
+                                    <td>{obj.id_produto}</td>
+                                    <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
                                     <td>{obj.nome_produto}</td>
                                     <td>{obj.descricao}</td>
                                     <td>{obj.preco.toString().replace('.', ',')}</td>
@@ -51,14 +63,14 @@ class ListaProduto extends Component {
                                     <td>{obj.visivel ? 'Sim' : 'Não'}</td>
                                     <td>{obj.promocao ? 'Sim' : 'Não'}</td>
                                     <td>
-                                        <Link to="/cardapio/produto/editar">
+                                        <Link to={{ pathname: `/cardapio/produto/editar/${obj.id_produto}` }}>
                                             <Button color="secondary" size="sm">
                                                 <i className="icon-note"></i>
                                             </Button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <Button color="danger" size="sm">
+                                        <Button onClick={() => this.remover(obj.id_produto)} color="danger" size="sm">
                                             <i className="icon-close"></i>
                                         </Button>
                                     </td>
