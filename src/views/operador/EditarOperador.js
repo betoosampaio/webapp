@@ -6,114 +6,115 @@ import serverRequest from '../../utils/serverRequest';
 
 class EditarOperador extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id_operador: "",
-            nome_operador: "",
-            id_perfil: "",
-            login_operador: "",
-            senha_operador: "",
-            ativo: "",
-        };
-    }
+	constructor(props) {
 
-    componentDidMount() {
-        this.obter(this.props.match.params.id);
-    }
+		super(props);
+		this.state = {
+			id_operador: "",
+			nome_operador: "",
+			id_perfil: "",
+			login_operador: "",
+			senha_operador: "",
+			ativo: "",
+		};
+	}
 
-    obter = async (id) => {
-        let dados = await serverRequest.request('/operador/obter', { "id_operador": id });
-        if (dados) {
-            this.setState(dados[0]);
-        }
-    }
+	componentDidMount() {
+		this.obter(this.props.match.params.id);
+	}
 
-    editar = async (event) => {
-        event.preventDefault();
-        let dados = await serverRequest.request('/operador/editar', this.state);
-        if (dados) {
-            window.location.href = '#/operador';
-        }
-    }
+	obter = async (id) => {
+		let dados = await serverRequest.request('/operador/obter', { "id_operador": id });
+		if (dados) {
+			this.setState(dados[0]);
+		}
+	}
 
-    changeInput = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-    }
+	editar = async (event) => {
+		event.preventDefault();
+		let dados = await serverRequest.request('/operador/editar', this.state);
+		if (dados) {
+			window.location.href = '#/operador';
+		}
+	}
 
-    changeSwitch = (event) => {
-        this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
-    }
+	changeInput = (event) => {
+		this.setState({ [event.target.name]: event.target.value });
+	}
 
-    render() {
-        return (
-            <form onSubmit={this.editar}>
-                <Card>
-                    <CardHeader>
-                        <strong>Editar Operador</strong>
-                    </CardHeader>
-                    <CardBody>
+	changeSwitch = (event) => {
+		this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
+	}
 
-                        <FormGroup>
-                            <Label>ID:</Label>
-                            <Input disabled name="id_operador" value={this.state.id_operador} onChange={this.changeInput} required/>
-                        </FormGroup>
+	render() {
+		return (
+			<form onSubmit={this.editar}>
+				<Card>
+					<CardHeader>
+						<strong>Editar Operador</strong>
+					</CardHeader>
+					<CardBody>
 
-                        <FormGroup>
-                            <Label>Nome:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-user"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required  minLength="4"/>
-                            </InputGroup>
-                        </FormGroup>
+						<FormGroup>
+							<Label>ID:</Label>
+							<Input disabled name="id_operador" value={this.state.id_operador} onChange={this.changeInput}/>
+						</FormGroup>
 
-                        <FormGroup>
-                            <Label>Perfil:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-group"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
-                            </InputGroup>
-                        </FormGroup>
+						<FormGroup>
+							<Label>Nome:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-user"></i></InputGroupText>
+								</InputGroupAddon>
+								<Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required minLength="4" />
+							</InputGroup>
+						</FormGroup>
 
-                        <FormGroup>
-                            <Label>Login:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required/>
-                            </InputGroup>
-                        </FormGroup>
+						<FormGroup>
+							<Label>Perfil:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-group"></i></InputGroupText>
+								</InputGroupAddon>
+								<SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
+							</InputGroup>
+						</FormGroup>
 
-                        <FormGroup>
-                            <Label>Senha:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-key"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input type="password" name="senha_operador" value={this.state.senha_operador} onChange={this.changeInput} required/>
-                            </InputGroup>
-                        </FormGroup>
+						<FormGroup>
+							<Label>Login:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
+								</InputGroupAddon>
+								<Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required />
+							</InputGroup>
+						</FormGroup>
 
-                        <FormGroup>
-                            <Label>Ativo:</Label>
-                            <InputGroup>
-                                <AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
-                            </InputGroup>
-                        </FormGroup>
+						<FormGroup>
+							<Label>Senha:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-key"></i></InputGroupText>
+								</InputGroupAddon>
+								<Input type="password" name="senha_operador" value={this.state.senha_operador} onChange={this.changeInput} required />
+							</InputGroup>
+						</FormGroup>
 
-                    </CardBody>
-                    <CardFooter>
-                        <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                    </CardFooter>
-                </Card>
-            </form>
-        );
-    }
+						<FormGroup>
+							<Label>Ativo:</Label>
+							<InputGroup>
+								<AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
+							</InputGroup>
+						</FormGroup>
+
+					</CardBody>
+					<CardFooter>
+						<Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+					</CardFooter>
+				</Card>
+			</form>
+		);
+	}
 }
 
 export default EditarOperador;

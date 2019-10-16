@@ -21,7 +21,7 @@ const routes = [
   { path: '/cardapio/', exact: true, name: 'Cardapio', component: Produto },
   { path: '/cardapio/produto', exact: true, name: 'Produto', component: Produto },
   { path: '/cardapio/produto/cadastrar', name: 'Cadastrar', component: CadastrarProduto },
-  { path: '/cardapio/produto/editar', name: 'Editar', component: EditarProduto },
+  { path: '/cardapio/produto/editar/:id', name: 'Editar', component: EditarProduto },
   { path: '/cardapio/menu', exact: true, name: 'Menu', component: Menu },
   { path: '/cardapio/menu/cadastrar', name: 'Cadastrar', component: CadastrarMenu },
   { path: '/cardapio/menu/editar/:id', name: 'Editar', component: EditarMenu },

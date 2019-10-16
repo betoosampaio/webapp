@@ -1,85 +1,137 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
-
+import { AppSwitch } from '@coreui/react';
+import serverRequest from '../../utils/serverRequest';
+import SelectMenu from '../../components/selectMenu/SelectMenu';
+import UploadFoto from '../../components/uploadFoto/UploadFoto';
 
 class EditarProduto extends Component {
-    render() {
-        return (
-            <div>
-                <Card>
-                    <CardHeader>
-                        <strong>Cadastrar Produto</strong>
-                    </CardHeader>
-                    <CardBody>
 
-                        <FormGroup>
-                            <Label>ID:</Label>
-                            <Input disabled />
-                        </FormGroup>
+  constructor(props) {
 
-                        <FormGroup>
-                            <Label>Nome do Produto:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input />
-                            </InputGroup>
-                        </FormGroup>
+    super(props);
+    this.state = {
+      id_produto: "",
+      nome_produto: "",
+      descricao: "",
+      preco: "",
+      id_menu: "",
+      promocao: "",
+      imagem: "",
+      visivel: "",
+      ativo: "",
+    };
+  }
 
-                        <FormGroup>
-                            <Label>Descrição:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input />
-                            </InputGroup>
-                        </FormGroup>
+  componentDidMount() {
+		this.obter(this.props.match.params.id);
+  }
+  
+  obter = async (id) => {
+    console.log(id);
+		let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
+		if (dados) {
+			this.setState(dados[0]);
+		}
+  }
+  
+  editar = async (event) => {
+		event.preventDefault();
+		let dados = await serverRequest.request('/produto/editar', this.state);
+		if (dados) {
+			window.location.href = '#/cardapio/produto';
+		}
+  }
+  
+  changeInput = (event) => {
+		this.setState({ [event.target.name]: event.target.value });
+	}
 
-                        <FormGroup>
-                            <Label>Preço:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-money"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input />
-                            </InputGroup>
-                        </FormGroup>
+	changeSwitch = (event) => {
+		this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
+	}
 
-                        <FormGroup>
-                            <Label>Menu:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input />
-                            </InputGroup>
-                        </FormGroup>
+  render() {
+    return (
+      <form onSubmit={this.editar}>
+        <Card>
+          <CardHeader>
+            <strong>Cadastrar Produto</strong>
+          </CardHeader>
+          <CardBody>
 
-                        <FormGroup>
-                            <Label>Promoção:</Label>
-                            <InputGroup>
-                                <AppSwitch className={'mx-1'} variant={'pill'} color={'success'} checked />
-                            </InputGroup>
-                        </FormGroup>
+            <FormGroup>
+              <Label>ID:</Label>
+              <Input disabled name="id_produto" value={this.state.id_produto} onChange={this.changeInput}/>
+            </FormGroup>
 
-                        <FormGroup>
-                            <Label>Visível:</Label>
-                            <InputGroup>
-                                <AppSwitch className={'mx-1'} variant={'pill'} color={'success'} checked />
-                            </InputGroup>
-                        </FormGroup>
+            <FormGroup>
+              <Label>Nome do Produto:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
+                </InputGroupAddon>
+                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} required/>
+              </InputGroup>
+            </FormGroup>
 
-                    </CardBody>
-                    <CardFooter>
-                        <Button className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                    </CardFooter>
-                </Card>
-            </div>
-        );
-    }
+            <FormGroup>
+              <Label>Descrição:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                </InputGroupAddon>
+                <Input  name="descricao" value={this.state.descricao} onChange={this.changeInput}/>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Preço:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-money"></i></InputGroupText>
+                </InputGroupAddon>
+                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required/>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Menu:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+                </InputGroupAddon>
+                <SelectMenu name="id_menu" value={this.state.id_menu} onChange={this.changeInput} required></SelectMenu>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Promoção:</Label>
+              <InputGroup>
+                <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'}  checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Visível:</Label>
+              <InputGroup>
+                <AppSwitch name="visivel" className={'mx-1'} variant={'pill'} color={'success'}  checked={this.state.visivel ? true : false} onChange={this.changeSwitch} />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Foto:</Label>
+              <UploadFoto name="imagem" onChange={this.changeInput} path={this.state.imagem}></UploadFoto>
+            </FormGroup>
+
+          </CardBody>
+          <CardFooter>
+            <Button className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+          </CardFooter>
+        </Card>
+      </form>
+    );
+  }
 }
 
 export default EditarProduto;
