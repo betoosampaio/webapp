@@ -18,7 +18,7 @@ class CadastrarMenu extends Component {
         event.preventDefault();
         let dados = await serverRequest.request('/menu/cadastrar', this.state);
         if (dados) {
-            window.location.href = '#/menu';
+            window.location.href = '#/cardapio/menu';
         }
     }
 
