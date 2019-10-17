@@ -1,9 +1,9 @@
 export default {
   items: [
     {
-      name: 'Gerenciar',
+      name: 'Meu perfil',
       url: '/gerenciar',
-      icon: 'icon-grid',
+      icon: 'icon-user',
       children: [
         {
           name: "Editar dados pessoais",
@@ -17,6 +17,12 @@ export default {
         },
 
       ]
+    },
+    {
+      name: 'Gerenciar',
+      url: '/meuperfil',
+      icon: 'icon-grid',
+      
     },
     {
       name: 'Operadores',
