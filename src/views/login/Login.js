@@ -54,7 +54,7 @@ class Login extends Component {
       <div className="app flex-row align-items-center bg">
         <Container>
           <Row className="col-sm">
-            <Col md="4">
+            <Col sm="8" md="6" lg="4">
               <CardGroup>
                 <Card className="p-6">
                   <CardBody>
