@@ -53,10 +53,10 @@ class Login extends Component {
     return (
       <div className="app flex-row align-items-center bg">
         <Container>
-          <Row className="justify-content-center">
-            <Col md="8">
+          <Row className="col-sm">
+            <Col md="4">
               <CardGroup>
-                <Card className="p-4">
+                <Card className="p-6">
                   <CardBody>
                     <Form onSubmit={this.logar}>
                       <h1>Login</h1>
@@ -114,18 +114,7 @@ class Login extends Component {
                     </Form>
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
-                  <CardBody className="text-center">
-                    <div>
-                      <h2>Cadastre-se!</h2>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                      <Link to="/registrar">
-                        <Button color="primary" className="mt-3" active tabIndex={-1}>Registrar Agora!</Button>
-                      </Link>
-                    </div>
-                  </CardBody>
-                </Card>
+                
               </CardGroup>
             </Col>
           </Row>
