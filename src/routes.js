@@ -26,6 +26,7 @@ const routes = [
   { path: '/cardapio/menu/cadastrar', name: 'Cadastrar', component: CadastrarMenu },
   { path: '/cardapio/menu/editar/:id', name: 'Editar', component: EditarMenu },
   { path: '/gerenciar', exact: true, name: 'Gerenciar', component: Gerenciar },
+  { path: '/gerenciar/restaurante/editar', exact: true, name: 'Editar Restaurante', component: Gerenciar },
   { path: '/gerenciar/detalhemesa', name: 'Detalhe Mesa', component: DetalheMesa },
 ];
 

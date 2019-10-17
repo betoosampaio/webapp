@@ -4,6 +4,13 @@ export default {
         name: 'Gerenciar',
         url: '/gerenciar',
         icon: 'icon-grid',
+        children:[
+          {
+            name: "Editar Restaurante",
+            url: '/gerenciar/restaurante/editar',
+            icon: 'icon-pencil'
+          }
+        ]
       },
       {
         name: 'Operadores',
