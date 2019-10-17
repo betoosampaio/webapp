@@ -61,7 +61,7 @@ class EditarDadosPessoais extends Component {
                             <Label>Nome do Administrador:</Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
                                 </InputGroupAddon>
                                 <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} required minLength="4" />
                             </InputGroup>
@@ -71,7 +71,7 @@ class EditarDadosPessoais extends Component {
                             <Label>CPF do Administrador:</Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
                                 </InputGroupAddon>
                                 <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} required minLength="11" />
                             </InputGroup>
@@ -81,7 +81,7 @@ class EditarDadosPessoais extends Component {
                             <Label>E-mail do Administrador:</Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                                    <InputGroupText><i className="icon-envelope"></i></InputGroupText>
                                 </InputGroupAddon>
                                 <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
                             </InputGroup>
@@ -91,7 +91,7 @@ class EditarDadosPessoais extends Component {
                             <Label>Celular do Administrador:</Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                                    <InputGroupText><i className="icon-eye"></i></InputGroupText>
                                 </InputGroupAddon>
                                 <Input name="celular" value={this.state.celular} onChange={this.changeInput} required minLength="13" />
                             </InputGroup>
