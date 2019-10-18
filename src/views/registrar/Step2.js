@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, In
 import MaskedInput from 'react-text-mask';
 import Select from 'react-select';
 import Autosuggest from 'react-autosuggest';
+import SelectUF from '../../components/selectUF/SelectUf'
 
 const stateName = "Step2";
 const path = process.env.REACT_APP_SRV_PATH;
@@ -138,7 +139,7 @@ class Step2 extends Component {
         formNewState['logradouro'] = dados.logradouro;
         formNewState['bairro'] = dados.bairro;
         formNewState['municipio'] = dados.localidade;
-        formNewState['uf'] = this.state.estados.find(e => e.uf == dados.uf);
+        formNewState['uf'] = dados.uf;
         formNewState['enderecoDisabled'] = true;
         this.setState(formNewState);
 
@@ -304,6 +305,7 @@ class Step2 extends Component {
 
             <MaskedInput
               name="cnpj"
+              className="form-control"
               value={this.state.cnpj}
               onChange={this.changeInput}
               onBlur={this.validarCNPJ}
@@ -316,7 +318,7 @@ class Step2 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Logradouro:</Label>
+          <Label>Razão Social:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
@@ -345,6 +347,7 @@ class Step2 extends Component {
 
             <MaskedInput
               name="cep"
+              className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
@@ -446,21 +449,21 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Select
+
+
+            <SelectUF
               name="uf"
-              options={this.state.estados}
-              getOptionLabel={option => option.uf}
-              getOptionValue={option => option.uf}
               value={this.state.uf}
-              onChange={this.formChangeSelect('uf')}
-            />
+              onChange={this.changeInput}>
+            </SelectUF>
+
 
             <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Complemento:</Label>
+          <Label>Cidade:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
@@ -468,12 +471,14 @@ class Step2 extends Component {
 
 
             <Autosuggest
+              className="form-control"
               suggestions={this.state.suggestions}
               onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
               onSuggestionsClearRequested={this.onSuggestionsClearRequested}
               getSuggestionValue={this.getSuggestionValue}
               renderSuggestion={this.renderSuggestion}
               inputProps={{
+                
                 type: 'text',
                 placeholder: 'Município',
                 name: 'municipio',
