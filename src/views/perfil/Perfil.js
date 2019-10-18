@@ -13,9 +13,9 @@ class Perfil extends Component {
           <CardHeader>
             <i className='icon-people'></i>&nbsp;Dados Usuário
             <div className="card-header-actions">
-              <Link to="/perfil/cadastrar">
-                <Button color="success" size="sm">
-                  <i className="icon-user-follow"></i>&nbsp;Cadastrar
+            <Link to="/perfil/editarDadosPessoais">
+                <Button color="secondary" size="sm">
+                  <i className="icon-note"></i>&nbsp;Editar
               </Button>
               </Link>
             </div>
@@ -29,9 +29,9 @@ class Perfil extends Component {
           <CardHeader>
             <i className='icon-people'></i>&nbsp;Dados do Restaurante
             <div className="card-header-actions">
-              <Link to="/perfil/cadastrar">
-                <Button color="success" size="sm">
-                  <i className="icon-user-follow"></i>&nbsp;Cadastrar
+            <Link to="/perfil/editarDadosRestaurante">
+                <Button color="secondary" size="sm">
+                  <i className="icon-note"></i>&nbsp;Editar
               </Button>
               </Link>
             </div>
@@ -46,9 +46,9 @@ class Perfil extends Component {
           <CardHeader>
             <i className='icon-people'></i>&nbsp;Dados Bancário
             <div className="card-header-actions">
-              <Link to="/perfil/cadastrar">
-                <Button color="success" size="sm">
-                  <i className="icon-user-follow"></i>&nbsp;Cadastrar
+            <Link to="/perfil/editarDadosBancario">
+                <Button color="secondary" size="sm">
+                  <i className="icon-note"></i>&nbsp;Editar
               </Button>
               </Link>
             </div>

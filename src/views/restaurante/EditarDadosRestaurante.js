@@ -34,7 +34,7 @@ class EditarDadosRestaurante extends Component {
 
   editar = async (event) => {
     event.preventDefault();
-    let dados = await serverRequest.request('/gerenciar/restaurante/editar', this.state);
+    let dados = await serverRequest.request('/gerenciar/restaurante/editar/restaurante', this.state);
     if (dados) {
       window.location.href = '#/gerenciar';
     }
