@@ -38,7 +38,7 @@ class dadosRestaurante extends Component {
             <ListGroup>
                 <ListGroupItem><b>Razão social: </b>{this.state.ListaRestaurante.razao_social}</ListGroupItem>
                 <ListGroupItem><b>CEP: </b>{this.state.ListaRestaurante.cep}</ListGroupItem>
-                <ListGroupItem><b>Logradoura: </b>{this.state.ListaRestaurante.logradouro}</ListGroupItem>
+                <ListGroupItem><b>Logradouro: </b>{this.state.ListaRestaurante.logradouro}</ListGroupItem>
                 <ListGroupItem><b>Número: </b>{this.state.ListaRestaurante.numero}</ListGroupItem>
                 <ListGroupItem><b>Complemento: </b>{this.state.ListaRestaurante.complemento}</ListGroupItem>
                 <ListGroupItem><b>Bairro: </b>{this.state.ListaRestaurante.bairro}</ListGroupItem>
