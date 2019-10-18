@@ -12,7 +12,12 @@ export default {
         },
         {
           name: "Editar dados do restaurante",
-          url: 'gerenciar/restaurante/editar',
+          url: 'gerenciar/restaurante/editar/restaurante',
+          icon: 'icon-pencil',
+        },
+        {
+          name: "Editar dados bancários",
+          url: 'gerenciar/restaurante/editar/bancarios',
           icon: 'icon-pencil',
         },
 

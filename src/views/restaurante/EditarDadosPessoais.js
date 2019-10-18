@@ -91,7 +91,7 @@ class EditarDadosPessoais extends Component {
                             <Label>Celular do Administrador:</Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-eye"></i></InputGroupText>
+                                    <InputGroupText><i className="icon-phone"></i></InputGroupText>
                                 </InputGroupAddon>
                                 <Input name="celular" value={this.state.celular} onChange={this.changeInput} required minLength="13" />
                             </InputGroup>
