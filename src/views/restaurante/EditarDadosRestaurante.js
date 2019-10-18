@@ -57,12 +57,12 @@ class EditarDadosRestaurante extends Component {
       <form name="form" onSubmit={this.editar}>
         <Card>
           <CardHeader>
-            <strong>Editar dados do restaurante</strong>
+            <h5><b>Editar dados do restaurante</b></h5>
           </CardHeader>
           <CardBody>
 
             <FormGroup>
-              <Label>Razão Social do Restaurante:</Label>
+              <Label><b>Razão Social do Restaurante:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -72,7 +72,7 @@ class EditarDadosRestaurante extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Logradouro:</Label>
+              <Label><b>Logradouro:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -82,7 +82,7 @@ class EditarDadosRestaurante extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Número:</Label>
+              <Label><b>Número:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -92,17 +92,17 @@ class EditarDadosRestaurante extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Complemento (opcional):</Label>
+              <Label><b>Complemento</b> (opcional):</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="complemento" value={this.state.complemento} onChange={this.changeInput} required minLength="13" />
+                <Input name="complemento" value={this.state.complemento} onChange={this.changeInput}  />
               </InputGroup>
             </FormGroup>
 
             <FormGroup>
-              <Label>Bairro:</Label>
+              <Label><b>Bairro:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -112,7 +112,7 @@ class EditarDadosRestaurante extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Munícipio:</Label>
+              <Label><b>Munícipio:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -122,7 +122,7 @@ class EditarDadosRestaurante extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Estado (UF):</Label>
+              <Label><b>Estado (UF):</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>

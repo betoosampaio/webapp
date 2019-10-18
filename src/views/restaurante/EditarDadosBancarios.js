@@ -34,7 +34,7 @@ class EditarDadosBancarios extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/gerenciar/restaurante/editar/bancario', this.state);
     if (dados) {
-     
+
     }
   }
 
@@ -55,12 +55,12 @@ class EditarDadosBancarios extends Component {
       <form name="form" onSubmit={this.editar}>
         <Card>
           <CardHeader>
-            <strong>Editar dados bancários</strong>
+            <h5><b>Editar dados bancários</b></h5>
           </CardHeader>
           <CardBody>
 
             <FormGroup>
-              <Label>Código do banco:</Label>
+              <Label><b>Código do banco:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -70,7 +70,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>ID da conta:</Label>
+              <Label><b>ID da conta:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -80,7 +80,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Tipo da conta:</Label>
+              <Label><b>Tipo da conta:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -90,7 +90,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Agência:</Label>
+              <Label><b>Agência:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -100,22 +100,12 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Conta:</Label>
+              <Label><b>Conta:</b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="conta" value={this.state.conta} onChange={this.changeInput} required minLength="13" />
-              </InputGroup>
-            </FormGroup>
-
-            <FormGroup>
-              <Label>Digito:</Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="digito" value={this.state.digito} onChange={this.changeInput} required minLength="13" />
+                <Input name="conta" value={this.state.conta} onChange={this.changeInput} />  <Label> <b> - </b> </Label> <Input name="digito" value={this.state.digito} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
 
