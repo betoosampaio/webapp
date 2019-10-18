@@ -14,6 +14,20 @@ class EditarDadosPessoais extends Component {
             cpf_administrador: "",
             email: "",
             celular: "",
+            razao_social: "",
+            cep: "",
+            logradouro: "",
+            numero: "",
+            complemento: "",
+            bairro: "",
+            municipio: "",
+            uf: "",
+            codigo_banco: "",
+            id_tipo_cadastro_conta: "",
+            id_tipo_conta: "",
+            agencia: "",
+            conta: "",
+            digito: "",
         };
     }
 
@@ -30,7 +44,7 @@ class EditarDadosPessoais extends Component {
 
     editar = async (event) => {
         event.preventDefault();
-        let dados = await serverRequest.request('/gerenciar/restaurante/editar', this.state);
+        let dados = await serverRequest.request('/restaurante/editar', this.state);
         if (dados) {
             window.location.href = '#/gerenciar';
         }
@@ -63,7 +77,7 @@ class EditarDadosPessoais extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-user"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} required minLength="4" />
+                                <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
                             </InputGroup>
                         </FormGroup>
 
@@ -73,7 +87,7 @@ class EditarDadosPessoais extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-user"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} required minLength="11" />
+                                <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} />
                             </InputGroup>
                         </FormGroup>
 
@@ -93,7 +107,7 @@ class EditarDadosPessoais extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-phone"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="celular" value={this.state.celular} onChange={this.changeInput} required minLength="13" />
+                                <Input name="celular" value={this.state.celular} onChange={this.changeInput} />
                             </InputGroup>
                         </FormGroup>
 

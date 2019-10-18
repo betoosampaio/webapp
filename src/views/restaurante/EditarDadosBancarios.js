@@ -10,6 +10,18 @@ class EditarDadosBancarios extends Component {
 
     super(props);
     this.state = {
+      nome_administrador: "",
+      cpf_administrador: "",
+      email: "",
+      celular: "",
+      razao_social: "",
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      municipio: "",
+      uf: "",
       codigo_banco: "",
       id_tipo_cadastro_conta: "",
       id_tipo_conta: "",
@@ -32,7 +44,7 @@ class EditarDadosBancarios extends Component {
 
   editar = async (event) => {
     event.preventDefault();
-    let dados = await serverRequest.request('/gerenciar/restaurante/editar/bancario', this.state);
+    let dados = await serverRequest.request('/restaurante/editar', this.state);
     if (dados) {
 
     }
@@ -65,7 +77,7 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="codigo_banco" value={this.state.codigo_banco} onChange={this.changeInput} required minLength="4" />
+                <Input name="codigo_banco" value={this.state.codigo_banco} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
 
@@ -95,7 +107,7 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="agencia" value={this.state.agencia} onChange={this.changeInput} required minLength="13" />
+                <Input name="agencia" value={this.state.agencia} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
 
