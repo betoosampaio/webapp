@@ -8,13 +8,43 @@ class Step4 extends Component {
   constructor(props) {
     super(props);
     this.state = props.state[stateName] || {
-      cpf_administrador: "",
-      nome_administrador: "",    
-      login: "",
-      senha: ""
+      codigo_restaurante: '',
+      nome_restaurante: '',
+      login: '',
+      senha: '',
     }
 
   }
+
+  cadastrarRestaurante = async (event) => {
+
+    for (let p in this.state.validacao) {
+        if (!this.state.validacao[p].ok) {
+            alert('Preencha todos os campos corretamente');
+            return false;
+        }
+    }
+
+    let formulario = Object.assign({}, this.state);
+
+
+    let res = await fetch('http://localhost:3001/restaurante/cadastrar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formulario)
+    });
+    let sucess = await res.ok;
+
+    if (sucess) {
+        alert('RESTAURANTE CADASTRADO COM SUCESSO!');
+     
+    } else {
+        let err = await res.json();
+        alert('ERRO NO CADASTRO: ' + err.msg);
+    }
+}
 
   prosseguir = (event) => {
     event.preventDefault();
@@ -38,22 +68,22 @@ class Step4 extends Component {
         <h4 className="text-center">Dados Pessoais</h4>
 
         <FormGroup>
-          <Label>CPF:</Label>
+          <Label>codigo_restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} />
+            <Input name="codigo_restaurante" value={this.state.codigo_restaurante} onChange={this.changeInput} />
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Nome Completo:</Label>
+          <Label>Nome Restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
+            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} />
           </InputGroup>
         </FormGroup>      
 
@@ -78,7 +108,7 @@ class Step4 extends Component {
         </FormGroup>
 
         <Button onClick={this.retornar} type="button" className="pull-left" color="secondary"><i className="icon-arrow-left"></i> Retornar</Button>
-        <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> FInalizar</Button>
+        <Button onClick={this.cadastrarRestaurante} type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> FInalizar</Button>
 
       </Form>
     );

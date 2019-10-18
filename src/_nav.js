@@ -6,6 +6,11 @@ export default {
       icon: 'icon-user',
       children: [
         {
+          name: "Listar Perfil",
+          url: '/perfil',
+          icon: 'icon-pencil'
+        },
+        {
           name: "Editar dados pessoais",
           url: '/gerenciar/restaurante/editar',
           icon: 'icon-pencil'
@@ -27,7 +32,6 @@ export default {
       name: 'Gerenciar',
       url: '/meuperfil',
       icon: 'icon-grid',
-      
     },
     {
       name: 'Operadores',
