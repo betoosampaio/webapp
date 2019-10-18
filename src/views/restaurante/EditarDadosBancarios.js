@@ -24,7 +24,7 @@ class EditarDadosBancarios extends Component {
   }
 
   obter = async (id) => {
-    let dados = await serverRequest.request('/restaurante/obter', { "id_menu": id });
+    let dados = await serverRequest.request('/restaurante/obter', { "id_restaurante": id });
     if (dados) {
       this.setState(dados[0]);
     }
@@ -34,7 +34,7 @@ class EditarDadosBancarios extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/gerenciar/restaurante/editar', this.state);
     if (dados) {
-      window.location.href = '#/gerenciar';
+     
     }
   }
 

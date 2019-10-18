@@ -22,7 +22,7 @@ class EditarDadosPessoais extends Component {
     }
 
     obter = async (id) => {
-        let dados = await serverRequest.request('/restaurante/obter', { "id_menu": id });
+        let dados = await serverRequest.request('/restaurante/obter', { "id_restaurante": id });
         if (dados) {
             this.setState(dados[0]);
         }
