@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import Select from 'react-select';
+import MaskedInput from 'react-text-mask';
+
+import SelectBanco from '../../components/selectBanco/SelectBanco'
 
 const stateName = "Step3";
 
@@ -15,31 +18,7 @@ class Step3 extends Component {
       agencia: "",
       conta: "",
       digito: "",
-      validacao: {
-        cnpj: { ok: false, msg: '*' },
-        razao_social: { ok: false, msg: '*' },
-        cep: { ok: false, msg: '*' },
-        logradouro: { ok: false, msg: '*' },
-        numero: { ok: false, msg: '*' },
-        bairro: { ok: false, msg: '*' },
-        municipio: { ok: false, msg: '*' },
-        uf: { ok: false, msg: '*' },
-        complemento: { ok: true },
-        celular: { ok: false, msg: '*' },
-        email: { ok: false, msg: '*' },
-        codigo_banco: { ok: false, msg: '*' },
-        id_tipo_cadastro_conta: { ok: false, msg: '*' },
-        id_tipo_conta: { ok: false, msg: '*' },
-        agencia: { ok: false, msg: '*' },
-        conta: { ok: false, msg: '*' },
-        digito: { ok: false, msg: '*' },
-        cpf_administrador: { ok: false, msg: '*' },
-        nome_administrador: { ok: false, msg: '*' },
-        codigo_restaurante: { ok: false, msg: '*' },
-        nome_restaurante: { ok: false, msg: '*' },
-        login: { ok: false, msg: '*' },
-        senha: { ok: false, msg: '*' }
-      },
+    
     }
   }
 
@@ -70,24 +49,9 @@ class Step3 extends Component {
     formNewState[name] = value;
     this.setState(formNewState);
 
-    let ValidnewState = Object.assign({}, this.state.validacao);
-    ValidnewState[name].ok = true;
-    ValidnewState[name].msg = '';
-    this.setState({ validacao: ValidnewState });
+  
   }
-  validarCampoVazio = (event) => {
-    let ok = false, msg = '';
-
-    if (!event.target.value)
-      msg = 'Campo obrigatório';
-    else
-      ok = true;
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState[event.target.name].ok = ok;
-    newState[event.target.name].msg = msg;
-    this.setState({ validacao: newState });
-  }
+ 
   getSuggestions = value => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
@@ -150,15 +114,14 @@ class Step3 extends Component {
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Select
+            <SelectBanco
               name="codigo_banco"
-              options={this.state.bancos}
-              getOptionLabel={option => option.nome}
-              getOptionValue={option => option.codigo}
-              onChange={this.formChangeSelect('codigo_banco')}
               value={this.state.codigo_banco}
-            />
-            <span style={{ color: 'red' }}>{this.state.validacao.codigo_banco.msg}</span>
+              onChange={this.changeInput}>
+            </SelectBanco>
+
+
+           
 
           </InputGroup>
         </FormGroup>
@@ -173,15 +136,22 @@ class Step3 extends Component {
 
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="id_tipo_cadastro_conta" id="pessoaFisica" value="0" />
+
+              <input class="form-check-input" 
+              type="radio" name="id_tipo_cadastro_conta" 
+              id="pessoaFisica" value={this.state.id_tipo_cadastro_conta = '0'} />
+
               <label class="form-check-label" for="pessoaFisica">Pessoa Física</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="id_tipo_cadastro_conta" id="pessoaJuridica" value="1" />
+
+              <input class="form-check-input" type="radio" 
+              name="id_tipo_cadastro_conta" id="pessoaJuridica" value={this.state.id_tipo_cadastro_conta = '1'} />
+
               <label class="form-check-label" for="pessoaJuridica">Pessoa Jurídica</label>
             </div>
 
-            <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_cadastro_conta.msg}</span>
+        
 
 
           </InputGroup>
@@ -195,15 +165,24 @@ class Step3 extends Component {
             </InputGroupAddon>
 
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="id_tipo_conta" id="contaCorrente" value="0" />
-              <label class="form-check-label" for="contaCorrente">Conta Corrente</label>
+
+              <input class="form-check-input"
+               type="radio" name="id_tipo_conta"
+                id="contaCorrente" value={this.state.id_tipo_conta = '0'} />
+
+              <label class="form-check-label" 
+              for="contaCorrente">Conta Corrente</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="id_tipo_conta" id="contaPoupanca" value="1" />
+
+              <input class="form-check-input"
+               type="radio" name="id_tipo_conta" id="contaPoupanca" 
+               value={this.state.id_tipo_conta = '1'} />
+
               <label class="form-check-label" for="contaPoupanca">Conta Poupança</label>
             </div>
 
-            <span style={{ color: 'red' }}>{this.state.validacao.id_tipo_conta.msg}</span>
+           
 
           </InputGroup>
         </FormGroup>
@@ -214,14 +193,17 @@ class Step3 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
-            <Input
+
+            <MaskedInput
+              className="form-control"
               name="agencia"
               value={this.state.agencia}
               onChange={this.changeInput}
-              onBlur={this.validarCampoVazio}
+            
+              mask={[/\d/, /\d/, /\d/, /\d/]}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.agencia.msg}</span>
+
           </InputGroup>
         </FormGroup>
 
@@ -231,14 +213,18 @@ class Step3 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
-            <Input
+
+            <MaskedInput
+              className="form-control"
               name="conta"
               value={this.state.conta}
               onChange={this.changeInput}
-              onBlur={this.validarCampoVazio}
+           
+              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+              guide={false}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.conta.msg}</span>
+     
           </InputGroup>
         </FormGroup>
 
@@ -248,13 +234,16 @@ class Step3 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
-            <Input
+            <MaskedInput
+              className="form-control"
               name="digito"
               value={this.state.digito}
               onChange={this.changeInput}
-              onBlur={this.validarCampoVazio}
+             
+              mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
+              guide={false}
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.digito.msg}</span>
+          
 
           </InputGroup>
         </FormGroup>

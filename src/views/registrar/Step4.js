@@ -16,35 +16,7 @@ class Step4 extends Component {
 
   }
 
-  cadastrarRestaurante = async (event) => {
-
-    for (let p in this.state.validacao) {
-        if (!this.state.validacao[p].ok) {
-            alert('Preencha todos os campos corretamente');
-            return false;
-        }
-    }
-
-    let formulario = Object.assign({}, this.state);
-
-
-    let res = await fetch('http://localhost:3001/restaurante/cadastrar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formulario)
-    });
-    let sucess = await res.ok;
-
-    if (sucess) {
-        alert('RESTAURANTE CADASTRADO COM SUCESSO!');
-     
-    } else {
-        let err = await res.json();
-        alert('ERRO NO CADASTRO: ' + err.msg);
-    }
-}
+  
 
   prosseguir = (event) => {
     event.preventDefault();

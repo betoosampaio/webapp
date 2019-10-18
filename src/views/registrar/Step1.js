@@ -147,6 +147,7 @@ class Step1 extends Component {
 
 
             <MaskedInput
+              className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
               onBlur={this.validarCPF}
@@ -155,6 +156,7 @@ class Step1 extends Component {
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
             />
+
             <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
 
           </InputGroup>
@@ -187,7 +189,9 @@ class Step1 extends Component {
               <InputGroupText><i className="icon-pencil"></i></InputGroupText>
             </InputGroupAddon>
 
-            <MaskedInput placeholder='Celular'
+            <MaskedInput
+              className="form-control"
+              placeholder='Celular'
               name="celular"
               value={this.state.celular}
               onBlur={this.validarCelular}
