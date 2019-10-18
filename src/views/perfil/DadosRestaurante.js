@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 
 const path = process.env.REACT_APP_SRV_PATH;
-class ListaPerfil extends Component {
+class dadosRestaurante extends Component {
     state = {
         ListaRestaurante: [],
     }
@@ -39,12 +39,14 @@ class ListaPerfil extends Component {
                     <tr>
 
 
-                        <th>Banco</th>
-                        <th>Tipo cadastro de conta</th>
-                        <th>Tipo de conta</th>
-                        <th>Agência</th>
-                        <th>Conta</th>
-                        <th>Digito</th>
+                        <th>Razão Social</th>
+                        <th>CEP</th>
+                        <th>Endereço</th>
+                        <th>Número</th>
+                        <th>Complemento</th>
+                        <th>Bairro</th>
+                        <th>Estado</th>
+                        <th>Município</th>
 
 
                     </tr>
@@ -59,13 +61,15 @@ class ListaPerfil extends Component {
 
 
 
-                                    <td>{obj.codigo_banco}</td>
-                                    <td>{obj.tipoCadastroConta}</td>
-                                    <td>{obj.tipo_conta}</td>
-                                    <td>{obj.agencia}</td>
-                                    <td>{obj.conta}</td>
-                                    <td>{obj.digito}</td>
-                                    
+                                    <td>{obj.razao_social}</td>
+                                    <td>{obj.cep}</td>
+                                    <td>{obj.logradouro}</td>
+                                    <td>{obj.numero}</td>
+                                    <td>{obj.complemento}</td>
+                                    <td>{obj.bairro}</td>
+                                    <td>{obj.estados}</td>
+                                    <td>{obj.municipio}</td>
+
 
 
 
@@ -79,4 +83,4 @@ class ListaPerfil extends Component {
     }
 }
 
-export default ListaPerfil;
+export default dadosRestaurante;

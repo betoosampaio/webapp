@@ -2,31 +2,9 @@ export default {
   items: [
     {
       name: 'Meu perfil',
-      url: '/gerenciar',
+      url: '/perfil',
       icon: 'icon-user',
-      children: [
-        {
-          name: "Listar Perfil",
-          url: '/perfil',
-          icon: 'icon-pencil'
-        },
-        {
-          name: "Editar dados pessoais",
-          url: '/gerenciar/restaurante/editar',
-          icon: 'icon-pencil'
-        },
-        {
-          name: "Editar dados do restaurante",
-          url: '/gerenciar/restaurante/editar',
-          icon: 'icon-pencil',
-        },
-        {
-          name: "Editar dados bancários",
-          url: '/gerenciar/restaurante/editar',
-          icon: 'icon-pencil',
-        },
 
-      ]
     },
     {
       name: 'Gerenciar',
