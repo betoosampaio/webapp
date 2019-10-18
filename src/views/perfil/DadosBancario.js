@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 
@@ -18,7 +18,9 @@ class ListaPerfil extends Component {
         });
 
 
-        this.setState({ ListaRestaurante: await res.json() });
+
+        let restaurante = await res.json()
+        this.setState({ ListaRestaurante: restaurante[0] });
 
     }
 
@@ -33,48 +35,15 @@ class ListaPerfil extends Component {
 
     render() {
         return (
-
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-
-
-                        <th>Banco</th>
-                        <th>Tipo cadastro de conta</th>
-                        <th>Tipo de conta</th>
-                        <th>Agência</th>
-                        <th>Conta</th>
-                        <th>Digito</th>
+            <ListGroup>
+                <ListGroupItem><b>Banco: </b>{this.state.ListaRestaurante.codigo_banco}</ListGroupItem>
+                <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.ListaRestaurante.tipoCadastroConta}</ListGroupItem>
+                <ListGroupItem><b>Tipo conta: </b>{this.state.ListaRestaurante.tipo_conta}</ListGroupItem>
+                <ListGroupItem><b>Agência: </b>{this.state.ListaRestaurante.agencia}</ListGroupItem>
+                <ListGroupItem><b>Conta: </b>{this.state.ListaRestaurante.conta} - {this.state.ListaRestaurante.digito}</ListGroupItem>
+            </ListGroup>
 
 
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {
-
-                        this.state.ListaRestaurante.map((obj) => {
-                            return (
-                                <tr>
-
-
-
-                                    <td>{obj.codigo_banco}</td>
-                                    <td>{obj.tipoCadastroConta}</td>
-                                    <td>{obj.tipo_conta}</td>
-                                    <td>{obj.agencia}</td>
-                                    <td>{obj.conta}</td>
-                                    <td>{obj.digito}</td>
-                                    
-
-
-
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </Table>
         );
     }
 }

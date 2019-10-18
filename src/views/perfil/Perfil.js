@@ -11,7 +11,7 @@ class Perfil extends Component {
       <div>
         <Card>
           <CardHeader>
-            <i className='icon-people'></i>&nbsp;Dados Usuário
+            <i className='icon-people'></i>&nbsp;<b>Dados Usuário</b>
             <div className="card-header-actions">
             <Link to="/perfil/editarDadosPessoais">
                 <Button color="secondary" size="sm">
@@ -27,7 +27,7 @@ class Perfil extends Component {
 
         <Card>
           <CardHeader>
-            <i className='icon-people'></i>&nbsp;Dados do Restaurante
+            <i className='icon-cup'></i>&nbsp;<b>Dados do Restaurante</b>
             <div className="card-header-actions">
             <Link to="/perfil/editarDadosRestaurante">
                 <Button color="secondary" size="sm">
@@ -44,7 +44,7 @@ class Perfil extends Component {
 
         <Card>
           <CardHeader>
-            <i className='icon-people'></i>&nbsp;Dados Bancário
+            <i className='icon-credit-card'></i>&nbsp;<b>Dados Bancário</b>
             <div className="card-header-actions">
             <Link to="/perfil/editarDadosBancario">
                 <Button color="secondary" size="sm">

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 
@@ -17,8 +17,8 @@ class ListaPerfil extends Component {
             },
         });
 
-
-        this.setState({ ListaRestaurante: await res.json() });
+        let restaurante = await res.json()
+        this.setState({ ListaRestaurante: restaurante[0] });
 
     }
 
@@ -33,39 +33,13 @@ class ListaPerfil extends Component {
 
     render() {
         return (
-
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-
-
-                        <th>Celular</th>
-                        <th>E-mail</th>
-                        <th>CPF Administrador</th>
-                        <th>Nome Administrador</th>
-
-
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {
-
-                        this.state.ListaRestaurante.map((obj) => {
-                            return (
-                                <tr>
-
-                                    <td>{obj.celular}</td>
-                                    <td>{obj.email}</td>
-                                    <td>{obj.cpf_administrador}</td>
-                                    <td>{obj.nome_administrador}</td>
-                                
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </Table>
+            <ListGroup>
+            <ListGroupItem><b>Celular:</b> {this.state.ListaRestaurante.celular}</ListGroupItem>
+            <ListGroupItem><b>Email:</b> {this.state.ListaRestaurante.email}</ListGroupItem>
+            <ListGroupItem><b>CPF administrador:</b> {this.state.ListaRestaurante.cpf_administrador}</ListGroupItem>
+            <ListGroupItem><b>Nome administrador:</b> {this.state.ListaRestaurante.nome_administrador}</ListGroupItem>
+            </ListGroup>
+         
         );
     }
 }

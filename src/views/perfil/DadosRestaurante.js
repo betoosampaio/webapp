@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, ListGroup, ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 
@@ -18,7 +18,9 @@ class dadosRestaurante extends Component {
         });
 
 
-        this.setState({ ListaRestaurante: await res.json() });
+        let restaurante = await res.json()
+        this.setState({ ListaRestaurante: restaurante[0] });
+
 
     }
 
@@ -33,52 +35,17 @@ class dadosRestaurante extends Component {
 
     render() {
         return (
+            <ListGroup>
+                <ListGroupItem><b>Razão social: </b>{this.state.ListaRestaurante.razao_social}</ListGroupItem>
+                <ListGroupItem><b>CEP: </b>{this.state.ListaRestaurante.cep}</ListGroupItem>
+                <ListGroupItem><b>Logradoura: </b>{this.state.ListaRestaurante.logradouro}</ListGroupItem>
+                <ListGroupItem><b>Número: </b>{this.state.ListaRestaurante.numero}</ListGroupItem>
+                <ListGroupItem><b>Complemento: </b>{this.state.ListaRestaurante.complemento}</ListGroupItem>
+                <ListGroupItem><b>Bairro: </b>{this.state.ListaRestaurante.bairro}</ListGroupItem>
+                <ListGroupItem><b>Estado: </b>{this.state.ListaRestaurante.estados}</ListGroupItem>
+                <ListGroupItem><b>Munícipio: </b>{this.state.ListaRestaurante.municipio}</ListGroupItem>
+            </ListGroup>
 
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-
-
-                        <th>Razão Social</th>
-                        <th>CEP</th>
-                        <th>Endereço</th>
-                        <th>Número</th>
-                        <th>Complemento</th>
-                        <th>Bairro</th>
-                        <th>Estado</th>
-                        <th>Município</th>
-
-
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {
-
-                        this.state.ListaRestaurante.map((obj) => {
-                            return (
-                                <tr>
-
-
-
-                                    <td>{obj.razao_social}</td>
-                                    <td>{obj.cep}</td>
-                                    <td>{obj.logradouro}</td>
-                                    <td>{obj.numero}</td>
-                                    <td>{obj.complemento}</td>
-                                    <td>{obj.bairro}</td>
-                                    <td>{obj.estados}</td>
-                                    <td>{obj.municipio}</td>
-
-
-
-
-                                </tr>
-                            );
-                        })
-                    }
-                </tbody>
-            </Table>
         );
     }
 }

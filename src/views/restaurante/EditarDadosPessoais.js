@@ -53,12 +53,12 @@ class EditarDadosPessoais extends Component {
             <form name="form" onSubmit={this.editar}>
                 <Card>
                     <CardHeader>
-                        <strong>Editar dados pessoais</strong>
+                        <h5><b>Editar dados pessoais</b></h5>
                     </CardHeader>
                     <CardBody>
 
                         <FormGroup>
-                            <Label>Nome do Administrador:</Label>
+                            <Label><b>Nome do Administrador:</b></Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -68,7 +68,7 @@ class EditarDadosPessoais extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <Label>CPF do Administrador:</Label>
+                            <Label><b>CPF do Administrador:</b></Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -78,7 +78,7 @@ class EditarDadosPessoais extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <Label>E-mail do Administrador:</Label>
+                            <Label><b>E-mail do Administrador:</b></Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-envelope"></i></InputGroupText>
@@ -88,7 +88,7 @@ class EditarDadosPessoais extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <Label>Celular do Administrador:</Label>
+                            <Label><b>Celular do Administrador:</b></Label>
                             <InputGroup>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-phone"></i></InputGroupText>
