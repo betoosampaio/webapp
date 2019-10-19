@@ -22,19 +22,32 @@ class UploadFoto extends Component {
 
     this.props.onChange({ target: { name: name, value: dados } });
     this.setState({ path: dados });
-    
+
+  }
+
+  remover = (name) => {
+    this.props.onChange({ target: { name: name, value: "" } });
+    this.setState({ path: "" });
   }
 
   render() {
+    const styleFileUpload = { border: "1px solid #ccc", display: "inline-block", padding: "6px 12px", cursor: "pointer" }
+    const name = this.props.name;
     return (
       <div>
-        <Input {...this.props} type="file" onChange={this.upload} style={{ color: "rgba(0,0,0,0)" }} />
+        <label for="imgupload" style={styleFileUpload}>
+          <i className="fa fa-cloud-upload"></i> Escolher Arquivo
+        </label>
+        <input {...this.props} id="imgupload" type="file" onChange={this.upload} style={{ display: "none" }} />
+        <label style={styleFileUpload} onClick={() => { this.remover(name) }}>
+          <i className="fa fa-remove"></i>
+        </label>
         <br />
         {
           (this.state.path || this.props.path)
-          ? <Foto src={this.state.path || this.props.path} alt=""></Foto>
-          : <span/>
-        }        
+            ? <Foto src={this.state.path || this.props.path} alt=""></Foto>
+            : <span />
+        }
       </div>
 
     )
