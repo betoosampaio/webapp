@@ -67,12 +67,12 @@ class Registrar extends Component {
       municipio: this.state.Step2.municipio,
       uf: this.state.Step2.uf,
 
-      codigo_banco: this.state.Step3.codigo_banco,
-      id_tipo_cadastro_conta: this.state.Step3.id_tipo_cadastro_conta,
-      id_tipo_conta: this.state.Step3.id_tipo_conta,
-      agencia: this.state.Step3.agencia,
-      conta: this.state.Step3.conta,
-      digito: this.state.Step3.digito,
+      codigo_banco: this.state.Step3.codigo_banco || "0",
+      id_tipo_cadastro_conta: this.state.Step3.id_tipo_cadastro_conta || "0",
+      id_tipo_conta: this.state.Step3.id_tipo_conta || "0",
+      agencia: this.state.Step3.agencia || "0",
+      conta: this.state.Step3.conta || "0",
+      digito: this.state.Step3.digito || "0",
 
       codigo_restaurante: this.state.Step4.codigo_restaurante,     
       login: this.state.Step4.login,
