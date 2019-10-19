@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
 
 class SelectUF extends Component {
 
