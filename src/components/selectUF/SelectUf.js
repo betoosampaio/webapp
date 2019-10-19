@@ -8,19 +8,36 @@ class SelectUF extends Component {
         super(props);
 
         this.state = {
-            lista: [],
+            lista: [
+                'AC',
+                'AL',
+                'AM',
+                'AP',
+                'BA',
+                'CE',
+                'DF',
+                'ES',
+                'GO',
+                'MA',
+                'MG',
+                'MS',
+                'MT',
+                'PA',
+                'PB',
+                'PE',
+                'PI',
+                'PR',
+                'RJ',
+                'RN',
+                'RO',
+                'RR',
+                'RS',
+                'SC',
+                'SE',
+                'SP',
+                'TO',
+            ],
         };
-    }
-
-    componentDidMount() {
-        this.obterDados();
-    }
-
-    obterDados = async () => {
-        let dados = await serverRequest.request('/restaurante/obterVariaveisCadastro');
-        if (dados) {
-            this.setState({ lista: dados[2] });
-        }
     }
 
     render() {
@@ -30,7 +47,7 @@ class SelectUF extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.uf} value={obj.uf}>{obj.uf}</option>
+                            <option key={obj} value={obj}>{obj}</option>
                         )
                     })
                 }

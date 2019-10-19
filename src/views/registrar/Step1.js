@@ -17,31 +17,14 @@ class Step1 extends Component {
       email: "",
 
       validacao: {
-        celular: { ok: false, msg: '*' },
-        email: { ok: false, msg: '*' },
-        cpf_administrador: { ok: false, msg: '*' },
-        nome_administrador: { ok: false, msg: '*' }
+        cpf_administrador: { ok: true, msg: '' },
+        nome_administrador: { ok: true, msg: '' },
+        celular: { ok: true, msg: '' },
+        email: { ok: true, msg: '' },    
       },
     }
 
   };
-
-
-
-
-  validarCampoVazio = (event) => {
-    let ok = false, msg = '';
-
-    if (!event.target.value)
-      msg = 'Campo obrigatório';
-    else
-      ok = true;
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState[event.target.name].ok = ok;
-    newState[event.target.name].msg = msg;
-    this.setState({ validacao: newState });
-  }
 
   validarCelular = (event) => {
     let ok = false, msg = '';
@@ -123,6 +106,14 @@ class Step1 extends Component {
 
   prosseguir = (event) => {
     event.preventDefault();
+
+    for (let v in this.state.validacao) {
+      if (!this.state.validacao[v].ok) {
+        alert('Preencha todos os campos corretamente');
+        return false;
+      }
+    }
+
     this.props.saveValues(stateName, this.state);
     this.props.nextStep();
   }
@@ -130,8 +121,6 @@ class Step1 extends Component {
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
-
-
 
   render() {
     return (
@@ -152,10 +141,11 @@ class Step1 extends Component {
               value={this.state.cpf_administrador}
               onBlur={this.validarCPF}
               onChange={this.changeInput}
-              placeholder='CPF'
+              placeholder='000.000.000-00'
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
-            />
+              required
+             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
 
@@ -174,8 +164,11 @@ class Step1 extends Component {
               value={this.state.nome_administrador}
               onChange={this.changeInput}
               onBlur={this.validarCampoVazio}
-              placeholder='Nome Administrador'
+              placeholder='Nome do administrador'
               name='nome_administrador'
+              required
+              minLength="4"
+              maxLength="255"
             />
             <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
 
@@ -191,13 +184,14 @@ class Step1 extends Component {
 
             <MaskedInput
               className="form-control"
-              placeholder='Celular'
+              placeholder='(11) 98888-9999'
               name="celular"
               value={this.state.celular}
               onBlur={this.validarCelular}
               onChange={this.changeInput}
               mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
               guide={true}
+              required
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
@@ -219,6 +213,7 @@ class Step1 extends Component {
               type='text'
               placeholder='E-mail'
               onBlur={this.validarEmail}
+              required
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>

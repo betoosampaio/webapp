@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
-import Select from 'react-select';
-import Autosuggest from 'react-autosuggest';
 import SelectUF from '../../components/selectUF/SelectUf'
 
 const stateName = "Step2";
@@ -18,6 +16,7 @@ class Step2 extends Component {
       suggestions: [],
       cnpj: '',
       razao_social: '',
+      nome_restaurante: '',
       cep: '',
       logradouro: '',
       numero: '',
@@ -27,54 +26,18 @@ class Step2 extends Component {
       complemento: '',
       enderecoDisabled: false,
       validacao: {
-        cnpj: { ok: false, msg: '*' },
-        razao_social: { ok: false, msg: '*' },
-        cep: { ok: false, msg: '*' },
-        logradouro: { ok: false, msg: '*' },
-        numero: { ok: false, msg: '*' },
-        bairro: { ok: false, msg: '*' },
-        municipio: { ok: false, msg: '*' },
-        uf: { ok: false, msg: '*' },
+        cnpj: { ok: true, msg: '' },
+        razao_social: { ok: true, msg: '' },
+        nome_restaurante: { ok: true, msg: '' },
+        cep: { ok: true, msg: '' },
+        logradouro: { ok: true, msg: '' },
+        numero: { ok: true, msg: '' },
+        bairro: { ok: true, msg: '' },
+        municipio: { ok: true, msg: '' },
+        uf: { ok: true, msg: '' },
         complemento: { ok: true },
-
-      },
+      },      
     };
-  }
-
-
-
-  componentDidMount() {
-    this.obterVariaveisCadastro();
-  }
-  obterVariaveisCadastro = async function () {
-    let res = await fetch('http://localhost:3001/restaurante/obterVariaveisCadastro', {
-      method: 'POST',
-    });
-    let dados = await res.json();
-    this.setState({
-      bancos: dados[0],
-      municipios: dados[1],
-      estados: dados[2],
-      tipoConta: dados[3],
-      tipoCadastroConta: dados[4]
-    });
-  }
-  formChange = (event) => {
-    if (event.target.name) {
-      let formNewState = Object.assign({}, this.state);
-      formNewState[event.target.name] = event.target.value;
-      this.setState(formNewState);
-    }
-  }
-  formChangeSelect = name => value => {
-    let formNewState = Object.assign({}, this.state);
-    formNewState[name] = value;
-    this.setState(formNewState);
-
-    let ValidnewState = Object.assign({}, this.state.validacao);
-    ValidnewState[name].ok = true;
-    ValidnewState[name].msg = '';
-    this.setState({ validacao: ValidnewState });
   }
 
   validarCNPJ = async (event) => {
@@ -155,13 +118,13 @@ class Step2 extends Component {
         this.setState({ validacao: ValidnewState });
       }
       else {
-        let formNewState = Object.assign({}, this.state.formulario);
+        let formNewState = Object.assign({}, this.state);
         formNewState['logradouro'] = '';
         formNewState['bairro'] = '';
         formNewState['municipio'] = '';
         formNewState['uf'] = '';
         formNewState['enderecoDisabled'] = false;
-        this.setState({ formulario: formNewState });
+        this.setState(formNewState);
 
         let ValidnewState = Object.assign({}, this.state.validacao);
         ValidnewState.logradouro.ok = false;
@@ -227,52 +190,16 @@ class Step2 extends Component {
     return true;
   }
 
-  validarCampoVazio = (event) => {
-    let ok = false, msg = '';
-
-    if (!event.target.value)
-      msg = 'Campo obrigatório';
-    else
-      ok = true;
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState[event.target.name].ok = ok;
-    newState[event.target.name].msg = msg;
-    this.setState({ validacao: newState });
-  }
-
-  getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    return inputLength === 0 ? [] : this.state.municipios.filter(lang =>
-      lang.municipio.toLowerCase().slice(0, inputLength) === inputValue
-    );
-  };
-  getSuggestionValue = suggestion => {
-    let formNewState = Object.assign({}, this.state.formulario);
-    formNewState['municipio'] = suggestion.municipio;
-    this.setState({ formulario: formNewState });
-  };
-  renderSuggestion = suggestion => (
-    <div>
-      {suggestion.municipio}
-    </div>
-  );
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
-  };
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
-
   prosseguir = (event) => {
     event.preventDefault();
+
+    for (let v in this.state.validacao) {
+      if (!this.state.validacao[v].ok) {
+        alert('Preencha todos os campos corretamente');
+        return false;
+      }
+    }
+
     this.props.saveValues(stateName, this.state);
     this.props.nextStep();
   }
@@ -286,14 +213,11 @@ class Step2 extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-
-
   render() {
     return (
       <Form name="form" onSubmit={this.prosseguir}>
 
-        <h4 className="text-center">Dados do restaurante</h4>
-
+        <h4 className="text-center">Dados do Restaurante</h4>
 
         <FormGroup>
           <Label>CNPJ:</Label>
@@ -302,15 +226,15 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
 
-
             <MaskedInput
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
               onChange={this.changeInput}
-              onBlur={this.validarCNPJ}
-              placeholder='Qual o cnpj do restaurante ?'
-              mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]} guide={true}
+              placeholder='00.000.000/0000-00'
+              mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
+              guide={true}
+              required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
 
@@ -330,11 +254,24 @@ class Step2 extends Component {
               value={this.state.razao_social}
               onChange={this.changeInput}
               type='text'
-              placeholder='E qual seria a sua Razão Social ?'
-              onBlur={this.validarCampoVazio}
+              placeholder='Razão social da empresa'
+              required
+              minLength="4"
+              maxLength="255"
             />
             <span style={{ color: 'red' }}>{this.state.validacao.razao_social.msg}</span>
 
+          </InputGroup>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Nome Restaurante:</Label>
+          <InputGroup>
+            <InputGroupAddon addonType="append">
+              <InputGroupText><i className="icon-user"></i></InputGroupText>
+            </InputGroupAddon>
+            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required/>
+            <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
           </InputGroup>
         </FormGroup>
 
@@ -351,9 +288,10 @@ class Step2 extends Component {
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
-              placeholder='Aqui seria o cep do restaurante !'
+              placeholder='00000-000'
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
               guide={true}
+              required
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
@@ -373,8 +311,9 @@ class Step2 extends Component {
               value={this.state.logradouro}
               onChange={this.changeInput}
               type='text'
-              placeholder='Qual seria o Endereço ? '
-              onBlur={this.validarCampoVazio}
+              placeholder='Avenida Paulista'
+              disabled={this.state.enderecoDisabled}
+              required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
 
@@ -388,13 +327,13 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
 
-
             <Input
               name="numero"
               value={this.state.numero}
               onChange={this.changeInput}
               type='text'
-              placeholder='Número'
+              placeholder='1234'             
+              required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
 
@@ -410,13 +349,11 @@ class Step2 extends Component {
 
             <Input
               type='text'
-              placeholder='Complemento'
+              placeholder='Bloco C'
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
             />
-
-
 
           </InputGroup>
         </FormGroup>
@@ -432,10 +369,10 @@ class Step2 extends Component {
               name="bairro"
               value={this.state.bairro}
               onChange={this.changeInput}
+              disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='Bairro'
-              onBlur={this.validarCampoVazio}
-
+              placeholder='Bela Vista'
+              required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
 
@@ -449,12 +386,12 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
 
-
-
             <SelectUF
               name="uf"
               value={this.state.uf}
-              onChange={this.changeInput}>
+              onChange={this.changeInput}
+              disabled={this.state.enderecoDisabled}
+              required>
             </SelectUF>
 
 
@@ -469,24 +406,14 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
 
-
-            <Autosuggest
-              className="form-control"
-              suggestions={this.state.suggestions}
-              onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-              getSuggestionValue={this.getSuggestionValue}
-              renderSuggestion={this.renderSuggestion}
-              inputProps={{
-                
-                type: 'text',
-                placeholder: 'Município',
-                name: 'municipio',
-                value: this.state.municipio,
-                onChange: this.formChange,
-                onBlur: this.validarCampoVazio,
-
-              }}
+            <Input
+              name="municipio"
+              value={this.state.municipio}
+              onChange={this.changeInput}
+              disabled={this.state.enderecoDisabled}
+              type='text'
+              placeholder='São Paulo'
+              required
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>
@@ -494,15 +421,13 @@ class Step2 extends Component {
           </InputGroup>
         </FormGroup>
 
-
-
-
         <Button onClick={this.retornar} type="button" className="pull-left" color="secondary"><i className="icon-arrow-left"></i> Retornar</Button>
         <Button type="submit" className="pull-right" color="success"><i className="icon-arrow-right"></i> Prosseguir</Button>
 
       </Form>
     );
   }
+
 }
 
 export default Step2;

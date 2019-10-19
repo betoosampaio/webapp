@@ -17,9 +17,9 @@ class SelectBanco extends Component {
     }
 
     obterDados = async () => {
-        let dados = await serverRequest.request('/restaurante/obterVariaveisCadastro');
+        let dados = await serverRequest.request('/restaurante/obterBancos');
         if (dados) {
-            this.setState({ lista: dados[0] });
+            this.setState({ lista: dados });
         }
     }
 
@@ -30,7 +30,7 @@ class SelectBanco extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.nome} value={obj.nome}>{obj.nome}</option>
+                            <option key={obj.codigo} value={obj.codigo}>{obj.nome}</option>
                         )
                     })
                 }
