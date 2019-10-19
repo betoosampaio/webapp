@@ -109,9 +109,7 @@ class Step1 extends Component {
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].ok) {
-        alert('Preencha todos os campos corretamente');
         ok = false;
-        return;
       }
     });
 
@@ -119,6 +117,8 @@ class Step1 extends Component {
       this.props.saveValues(stateName, this.state);
       this.props.nextStep();
     }
+    else
+      alert('Preencha todos os campos corretamente');
 
   }
 
@@ -129,8 +129,8 @@ class Step1 extends Component {
   render() {
     return (
       <Form name="form" onSubmit={this.prosseguir}>
-        <h4 className="text-center">Dados do Usuário</h4>
-
+        <h4 className="text-center">Dados do Usuário</h4> 
+            
         <FormGroup>
           <Label>CPF:</Label>
           <InputGroup>

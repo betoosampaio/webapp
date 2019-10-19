@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
-import SelectUF from '../../components/selectUF/SelectUf'
+import SelectUF from '../../components/selectUF/SelectUf';
+import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 
 const stateName = "Step2";
@@ -71,10 +72,7 @@ class Step2 extends Component {
   validarCEP = async (event) => {
     let ok = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
-    if (!val) {
-      msg = 'Campo obrigatório';
-    }
-    else if (val.length < 8) {
+    if (val.length < 8) {
       msg = 'CEP Incompleto';
     }
     else {
@@ -97,17 +95,6 @@ class Step2 extends Component {
         formNewState['uf'] = dados.uf;
         formNewState['enderecoDisabled'] = true;
         this.setState(formNewState);
-
-        let ValidnewState = Object.assign({}, this.state.validacao);
-        ValidnewState.logradouro.ok = true;
-        ValidnewState.logradouro.msg = '';
-        ValidnewState.bairro.ok = true;
-        ValidnewState.bairro.msg = '';
-        ValidnewState.municipio.ok = true;
-        ValidnewState.municipio.msg = '';
-        ValidnewState.uf.ok = true;
-        ValidnewState.uf.msg = '';
-        this.setState({ validacao: ValidnewState });
       }
       else {
         let formNewState = Object.assign({}, this.state);
@@ -117,23 +104,12 @@ class Step2 extends Component {
         formNewState['uf'] = '';
         formNewState['enderecoDisabled'] = false;
         this.setState(formNewState);
-
-        let ValidnewState = Object.assign({}, this.state.validacao);
-        ValidnewState.logradouro.ok = false;
-        ValidnewState.logradouro.msg = 'Campo obrigatório';
-        ValidnewState.bairro.ok = false;
-        ValidnewState.bairro.msg = 'Campo obrigatório';
-        ValidnewState.municipio.ok = false;
-        ValidnewState.municipio.msg = 'Campo obrigatório';
-        ValidnewState.uf.ok = false;
-        ValidnewState.uf.msg = 'Campo obrigatório';
-        this.setState({ validacao: ValidnewState });
       }
     }
   }
 
   testarCNPJ = (cnpj) => {
-    
+
     if (cnpj === '') return false;
 
     if (cnpj.length !== 14)
@@ -190,9 +166,7 @@ class Step2 extends Component {
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].ok) {
-        alert('Preencha todos os campos corretamente');
         ok = false;
-        return;
       }
     });
 
@@ -200,6 +174,8 @@ class Step2 extends Component {
       this.props.saveValues(stateName, this.state);
       this.props.nextStep();
     }
+    else
+      alert('Preencha todos os campos corretamente');
   }
 
   retornar = () => {
@@ -223,7 +199,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
             <MaskedInput
               name="cnpj"
               className="form-control"
@@ -236,7 +211,6 @@ class Step2 extends Component {
               required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -246,8 +220,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
-
             <Input
               name="razao_social"
               value={this.state.razao_social}
@@ -258,8 +230,6 @@ class Step2 extends Component {
               minLength="4"
               maxLength="255"
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.razao_social.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -270,7 +240,6 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
             <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required />
-            <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
           </InputGroup>
         </FormGroup>
 
@@ -292,9 +261,7 @@ class Step2 extends Component {
               guide={true}
               required
             />
-
             <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -314,8 +281,6 @@ class Step2 extends Component {
               disabled={this.state.enderecoDisabled}
               required
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.logradouro.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -325,7 +290,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
             <Input
               name="numero"
               value={this.state.numero}
@@ -334,8 +298,6 @@ class Step2 extends Component {
               placeholder='1234'
               required
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -345,7 +307,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
             <Input
               type='text'
               placeholder='Bloco C'
@@ -353,7 +314,6 @@ class Step2 extends Component {
               value={this.state.complemento}
               onChange={this.changeInput}
             />
-
           </InputGroup>
         </FormGroup>
 
@@ -363,7 +323,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
             <Input
               name="bairro"
               value={this.state.bairro}
@@ -373,8 +332,6 @@ class Step2 extends Component {
               placeholder='Bela Vista'
               required
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.bairro.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -384,7 +341,6 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
             <SelectUF
               name="uf"
               value={this.state.uf}
@@ -392,20 +348,16 @@ class Step2 extends Component {
               disabled={this.state.enderecoDisabled}
               required>
             </SelectUF>
-
-
-            <span style={{ color: 'red' }}>{this.state.validacao.uf.msg}</span>
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Cidade:</Label>
+          <Label>Município:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cursor"></i></InputGroupText>
             </InputGroupAddon>
-
-            <Input
+            <SuggestMunicipio
               name="municipio"
               value={this.state.municipio}
               onChange={this.changeInput}
@@ -413,10 +365,7 @@ class Step2 extends Component {
               type='text'
               placeholder='São Paulo'
               required
-            />
-
-            <span style={{ color: 'red' }}>{this.state.validacao.municipio.msg}</span>
-
+            ></SuggestMunicipio>
           </InputGroup>
         </FormGroup>
 

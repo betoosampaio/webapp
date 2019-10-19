@@ -17,7 +17,7 @@ class SelectBanco extends Component {
     }
 
     obterDados = async () => {
-        let dados = await serverRequest.request('/restaurante/obterBancos');
+        let dados = await serverRequest.request('/obterBancos');
         if (dados) {
             this.setState({ lista: dados });
         }

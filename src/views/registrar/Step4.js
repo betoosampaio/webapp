@@ -27,9 +27,7 @@ class Step4 extends Component {
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].ok) {
-        alert('Preencha todos os campos corretamente');
         ok = false;
-        return;
       }
     });
 
@@ -38,6 +36,8 @@ class Step4 extends Component {
         this.props.cadastrar();
       });
     }
+    else
+      alert('Preencha todos os campos corretamente');
 
   }
 
