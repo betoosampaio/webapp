@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 
 

@@ -9,13 +9,12 @@ const EditarProduto = React.lazy(() => import('./views/produto/EditarProduto'));
 const Menu = React.lazy(() => import('./views/menu/Menu'));
 const CadastrarMenu = React.lazy(() => import('./views/menu/CadastrarMenu'));
 const EditarMenu = React.lazy(() => import('./views/menu/EditarMenu'));
-const EditarDadosPessoais = React.lazy(() => import('./views/restaurante/EditarDadosPessoais'));
-const EditarDadosRestaurante = React.lazy(() => import('./views/restaurante/EditarDadosRestaurante'));
-const EditarDadosBancarios = React.lazy(() => import('./views/restaurante/EditarDadosBancarios'));
+const Perfil = React.lazy(() => import('./views/perfil/Perfil'));
+const EditarDadosPessoais = React.lazy(() => import('./views/perfil/EditarDadosPessoais'));
+const EditarDadosRestaurante = React.lazy(() => import('./views/perfil/EditarDadosRestaurante'));
+const EditarDadosBancarios = React.lazy(() => import('./views/perfil/EditarDadosBancarios'));
 const Gerenciar = React.lazy(() => import('./views/gerenciar/Gerenciar'));
 const DetalheMesa = React.lazy(() => import('./views/gerenciar/DetalheMesa'));
-const Perfil = React.lazy(() => import('./views/perfil/Perfil'));
-
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
