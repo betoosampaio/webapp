@@ -17,7 +17,7 @@ const serverRequest = {
                 return await res.json();
             }
             else if (res.status === 401) {
-                window.location.href = '#/401';
+                window.location.href = '#/login';
                 return false;
             }
             else {
