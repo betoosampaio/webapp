@@ -30,7 +30,11 @@ class UploadFoto extends Component {
       <div>
         <Input {...this.props} type="file" onChange={this.upload} style={{ color: "rgba(0,0,0,0)" }} />
         <br />
-        <Foto src={this.state.path || this.props.path} alt=""></Foto>
+        {
+          (this.state.path || this.props.path)
+          ? <Foto src={this.state.path || this.props.path} alt=""></Foto>
+          : <span/>
+        }        
       </div>
 
     )

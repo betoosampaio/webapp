@@ -28,7 +28,6 @@ class EditarProduto extends Component {
   }
   
   obter = async (id) => {
-    console.log(id);
 		let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
 		if (dados) {
 			this.setState(dados[0]);
@@ -71,7 +70,7 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} required/>
+                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} placeholder="X-Salada" required/>
               </InputGroup>
             </FormGroup>
 
@@ -81,7 +80,7 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input  name="descricao" value={this.state.descricao} onChange={this.changeInput}/>
+                <Input  name="descricao" value={this.state.descricao} onChange={this.changeInput} placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"/>
               </InputGroup>
             </FormGroup>
 
@@ -91,7 +90,7 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-money"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required/>
+                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required placeholder="R$ 10,00"/>
               </InputGroup>
             </FormGroup>
 

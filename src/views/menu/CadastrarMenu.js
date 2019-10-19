@@ -41,7 +41,7 @@ class CadastrarMenu extends Component {
                                     <InputGroupAddon addonType="append">
                                         <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                                     </InputGroupAddon>
-                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" />
+                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
                                 </InputGroup>
                             </FormGroup>
 

@@ -23,7 +23,6 @@ class CadastrarProduto extends Component {
 
   cadastrar = async (event) => {
     event.preventDefault();
-
     let dados = await serverRequest.request('/produto/cadastrar', this.state);
     if (dados) {
       window.location.href = '#/cardapio/produto';
@@ -53,7 +52,7 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} required />
+                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} required placeholder="X-Salada" />
               </InputGroup>
             </FormGroup>
 
@@ -63,7 +62,7 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input type="textarea" name="descricao" value={this.state.descricao} onChange={this.changeInput} />
+                <Input type="textarea" name="descricao" value={this.state.descricao} onChange={this.changeInput} placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese" />
               </InputGroup>
             </FormGroup>
 
@@ -73,7 +72,7 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-money"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required/>
+                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required placeholder="R$ 10,00"/>
               </InputGroup>
             </FormGroup>
 

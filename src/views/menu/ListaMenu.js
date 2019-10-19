@@ -36,6 +36,7 @@ class ListaMenu extends Component {
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Descrição</th>
                         <th>Ativo</th>
                         <th>Editar</th>
@@ -46,11 +47,12 @@ class ListaMenu extends Component {
                     {
                         this.state.lista.map((obj) => {
                             return (
-                                <tr>
+                                <tr key={obj.id_menu}>
+                                    <td>{obj.id_menu}</td>
                                     <td>{obj.ds_menu}</td>
                                     <td>{obj.ativo ? 'Sim' : 'Não'}</td>
                                     <td>
-                                    <Link to={{ pathname: `/cardapio/menu/editar/${obj.id_menu}` }}>
+                                        <Link to={{ pathname: `/cardapio/menu/editar/${obj.id_menu}` }}>
                                             <Button color="secondary" size="sm">
                                                 <i className="icon-note"></i>
                                             </Button>

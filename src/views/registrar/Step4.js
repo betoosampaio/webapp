@@ -72,7 +72,7 @@ class Step4 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="login" value={this.state.login} onChange={this.changeInput} placeholder="administrador" required />
+            <Input name="login" value={this.state.login} onChange={this.changeInput} placeholder="Administrador" required />
             <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
           </InputGroup>
         </FormGroup>
@@ -83,7 +83,7 @@ class Step4 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input type="password" name="senha" value={this.state.senha} onChange={this.changeInput} required />
+            <Input type="password" name="senha" value={this.state.senha} onChange={this.changeInput} placeholder="Senha" required />
             <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
           </InputGroup>
         </FormGroup>
