@@ -79,7 +79,7 @@ class Registrar extends Component {
       senha: this.state.Step4.senha,
     }
 
-    console.log(obj);
+    //console.log(obj);
 
     let dados = await serverRequest.request('/restaurante/cadastrar', obj);
     if (dados) {

@@ -23,16 +23,22 @@ class Step4 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    for (let v in this.state.validacao) {
-      if (!this.state.validacao[v].ok) {
+    let ok = true;
+
+    Object.keys(this.state.validacao).forEach(p => {
+      if (!this.state.validacao[p].ok) {
         alert('Preencha todos os campos corretamente');
-        return false;
+        ok = false;
+        return;
       }
+    });
+
+    if (ok) {
+      this.props.saveValues(stateName, this.state, () => {
+        this.props.cadastrar();
+      });
     }
 
-    this.props.saveValues(stateName, this.state, () => {
-      this.props.cadastrar();
-    });
   }
 
   retornar = () => {
@@ -55,7 +61,7 @@ class Step4 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="codigo_restaurante" value={this.state.codigo_restaurante} onChange={this.changeInput} placeholder="restaurante_freedapp" required/>
+            <Input name="codigo_restaurante" value={this.state.codigo_restaurante} onChange={this.changeInput} placeholder="restaurante_freedapp" required />
             <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
           </InputGroup>
         </FormGroup>
@@ -66,7 +72,7 @@ class Step4 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="login" value={this.state.login} onChange={this.changeInput} placeholder="administrador" required/>
+            <Input name="login" value={this.state.login} onChange={this.changeInput} placeholder="administrador" required />
             <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
           </InputGroup>
         </FormGroup>
@@ -77,7 +83,7 @@ class Step4 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input type="password" name="senha" value={this.state.senha} onChange={this.changeInput} required/>
+            <Input type="password" name="senha" value={this.state.senha} onChange={this.changeInput} required />
             <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
           </InputGroup>
         </FormGroup>

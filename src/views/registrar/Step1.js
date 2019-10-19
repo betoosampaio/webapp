@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
-
 import MaskedInput from 'react-text-mask';
 
 const stateName = "Step1";
@@ -19,7 +18,7 @@ class Step1 extends Component {
         cpf_administrador: { ok: true, msg: '' },
         nome_administrador: { ok: true, msg: '' },
         celular: { ok: true, msg: '' },
-        email: { ok: true, msg: '' },    
+        email: { ok: true, msg: '' },
       },
     }
 
@@ -106,15 +105,21 @@ class Step1 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    for (let v in this.state.validacao) {
-      if (!this.state.validacao[v].ok) {
+    let ok = true;
+
+    Object.keys(this.state.validacao).forEach(p => {
+      if (!this.state.validacao[p].ok) {
         alert('Preencha todos os campos corretamente');
-        return false;
+        ok = false;
+        return;
       }
+    });
+
+    if (ok) {
+      this.props.saveValues(stateName, this.state);
+      this.props.nextStep();
     }
 
-    this.props.saveValues(stateName, this.state);
-    this.props.nextStep();
   }
 
   changeInput = (event) => {
@@ -144,7 +149,7 @@ class Step1 extends Component {
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
               required
-             />
+            />
 
             <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
 
@@ -164,7 +169,6 @@ class Step1 extends Component {
               onChange={this.changeInput}
               onBlur={this.validarCampoVazio}
               placeholder='Nome do administrador'
-              name='nome_administrador'
               required
               minLength="4"
               maxLength="255"

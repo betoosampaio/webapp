@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf'
+import serverRequest from '../../utils/serverRequest';
 
 const stateName = "Step2";
-const path = process.env.REACT_APP_SRV_PATH;
 
 class Step2 extends Component {
 
@@ -36,17 +36,15 @@ class Step2 extends Component {
         municipio: { ok: true, msg: '' },
         uf: { ok: true, msg: '' },
         complemento: { ok: true },
-      },      
+      },
     };
   }
 
   validarCNPJ = async (event) => {
     let ok = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
-    if (!val) {
-      msg = 'Campo obrigatório';
-    }
-    else if (!this.testarCNPJ(val)) {
+
+    if (!this.testarCNPJ(val)) {
       msg = 'CNPJ incorreto';
     }
     else {
@@ -59,21 +57,15 @@ class Step2 extends Component {
     this.setState({ validacao: newState });
 
     if (val.length === 14) {
-      let res = await fetch(path + '/restaurante/checarSeCNPJExiste', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ cnpj: val })
-      });
-      let json = await res.json();
-      if (json.exists) {
+      let dados = await serverRequest.request('/restaurante/checarSeCNPJExiste', { cnpj: val });
+      if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
         newState.cnpj.ok = false;
         newState.cnpj.msg = 'Este CNPJ já está cadastrado';
         this.setState({ validacao: newState });
       }
     }
+
   }
 
   validarCEP = async (event) => {
@@ -141,6 +133,7 @@ class Step2 extends Component {
   }
 
   testarCNPJ = (cnpj) => {
+    
     if (cnpj === '') return false;
 
     if (cnpj.length !== 14)
@@ -165,15 +158,15 @@ class Step2 extends Component {
     let digitos = cnpj.substring(tamanho);
     let soma = 0;
     let pos = tamanho - 7;
+
     for (let i = tamanho; i >= 1; i--) {
       soma += numeros.charAt(tamanho - i) * pos--;
       if (pos < 2)
         pos = 9;
     }
     let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado !== digitos.charAt(0))
+    if (resultado.toString() !== digitos.charAt(0))
       return false;
-
     tamanho = tamanho + 1;
     numeros = cnpj.substring(0, tamanho);
     soma = 0;
@@ -184,7 +177,7 @@ class Step2 extends Component {
         pos = 9;
     }
     resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado !== digitos.charAt(1))
+    if (resultado.toString() !== digitos.charAt(1))
       return false;
 
     return true;
@@ -193,15 +186,20 @@ class Step2 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    for (let v in this.state.validacao) {
-      if (!this.state.validacao[v].ok) {
-        alert('Preencha todos os campos corretamente');
-        return false;
-      }
-    }
+    let ok = true;
 
-    this.props.saveValues(stateName, this.state);
-    this.props.nextStep();
+    Object.keys(this.state.validacao).forEach(p => {
+      if (!this.state.validacao[p].ok) {
+        alert('Preencha todos os campos corretamente');
+        ok = false;
+        return;
+      }
+    });
+
+    if (ok) {
+      this.props.saveValues(stateName, this.state);
+      this.props.nextStep();
+    }
   }
 
   retornar = () => {
@@ -231,6 +229,7 @@ class Step2 extends Component {
               className="form-control"
               value={this.state.cnpj}
               onChange={this.changeInput}
+              onBlur={this.validarCNPJ}
               placeholder='00.000.000/0000-00'
               mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
@@ -270,7 +269,7 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required/>
+            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required />
             <span style={{ color: 'red' }}>{this.state.validacao.nome_restaurante.msg}</span>
           </InputGroup>
         </FormGroup>
@@ -332,7 +331,7 @@ class Step2 extends Component {
               value={this.state.numero}
               onChange={this.changeInput}
               type='text'
-              placeholder='1234'             
+              placeholder='1234'
               required
             />
             <span style={{ color: 'red' }}>{this.state.validacao.numero.msg}</span>
