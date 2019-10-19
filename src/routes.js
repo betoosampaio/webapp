@@ -31,7 +31,7 @@ const routes = [
   { path: '/cardapio/menu/cadastrar', name: 'Cadastrar', component: CadastrarMenu },
   { path: '/cardapio/menu/editar/:id', name: 'Editar', component: EditarMenu },
   { path: '/perfil', exact: true, name: 'Perfil', component: Perfil },
-  { path: '/perfil/editarDadosPessoais', name: 'Editar Dados Pessoais', component: EditarDadosPessoais },
+  { path: '/perfil/EditarDadosPessoais', name: 'Editar Dados Pessoais', component: EditarDadosPessoais },
   { path: '/perfil/editarDadosRestaurante', name: 'Editar Dados Restaurante', component: EditarDadosRestaurante },
   { path: '/perfil/editarDadosBancario', name: 'Editar Dados Bancários', component: EditarDadosBancarios },
   { path: '/gerenciar', exact: true, name: 'Gerenciar', component: Gerenciar },
