@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Input } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Foto from './Foto';
 
@@ -35,7 +34,7 @@ class UploadFoto extends Component {
     const name = this.props.name;
     return (
       <div>
-        <label for="imgupload" style={styleFileUpload}>
+        <label htmlFor="imgupload" style={styleFileUpload}>
           <i className="fa fa-cloud-upload"></i> Escolher Arquivo
         </label>
         <input {...this.props} id="imgupload" type="file" onChange={this.upload} style={{ display: "none" }} />
