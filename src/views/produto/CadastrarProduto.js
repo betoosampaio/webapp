@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
+import CurrencyFormat from 'react-currency-format';
+import CurrencyInput from 'react-currency-input';
+import MaskedInput from 'react-text-mask'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 import UploadFoto from '../../components/uploadFoto/UploadFoto';
@@ -23,6 +26,7 @@ class CadastrarProduto extends Component {
 
   cadastrar = async (event) => {
     event.preventDefault();
+    this.state.preco = this.state.preco.replace(',' , '.');
     let dados = await serverRequest.request('/produto/cadastrar', this.state);
     if (dados) {
       window.location.href = '#/cardapio/produto';
@@ -31,6 +35,13 @@ class CadastrarProduto extends Component {
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+
+  formChangeInput = name => value => {
+    let formNewState = Object.assign({}, this.state);
+    formNewState[name] = value;
+    this.setState(formNewState);
   }
 
   changeSwitch = (event) => {
@@ -72,7 +83,19 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-money"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required placeholder="R$ 10,00"/>
+
+
+                <CurrencyInput
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  value={this.state.preco}
+                  name="preco"
+                  className="form-control"
+                  onChange={this.formChangeInput('preco')}
+                  required placeholder="R$ 10,00"
+                />
+
+
               </InputGroup>
             </FormGroup>
 

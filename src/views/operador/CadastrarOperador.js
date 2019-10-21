@@ -27,6 +27,8 @@ class CadastrarOperador extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+
+
   render() {
     return (
       <form name="form" onSubmit={this.cadastrar}>

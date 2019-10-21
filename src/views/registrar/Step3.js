@@ -34,6 +34,8 @@ class Step3 extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+
+
   render() {
     return (
       <Form name="form" onSubmit={this.prosseguir}>
@@ -47,6 +49,7 @@ class Step3 extends Component {
             </InputGroupAddon>
 
             <SelectBanco
+              required
               name="codigo_banco"
               value={this.state.codigo_banco}
               onChange={this.changeInput}>
@@ -62,6 +65,7 @@ class Step3 extends Component {
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
             <Input
+              required
               type="select"
               name="id_tipo_cadastro_conta"
               value={this.state.id_tipo_cadastro_conta}
@@ -82,6 +86,7 @@ class Step3 extends Component {
             </InputGroupAddon>
 
             <Input
+              required
               type="select"
               name="id_tipo_conta"
               value={this.state.id_tipo_conta}
@@ -102,6 +107,7 @@ class Step3 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
+              required
               className="form-control"
               name="agencia"
               placeholder="Agência"
@@ -122,6 +128,7 @@ class Step3 extends Component {
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
             <MaskedInput
+              required
               className="form-control"
               name="conta"
               value={this.state.conta}
@@ -131,6 +138,7 @@ class Step3 extends Component {
               guide={false}
             />
             <MaskedInput
+              required
               className="form-control"
               name="digito"
               value={this.state.digito}

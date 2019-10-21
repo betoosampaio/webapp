@@ -23,6 +23,8 @@ class Perfil extends Component {
     }
   }
 
+ 
+
 
   render() {
     return (
@@ -41,9 +43,13 @@ class Perfil extends Component {
           <CardBody>
             <ListGroup>
               <ListGroupItem><b>Celular:</b> {this.state.dados.celular}</ListGroupItem>
+
               <ListGroupItem><b>Email:</b> {this.state.dados.email}</ListGroupItem>
+
               <ListGroupItem><b>CPF administrador:</b> {this.state.dados.cpf_administrador}</ListGroupItem>
+
               <ListGroupItem><b>Nome administrador:</b> {this.state.dados.nome_administrador}</ListGroupItem>
+
             </ListGroup>
           </CardBody>
         </Card>
@@ -67,7 +73,7 @@ class Perfil extends Component {
               <ListGroupItem><b>Número: </b>{this.state.dados.numero}</ListGroupItem>
               <ListGroupItem><b>Complemento: </b>{this.state.dados.complemento}</ListGroupItem>
               <ListGroupItem><b>Bairro: </b>{this.state.dados.bairro}</ListGroupItem>
-              <ListGroupItem><b>Estado: </b>{this.state.dados.estados}</ListGroupItem>
+              <ListGroupItem><b>Estado: </b>{this.state.dados.uf}</ListGroupItem>
               <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}</ListGroupItem>
             </ListGroup>
 
