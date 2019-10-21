@@ -110,6 +110,9 @@ class Login extends Component {
                         <Col xs="6" className="text-right">
                           <Button color="link" className="px-0">Esqueceu a senha?</Button>
                         </Col>
+                        <Col xs="12" className="text-right">
+                          <Button color="link"  className="px-0" onClick={() => {window.location.href="http://localhost:3000/#/registrar"}}>Registrar-se</Button>
+                        </Col>
                       </Row>
                     </Form>
                   </CardBody>
