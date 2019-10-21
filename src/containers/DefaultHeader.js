@@ -49,7 +49,7 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-comments"></i> Comentários</DropdownItem>
               <DropdownItem header tag="div" className="text-center"><strong>Configuração</strong></DropdownItem>
              
-              <DropdownItem><i className="fa fa-user"></i><a href="http://localhost:3000/#/perfil">Perfil</a> </DropdownItem>
+              <DropdownItem onClick={() => {window.location.href="http://localhost:3000/#/perfil"}} ><i className="fa fa-user"></i>Perfil</DropdownItem>
              
               <DropdownItem><i className="fa fa-wrench"></i> Configurações</DropdownItem>
               <DropdownItem><i className="fa fa-usd"></i> Recebimento</DropdownItem>
