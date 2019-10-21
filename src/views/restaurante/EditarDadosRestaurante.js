@@ -78,7 +78,7 @@ class EditarDadosRestaurante extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} />
+                <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} type="text" />
               </InputGroup>
             </FormGroup>
 
@@ -108,7 +108,7 @@ class EditarDadosRestaurante extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="email" />
+                <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="text" />
               </InputGroup>
             </FormGroup>
 
@@ -128,7 +128,7 @@ class EditarDadosRestaurante extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} />
+                <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} type="text" />
               </InputGroup>
             </FormGroup>
 
@@ -138,7 +138,7 @@ class EditarDadosRestaurante extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} />
+                <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} type="text" />
               </InputGroup>
             </FormGroup>
 
