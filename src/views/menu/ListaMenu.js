@@ -56,6 +56,14 @@ class ListaMenu extends Component {
                                     <td>{obj.ativo ? 'Sim' : 'Não'}</td>
                                     <td>
 
+                                        <Link to={{ pathname: `/cardapio/menu/editar/${obj.id_menu}` }}>
+                                            <Button color="secondary" size="sm">
+                                                <i className="icon-note"></i>
+                                            </Button>
+                                        </Link>
+                                    </td>
+
+                                    <td>
                                         <Modal
                                             size="sm"
                                             aria-labelledby="contained-modal-title-vcenter"
@@ -79,14 +87,7 @@ class ListaMenu extends Component {
 
                                         </Modal>
 
-                                        <Link to={{ pathname: `/cardapio/menu/editar/${obj.id_menu}` }}>
-                                            <Button color="secondary" size="sm">
-                                                <i className="icon-note"></i>
-                                            </Button>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Button onClick={() => this.remover(obj.id_menu)} color="danger" size="sm">
+                                        <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
                                             <i className="icon-close"></i>
                                         </Button>
                                     </td>
