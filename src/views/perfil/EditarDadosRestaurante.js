@@ -47,7 +47,7 @@ class EditarDadosRestaurante extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/restaurante/editar', this.state);
     if (dados) {
-      window.location.href = '#/gerenciar';
+      window.location.href = '#/perfil';
     }
   }
 

@@ -46,7 +46,7 @@ class EditarDadosBancarios extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/restaurante/editar', this.state);
     if (dados) {
-
+      window.location.href = '#/perfil';
     }
   }
 
