@@ -64,7 +64,7 @@ class CadastrarOperador extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required placeholder="gerente" />
+                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required placeholder="Login" />
               </InputGroup>
             </FormGroup>
 

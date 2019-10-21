@@ -195,7 +195,7 @@ class Step4 extends Component {
               name="validarSenha"
               value={this.state.validarSenha}
               onChange={this.changeInput}
-              placeholder="validarSenha"
+              placeholder="Repita a senha"
               onBlur={this.conferirSenha}
               required
             />

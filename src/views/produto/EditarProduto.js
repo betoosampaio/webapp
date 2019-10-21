@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
+import CurrencyFormat from 'react-currency-format';
+import CurrencyInput from 'react-currency-input';
+import MaskedInput from 'react-text-mask'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 import UploadFoto from '../../components/uploadFoto/UploadFoto';
@@ -24,31 +27,41 @@ class EditarProduto extends Component {
   }
 
   componentDidMount() {
-		this.obter(this.props.match.params.id);
+    this.obter(this.props.match.params.id);
   }
-  
-  obter = async (id) => {
-		let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
-		if (dados) {
-			this.setState(dados[0]);
-		}
-  }
-  
-  editar = async (event) => {
-		event.preventDefault();
-		let dados = await serverRequest.request('/produto/editar', this.state);
-		if (dados) {
-			window.location.href = '#/cardapio/produto';
-		}
-  }
-  
-  changeInput = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
-	}
 
-	changeSwitch = (event) => {
-		this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
-	}
+  obter = async (id) => {
+    let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
+    if (dados) {
+      this.setState(dados[0]);
+    }
+  }
+
+  editar = async (event) => {
+    event.preventDefault();
+
+    this.state.preco = this.state.preco.replace('.', '' );
+    this.state.preco = this.state.preco.replace(',', '.');
+   
+  
+    let dados = await serverRequest.request('/produto/editar', this.state);
+    if (dados) {
+      window.location.href = '#/cardapio/produto';
+    }
+  }
+
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+  formChangeInput = name => value => {
+    let formNewState = Object.assign({}, this.state);
+    formNewState[name] = value;
+    this.setState(formNewState);
+  }
+
+  changeSwitch = (event) => {
+    this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
+  }
 
   render() {
     return (
@@ -61,7 +74,7 @@ class EditarProduto extends Component {
 
             <FormGroup>
               <Label>ID:</Label>
-              <Input disabled name="id_produto" value={this.state.id_produto} onChange={this.changeInput}/>
+              <Input disabled name="id_produto" value={this.state.id_produto} onChange={this.changeInput} />
             </FormGroup>
 
             <FormGroup>
@@ -70,7 +83,7 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} placeholder="X-Salada" required/>
+                <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} placeholder="X-Salada" required />
               </InputGroup>
             </FormGroup>
 
@@ -80,7 +93,7 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input  name="descricao" value={this.state.descricao} onChange={this.changeInput} placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"/>
+                <Input name="descricao" value={this.state.descricao} onChange={this.changeInput} placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese" />
               </InputGroup>
             </FormGroup>
 
@@ -90,7 +103,17 @@ class EditarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-money"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="preco" value={this.state.preco} onChange={this.changeInput} required placeholder="R$ 10,00"/>
+
+                <CurrencyInput
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  value={this.state.preco}
+                  name="preco"
+                  className="form-control"
+                  onChange={this.formChangeInput('preco')}
+                  required placeholder="R$ 10,00"
+                />
+
               </InputGroup>
             </FormGroup>
 
@@ -107,14 +130,14 @@ class EditarProduto extends Component {
             <FormGroup>
               <Label>Promoção:</Label>
               <InputGroup>
-                <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'}  checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
+                <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
               </InputGroup>
             </FormGroup>
 
             <FormGroup>
               <Label>Visível:</Label>
               <InputGroup>
-                <AppSwitch name="visivel" className={'mx-1'} variant={'pill'} color={'success'}  checked={this.state.visivel ? true : false} onChange={this.changeSwitch} />
+                <AppSwitch name="visivel" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.visivel ? true : false} onChange={this.changeSwitch} />
               </InputGroup>
             </FormGroup>
 

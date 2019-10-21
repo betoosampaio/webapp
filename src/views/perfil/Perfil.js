@@ -18,8 +18,13 @@ class Perfil extends Component {
 
   obterDados = async () => {
     let dados = await serverRequest.request('/restaurante/obter');
+
     if (dados) {
+    
       this.setState({ dados: dados[0] });
+     
+     
+      
     }
   }
 

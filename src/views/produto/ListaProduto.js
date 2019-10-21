@@ -3,6 +3,7 @@ import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
+import Modal from 'react-bootstrap/Modal'
 
 class ListaProduto extends Component {
 
@@ -10,6 +11,7 @@ class ListaProduto extends Component {
         super(props);
 
         this.state = {
+            showDelete: false,
             lista: [],
         };
     }
@@ -25,16 +27,26 @@ class ListaProduto extends Component {
         }
     }
 
+
+
     remover = async (id) => {
+
         let dados = await serverRequest.request('/produto/remover', { "id_produto": id });
         if (dados) {
             this.obterLista();
+            this.setState({ showDelete: false });
         }
+
     }
 
     render() {
         return (
             <Table striped bordered hover responsive>
+
+
+
+
+
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -70,7 +82,33 @@ class ListaProduto extends Component {
                                         </Link>
                                     </td>
                                     <td>
-                                        <Button onClick={() => this.remover(obj.id_produto)} color="danger" size="sm">
+                                        <Modal
+                                            size="sm"
+                                            aria-labelledby="contained-modal-title-vcenter"
+                                            centered
+                                            show={this.state.showDelete}
+                                            onHide={() => { this.setState({ showDelete: false }) }}
+                                            backdrop='static'
+                                        >
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Confirmação</Modal.Title>
+                                            </Modal.Header>
+
+                                            <Modal.Body>
+                                                <p>Você tem certeza que deseja excluir ?</p>
+                                            </Modal.Body>
+
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                <Button variant="primary" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
+                                            </Modal.Footer>
+
+                                        </Modal>
+
+
+
+                                        <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
+                                            
                                             <i className="icon-close"></i>
                                         </Button>
                                     </td>
