@@ -53,10 +53,10 @@ class Login extends Component {
     return (
       <div className="app flex-row align-items-center bg">
         <Container>
-          <Row className="col-sm">
-            <Col sm="8" md="6" lg="4">
+          <Row className="justify-content-center">
+            <Col sm="8" md="7" lg="6">
               <CardGroup>
-                <Card className="p-6">
+                <Card className="p-4">
                   <CardBody>
                     <Form onSubmit={this.logar}>
                       <h1>Login</h1>
@@ -101,23 +101,21 @@ class Login extends Component {
                           autoComplete="current-password"
                           name="senha_operador"
                           value={this.state.senha_operador}
-                          onChange={this.changeInput} required/>
+                          onChange={this.changeInput} required />
                       </InputGroup>
-                      <Row>
-                        <Col xs="6">
-                          <Button type="submit" color="primary" className="px-4">Login</Button>
+                      <Row className="justify-content-center">
+                        <Col sm="justify-content-center">
+                          <Button type="submit" color="primary">Login</Button>
                         </Col>
-                        <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Esqueceu a senha?</Button>
-                        </Col>
-                        <Col xs="12" className="text-right">
-                          <Button color="link"  className="px-0" onClick={() => {window.location.href="http://localhost:3000/#/registrar"}}>Registrar-se</Button>
+
+                        <Col xs="12" className="text-center">
+                          <Button color="link" className="px-0" onClick={() => { window.location.href = "http://localhost:3000/#/registrar" }}>Registrar-se</Button>
                         </Col>
                       </Row>
                     </Form>
                   </CardBody>
                 </Card>
-                
+
               </CardGroup>
             </Col>
           </Row>
