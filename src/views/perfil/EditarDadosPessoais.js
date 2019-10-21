@@ -14,21 +14,86 @@ class EditarDadosPessoais extends Component {
             cpf_administrador: "",
             email: "",
             celular: "",
-            razao_social: "",
-            cep: "",
-            logradouro: "",
-            numero: "",
-            complemento: "",
-            bairro: "",
-            municipio: "",
-            uf: "",
-            codigo_banco: "",
-            id_tipo_cadastro_conta: "",
-            id_tipo_conta: "",
-            agencia: "",
-            conta: "",
-            digito: "",
-        };
+        }
+
+    };
+
+    validarCelular = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 11) {
+            msg = 'Celular incompleto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.celular.ok = ok;
+        newState.celular.msg = msg;
+        this.setState({ validacao: newState });
+    }
+
+    validarCPF = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (!this.testarCPF(val)) {
+            msg = 'CPF incorreto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.cpf_administrador.ok = ok;
+        newState.cpf_administrador.msg = msg;
+        this.setState({ validacao: newState });
+    }
+
+    testarCPF = (strCPF) => {
+        var Soma;
+        var Resto;
+        Soma = 0;
+        if (strCPF === "00000000000") return false;
+
+        for (let i = 1; i <= 9; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+        Resto = (Soma * 10) % 11;
+
+        if ((Resto === 10) || (Resto === 11)) Resto = 0;
+        if (Resto !== parseInt(strCPF.substring(9, 10))) return false;
+
+        Soma = 0;
+        for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+        Resto = (Soma * 10) % 11;
+
+        if ((Resto === 10) || (Resto === 11)) Resto = 0;
+        if (Resto !== parseInt(strCPF.substring(10, 11))) return false;
+        return true;
+    }
+
+    validarEmail = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (!/.+@.+\..+/.test(val)) {
+            msg = 'Email incorreto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.email.ok = ok;
+        newState.email.msg = msg;
+        this.setState({ validacao: newState });
     }
 
     componentDidMount() {
