@@ -97,7 +97,7 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="id_tipo_conta" value={this.state.id_tipo_conta} onChange={this.changeInput} type="email" />
+                <Input name="id_tipo_conta" value={this.state.id_tipo_conta} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
 
@@ -117,7 +117,7 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="conta" value={this.state.conta} onChange={this.changeInput} />  <Label> <b> - </b> </Label> <Input name="digito" value={this.state.digito} onChange={this.changeInput} />
+                <Input name="conta" value={this.state.conta} onChange={this.changeInput} minLength="4" required />  <Label> <b> - </b> </Label> <Input name="digito" value={this.state.digito} onChange={this.changeInput} rminLength="1" required />
               </InputGroup>
             </FormGroup>
 
