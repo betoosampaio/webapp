@@ -48,7 +48,9 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-tasks"></i> Tarefas</DropdownItem>
               <DropdownItem><i className="fa fa-comments"></i> Comentários</DropdownItem>
               <DropdownItem header tag="div" className="text-center"><strong>Configuração</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-user"></i> Perfil</DropdownItem>
+             
+              <DropdownItem><i className="fa fa-user"></i><a href="http://localhost:3000/#/perfil">Perfil</a> </DropdownItem>
+             
               <DropdownItem><i className="fa fa-wrench"></i> Configurações</DropdownItem>
               <DropdownItem><i className="fa fa-usd"></i> Recebimento</DropdownItem>
               <DropdownItem><i className="fa fa-file"></i> Projetos</DropdownItem>

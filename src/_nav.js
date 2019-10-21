@@ -1,12 +1,6 @@
 export default {
   items: [
     {
-      name: 'Meu perfil',
-      url: '/perfil',
-      icon: 'icon-user',
-
-    },
-    {
       name: 'Gerenciar',
       url: '/meuperfil',
       icon: 'icon-grid',
