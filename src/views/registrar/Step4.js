@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
-
+import { UncontrolledTooltip } from 'reactstrap';
 const stateName = "Step4";
 
 class Step4 extends Component {
@@ -121,7 +121,7 @@ class Step4 extends Component {
         <h4 className="text-center">Acesso ao sistema</h4>
 
         <FormGroup>
-          <Label>codigo_restaurante:</Label>
+          <Label>Login do restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -134,7 +134,13 @@ class Step4 extends Component {
               placeholder="restaurante_freedapp"
               onBlur={this.validarCampoVazio}
               required
+              id="informativoCodigo"
             />
+      
+           
+            <UncontrolledTooltip placement="top" target="informativoCodigo">
+             Aqui é Login do restaurante  "Será usado sempre para acessar como Administrador"
+           </UncontrolledTooltip>
 
             <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
 
@@ -142,7 +148,7 @@ class Step4 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Login:</Label>
+          <Label>Login do operador:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -153,6 +159,7 @@ class Step4 extends Component {
               value={this.state.login}
               onChange={this.changeInput}
               placeholder="Administrador"
+              onBlur={this.validarCampoVazio}
               required
             />
 

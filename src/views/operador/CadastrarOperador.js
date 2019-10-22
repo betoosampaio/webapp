@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import SelectPerfil from '../../components/selectPerfil/SelectPerfil'
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
+
 
 class CadastrarOperador extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      showCadastrado: false,
       nome_operador: "",
       id_perfil: "",
       login_operador: "",
@@ -19,7 +22,9 @@ class CadastrarOperador extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/operador/cadastrar', this.state);
     if (dados) {
-      window.location.href = '#/operador';
+      
+   this.setState({showCadastrado:true});
+      
     }
   }
 
@@ -37,6 +42,35 @@ class CadastrarOperador extends Component {
             <strong>Cadastrar Operador</strong>
           </CardHeader>
           <CardBody>
+
+
+
+            <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.showCadastrado}
+              onHide={() => { this.setState({ showCadastrado: false }) }}
+              backdrop='static'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmação</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Body>
+                <p>Operador Cadastrado com sucesso</p>
+              </Modal.Body>
+
+              <Modal.Footer>
+        
+                <Button variant="primary" onClick={() => {window.location.href = '#/operador'}}  >Fechar</Button>
+              </Modal.Footer>
+
+            </Modal>
+
+
+
+
 
             <FormGroup>
               <Label>Nome:</Label>
