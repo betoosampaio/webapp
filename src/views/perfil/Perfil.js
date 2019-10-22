@@ -100,8 +100,10 @@ class Perfil extends Component {
           </CardHeader>
           <CardBody>
             <ListGroup>
-              <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco}</ListGroupItem>
-              <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipoCadastroConta}</ListGroupItem>
+              <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco} - {this.state.dados.nome_banco}</ListGroupItem>
+              <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
+    
+              <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
               <ListGroupItem><b>Tipo conta: </b>{this.state.dados.tipo_conta}</ListGroupItem>
               <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
               <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
