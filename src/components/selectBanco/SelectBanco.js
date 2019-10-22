@@ -30,7 +30,7 @@ class SelectBanco extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.codigo} value={obj.codigo}>{obj.nome}</option>
+                            <option key={obj.codigo} value={obj.codigo}>{`${obj.codigo} - ${obj.nome}`}</option>
                         )
                     })
                 }
