@@ -60,7 +60,7 @@ class EditarDadosBancarios extends Component {
           <CardBody>
 
             <FormGroup>
-              <Label><b>Código do banco:</b></Label>
+              <Label><b>Código do banco: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -69,8 +69,19 @@ class EditarDadosBancarios extends Component {
               </InputGroup>
             </FormGroup>
 
+
             <FormGroup>
-              <Label><b>ID da conta:</b></Label>
+              <Label><b>Nome  do banco: </b></Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                </InputGroupAddon>
+                <Input name="nome_banco" value={this.state.nome_banco} onChange={this.changeInput} />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label><b>ID da conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -80,7 +91,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Tipo da conta:</b></Label>
+              <Label><b>Tipo da conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -90,7 +101,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Agência:</b></Label>
+              <Label><b>Agência: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -100,7 +111,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Conta:</b></Label>
+              <Label><b>Conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -114,7 +125,7 @@ class EditarDadosBancarios extends Component {
             <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
-      </form>
+      </form >
 
     );
   }

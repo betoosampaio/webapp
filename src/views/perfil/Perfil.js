@@ -20,15 +20,15 @@ class Perfil extends Component {
     let dados = await serverRequest.request('/restaurante/obter');
 
     if (dados) {
-    
+
       this.setState({ dados: dados[0] });
-     
-     
-      
+
+
+
     }
   }
 
- 
+
 
 
   render() {
@@ -48,17 +48,12 @@ class Perfil extends Component {
           <CardBody>
             <ListGroup>
               <ListGroupItem><b>Celular:</b> {this.state.dados.celular}</ListGroupItem>
-
               <ListGroupItem><b>Email:</b> {this.state.dados.email}</ListGroupItem>
-
               <ListGroupItem><b>CPF administrador:</b> {this.state.dados.cpf_administrador}</ListGroupItem>
-
               <ListGroupItem><b>Nome administrador:</b> {this.state.dados.nome_administrador}</ListGroupItem>
-
             </ListGroup>
           </CardBody>
         </Card>
-
         <Card>
           <CardHeader>
             <i className='icon-cup'></i>&nbsp;<b>Dados do Restaurante</b>
@@ -82,11 +77,8 @@ class Perfil extends Component {
               <ListGroupItem><b>Estado: </b>{this.state.dados.uf}</ListGroupItem>
               <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}</ListGroupItem>
             </ListGroup>
-
           </CardBody>
         </Card>
-
-
         <Card>
           <CardHeader>
             <i className='icon-credit-card'></i>&nbsp;<b>Dados Bancário</b>
@@ -102,19 +94,12 @@ class Perfil extends Component {
             <ListGroup>
               <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco} - {this.state.dados.nome_banco}</ListGroupItem>
               <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
-    
-              <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
               <ListGroupItem><b>Tipo conta: </b>{this.state.dados.tipo_conta}</ListGroupItem>
               <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
               <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
             </ListGroup>
-
           </CardBody>
         </Card>
-
-
-
-
       </div>
 
 
