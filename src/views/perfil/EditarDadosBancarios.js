@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
+import MaskedInput from 'react-text-mask';
+import SelectBanco from '../../components/selectBanco/SelectBanco'
 
 
 class EditarDadosBancarios extends Component {
@@ -60,25 +62,22 @@ class EditarDadosBancarios extends Component {
           <CardBody>
 
             <FormGroup>
-              <Label><b>Código do banco: </b></Label>
+              <Label><b>Banco: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="codigo_banco" value={this.state.codigo_banco} onChange={this.changeInput} />
+                <SelectBanco
+                  required
+                  name="codigo_banco"
+                  value={this.state.codigo_banco}
+                  onChange={this.changeInput}>
+                </SelectBanco>
               </InputGroup>
             </FormGroup>
 
 
-            <FormGroup>
-              <Label><b>Nome  do banco: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="nome_banco" value={this.state.nome_banco} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+            
 
             <FormGroup>
               <Label><b>ID da conta: </b></Label>
@@ -86,7 +85,16 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="id_tipo_cadastro_conta" value={this.state.id_tipo_cadastro_conta} onChange={this.changeInput} />
+                <Input
+                  required
+                  type="select"
+                  name="id_tipo_cadastro_conta"
+                  value={this.state.id_tipo_cadastro_conta}
+                  onChange={this.changeInput}>
+                  <option value="0">Selecione</option>
+                  <option value="1">Pessoa Física</option>
+                  <option value="2">Pessoa Jurídica</option>
+                </Input>
               </InputGroup>
             </FormGroup>
 
@@ -96,7 +104,16 @@ class EditarDadosBancarios extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="id_tipo_conta" value={this.state.id_tipo_conta} onChange={this.changeInput} />
+                <Input
+                  required
+                  type="select"
+                  name="id_tipo_conta"
+                  value={this.state.id_tipo_conta}
+                  onChange={this.changeInput}>
+                  <option value="0">Selecione</option>
+                  <option value="1">Conta Corrente</option>
+                  <option value="2">Conta Poupança</option>
+                </Input>
               </InputGroup>
             </FormGroup>
 
