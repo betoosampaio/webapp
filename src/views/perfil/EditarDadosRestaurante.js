@@ -14,22 +14,18 @@ class EditarDadosRestaurante extends Component {
 
     super(props);
     this.state = {
-<<<<<<< HEAD
-      formulario:{
-=======
-      showConfirm: false,
->>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
-      razao_social: "",
-      cep: "",
-      logradouro: "",
-      numero: "",
-      complemento: "",
-      bairro: "",
-      municipio: "",
-      uf: "",
-<<<<<<< HEAD
-      enderecoDisabled: false,
-    },
+      formulario: {
+        showConfirm: false,
+        razao_social: "",
+        cep: "",
+        logradouro: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        municipio: "",
+        uf: "",
+        enderecoDisabled: false,
+      },
       validacao: {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
@@ -42,8 +38,6 @@ class EditarDadosRestaurante extends Component {
         uf: { ok: true, msg: '' },
         complemento: { ok: true },
       },
-=======
->>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
     };
   }
 
@@ -181,7 +175,7 @@ class EditarDadosRestaurante extends Component {
 
     let obj = {
 
-     
+
 
       cnpj: this.state.formulario.cnpj,
       razao_social: this.state.formulario.razao_social,
@@ -228,136 +222,133 @@ class EditarDadosRestaurante extends Component {
   render() {
     return (
 
-      <form name="form" onSubmit={this.editar}>
-        <Card>
-          <CardHeader>
-            <h5><b>Editar dados do restaurante</b></h5>
-          </CardHeader>
-          <CardBody>
-            <Modal
-              size="md"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              show={this.state.showConfirm}
-              onHide={() => { this.setState({ showConfirm: false }) }}
-              backdrop='static'
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Confirmação</Modal.Title>
-              </Modal.Header>
+      <Card>
+        <CardHeader>
+          <h5><b>Editar dados do restaurante</b></h5>
+        </CardHeader>
+        <CardBody>
+          <Modal
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={this.state.showConfirm}
+            onHide={() => { this.setState({ showConfirm: false }) }}
+            backdrop='static'
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Confirmação</Modal.Title>
+            </Modal.Header>
 
-              <Modal.Body>
-                <p>Tem certeza de que deseja Editar Dados do Restaurante? </p>
-              </Modal.Body>
+            <Modal.Body>
+              <p>Tem certeza de que deseja Editar Dados do Restaurante? </p>
+            </Modal.Body>
 
-              <Modal.Footer>
+            <Modal.Footer>
 
-                <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
-                <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-              </Modal.Footer>
+              <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+              <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+            </Modal.Footer>
 
-            </Modal>
+          </Modal>
 
-            <FormGroup>
-              <Label><b>Razão Social do Restaurante: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Razão Social do Restaurante: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} type="text" />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>CEP: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
+          <FormGroup>
+            <Label><b>CEP: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
 
 
-                <MaskedInput
-                  name="cep"
-                  className="form-control"
-                  value={this.state.cep}
-                  onChange={this.changeInput}
-                  onBlur={this.validarCEP}
-                  placeholder='00000-000'
-                  mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
-                  guide={true}
-                  required
-                />
+              <MaskedInput
+                name="cep"
+                className="form-control"
+                value={this.state.cep}
+                onChange={this.changeInput}
+                onBlur={this.validarCEP}
+                placeholder='00000-000'
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
+                guide={true}
+                required
+              />
 
-              </InputGroup>
-            </FormGroup>
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Logradouro: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="logradouro" value={this.state.logradouro} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Logradouro: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="logradouro" value={this.state.logradouro} onChange={this.changeInput} />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Número: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Número: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="text" />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Complemento</b> (opcional): </Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="complemento" value={this.state.complemento} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Complemento</b> (opcional): </Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="complemento" value={this.state.complemento} onChange={this.changeInput} />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Bairro: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Bairro: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} type="text" />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Munícipio: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Munícipio: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} type="text" />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Estado (UF): </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="uf" value={this.state.uf} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>Estado (UF): </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input name="uf" value={this.state.uf} onChange={this.changeInput} />
+            </InputGroup>
+          </FormGroup>
 
-          </CardBody>
-          <CardFooter>
-            <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-          </CardFooter>
-        </Card>
-      </form>
-
+        </CardBody>
+        <CardFooter>
+          <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+        </CardFooter>
+      </Card>
     );
   }
 }

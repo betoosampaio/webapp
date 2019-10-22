@@ -150,104 +150,99 @@ class EditarDadosPessoais extends Component {
     render() {
         return (
 
-            <form name="form" onSubmit={this.editar}>
-                <Card>
-                    <CardHeader>
-                        <h5><b>Editar dados pessoais</b></h5>
-                    </CardHeader>
-                    <CardBody>
-                        <Modal
-                            size="md"
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                            show={this.state.showConfirm}
-                            onHide={() => { this.setState({ showConfirm: false }) }}
-                            backdrop='static'
-                        >
-                            <Modal.Header closeButton>
-                                <Modal.Title>Confirmação</Modal.Title>
-                            </Modal.Header>
+            <Card>
+                <CardHeader>
+                    <h5><b>Editar dados pessoais</b></h5>
+                </CardHeader>
+                <CardBody>
+                    <Modal
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        show={this.state.showConfirm}
+                        onHide={() => { this.setState({ showConfirm: false }) }}
+                        backdrop='static'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmação</Modal.Title>
+                        </Modal.Header>
 
-                            <Modal.Body>
-                                <p>Tem certeza de que deseja Editar Dados Pessoais? </p>
-                            </Modal.Body>
+                        <Modal.Body>
+                            <p>Tem certeza de que deseja Editar Dados Pessoais? </p>
+                        </Modal.Body>
 
-                            <Modal.Footer>
+                        <Modal.Footer>
 
-                                <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
-                                <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-                            </Modal.Footer>
+                            <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+                            <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                        </Modal.Footer>
 
-                        </Modal>
+                    </Modal>
 
-                        <FormGroup>
-                            <Label><b>Nome do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
-                            </InputGroup>
-                        </FormGroup>
+                    <FormGroup>
+                        <Label><b>Nome do Administrador:</b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-user"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
+                        </InputGroup>
+                    </FormGroup>
 
-                        <FormGroup>
-                            <Label><b>CPF do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
-                                </InputGroupAddon>
+                    <FormGroup>
+                        <Label><b>CPF do Administrador:</b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-user"></i></InputGroupText>
+                            </InputGroupAddon>
 
-                                <MaskedInput
-                                    className="form-control"
-                                    name="cpf_administrador"
-                                    value={this.state.cpf_administrador}
-                                    onChange={this.changeInput}
-                                    placeholder='000.000.000-00'
-                                    mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-                                    guide={true}
-                                    required
-                                />
+                            <MaskedInput
+                                className="form-control"
+                                name="cpf_administrador"
+                                value={this.state.cpf_administrador}
+                                onChange={this.changeInput}
+                                placeholder='000.000.000-00'
+                                mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
+                                guide={true}
+                                required
+                            />
 
-                            </InputGroup>
-                        </FormGroup>
+                        </InputGroup>
+                    </FormGroup>
 
-                        <FormGroup>
-                            <Label><b>E-mail do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-envelope"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
-                            </InputGroup>
-                        </FormGroup>
+                    <FormGroup>
+                        <Label><b>E-mail do Administrador:</b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-envelope"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
+                        </InputGroup>
+                    </FormGroup>
 
-                        <FormGroup>
-                            <Label><b>Celular do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-phone"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <MaskedInput
-                                    className="form-control"
-                                    placeholder='(11) 98888-9999'
-                                    name="celular"
-                                    value={this.state.celular}
-                                    onChange={this.changeInput}
-                                    mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
-                                    guide={true}
-                                />
+                    <FormGroup>
+                        <Label><b>Celular do Administrador:</b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-phone"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <MaskedInput
+                                className="form-control"
+                                placeholder='(11) 98888-9999'
+                                name="celular"
+                                value={this.state.celular}
+                                onChange={this.changeInput}
+                                mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
+                                guide={true}
+                            />
+                        </InputGroup>
+                    </FormGroup>
 
-
-                            </InputGroup>
-                        </FormGroup>
-
-                    </CardBody>
-                    <CardFooter>
-                        <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-                    </CardFooter>
-                </Card>
-            </form>
-
+                </CardBody>
+                <CardFooter>
+                    <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+                </CardFooter>
+            </Card>
         );
     }
 }
