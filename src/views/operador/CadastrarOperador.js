@@ -58,12 +58,12 @@ class CadastrarOperador extends Component {
               </Modal.Header>
 
               <Modal.Body>
-                <p>Operador Cadastrado com sucesso</p>
+                <p>Operador Cadastrado com sucesso! </p>
               </Modal.Body>
 
               <Modal.Footer>
         
-                <Button variant="primary" onClick={() => {window.location.href = '#/operador'}}  >Fechar</Button>
+                <Button variant="primary" color="success" onClick={() => {window.location.href = '#/operador'}}  >OK</Button>
               </Modal.Footer>
 
             </Modal>

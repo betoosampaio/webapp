@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 class EditarMenu extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            showConfirm: false,
             ds_menu: "",
-            
+
         };
     }
 
@@ -42,38 +44,60 @@ class EditarMenu extends Component {
 
     render() {
         return (
-            <form onSubmit={this.editar}>
-                <div>
-                    <Card>
-                        <CardHeader>
-                            <strong>Editar Menu</strong>
-                        </CardHeader>
-                        <CardBody>
 
-                            <FormGroup>
-                                <Label>Nome do menu:</Label>
-                                <InputGroup>
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches"/>
-                                </InputGroup>
-                            </FormGroup>
+            <Card>
+                <CardHeader>
+                    <strong>Editar Menu</strong>
+                </CardHeader>
+                <CardBody>
 
-                            <FormGroup>
-                                <Label>Ativo:</Label>
-                                <InputGroup>
-                                    <AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
-                                </InputGroup>
-                            </FormGroup>
+                    <Modal
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        show={this.state.showConfirm}
+                        onHide={() => { this.setState({ showConfirm: false }) }}
+                        backdrop='static'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmação</Modal.Title>
+                        </Modal.Header>
 
-                        </CardBody>
-                        <CardFooter>
-                            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                        </CardFooter>
-                    </Card>
-                </div>
-            </form>
+                        <Modal.Body>
+                            <p>Tem certeza de que deseja Editar este Menu? </p>
+                        </Modal.Body>
+
+                        <Modal.Footer>
+
+                            <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/menu' }} >Cancelar</Button>
+                            <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                        </Modal.Footer>
+
+                    </Modal>
+
+                    <FormGroup>
+                        <Label>Nome do menu:</Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label>Ativo:</Label>
+                        <InputGroup>
+                            <AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
+                        </InputGroup>
+                    </FormGroup>
+
+                </CardBody>
+                <CardFooter>
+                <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+                </CardFooter>
+            </Card>
+
         );
     }
 }
