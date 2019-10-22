@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 class EditarMenu extends Component {
 
@@ -9,7 +10,7 @@ class EditarMenu extends Component {
         super(props);
         this.state = {
             ds_menu: "",
-            
+
         };
     }
 
@@ -28,7 +29,7 @@ class EditarMenu extends Component {
         event.preventDefault();
         let dados = await serverRequest.request('/menu/editar', this.state);
         if (dados) {
-            window.location.href = '#/cardapio/menu';
+            this.setState({ showEditado: true });
         }
     }
 
@@ -50,13 +51,37 @@ class EditarMenu extends Component {
                         </CardHeader>
                         <CardBody>
 
+                            <Modal
+                                size="md"
+                                aria-labelledby="contained-modal-title-vcenter"
+                                centered
+                                show={this.state.showEditado}
+                                onHide={() => { this.setState({ showEditado: false }) }}
+                                backdrop='static'
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Confirmação</Modal.Title>
+                                </Modal.Header>
+
+                                <Modal.Body>
+                                    <p>Tem certeza de que deseja Editar este Menu? </p>
+                                </Modal.Body>
+
+                                <Modal.Footer>
+
+                                    <Button variant="primary" color="danger" onClick={() => this.setState({ showEditado: false })}  >Não, cancelar</Button>
+                                    <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >Sim</Button>
+                                </Modal.Footer>
+
+                            </Modal>
+
                             <FormGroup>
                                 <Label>Nome do menu:</Label>
                                 <InputGroup>
                                     <InputGroupAddon addonType="append">
                                         <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                                     </InputGroupAddon>
-                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches"/>
+                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
                                 </InputGroup>
                             </FormGroup>
 
