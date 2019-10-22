@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import { AppSwitch } from '@coreui/react';
 import SelectPerfil from '../../components/selectPerfil/SelectPerfil';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 class EditarOperador extends Component {
 
@@ -34,7 +35,7 @@ class EditarOperador extends Component {
 		event.preventDefault();
 		let dados = await serverRequest.request('/operador/editar', this.state);
 		if (dados) {
-			window.location.href = '#/operador';
+			this.setState({ showEditado: true });
 		}
 	}
 
@@ -54,10 +55,33 @@ class EditarOperador extends Component {
 						<strong>Editar Operador</strong>
 					</CardHeader>
 					<CardBody>
+						<Modal
+							size="md"
+							aria-labelledby="contained-modal-title-vcenter"
+							centered
+							show={this.state.showEditado}
+							onHide={() => { this.setState({ showEditado: false }) }}
+							backdrop='static'
+						>
+							<Modal.Header closeButton>
+								<Modal.Title>Confirmação</Modal.Title>
+							</Modal.Header>
+
+							<Modal.Body>
+								<p>Tem certeza de que deseja Editar este Operador? </p>
+							</Modal.Body>
+
+							<Modal.Footer>
+
+								<Button variant="primary" color="danger" onClick={() => this.setState({ showEditado: false })}  >Não, cancelar</Button>
+								<Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >Sim</Button>
+							</Modal.Footer>
+
+						</Modal>
 
 						<FormGroup>
 							<Label>ID:</Label>
-							<Input disabled name="id_operador" value={this.state.id_operador} onChange={this.changeInput}/>
+							<Input disabled name="id_operador" value={this.state.id_operador} onChange={this.changeInput} />
 						</FormGroup>
 
 						<FormGroup>
