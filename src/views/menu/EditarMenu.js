@@ -9,6 +9,7 @@ class EditarMenu extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showConfirm: false,
             ds_menu: "",
 
         };
@@ -29,7 +30,7 @@ class EditarMenu extends Component {
         event.preventDefault();
         let dados = await serverRequest.request('/menu/editar', this.state);
         if (dados) {
-            this.setState({ showEditado: true });
+            window.location.href = '#/cardapio/menu';
         }
     }
 
@@ -43,62 +44,60 @@ class EditarMenu extends Component {
 
     render() {
         return (
-            <form onSubmit={this.editar}>
-                <div>
-                    <Card>
-                        <CardHeader>
-                            <strong>Editar Menu</strong>
-                        </CardHeader>
-                        <CardBody>
 
-                            <Modal
-                                size="md"
-                                aria-labelledby="contained-modal-title-vcenter"
-                                centered
-                                show={this.state.showEditado}
-                                onHide={() => { this.setState({ showEditado: false }) }}
-                                backdrop='static'
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Confirmação</Modal.Title>
-                                </Modal.Header>
+            <Card>
+                <CardHeader>
+                    <strong>Editar Menu</strong>
+                </CardHeader>
+                <CardBody>
 
-                                <Modal.Body>
-                                    <p>Tem certeza de que deseja Editar este Menu? </p>
-                                </Modal.Body>
+                    <Modal
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        show={this.state.showConfirm}
+                        onHide={() => { this.setState({ showConfirm: false }) }}
+                        backdrop='static'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmação</Modal.Title>
+                        </Modal.Header>
 
-                                <Modal.Footer>
+                        <Modal.Body>
+                            <p>Tem certeza de que deseja Editar este Menu? </p>
+                        </Modal.Body>
 
-                                    <Button variant="primary" color="danger" onClick={() => this.setState({ showEditado: false })}  >Não, cancelar</Button>
-                                    <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >Sim</Button>
-                                </Modal.Footer>
+                        <Modal.Footer>
 
-                            </Modal>
+                            <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/menu' }} >Cancelar</Button>
+                            <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                        </Modal.Footer>
 
-                            <FormGroup>
-                                <Label>Nome do menu:</Label>
-                                <InputGroup>
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
-                                </InputGroup>
-                            </FormGroup>
+                    </Modal>
 
-                            <FormGroup>
-                                <Label>Ativo:</Label>
-                                <InputGroup>
-                                    <AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
-                                </InputGroup>
-                            </FormGroup>
+                    <FormGroup>
+                        <Label>Nome do menu:</Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
+                        </InputGroup>
+                    </FormGroup>
 
-                        </CardBody>
-                        <CardFooter>
-                            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                        </CardFooter>
-                    </Card>
-                </div>
-            </form>
+                    <FormGroup>
+                        <Label>Ativo:</Label>
+                        <InputGroup>
+                            <AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
+                        </InputGroup>
+                    </FormGroup>
+
+                </CardBody>
+                <CardFooter>
+                <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+                </CardFooter>
+            </Card>
+
         );
     }
 }
