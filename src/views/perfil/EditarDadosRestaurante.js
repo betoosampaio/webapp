@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
+import MaskedInput from 'react-text-mask';
+import SelectUF from '../../components/selectUF/SelectUf';
+import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 
 
@@ -9,7 +12,8 @@ class EditarDadosRestaurante extends Component {
   constructor(props) {
 
     super(props);
-    this.state = {     
+    this.state = {
+      formulario:{
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -17,7 +21,21 @@ class EditarDadosRestaurante extends Component {
       complemento: "",
       bairro: "",
       municipio: "",
-      uf: "",  
+      uf: "",
+      enderecoDisabled: false,
+    },
+      validacao: {
+        cnpj: { ok: true, msg: '' },
+        razao_social: { ok: true, msg: '' },
+        nome_restaurante: { ok: true, msg: '' },
+        cep: { ok: true, msg: '' },
+        logradouro: { ok: true, msg: '' },
+        numero: { ok: true, msg: '' },
+        bairro: { ok: true, msg: '' },
+        municipio: { ok: true, msg: '' },
+        uf: { ok: true, msg: '' },
+        complemento: { ok: true },
+      },
     };
   }
 
@@ -152,16 +170,40 @@ class EditarDadosRestaurante extends Component {
 
   editar = async (event) => {
     event.preventDefault();
-   
-    this.setState({celular: this.state.celular.toString()}, async () => {
-      let dados = await serverRequest.request('/restaurante/editar', this.state);
-    
-      if (dados) {
-        window.location.href = '#/perfil';
-      }
-    });
 
-   
+    let obj = {
+
+     
+
+      cnpj: this.state.formulario.cnpj,
+      razao_social: this.state.formulario.razao_social,
+      nome_restaurante: this.state.formulario.nome_restaurante,
+      cep: this.state.formulario.cep,
+      logradouro: this.state.formulario.logradouro,
+      numero: this.state.formulario.numero,
+      complemento: this.state.formulario.complemento,
+      bairro: this.state.formulario.bairro,
+      municipio: this.state.formulario.municipio,
+      uf: this.state.formulario.uf,
+
+      codigo_banco: this.state.codigo_banco || "0",
+      id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+      id_tipo_conta: this.state.id_tipo_conta || "0",
+      agencia: this.state.agencia || "0",
+      conta: this.state.conta || "0",
+      digito: this.state.digito || "0",
+
+      codigo_restaurante: this.state.codigo_restaurante,
+      login: this.state.login,
+      senha: this.state.senha,
+    }
+
+    //console.log(obj);
+
+    let dados = await serverRequest.request('/restaurante/editar', obj);
+    if (dados) {
+      window.location.href = '#/perfil';
+    }
   }
 
   changeInput = (event) => {
@@ -201,7 +243,20 @@ class EditarDadosRestaurante extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="cep" value={this.state.cep} onChange={this.changeInput} />
+
+
+                <MaskedInput
+                  name="cep"
+                  className="form-control"
+                  value={this.state.cep}
+                  onChange={this.changeInput}
+                  onBlur={this.validarCEP}
+                  placeholder='00000-000'
+                  mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
+                  guide={true}
+                  required
+                />
+
               </InputGroup>
             </FormGroup>
 

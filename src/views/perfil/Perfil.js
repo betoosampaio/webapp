@@ -47,10 +47,10 @@ class Perfil extends Component {
           </CardHeader>
           <CardBody>
             <ListGroup>
-              <ListGroupItem><b>Celular:</b> {this.state.dados.celular}</ListGroupItem>
-              <ListGroupItem><b>Email:</b> {this.state.dados.email}</ListGroupItem>
-              <ListGroupItem><b>CPF administrador:</b> {this.state.dados.cpf_administrador}</ListGroupItem>
               <ListGroupItem><b>Nome administrador:</b> {this.state.dados.nome_administrador}</ListGroupItem>
+              <ListGroupItem><b>CPF administrador:</b> {this.state.dados.cpf_administrador}</ListGroupItem>
+              <ListGroupItem><b>Email:</b> {this.state.dados.email}</ListGroupItem>
+              <ListGroupItem><b>Celular:</b> {this.state.dados.celular}</ListGroupItem>
             </ListGroup>
           </CardBody>
         </Card>

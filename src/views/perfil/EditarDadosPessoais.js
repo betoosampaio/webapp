@@ -92,17 +92,17 @@ class EditarDadosPessoais extends Component {
     editar = async (event) => {
         event.preventDefault();
 
-        let obj = {         
+        let obj = {
 
             cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
             nome_administrador: this.state.nome_administrador,
-            celular: this.state.celular.toString(),
+            celular: this.state.celular.toString().replace(/\D/g, ''),
             email: this.state.email,
 
             cnpj: this.state.cnpj,
             razao_social: this.state.razao_social,
             nome_restaurante: this.state.nome_restaurante,
-            cep: this.state.cep,
+            cep: this.state.cep.replace(/\D/g, ''),
             logradouro: this.state.logradouro,
             numero: this.state.numero,
             complemento: this.state.complemento,
@@ -201,7 +201,17 @@ class EditarDadosPessoais extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-phone"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="celular" value={this.state.celular} onChange={this.changeInput} />
+                                <MaskedInput
+                                    className="form-control"
+                                    placeholder='(11) 98888-9999'
+                                    name="celular"
+                                    value={this.state.celular}
+                                    onChange={this.changeInput}
+                                    mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
+                                    guide={true}
+                                />
+
+
                             </InputGroup>
                         </FormGroup>
 
