@@ -14,7 +14,6 @@ class EditarDadosRestaurante extends Component {
 
     super(props);
     this.state = {
-      formulario:{
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -24,7 +23,6 @@ class EditarDadosRestaurante extends Component {
       municipio: "",
       uf: "",
       enderecoDisabled: false,
-    },
       validacao: {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
@@ -37,8 +35,9 @@ class EditarDadosRestaurante extends Component {
         uf: { ok: true, msg: '' },
         complemento: { ok: true },
       },
-    };
-  }
+    }
+  };
+     
 
   validarCNPJ = async (event) => {
     let ok = false, msg = '';
@@ -169,43 +168,50 @@ class EditarDadosRestaurante extends Component {
     }
   }
 
+  
   editar = async (event) => {
     event.preventDefault();
 
     let obj = {
 
-     
+        cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+        nome_administrador: this.state.nome_administrador,
+        celular: this.state.celular.toString().replace(/\D/g, ''),
+        email: this.state.email,
 
-      cnpj: this.state.formulario.cnpj,
-      razao_social: this.state.formulario.razao_social,
-      nome_restaurante: this.state.formulario.nome_restaurante,
-      cep: this.state.formulario.cep,
-      logradouro: this.state.formulario.logradouro,
-      numero: this.state.formulario.numero,
-      complemento: this.state.formulario.complemento,
-      bairro: this.state.formulario.bairro,
-      municipio: this.state.formulario.municipio,
-      uf: this.state.formulario.uf,
+        cnpj: this.state.cnpj,
+        razao_social: this.state.razao_social,
+        nome_restaurante: this.state.nome_restaurante,
+        cep: this.state.cep.replace(/\D/g, ''),
+        logradouro: this.state.logradouro,
+        numero: this.state.numero,
+        complemento: this.state.complemento,
+        bairro: this.state.bairro,
+        municipio: this.state.municipio,
+        uf: this.state.uf,
 
-      codigo_banco: this.state.codigo_banco || "0",
-      id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
-      id_tipo_conta: this.state.id_tipo_conta || "0",
-      agencia: this.state.agencia || "0",
-      conta: this.state.conta || "0",
-      digito: this.state.digito || "0",
+        codigo_banco: this.state.codigo_banco || "0",
+        id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+        id_tipo_conta: this.state.id_tipo_conta || "0",
+        agencia: this.state.agencia || "0",
+        conta: this.state.conta || "0",
+        digito: this.state.digito || "0",
 
-      codigo_restaurante: this.state.codigo_restaurante,
-      login: this.state.login,
-      senha: this.state.senha,
+        codigo_restaurante: this.state.codigo_restaurante,
+        login: this.state.login,
+        senha: this.state.senha,
     }
 
     //console.log(obj);
 
     let dados = await serverRequest.request('/restaurante/editar', obj);
     if (dados) {
-      window.location.href = '#/perfil';
+        window.location.href = '#/perfil';
     }
-  }
+}
+
+
+
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
