@@ -14,29 +14,16 @@ class EditarDadosRestaurante extends Component {
 
     super(props);
     this.state = {
-      formulario: {
-        showConfirm: false,
-        razao_social: "",
-        cep: "",
-        logradouro: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        municipio: "",
-        uf: "",
-        enderecoDisabled: false,
-      },
-      formulario: {
-        razao_social: "",
-        cep: "",
-        logradouro: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        municipio: "",
-        uf: "",
-        enderecoDisabled: false,
-      },
+      showConfirm: false,
+      razao_social: "",
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      municipio: "",
+      uf: "",
+      enderecoDisabled: false,
       validacao: {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
@@ -47,7 +34,6 @@ class EditarDadosRestaurante extends Component {
         bairro: { ok: true, msg: '' },
         municipio: { ok: true, msg: '' },
         uf: { ok: true, msg: '' },
-        complemento: { ok: true },
       },
     };
   }
@@ -186,18 +172,21 @@ class EditarDadosRestaurante extends Component {
 
     let obj = {
 
+      cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+      nome_administrador: this.state.nome_administrador,
+      celular: this.state.celular.toString().replace(/\D/g, ''),
+      email: this.state.email,
 
-
-      cnpj: this.state.formulario.cnpj,
-      razao_social: this.state.formulario.razao_social,
-      nome_restaurante: this.state.formulario.nome_restaurante,
-      cep: this.state.formulario.cep,
-      logradouro: this.state.formulario.logradouro,
-      numero: this.state.formulario.numero,
-      complemento: this.state.formulario.complemento,
-      bairro: this.state.formulario.bairro,
-      municipio: this.state.formulario.municipio,
-      uf: this.state.formulario.uf,
+      cnpj: this.state.cnpj,
+      razao_social: this.state.razao_social,
+      nome_restaurante: this.state.nome_restaurante,
+      cep: this.state.cep.replace(/\D/g, ''),
+      logradouro: this.state.logradouro,
+      numero: this.state.numero,
+      complemento: this.state.complemento,
+      bairro: this.state.bairro,
+      municipio: this.state.municipio,
+      uf: this.state.uf,
 
       codigo_banco: this.state.codigo_banco || "0",
       id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
@@ -262,11 +251,6 @@ class EditarDadosRestaurante extends Component {
 
           </Modal>
 
-
-
-
-
-
           <FormGroup>
             <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
             <p></p>
@@ -277,7 +261,16 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} type="text" />
+              <Input
+                name="razao_social"
+                value={this.state.razao_social}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='Razão social da empresa'
+                required
+                minLength="4"
+                maxLength="255"
+              />
             </InputGroup>
           </FormGroup>
 
@@ -287,7 +280,6 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-
 
               <MaskedInput
                 name="cep"
@@ -300,7 +292,7 @@ class EditarDadosRestaurante extends Component {
                 guide={true}
                 required
               />
-
+              <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
             </InputGroup>
           </FormGroup>
 
@@ -310,7 +302,15 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="logradouro" value={this.state.logradouro} onChange={this.changeInput} />
+              <Input
+                name="logradouro"
+                value={this.state.logradouro}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='Avenida Paulista'
+                disabled={this.state.enderecoDisabled}
+                required
+              />
             </InputGroup>
           </FormGroup>
 
@@ -320,7 +320,14 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="text" />
+              <Input
+                name="numero"
+                value={this.state.numero}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='1234'
+                required
+              />
             </InputGroup>
           </FormGroup>
 
@@ -330,7 +337,13 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="complemento" value={this.state.complemento} onChange={this.changeInput} />
+              <Input
+                type='text'
+                placeholder='Bloco C'
+                name="complemento"
+                value={this.state.complemento}
+                onChange={this.changeInput}
+              />
             </InputGroup>
           </FormGroup>
 
@@ -340,7 +353,15 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} type="text" />
+              <Input
+                name="bairro"
+                value={this.state.bairro}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                type='text'
+                placeholder='Bela Vista'
+                required
+              />
             </InputGroup>
           </FormGroup>
 
@@ -350,7 +371,15 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} type="text" />
+              <SuggestMunicipio
+                name="municipio"
+                value={this.state.municipio}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                type='text'
+                placeholder='São Paulo'
+                required
+              ></SuggestMunicipio>
             </InputGroup>
           </FormGroup>
 
@@ -360,7 +389,13 @@ class EditarDadosRestaurante extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="uf" value={this.state.uf} onChange={this.changeInput} />
+              <SelectUF
+                name="uf"
+                value={this.state.uf}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                required>
+              </SelectUF>
             </InputGroup>
           </FormGroup>
 
