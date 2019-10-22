@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
-
+import Modal from 'react-bootstrap/Modal'
 
 class EditarDadosPessoais extends Component {
 
@@ -10,6 +10,7 @@ class EditarDadosPessoais extends Component {
 
         super(props);
         this.state = {
+            showConfirm: false,
             nome_administrador: "",
             cpf_administrador: "",
             email: "",
@@ -135,6 +136,29 @@ class EditarDadosPessoais extends Component {
                         <h5><b>Editar dados pessoais</b></h5>
                     </CardHeader>
                     <CardBody>
+                        <Modal
+                            size="md"
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                            show={this.state.showConfirm}
+                            onHide={() => { this.setState({ showConfirm: false }) }}
+                            backdrop='static'
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Confirmação</Modal.Title>
+                            </Modal.Header>
+
+                            <Modal.Body>
+                                <p>Tem certeza de que deseja Editar Dados Pessoais? </p>
+                            </Modal.Body>
+
+                            <Modal.Footer>
+
+                                <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+                                <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                            </Modal.Footer>
+
+                        </Modal>
 
                         <FormGroup>
                             <Label><b>Nome do Administrador:</b></Label>
@@ -178,7 +202,7 @@ class EditarDadosPessoais extends Component {
 
                     </CardBody>
                     <CardFooter>
-                        <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+                        <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
                     </CardFooter>
                 </Card>
             </form>
