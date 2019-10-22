@@ -180,7 +180,7 @@ class EditarDadosPessoais extends Component {
                     </Modal>
 
                     <FormGroup>
-                        <Label><b>Nome do Administrador:</b></Label>
+                        <Label><b>Nome do Administrador: </b></Label>
                         <InputGroup>
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -190,7 +190,7 @@ class EditarDadosPessoais extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label><b>CPF do Administrador:</b></Label>
+                        <Label><b>CPF do Administrador: </b></Label>
                         <InputGroup>
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -211,7 +211,7 @@ class EditarDadosPessoais extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label><b>E-mail do Administrador:</b></Label>
+                        <Label><b>E-mail do Administrador: </b></Label>
                         <InputGroup>
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-envelope"></i></InputGroupText>
@@ -221,7 +221,7 @@ class EditarDadosPessoais extends Component {
                     </FormGroup>
 
                     <FormGroup>
-                        <Label><b>Celular do Administrador:</b></Label>
+                        <Label><b>Celular do Administrador: </b></Label>
                         <InputGroup>
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-phone"></i></InputGroupText>
