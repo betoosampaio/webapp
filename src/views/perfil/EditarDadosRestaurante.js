@@ -26,6 +26,17 @@ class EditarDadosRestaurante extends Component {
         uf: "",
         enderecoDisabled: false,
       },
+      formulario:{
+      razao_social: "",
+      cep: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      municipio: "",
+      uf: "",
+      enderecoDisabled: false,
+    },
       validacao: {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
