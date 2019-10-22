@@ -10,18 +10,6 @@ class EditarDadosBancarios extends Component {
 
     super(props);
     this.state = {
-      nome_administrador: "",
-      cpf_administrador: "",
-      email: "",
-      celular: "",
-      razao_social: "",
-      cep: "",
-      logradouro: "",
-      numero: "",
-      complemento: "",
-      bairro: "",
-      municipio: "",
-      uf: "",
       codigo_banco: "",
       id_tipo_cadastro_conta: "",
       id_tipo_conta: "",
@@ -46,7 +34,7 @@ class EditarDadosBancarios extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/restaurante/editar', this.state);
     if (dados) {
-
+      window.location.href = '#/perfil';
     }
   }
 

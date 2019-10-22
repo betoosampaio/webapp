@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 class ListaOperador extends Component {
 
@@ -9,6 +10,7 @@ class ListaOperador extends Component {
         super(props);
 
         this.state = {
+            showDelete: false,
             lista: [],
         };
     }
@@ -28,6 +30,7 @@ class ListaOperador extends Component {
         let dados = await serverRequest.request('/operador/remover', { "id_operador": id });
         if (dados) {
             this.obterLista();
+            this.setState({ showDelete: false });
         }
     }
 
@@ -56,6 +59,8 @@ class ListaOperador extends Component {
                                     <td>{obj.login_operador}</td>
                                     <td>{obj.ativo ? 'Operador Ativo' : 'Operador Desativado'}</td>
                                     <td>
+
+
                                         <Link to={{ pathname: `/operador/editar/${obj.id_operador}` }}>
                                             <Button color="secondary" size="sm">
                                                 <i className="icon-note"></i>
@@ -63,7 +68,31 @@ class ListaOperador extends Component {
                                         </Link>
                                     </td>
                                     <td>
-                                        <Button onClick={() => this.remover(obj.id_operador)} color="danger" size="sm">
+
+                                        <Modal
+                                            size="sm"
+                                            aria-labelledby="contained-modal-title-vcenter"
+                                            centered
+                                            show={this.state.showDelete}
+                                            onHide={() => { this.setState({ showDelete: false }) }}
+                                            backdrop='static'
+                                        >
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Confirmação</Modal.Title>
+                                            </Modal.Header>
+
+                                            <Modal.Body>
+                                                <p>Você tem certeza que deseja excluir ?</p>
+                                            </Modal.Body>
+
+                                            <Modal.Footer>
+                                                <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                <Button variant="primary" color="success" onClick={() => this.remover(obj.id_operador)}>Sim, excluir</Button>
+                                            </Modal.Footer>
+
+                                        </Modal>
+
+                                        <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
                                             <i className="icon-user-unfollow"></i>
                                         </Button>
                                     </td>

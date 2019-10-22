@@ -9,11 +9,7 @@ class EditarDadosRestaurante extends Component {
   constructor(props) {
 
     super(props);
-    this.state = {
-      nome_administrador: "",
-      cpf_administrador: "",
-      email: "",
-      celular: "",
+    this.state = {     
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -21,15 +17,126 @@ class EditarDadosRestaurante extends Component {
       complemento: "",
       bairro: "",
       municipio: "",
-      uf: "",
-      codigo_banco: "",
-      id_tipo_cadastro_conta: "",
-      id_tipo_conta: "",
-      agencia: "",
-      conta: "",
-      digito: "",
-
+      uf: "",  
     };
+  }
+
+  validarCNPJ = async (event) => {
+    let ok = false, msg = '';
+    let val = event.target.value.replace(/\D/g, '');
+
+    if (!this.testarCNPJ(val)) {
+      msg = 'CNPJ incorreto';
+    }
+    else {
+      ok = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.cnpj.ok = ok;
+    newState.cnpj.msg = msg;
+    this.setState({ validacao: newState });
+
+    if (val.length === 14) {
+      let dados = await serverRequest.request('/restaurante/checarSeCNPJExiste', { cnpj: val });
+      if (dados.exists) {
+        let newState = Object.assign({}, this.state.validacao);
+        newState.cnpj.ok = false;
+        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
+        this.setState({ validacao: newState });
+      }
+    }
+
+  }
+
+  validarCEP = async (event) => {
+    let ok = false, msg = '';
+    let val = event.target.value.replace(/\D/g, '');
+    if (val.length < 8) {
+      msg = 'CEP Incompleto';
+    }
+    else {
+      ok = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.cep.ok = ok;
+    newState.cep.msg = msg;
+    this.setState({ validacao: newState });
+
+    if (val.length === 8) {
+      let res = await fetch('http://viacep.com.br/ws/' + val + '/json/');
+      let dados = await res.json();
+      if (!dados['erro']) {
+        let formNewState = Object.assign({}, this.state);
+        formNewState['logradouro'] = dados.logradouro;
+        formNewState['bairro'] = dados.bairro;
+        formNewState['municipio'] = dados.localidade;
+        formNewState['uf'] = dados.uf;
+        formNewState['enderecoDisabled'] = true;
+        this.setState(formNewState);
+      }
+      else {
+        let formNewState = Object.assign({}, this.state);
+        formNewState['logradouro'] = '';
+        formNewState['bairro'] = '';
+        formNewState['municipio'] = '';
+        formNewState['uf'] = '';
+        formNewState['enderecoDisabled'] = false;
+        this.setState(formNewState);
+      }
+    }
+  }
+
+  testarCNPJ = (cnpj) => {
+
+    if (cnpj === '') return false;
+
+    if (cnpj.length !== 14)
+      return false;
+
+    // Elimina CNPJs invalidos conhecidos
+    if (cnpj === "00000000000000" ||
+      cnpj === "11111111111111" ||
+      cnpj === "22222222222222" ||
+      cnpj === "33333333333333" ||
+      cnpj === "44444444444444" ||
+      cnpj === "55555555555555" ||
+      cnpj === "66666666666666" ||
+      cnpj === "77777777777777" ||
+      cnpj === "88888888888888" ||
+      cnpj === "99999999999999")
+      return false;
+
+    // Valida DVs
+    let tamanho = cnpj.length - 2
+    let numeros = cnpj.substring(0, tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+        pos = 9;
+    }
+    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado.toString() !== digitos.charAt(0))
+      return false;
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2)
+        pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+    if (resultado.toString() !== digitos.charAt(1))
+      return false;
+
+    return true;
   }
 
   componentDidMount() {
@@ -47,7 +154,7 @@ class EditarDadosRestaurante extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/restaurante/editar', this.state);
     if (dados) {
-      window.location.href = '#/gerenciar';
+      window.location.href = '#/perfil';
     }
   }
 
