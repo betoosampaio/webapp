@@ -5,6 +5,7 @@ import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 
 class EditarDadosRestaurante extends Component {
@@ -13,7 +14,11 @@ class EditarDadosRestaurante extends Component {
 
     super(props);
     this.state = {
+<<<<<<< HEAD
       formulario:{
+=======
+      showConfirm: false,
+>>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -22,6 +27,7 @@ class EditarDadosRestaurante extends Component {
       bairro: "",
       municipio: "",
       uf: "",
+<<<<<<< HEAD
       enderecoDisabled: false,
     },
       validacao: {
@@ -36,6 +42,8 @@ class EditarDadosRestaurante extends Component {
         uf: { ok: true, msg: '' },
         complemento: { ok: true },
       },
+=======
+>>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
     };
   }
 
@@ -226,6 +234,29 @@ class EditarDadosRestaurante extends Component {
             <h5><b>Editar dados do restaurante</b></h5>
           </CardHeader>
           <CardBody>
+            <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.showConfirm}
+              onHide={() => { this.setState({ showConfirm: false }) }}
+              backdrop='static'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmação</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Body>
+                <p>Tem certeza de que deseja Editar Dados do Restaurante? </p>
+              </Modal.Body>
+
+              <Modal.Footer>
+
+                <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+                <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+              </Modal.Footer>
+
+            </Modal>
 
             <FormGroup>
               <Label><b>Razão Social do Restaurante: </b></Label>
@@ -322,8 +353,7 @@ class EditarDadosRestaurante extends Component {
 
           </CardBody>
           <CardFooter>
-            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-
+            <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
       </form>
