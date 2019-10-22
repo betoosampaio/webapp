@@ -7,6 +7,8 @@ import MaskedInput from 'react-text-mask'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 import UploadFoto from '../../components/uploadFoto/UploadFoto';
+import Modal from 'react-bootstrap/Modal'
+
 
 
 class CadastrarProduto extends Component {
@@ -26,10 +28,11 @@ class CadastrarProduto extends Component {
 
   cadastrar = async (event) => {
     event.preventDefault();
-    this.state.preco = this.state.preco.replace(',' , '.');
+    this.state.preco = this.state.preco.replace(',', '.');
     let dados = await serverRequest.request('/produto/cadastrar', this.state);
     if (dados) {
-      window.location.href = '#/cardapio/produto';
+
+      this.setState({ showCadastrado: true });
     }
   }
 
@@ -56,6 +59,28 @@ class CadastrarProduto extends Component {
             <strong>Cadastrar Produto</strong>
           </CardHeader>
           <CardBody>
+            <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.showCadastrado}
+              onHide={() => { this.setState({ showCadastrado: false }) }}
+              backdrop='static'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmação</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Body>
+                <p>Produto Cadastrado com sucesso!</p>
+              </Modal.Body>
+
+              <Modal.Footer>
+
+                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK </Button>
+              </Modal.Footer>
+
+            </Modal>
 
             <FormGroup>
               <Label>Nome do Produto:</Label>
