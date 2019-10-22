@@ -55,7 +55,7 @@ class CadastrarMenu extends Component {
 
                             <Modal.Footer>
 
-                                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >OK </Button>
+                                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >OK</Button>
                             </Modal.Footer>
 
                         </Modal>

@@ -77,7 +77,7 @@ class CadastrarProduto extends Component {
 
               <Modal.Footer>
 
-                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK </Button>
+                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK</Button>
               </Modal.Footer>
 
             </Modal>
