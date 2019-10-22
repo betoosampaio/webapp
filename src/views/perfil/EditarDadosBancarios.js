@@ -135,9 +135,6 @@ class EditarDadosBancarios extends Component {
             </InputGroup>
           </FormGroup>
 
-
-
-
           <FormGroup>
             <Label><b>Tipo cadastro conta: </b></Label>
             <InputGroup>
