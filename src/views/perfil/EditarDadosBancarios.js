@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
+import MaskedInput from 'react-text-mask';
+import SelectBanco from '../../components/selectBanco/SelectBanco'
 
 
 class EditarDadosBancarios extends Component {
@@ -66,37 +68,63 @@ class EditarDadosBancarios extends Component {
           <CardBody>
 
             <FormGroup>
-              <Label><b>Código do banco:</b></Label>
+              <Label><b>Instituição: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="codigo_banco" value={this.state.codigo_banco} onChange={this.changeInput} />
+                <SelectBanco
+                  required
+                  name="codigo_banco"
+                  value={this.state.codigo_banco}
+                  onChange={this.changeInput}>
+                </SelectBanco>
               </InputGroup>
             </FormGroup>
 
+
+            
+
             <FormGroup>
-              <Label><b>ID da conta:</b></Label>
+              <Label><b>Tipo cadastro conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="id_tipo_cadastro_conta" value={this.state.id_tipo_cadastro_conta} onChange={this.changeInput} />
+                <Input
+                  required
+                  type="select"
+                  name="id_tipo_cadastro_conta"
+                  value={this.state.id_tipo_cadastro_conta}
+                  onChange={this.changeInput}>
+                  <option value="0">Selecione</option>
+                  <option value="1">Pessoa Física</option>
+                  <option value="2">Pessoa Jurídica</option>
+                </Input>
               </InputGroup>
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Tipo da conta:</b></Label>
+              <Label><b>Tipo conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="id_tipo_conta" value={this.state.id_tipo_conta} onChange={this.changeInput} />
+                <Input
+                  required
+                  type="select"
+                  name="id_tipo_conta"
+                  value={this.state.id_tipo_conta}
+                  onChange={this.changeInput}>
+                  <option value="0">Selecione</option>
+                  <option value="1">Conta Corrente</option>
+                  <option value="2">Conta Poupança</option>
+                </Input>
               </InputGroup>
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Agência:</b></Label>
+              <Label><b>Agência: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -106,7 +134,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Conta:</b></Label>
+              <Label><b>Conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -120,7 +148,7 @@ class EditarDadosBancarios extends Component {
             <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
-      </form>
+      </form >
 
     );
   }
