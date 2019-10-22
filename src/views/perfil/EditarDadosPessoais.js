@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
+import MaskedInput from 'react-text-mask';
 
 
 class EditarDadosPessoais extends Component {
@@ -10,6 +12,7 @@ class EditarDadosPessoais extends Component {
 
         super(props);
         this.state = {
+            showConfirm: false,
             nome_administrador: "",
             cpf_administrador: "",
             email: "",
@@ -18,24 +21,6 @@ class EditarDadosPessoais extends Component {
 
     };
 
-    validarCelular = (event) => {
-        let ok = false, msg = '';
-        let val = event.target.value.replace(/\D/g, '');
-        if (!val) {
-            msg = 'Campo obrigatório';
-        }
-        else if (val.length < 11) {
-            msg = 'Celular incompleto';
-        }
-        else {
-            ok = true;
-        }
-
-        let newState = Object.assign({}, this.state.validacao);
-        newState.celular.ok = ok;
-        newState.celular.msg = msg;
-        this.setState({ validacao: newState });
-    }
 
     validarCPF = (event) => {
         let ok = false, msg = '';
@@ -109,11 +94,47 @@ class EditarDadosPessoais extends Component {
 
     editar = async (event) => {
         event.preventDefault();
-        let dados = await serverRequest.request('/restaurante/editar', this.state);
+
+        let obj = {
+
+            cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+            nome_administrador: this.state.nome_administrador,
+            celular: this.state.celular.toString().replace(/\D/g, ''),
+            email: this.state.email,
+
+            cnpj: this.state.cnpj,
+            razao_social: this.state.razao_social,
+            nome_restaurante: this.state.nome_restaurante,
+            cep: this.state.cep.replace(/\D/g, ''),
+            logradouro: this.state.logradouro,
+            numero: this.state.numero,
+            complemento: this.state.complemento,
+            bairro: this.state.bairro,
+            municipio: this.state.municipio,
+            uf: this.state.uf,
+
+            codigo_banco: this.state.codigo_banco || "0",
+            id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+            id_tipo_conta: this.state.id_tipo_conta || "0",
+            agencia: this.state.agencia || "0",
+            conta: this.state.conta || "0",
+            digito: this.state.digito || "0",
+
+            codigo_restaurante: this.state.codigo_restaurante,
+            login: this.state.login,
+            senha: this.state.senha,
+        }
+
+        //console.log(obj);
+
+        let dados = await serverRequest.request('/restaurante/editar', obj);
         if (dados) {
             window.location.href = '#/perfil';
         }
     }
+
+
+
 
     changeInput = (event) => {
         this.setState({ [event.target.name]: event.target.value });
@@ -129,60 +150,99 @@ class EditarDadosPessoais extends Component {
     render() {
         return (
 
-            <form name="form" onSubmit={this.editar}>
-                <Card>
-                    <CardHeader>
-                        <h5><b>Editar dados pessoais</b></h5>
-                    </CardHeader>
-                    <CardBody>
+            <Card>
+                <CardHeader>
+                    <h5><b>Editar dados pessoais</b></h5>
+                </CardHeader>
+                <CardBody>
+                    <Modal
+                        size="md"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered
+                        show={this.state.showConfirm}
+                        onHide={() => { this.setState({ showConfirm: false }) }}
+                        backdrop='static'
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirmação</Modal.Title>
+                        </Modal.Header>
 
-                        <FormGroup>
-                            <Label><b>Nome do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
-                            </InputGroup>
-                        </FormGroup>
+                        <Modal.Body>
+                            <p>Tem certeza de que deseja Editar Dados Pessoais? </p>
+                        </Modal.Body>
 
-                        <FormGroup>
-                            <Label><b>CPF do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-user"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} />
-                            </InputGroup>
-                        </FormGroup>
+                        <Modal.Footer>
 
-                        <FormGroup>
-                            <Label><b>E-mail do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-envelope"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
-                            </InputGroup>
-                        </FormGroup>
+                            <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+                            <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                        </Modal.Footer>
 
-                        <FormGroup>
-                            <Label><b>Celular do Administrador:</b></Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="icon-phone"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="celular" value={this.state.celular} onChange={this.changeInput} />
-                            </InputGroup>
-                        </FormGroup>
+                    </Modal>
 
-                    </CardBody>
-                    <CardFooter>
-                        <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                    </CardFooter>
-                </Card>
-            </form>
+                    <FormGroup>
+                        <Label><b>Nome do Administrador: </b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-user"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
+                        </InputGroup>
+                    </FormGroup>
 
+                    <FormGroup>
+                        <Label><b>CPF do Administrador: </b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-user"></i></InputGroupText>
+                            </InputGroupAddon>
+
+                            <MaskedInput
+                                className="form-control"
+                                name="cpf_administrador"
+                                value={this.state.cpf_administrador}
+                                onChange={this.changeInput}
+                                placeholder='000.000.000-00'
+                                mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
+                                guide={true}
+                                required
+                            />
+
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label><b>E-mail do Administrador: </b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-envelope"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
+                        </InputGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Label><b>Celular do Administrador: </b></Label>
+                        <InputGroup>
+                            <InputGroupAddon addonType="append">
+                                <InputGroupText><i className="icon-phone"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <MaskedInput
+                                className="form-control"
+                                placeholder='(11) 98888-9999'
+                                name="celular"
+                                value={this.state.celular}
+                                onChange={this.changeInput}
+                                mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
+                                guide={true}
+                            />
+                        </InputGroup>
+                    </FormGroup>
+
+                </CardBody>
+                <CardFooter>
+                    <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+                </CardFooter>
+            </Card>
         );
     }
 }

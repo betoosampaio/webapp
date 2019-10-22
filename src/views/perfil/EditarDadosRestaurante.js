@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
+import MaskedInput from 'react-text-mask';
+import SelectUF from '../../components/selectUF/SelectUf';
+import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
 
 class EditarDadosRestaurante extends Component {
@@ -9,7 +13,8 @@ class EditarDadosRestaurante extends Component {
   constructor(props) {
 
     super(props);
-    this.state = {     
+    this.state = {
+      showConfirm: false,
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -17,7 +22,19 @@ class EditarDadosRestaurante extends Component {
       complemento: "",
       bairro: "",
       municipio: "",
-      uf: "",  
+      uf: "",
+      enderecoDisabled: false,
+      validacao: {
+        cnpj: { ok: true, msg: '' },
+        razao_social: { ok: true, msg: '' },
+        nome_restaurante: { ok: true, msg: '' },
+        cep: { ok: true, msg: '' },
+        logradouro: { ok: true, msg: '' },
+        numero: { ok: true, msg: '' },
+        bairro: { ok: true, msg: '' },
+        municipio: { ok: true, msg: '' },
+        uf: { ok: true, msg: '' },
+      },
     };
   }
 
@@ -152,7 +169,40 @@ class EditarDadosRestaurante extends Component {
 
   editar = async (event) => {
     event.preventDefault();
-    let dados = await serverRequest.request('/restaurante/editar', this.state);
+
+    let obj = {
+
+      cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+      nome_administrador: this.state.nome_administrador,
+      celular: this.state.celular.toString().replace(/\D/g, ''),
+      email: this.state.email,
+
+      cnpj: this.state.cnpj,
+      razao_social: this.state.razao_social,
+      nome_restaurante: this.state.nome_restaurante,
+      cep: this.state.cep.replace(/\D/g, ''),
+      logradouro: this.state.logradouro,
+      numero: this.state.numero,
+      complemento: this.state.complemento,
+      bairro: this.state.bairro,
+      municipio: this.state.municipio,
+      uf: this.state.uf,
+
+      codigo_banco: this.state.codigo_banco || "0",
+      id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+      id_tipo_conta: this.state.id_tipo_conta || "0",
+      agencia: this.state.agencia || "0",
+      conta: this.state.conta || "0",
+      digito: this.state.digito || "0",
+
+      codigo_restaurante: this.state.codigo_restaurante,
+      login: this.state.login,
+      senha: this.state.senha,
+    }
+
+    //console.log(obj);
+
+    let dados = await serverRequest.request('/restaurante/editar', obj);
     if (dados) {
       window.location.href = '#/perfil';
     }
@@ -172,101 +222,188 @@ class EditarDadosRestaurante extends Component {
   render() {
     return (
 
-      <form name="form" onSubmit={this.editar}>
-        <Card>
-          <CardHeader>
-            <h5><b>Editar dados do restaurante</b></h5>
-          </CardHeader>
-          <CardBody>
+      <Card>
+        <CardHeader>
+          <h5><b>Editar dados do restaurante</b></h5>
+        </CardHeader>
+        <CardBody>
+          <Modal
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={this.state.showConfirm}
+            onHide={() => { this.setState({ showConfirm: false }) }}
+            backdrop='static'
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Confirmação</Modal.Title>
+            </Modal.Header>
 
-            <FormGroup>
-              <Label><b>Razão Social do Restaurante: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="razao_social" value={this.state.razao_social} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+            <Modal.Body>
+              <p>Tem certeza de que deseja Editar Dados do Restaurante? </p>
+            </Modal.Body>
 
-            <FormGroup>
-              <Label><b>CEP: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="cep" value={this.state.cep} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+            <Modal.Footer>
 
-            <FormGroup>
-              <Label><b>Logradouro: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="logradouro" value={this.state.logradouro} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+              <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+              <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+            </Modal.Footer>
 
-            <FormGroup>
-              <Label><b>Número: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="numero" value={this.state.numero} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+          </Modal>
 
-            <FormGroup>
-              <Label><b>Complemento</b> (opcional): </Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="complemento" value={this.state.complemento} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
+            <p></p>
+            <Label><b>Razão Social do Restaurante: </b></Label>
 
-            <FormGroup>
-              <Label><b>Bairro: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="bairro" value={this.state.bairro} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
 
-            <FormGroup>
-              <Label><b>Munícipio: </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="municipio" value={this.state.municipio} onChange={this.changeInput} type="text" />
-              </InputGroup>
-            </FormGroup>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="razao_social"
+                value={this.state.razao_social}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='Razão social da empresa'
+                required
+                minLength="4"
+                maxLength="255"
+              />
+            </InputGroup>
+          </FormGroup>
 
-            <FormGroup>
-              <Label><b>Estado (UF): </b></Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input name="uf" value={this.state.uf} onChange={this.changeInput} />
-              </InputGroup>
-            </FormGroup>
+          <FormGroup>
+            <Label><b>CEP: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
 
-          </CardBody>
-          <CardFooter>
-            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+              <MaskedInput
+                name="cep"
+                className="form-control"
+                value={this.state.cep}
+                onChange={this.changeInput}
+                onBlur={this.validarCEP}
+                placeholder='00000-000'
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
+                guide={true}
+                required
+              />
+              <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
+            </InputGroup>
+          </FormGroup>
 
-          </CardFooter>
-        </Card>
-      </form>
+          <FormGroup>
+            <Label><b>Logradouro: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="logradouro"
+                value={this.state.logradouro}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='Avenida Paulista'
+                disabled={this.state.enderecoDisabled}
+                required
+              />
+            </InputGroup>
+          </FormGroup>
 
+          <FormGroup>
+            <Label><b>Número: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="numero"
+                value={this.state.numero}
+                onChange={this.changeInput}
+                type='text'
+                placeholder='1234'
+                required
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label><b>Complemento</b> (opcional): </Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input
+                type='text'
+                placeholder='Bloco C'
+                name="complemento"
+                value={this.state.complemento}
+                onChange={this.changeInput}
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label><b>Bairro: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <Input
+                name="bairro"
+                value={this.state.bairro}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                type='text'
+                placeholder='Bela Vista'
+                required
+              />
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label><b>Munícipio: </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <SuggestMunicipio
+                name="municipio"
+                value={this.state.municipio}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                type='text'
+                placeholder='São Paulo'
+                required
+              ></SuggestMunicipio>
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label><b>Estado (UF): </b></Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+              </InputGroupAddon>
+              <SelectUF
+                name="uf"
+                value={this.state.uf}
+                onChange={this.changeInput}
+                disabled={this.state.enderecoDisabled}
+                required>
+              </SelectUF>
+            </InputGroup>
+          </FormGroup>
+
+        </CardBody>
+        <CardFooter>
+          <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+        </CardFooter>
+      </Card>
     );
   }
 }
