@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
-
+import MaskedInput from 'react-text-mask';
 
 class EditarDadosPessoais extends Component {
 
@@ -18,24 +18,6 @@ class EditarDadosPessoais extends Component {
 
     };
 
-    validarCelular = (event) => {
-        let ok = false, msg = '';
-        let val = event.target.value.replace(/\D/g, '');
-        if (!val) {
-            msg = 'Campo obrigatório';
-        }
-        else if (val.length < 11) {
-            msg = 'Celular incompleto';
-        }
-        else {
-            ok = true;
-        }
-
-        let newState = Object.assign({}, this.state.validacao);
-        newState.celular.ok = ok;
-        newState.celular.msg = msg;
-        this.setState({ validacao: newState });
-    }
 
     validarCPF = (event) => {
         let ok = false, msg = '';
@@ -109,11 +91,47 @@ class EditarDadosPessoais extends Component {
 
     editar = async (event) => {
         event.preventDefault();
-        let dados = await serverRequest.request('/restaurante/editar', this.state);
+
+        let obj = {         
+
+            cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+            nome_administrador: this.state.nome_administrador,
+            celular: this.state.celular.toString(),
+            email: this.state.email,
+
+            cnpj: this.state.cnpj,
+            razao_social: this.state.razao_social,
+            nome_restaurante: this.state.nome_restaurante,
+            cep: this.state.cep,
+            logradouro: this.state.logradouro,
+            numero: this.state.numero,
+            complemento: this.state.complemento,
+            bairro: this.state.bairro,
+            municipio: this.state.municipio,
+            uf: this.state.uf,
+
+            codigo_banco: this.state.codigo_banco || "0",
+            id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+            id_tipo_conta: this.state.id_tipo_conta || "0",
+            agencia: this.state.agencia || "0",
+            conta: this.state.conta || "0",
+            digito: this.state.digito || "0",
+
+            codigo_restaurante: this.state.codigo_restaurante,
+            login: this.state.login,
+            senha: this.state.senha,
+        }
+
+        //console.log(obj);
+
+        let dados = await serverRequest.request('/restaurante/editar', obj);
         if (dados) {
             window.location.href = '#/perfil';
         }
     }
+
+
+
 
     changeInput = (event) => {
         this.setState({ [event.target.name]: event.target.value });
@@ -152,7 +170,18 @@ class EditarDadosPessoais extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="icon-user"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="cpf_administrador" value={this.state.cpf_administrador} onChange={this.changeInput} />
+
+                                <MaskedInput
+                                    className="form-control"
+                                    name="cpf_administrador"
+                                    value={this.state.cpf_administrador}
+                                    onChange={this.changeInput}
+                                    placeholder='000.000.000-00'
+                                    mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
+                                    guide={true}
+                                    required
+                                />
+
                             </InputGroup>
                         </FormGroup>
 

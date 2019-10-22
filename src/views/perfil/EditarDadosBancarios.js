@@ -32,10 +32,16 @@ class EditarDadosBancarios extends Component {
 
   editar = async (event) => {
     event.preventDefault();
-    let dados = await serverRequest.request('/restaurante/editar', this.state);
-    if (dados) {
-      window.location.href = '#/perfil';
-    }
+   
+    this.setState({celular: this.state.celular.toString()}, async () => {
+      let dados = await serverRequest.request('/restaurante/editar', this.state);
+    
+      if (dados) {
+        window.location.href = '#/perfil';
+      }
+    });
+
+   
   }
 
   changeInput = (event) => {
