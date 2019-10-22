@@ -4,6 +4,8 @@ import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import MaskedInput from 'react-text-mask';
 import SelectBanco from '../../components/selectBanco/SelectBanco'
+import Modal from 'react-bootstrap/Modal'
+
 
 
 class EditarDadosBancarios extends Component {
@@ -12,6 +14,7 @@ class EditarDadosBancarios extends Component {
 
     super(props);
     this.state = {
+      showConfirm: false,
       codigo_banco: "",
       id_tipo_cadastro_conta: "",
       id_tipo_conta: "",
@@ -54,12 +57,36 @@ class EditarDadosBancarios extends Component {
   render() {
     return (
 
-      <form name="form" onSubmit={this.editar}>
+      
         <Card>
           <CardHeader>
             <h5><b>Editar dados bancários</b></h5>
           </CardHeader>
           <CardBody>
+
+          <Modal
+            size="md"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            show={this.state.showConfirm}
+            onHide={() => { this.setState({ showConfirm: false }) }}
+            backdrop='static'
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Confirmação</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>Tem certeza de que deseja Editar Dados Bancários? </p>
+            </Modal.Body>
+
+            <Modal.Footer>
+
+              <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+              <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+            </Modal.Footer>
+
+          </Modal>
 
             <FormGroup>
               <Label><b>Instituição: </b></Label>
@@ -139,10 +166,10 @@ class EditarDadosBancarios extends Component {
 
           </CardBody>
           <CardFooter>
-            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+          <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
-      </form >
+      
 
     );
   }
