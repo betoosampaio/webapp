@@ -26,17 +26,17 @@ class EditarDadosRestaurante extends Component {
         uf: "",
         enderecoDisabled: false,
       },
-      formulario:{
-      razao_social: "",
-      cep: "",
-      logradouro: "",
-      numero: "",
-      complemento: "",
-      bairro: "",
-      municipio: "",
-      uf: "",
-      enderecoDisabled: false,
-    },
+      formulario: {
+        razao_social: "",
+        cep: "",
+        logradouro: "",
+        numero: "",
+        complemento: "",
+        bairro: "",
+        municipio: "",
+        uf: "",
+        enderecoDisabled: false,
+      },
       validacao: {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
@@ -262,8 +262,17 @@ class EditarDadosRestaurante extends Component {
 
           </Modal>
 
+
+
+
+
+
           <FormGroup>
+            <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
+            <p></p>
             <Label><b>Razão Social do Restaurante: </b></Label>
+
+
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
