@@ -14,11 +14,7 @@ class EditarDadosRestaurante extends Component {
 
     super(props);
     this.state = {
-<<<<<<< HEAD
       formulario:{
-=======
-      showConfirm: false,
->>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -27,7 +23,6 @@ class EditarDadosRestaurante extends Component {
       bairro: "",
       municipio: "",
       uf: "",
-<<<<<<< HEAD
       enderecoDisabled: false,
     },
       validacao: {
@@ -42,8 +37,6 @@ class EditarDadosRestaurante extends Component {
         uf: { ok: true, msg: '' },
         complemento: { ok: true },
       },
-=======
->>>>>>> 9c983259071169a29bbd7b621b955368c07fee65
     };
   }
 
