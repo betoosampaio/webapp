@@ -62,7 +62,7 @@ class EditarDadosBancarios extends Component {
           <CardBody>
 
             <FormGroup>
-              <Label><b>Banco: </b></Label>
+              <Label><b>Instituição: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -80,7 +80,7 @@ class EditarDadosBancarios extends Component {
             
 
             <FormGroup>
-              <Label><b>ID da conta: </b></Label>
+              <Label><b>Tipo cadastro conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
@@ -99,7 +99,7 @@ class EditarDadosBancarios extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label><b>Tipo da conta: </b></Label>
+              <Label><b>Tipo conta: </b></Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>

@@ -42,7 +42,7 @@ class Step3 extends Component {
         <h4 className="text-center">Dados Bancários</h4>
 
         <FormGroup>
-          <Label>Banco:</Label>
+          <Label>Instituição: </Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
