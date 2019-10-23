@@ -101,7 +101,7 @@ class EditarDadosPessoais extends Component {
             nome_administrador: this.state.nome_administrador,
             celular: this.state.celular.toString().replace(/\D/g, ''),
             email: this.state.email,
-         
+
         }
 
         //console.log(obj);
@@ -152,7 +152,7 @@ class EditarDadosPessoais extends Component {
 
                         <Modal.Footer>
 
-                        <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
+                            <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
                             <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
                         </Modal.Footer>
 
@@ -218,9 +218,10 @@ class EditarDadosPessoais extends Component {
                     </FormGroup>
 
                 </CardBody>
-                <CardFooter>
+                <Modal.Footer>
+                    <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
                     <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-                </CardFooter>
+                    </Modal.Footer>
             </Card>
         );
     }

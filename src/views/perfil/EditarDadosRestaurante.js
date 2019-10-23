@@ -248,7 +248,7 @@ class EditarDadosRestaurante extends Component {
 
             <Modal.Footer>
 
-            <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
+              <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
               <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
             </Modal.Footer>
 
@@ -279,19 +279,19 @@ class EditarDadosRestaurante extends Component {
 
 
           <FormGroup>
-          <Label>Especialidade: </Label>
-          <InputGroup>
-            <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cup"></i></InputGroupText>
-            </InputGroupAddon>
-            <SelectEspecialidade
-              required
-              name="id_especialidade"
-              value={this.state.id_especialidade}
-              onChange={this.changeInput}>
-            </SelectEspecialidade>
-          </InputGroup>
-        </FormGroup>
+            <Label>Especialidade: </Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="icon-cup"></i></InputGroupText>
+              </InputGroupAddon>
+              <SelectEspecialidade
+                required
+                name="id_especialidade"
+                value={this.state.id_especialidade}
+                onChange={this.changeInput}>
+              </SelectEspecialidade>
+            </InputGroup>
+          </FormGroup>
 
 
           <FormGroup>
@@ -420,9 +420,10 @@ class EditarDadosRestaurante extends Component {
           </FormGroup>
 
         </CardBody>
-        <CardFooter>
+        <Modal.Footer>
+          <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
           <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-        </CardFooter>
+        </Modal.Footer>
       </Card>
     );
   }
