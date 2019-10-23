@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import { UncontrolledTooltip } from 'reactstrap';
+import serverRequest from '../../utils/serverRequest';
 const stateName = "Step4";
 
 class Step4 extends Component {
@@ -53,18 +54,30 @@ class Step4 extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  validarCampoVazio = (event) => {
+  validarCodigoRestaurante = async (event) => {
     let ok = false, msg = '';
-
-    if (!event.target.value)
+    let val = event.target.value;
+    if (!val) {
       msg = 'Campo obrigatório';
-    else
+    }
+    else if (val.length < 4) {
+      msg = 'Senha deve conter 4 dígitos';
+    }
+    else {
       ok = true;
+      let newState = Object.assign({}, this.state.validacao);
+      newState.codigo_restaurante.ok = ok;
+      newState.codigo_restaurante.msg = msg;
+      this.setState({ validacao: newState });
+    }
 
-    let newState = Object.assign({}, this.state.validacao);
-    newState[event.target.name].ok = ok;
-    newState[event.target.name].msg = msg;
-    this.setState({ validacao: newState });
+    let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
+    if (dados.exists) {
+      let newState = Object.assign({}, this.state.validacao);
+      newState.codigo_restaurante.ok = false;
+      newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
+      this.setState({ validacao: newState });
+    }
   }
 
   validarSenha = (event) => {
@@ -89,7 +102,6 @@ class Step4 extends Component {
     this.setState({ validacao: newState });
   }
 
-
   conferirSenha = (event) => {
     let ok = false, msg = '';
 
@@ -109,13 +121,6 @@ class Step4 extends Component {
     this.setState({ validacao: newState });
   }
 
-
-
-
-
-
-
-
   render() {
     return (
       <Form name="form" onSubmit={this.prosseguir}>
@@ -133,14 +138,14 @@ class Step4 extends Component {
               value={this.state.codigo_restaurante}
               onChange={this.changeInput}
               placeholder="restaurante_freedapp"
-              onBlur={this.validarCampoVazio}
+              onBlur={this.validarCodigoRestaurante}
               required
               id="informativoCodigo"
             />
-      
-           
+
+
             <UncontrolledTooltip placement="top" target="informativoCodigo">
-             O login do restaurante deve ser único e sempre será usado para acessar o sistema
+              O login do restaurante deve ser único e sempre será usado para acessar o sistema
            </UncontrolledTooltip>
 
             <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
@@ -160,7 +165,6 @@ class Step4 extends Component {
               value={this.state.login}
               onChange={this.changeInput}
               placeholder="Administrador"
-              onBlur={this.validarCampoVazio}
               required
             />
 
