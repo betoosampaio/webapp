@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
-import CurrencyFormat from 'react-currency-format';
 import CurrencyInput from 'react-currency-input';
-import MaskedInput from 'react-text-mask'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 import UploadFoto from '../../components/uploadFoto/UploadFoto';

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import SelectBanco from '../../components/selectBanco/SelectBanco'
 import Modal from 'react-bootstrap/Modal'
-import MaskedInput from 'react-text-mask';
 
 
 
