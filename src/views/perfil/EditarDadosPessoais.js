@@ -173,7 +173,7 @@ class EditarDadosPessoais extends Component {
 
                         <Modal.Footer>
 
-                            <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+                        <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
                             <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
                         </Modal.Footer>
 
