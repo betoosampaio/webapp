@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
+import { Card, CardHeader, CardBody,  Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';

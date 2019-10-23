@@ -196,7 +196,7 @@ class Step4 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Validar Senha:</Label>
+          <Label>Confirmar Senha:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
