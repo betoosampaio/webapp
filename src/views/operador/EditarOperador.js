@@ -57,13 +57,6 @@ class EditarOperador extends Component {
 				</CardHeader>
 				<CardBody>
 
-
-
-
-
-
-
-
 					<Modal
 						size="md"
 						aria-labelledby="contained-modal-title-vcenter"
@@ -81,22 +74,10 @@ class EditarOperador extends Component {
 						</Modal.Body>
 
 						<Modal.Footer>
-						<Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
+							<Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
 							<Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-
 						</Modal.Footer>
-
 					</Modal>
-
-
-
-
-
-
-
-
-
-
 
 					<FormGroup>
 						<Label>ID:</Label>
@@ -151,9 +132,11 @@ class EditarOperador extends Component {
 					</FormGroup>
 
 				</CardBody>
-				<CardFooter>
-					<Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-				</CardFooter>
+
+				<Modal.Footer>
+					<Button variant="primary" color="danger" onClick={() => { window.location.href = '#/operador' }} >Cancelar</Button>
+					<Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+				</Modal.Footer>
 			</Card>
 
 		);

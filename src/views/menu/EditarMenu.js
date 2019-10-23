@@ -93,9 +93,10 @@ class EditarMenu extends Component {
                     </FormGroup>
 
                 </CardBody>
-                <CardFooter>
-                <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-                </CardFooter>
+                <Modal.Footer>
+                    <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/menu' }} >Cancelar</Button>
+                    <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                </Modal.Footer>
             </Card>
 
         );
