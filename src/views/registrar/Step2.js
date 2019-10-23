@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
+import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 
@@ -18,6 +19,7 @@ class Step2 extends Component {
       cnpj: '',
       razao_social: '',
       nome_restaurante: '',
+      id_especialidade: '',
       cep: '',
       logradouro: '',
       numero: '',
@@ -30,6 +32,7 @@ class Step2 extends Component {
         cnpj: { ok: true, msg: '' },
         razao_social: { ok: true, msg: '' },
         nome_restaurante: { ok: true, msg: '' },
+        id_especialidade: { ok: true, msg: '' },
         cep: { ok: true, msg: '' },
         logradouro: { ok: true, msg: '' },
         numero: { ok: true, msg: '' },
@@ -197,7 +200,7 @@ class Step2 extends Component {
           <Label>CNPJ:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
             <MaskedInput
               name="cnpj"
@@ -218,7 +221,7 @@ class Step2 extends Component {
           <Label>Razão Social:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               name="razao_social"
@@ -237,9 +240,24 @@ class Step2 extends Component {
           <Label>Nome Restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-user"></i></InputGroupText>
+              <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
             <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required />
+          </InputGroup>
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Especialidade: </Label>
+          <InputGroup>
+            <InputGroupAddon addonType="append">
+              <InputGroupText><i className="icon-cup"></i></InputGroupText>
+            </InputGroupAddon>
+            <SelectEspecialidade
+              required
+              name="id_especialidade"
+              value={this.state.id_especialidade}
+              onChange={this.changeInput}>
+            </SelectEspecialidade>
           </InputGroup>
         </FormGroup>
 

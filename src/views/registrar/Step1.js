@@ -135,7 +135,7 @@ class Step1 extends Component {
           <Label>CPF:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-pencil"></i></InputGroupText>
+              <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
 
@@ -160,7 +160,7 @@ class Step1 extends Component {
           <Label>Nome Administrador:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-pencil"></i></InputGroupText>
+              <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
             <Input
@@ -182,7 +182,7 @@ class Step1 extends Component {
           <Label>Celular:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-pencil"></i></InputGroupText>
+              <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
             <MaskedInput
@@ -206,7 +206,7 @@ class Step1 extends Component {
           <Label>Email:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-pencil"></i></InputGroupText>
+              <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
             <Input

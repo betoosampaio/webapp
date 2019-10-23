@@ -26,6 +26,7 @@ class Step4 extends Component {
     event.preventDefault();
 
     let ok = true;
+    this.conferirSenha();
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].ok) {
@@ -92,7 +93,7 @@ class Step4 extends Component {
   conferirSenha = (event) => {
     let ok = false, msg = '';
 
-    let val = event.target.value;
+    let val = this.state.validarSenha;
     let senha = this.state.senha;
 
     if (val !== senha) {
@@ -139,7 +140,7 @@ class Step4 extends Component {
       
            
             <UncontrolledTooltip placement="top" target="informativoCodigo">
-             Aqui é Login do restaurante  "Será usado sempre para acessar como Administrador"
+             O login do restaurante deve ser único e sempre será usado para acessar o sistema
            </UncontrolledTooltip>
 
             <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
