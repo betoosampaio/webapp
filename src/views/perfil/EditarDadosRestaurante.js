@@ -4,6 +4,7 @@ import { AppSwitch } from '@coreui/react'
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
+import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 
@@ -23,6 +24,7 @@ class EditarDadosRestaurante extends Component {
       bairro: "",
       municipio: "",
       uf: "",
+      id_especialidade: "",
       enderecoDisabled: false,
       validacao: {
         cnpj: { ok: true, msg: '' },
@@ -187,6 +189,7 @@ class EditarDadosRestaurante extends Component {
       bairro: this.state.bairro,
       municipio: this.state.municipio,
       uf: this.state.uf,
+      id_especialidade: this.state.id_especialidade,
 
       codigo_banco: this.state.codigo_banco || "0",
       id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
@@ -202,7 +205,7 @@ class EditarDadosRestaurante extends Component {
 
     //console.log(obj);
 
-    let dados = await serverRequest.request('/restaurante/editar', obj);
+    let dados = await serverRequest.request('/restaurante/editar/dadosRestaurante', obj);
     if (dados) {
       window.location.href = '#/perfil';
     }
@@ -273,6 +276,23 @@ class EditarDadosRestaurante extends Component {
               />
             </InputGroup>
           </FormGroup>
+
+
+          <FormGroup>
+          <Label>Especialidade: </Label>
+          <InputGroup>
+            <InputGroupAddon addonType="append">
+              <InputGroupText><i className="icon-cup"></i></InputGroupText>
+            </InputGroupAddon>
+            <SelectEspecialidade
+              required
+              name="id_especialidade"
+              value={this.state.id_especialidade}
+              onChange={this.changeInput}>
+            </SelectEspecialidade>
+          </InputGroup>
+        </FormGroup>
+
 
           <FormGroup>
             <Label><b>CEP: </b></Label>
