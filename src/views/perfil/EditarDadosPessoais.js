@@ -101,33 +101,12 @@ class EditarDadosPessoais extends Component {
             nome_administrador: this.state.nome_administrador,
             celular: this.state.celular.toString().replace(/\D/g, ''),
             email: this.state.email,
-
-            cnpj: this.state.cnpj,
-            razao_social: this.state.razao_social,
-            nome_restaurante: this.state.nome_restaurante,
-            cep: this.state.cep.replace(/\D/g, ''),
-            logradouro: this.state.logradouro,
-            numero: this.state.numero,
-            complemento: this.state.complemento,
-            bairro: this.state.bairro,
-            municipio: this.state.municipio,
-            uf: this.state.uf,
-
-            codigo_banco: this.state.codigo_banco || "0",
-            id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
-            id_tipo_conta: this.state.id_tipo_conta || "0",
-            agencia: this.state.agencia || "0",
-            conta: this.state.conta || "0",
-            digito: this.state.digito || "0",
-
-            codigo_restaurante: this.state.codigo_restaurante,
-            login: this.state.login,
-            senha: this.state.senha,
+         
         }
 
         //console.log(obj);
 
-        let dados = await serverRequest.request('/restaurante/editar', obj);
+        let dados = await serverRequest.request('/restaurante/editar/dadosPessoais', obj);
         if (dados) {
             window.location.href = '#/perfil';
         }

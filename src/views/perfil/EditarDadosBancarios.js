@@ -70,7 +70,7 @@ class EditarDadosBancarios extends Component {
 
     //console.log(obj);
 
-    let dados = await serverRequest.request('/restaurante/editar', obj);
+    let dados = await serverRequest.request('/restaurante/editar/dadosBancarios', obj);
     if (dados) {
       window.location.href = '#/perfil';
     }
