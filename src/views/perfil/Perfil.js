@@ -68,18 +68,18 @@ class Perfil extends Component {
           <CardBody>
             <ListGroup>
               <ListGroupItem><b>Cnpj: </b>{this.state.dados.cnpj}</ListGroupItem>
+              <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
               <ListGroupItem><b>Razão social: </b>{this.state.dados.razao_social}</ListGroupItem>
               <ListGroupItem><b>CEP: </b>{this.state.dados.cep}</ListGroupItem>
               <ListGroupItem>
-              <b>Endereço: </b>{this.state.dados.logradouro}
-              <b>, </b>{this.state.dados.numero}
-              <b> - Complemento: </b>{this.state.dados.complemento}
-              <b> - Bairro: </b>{this.state.dados.bairro}
-              </ListGroupItem>      
-               <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
-               <b> - Estado: </b>{this.state.dados.uf}
+                <b>Endereço: </b>{this.state.dados.logradouro}
+                <b>, </b>{this.state.dados.numero}
+                <b> - Complemento: </b>{this.state.dados.complemento}
+                <b> - Bairro: </b>{this.state.dados.bairro}
               </ListGroupItem>
-              <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
+              <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
+                <b> - Estado: </b>{this.state.dados.uf}
+              </ListGroupItem>
             </ListGroup>
           </CardBody>
         </Card>
