@@ -40,15 +40,15 @@ class EditarDadosBancarios extends Component {
     event.preventDefault();
 
     let obj = {
-
       cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
       nome_administrador: this.state.nome_administrador,
-      celular: this.state.celular.toString().replace(/\D/g, ''),
+   
       email: this.state.email,
 
-      cnpj: this.state.cnpj,
+      cnpj: this.state.cnpj.replace(/\D/g, ''),
       razao_social: this.state.razao_social,
       nome_restaurante: this.state.nome_restaurante,
+      id_especialidade: this.state.id_especialidade,
       cep: this.state.cep.replace(/\D/g, ''),
       logradouro: this.state.logradouro,
       numero: this.state.numero,
@@ -57,14 +57,16 @@ class EditarDadosBancarios extends Component {
       municipio: this.state.municipio,
       uf: this.state.uf,
 
-      codigo_banco: this.state.codigo_banco || "0",
-      id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+      pagamento_app: this.state.pagamento_app || "0",
+      codigo_banco: this.state.codigo_banco || "0",   
       id_tipo_conta: this.state.id_tipo_conta || "0",
       agencia: this.state.agencia || "0",
       conta: this.state.conta || "0",
       digito: this.state.digito || "0",
+      id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
+      cpfcnpj_conta: this.state.cpfcnpj_conta.replace(/\D/g, ''),
 
-      codigo_restaurante: this.state.codigo_restaurante,
+      codigo_restaurante: this.state.codigo_restaurante,     
       login: this.state.login,
       senha: this.state.senha,
     }
