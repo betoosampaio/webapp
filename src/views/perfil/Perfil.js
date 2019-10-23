@@ -79,6 +79,7 @@ class Perfil extends Component {
                <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
                <b> - Estado: </b>{this.state.dados.uf}
               </ListGroupItem>
+              <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
             </ListGroup>
           </CardBody>
         </Card>
