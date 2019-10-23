@@ -67,7 +67,7 @@ class Perfil extends Component {
           </CardHeader>
           <CardBody>
             <ListGroup>
-              <ListGroupItem><b>Cnpj: </b>{this.state.dados.cnpj}</ListGroupItem>
+              <ListGroupItem><b>CNPJ: </b>{this.state.dados.cnpj}</ListGroupItem>
               <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
               <ListGroupItem><b>Razão social: </b>{this.state.dados.razao_social}</ListGroupItem>
               <ListGroupItem><b>CEP: </b>{this.state.dados.cep}</ListGroupItem>
