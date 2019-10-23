@@ -15,6 +15,7 @@ class EditarDadosBancarios extends Component {
     super(props);
     this.state = {
       showConfirm: false,
+      pagamento_app: "",
       codigo_banco: "",
       id_tipo_cadastro_conta: "",
       id_tipo_conta: "",
@@ -120,6 +121,13 @@ class EditarDadosBancarios extends Component {
 
           </Modal>
 
+          <FormGroup className="mt-4">
+            <InputGroup>
+              <Label>Aceitar pagamentos pelo App:</Label>
+              <AppSwitch name="pagamento_app" className={'mx-3'} variant={'pill'} color={'success'} checked={this.state.pagamento_app ? true : false} onChange={this.changeSwitch} />
+            </InputGroup>
+          </FormGroup>
+
           <FormGroup>
             <Label><b>Instituição: </b></Label>
             <InputGroup>
@@ -130,7 +138,8 @@ class EditarDadosBancarios extends Component {
                 required
                 name="codigo_banco"
                 value={this.state.codigo_banco}
-                onChange={this.changeInput}>
+                onChange={this.changeInput}
+                disabled={this.state.pagamento_app ? false : true}>
               </SelectBanco>
             </InputGroup>
           </FormGroup>
@@ -146,7 +155,8 @@ class EditarDadosBancarios extends Component {
                 type="select"
                 name="id_tipo_cadastro_conta"
                 value={this.state.id_tipo_cadastro_conta}
-                onChange={this.changeInput}>
+                onChange={this.changeInput}
+                disabled={this.state.pagamento_app ? false : true}>
                 <option value="0">Selecione</option>
                 <option value="1">Pessoa Física</option>
                 <option value="2">Pessoa Jurídica</option>
@@ -165,7 +175,8 @@ class EditarDadosBancarios extends Component {
                 type="select"
                 name="id_tipo_conta"
                 value={this.state.id_tipo_conta}
-                onChange={this.changeInput}>
+                onChange={this.changeInput}
+                disabled={this.state.pagamento_app ? false : true}>
                 <option value="0">Selecione</option>
                 <option value="1">Conta Corrente</option>
                 <option value="2">Conta Poupança</option>
@@ -179,7 +190,13 @@ class EditarDadosBancarios extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="agencia" value={this.state.agencia} onChange={this.changeInput} />
+              <Input className="form-control"
+                name="agencia"
+                placeholder="Agência"
+                value={this.state.agencia}
+                onChange={this.changeInput}
+                mask={[/\d/, /\d/, /\d/, /\d/]}
+                disabled={this.state.pagamento_app ? false : true} />
             </InputGroup>
           </FormGroup>
 
@@ -189,7 +206,23 @@ class EditarDadosBancarios extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="conta" value={this.state.conta} onChange={this.changeInput} minLength="4" required />  <Label> <b> - </b> </Label> <Input name="digito" value={this.state.digito} onChange={this.changeInput} rminLength="1" required />
+              <Input className="form-control"
+                name="conta"
+                value={this.state.conta}
+                onChange={this.changeInput}
+                placeholder="Conta"
+                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
+                guide={false}
+                disabled={this.state.pagamento_app ? false : true}
+              />
+              <Label> <b> - </b> </Label> <Input className="form-control"
+                name="digito"
+                value={this.state.digito}
+                onChange={this.changeInput}
+                placeholder="Dígito"
+                mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
+                guide={false}
+                disabled={this.state.pagamento_app ? false : true} />
             </InputGroup>
           </FormGroup>
 
