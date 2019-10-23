@@ -70,12 +70,15 @@ class Perfil extends Component {
               <ListGroupItem><b>Cnpj: </b>{this.state.dados.cnpj}</ListGroupItem>
               <ListGroupItem><b>Razão social: </b>{this.state.dados.razao_social}</ListGroupItem>
               <ListGroupItem><b>CEP: </b>{this.state.dados.cep}</ListGroupItem>
-              <ListGroupItem><b>Logradouro: </b>{this.state.dados.logradouro}</ListGroupItem>
-              <ListGroupItem><b>Número: </b>{this.state.dados.numero}</ListGroupItem>
-              <ListGroupItem><b>Complemento: </b>{this.state.dados.complemento}</ListGroupItem>
-              <ListGroupItem><b>Bairro: </b>{this.state.dados.bairro}</ListGroupItem>
-              <ListGroupItem><b>Estado: </b>{this.state.dados.uf}</ListGroupItem>
-              <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}</ListGroupItem>
+              <ListGroupItem>
+              <b>Endereço: </b>{this.state.dados.logradouro}
+              <b>, </b>{this.state.dados.numero}
+              <b> - Complemento: </b>{this.state.dados.complemento}
+              <b> - Bairro: </b>{this.state.dados.bairro}
+              </ListGroupItem>      
+               <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
+               <b> - Estado: </b>{this.state.dados.uf}
+              </ListGroupItem>
             </ListGroup>
           </CardBody>
         </Card>
