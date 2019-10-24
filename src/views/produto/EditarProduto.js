@@ -41,9 +41,11 @@ class EditarProduto extends Component {
   editar = async (event) => {
     event.preventDefault();
 
-    this.state.preco = this.state.preco.replace('.', '');
-    this.state.preco = this.state.preco.replace(',', '.');
+    let validar = this.state.preco.toString().includes('.');
 
+  if(!validar){
+    this.state.preco = this.state.preco.replace(',', '.');
+  } 
 
     let dados = await serverRequest.request('/produto/editar', this.state);
     if (dados) {

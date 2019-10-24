@@ -17,10 +17,34 @@ class EditarDadosPessoais extends Component {
             cpf_administrador: "",
             email: "",
             celular: "",
+            validacao: {
+                cpf_administrador: { ok: true, msg: '' },
+                nome_administrador: { ok: true, msg: '' },
+                celular: { ok: true, msg: '' },
+                email: { ok: true, msg: '' },
+            },
         }
 
     };
 
+    validarCelular = (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value.replace(/\D/g, '');
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 11) {
+            msg = 'Celular incompleto';
+        }
+        else {
+            ok = true;
+        }
+
+        let newState = Object.assign({}, this.state.validacao);
+        newState.celular.ok = ok;
+        newState.celular.msg = msg;
+        this.setState({ validacao: newState });
+    }
 
     validarCPF = (event) => {
         let ok = false, msg = '';
@@ -164,7 +188,15 @@ class EditarDadosPessoais extends Component {
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-user"></i></InputGroupText>
                             </InputGroupAddon>
-                            <Input name="nome_administrador" value={this.state.nome_administrador} onChange={this.changeInput} />
+
+                            <Input
+                                name="nome_administrador"
+                                value={this.state.nome_administrador}
+                                onChange={this.changeInput}
+                            />
+
+
+
                         </InputGroup>
                     </FormGroup>
 
@@ -179,12 +211,15 @@ class EditarDadosPessoais extends Component {
                                 className="form-control"
                                 name="cpf_administrador"
                                 value={this.state.cpf_administrador}
+                                onBlur={this.validarCPF}
                                 onChange={this.changeInput}
                                 placeholder='000.000.000-00'
                                 mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
                                 guide={true}
                                 required
                             />
+
+                            <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
 
                         </InputGroup>
                     </FormGroup>
@@ -195,7 +230,17 @@ class EditarDadosPessoais extends Component {
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-envelope"></i></InputGroupText>
                             </InputGroupAddon>
-                            <Input name="email" value={this.state.email} onChange={this.changeInput} type="email" />
+
+                            <Input
+                                name="email"
+                                value={this.state.email}
+                                onChange={this.changeInput}
+                                type="email"
+                                onBlur={this.validarEmail}
+                            />
+
+                            <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
+
                         </InputGroup>
                     </FormGroup>
 
@@ -205,15 +250,20 @@ class EditarDadosPessoais extends Component {
                             <InputGroupAddon addonType="append">
                                 <InputGroupText><i className="icon-phone"></i></InputGroupText>
                             </InputGroupAddon>
+
                             <MaskedInput
                                 className="form-control"
                                 placeholder='(11) 98888-9999'
                                 name="celular"
+                                onBlur={this.validarCelular}
                                 value={this.state.celular}
                                 onChange={this.changeInput}
                                 mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
                                 guide={true}
                             />
+
+                            <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
+
                         </InputGroup>
                     </FormGroup>
 
@@ -221,7 +271,7 @@ class EditarDadosPessoais extends Component {
                 <Modal.Footer>
                     <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
                     <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
-                    </Modal.Footer>
+                </Modal.Footer>
             </Card>
         );
     }

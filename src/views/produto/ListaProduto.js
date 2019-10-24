@@ -64,13 +64,24 @@ class ListaProduto extends Component {
                 <tbody>
                     {
                         this.state.lista.map((obj) => {
+
                             return (
                                 <tr key={obj.id_produto}>
                                     <td>{obj.id_produto}</td>
                                     <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
                                     <td>{obj.nome_produto}</td>
                                     <td>{obj.descricao}</td>
-                                    <td>{obj.preco.toString().replace('.', ',')}</td>
+
+
+
+
+                                    <td>R$ {obj.preco.toFixed(2).replace('.',',')}</td>
+
+
+
+
+
+
                                     <td>{obj.ds_menu}</td>
                                     <td>{obj.visivel ? 'Sim' : 'Não'}</td>
                                     <td>{obj.promocao ? 'Sim' : 'Não'}</td>
@@ -108,7 +119,7 @@ class ListaProduto extends Component {
 
 
                                         <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
-                                            
+
                                             <i className="icon-close"></i>
                                         </Button>
                                     </td>

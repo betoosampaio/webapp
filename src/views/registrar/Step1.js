@@ -143,7 +143,6 @@ class Step1 extends Component {
               className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
-              onBlur={this.validarCPF}
               onChange={this.changeInput}
               placeholder='000.000.000-00'
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}

@@ -20,15 +20,15 @@ class Perfil extends Component {
     let dados = await serverRequest.request('/restaurante/obter');
 
     if (dados) {
-      
+
       let obj = dados[0];
 
-    
+
       obj.cpf_administrador = obj.cpf_administrador.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
       obj.celular = obj.celular.toString().replace(/(\d{2})(\d{5})(\d{3})/, "($1) $2-$3");
       obj.cnpj = obj.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
       obj.cep = obj.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
-      
+
 
       this.setState({ dados: obj });
 
@@ -101,15 +101,26 @@ class Perfil extends Component {
               </Link>
             </div>
           </CardHeader>
+
+
+
           <CardBody>
-            <ListGroup>
-              <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco} - {this.state.dados.nome_banco}</ListGroupItem>
-              <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
-              <ListGroupItem><b>Tipo conta: </b>{this.state.dados.tipo_conta}</ListGroupItem>
-              <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
-              <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
+          <ListGroup>
+            <ListGroupItem><b>Aceita Pagamento via App: </b> {this.state.dados.pagamento_app === 1 ? 'Sim':'Não'} </ListGroupItem>
             </ListGroup>
+
+            {this.state.dados.pagamento_app === 1 &&
+              <ListGroup>
+                <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco} - {this.state.dados.nome_banco}</ListGroupItem>
+                <ListGroupItem><b>pagamentoApp: </b>{this.state.dados.pagamento_app}</ListGroupItem>
+                <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
+                <ListGroupItem><b>Tipo conta: </b>{this.state.dados.tipo_conta}</ListGroupItem>
+                <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
+                <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
+              </ListGroup>}
+
           </CardBody>
+
         </Card>
       </div>
 
