@@ -194,6 +194,7 @@ class EditarDadosBancarios extends Component {
               <Input className="form-control"
                 name="agencia"
                 placeholder="Agência"
+                maxlength="4"
                 value={this.state.agencia}
                 onChange={this.changeInput}
                 mask={[/\d/, /\d/, /\d/, /\d/]}
@@ -212,6 +213,7 @@ class EditarDadosBancarios extends Component {
                 value={this.state.conta}
                 onChange={this.changeInput}
                 placeholder="Conta"
+                maxlength="11"
                 mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
                 guide={false}
                 disabled={this.state.pagamento_app ? false : true}
@@ -221,6 +223,7 @@ class EditarDadosBancarios extends Component {
                 value={this.state.digito}
                 onChange={this.changeInput}
                 placeholder="Dígito"
+                maxlength="2"
                 mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
                 guide={false}
                 disabled={this.state.pagamento_app ? false : true} />

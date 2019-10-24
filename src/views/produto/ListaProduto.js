@@ -6,6 +6,7 @@ import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
 import { Card, CardHeader, CardBody, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
+import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class ListaProduto extends Component {
 
@@ -13,6 +14,7 @@ class ListaProduto extends Component {
         super(props);
 
         this.state = {
+            id_menu: "",
             showVisivel: "",
             showDelete: false,
             lista: [],
@@ -21,6 +23,7 @@ class ListaProduto extends Component {
 
     componentDidMount() {
         this.obterLista();
+
     }
 
     obterLista = async function () {
@@ -46,8 +49,16 @@ class ListaProduto extends Component {
         this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
     }
 
+    changeInput = (event) => {
+        this.setState({ [event.target.name]: event.target.value });
+    }
+
+
+
     render() {
+
         return (
+
             <Table striped bordered hover responsive>
 
 
@@ -70,6 +81,28 @@ class ListaProduto extends Component {
 
                         </InputGroup>
                     </FormGroup>
+
+
+
+
+                    <FormGroup className="mt-4">
+                        <InputGroup>
+
+
+                            <input
+                                type="text"
+                                className="input"
+                                id="addInput"
+                                placeholder="Something that needs ot be done..."
+                            />
+
+                            <SelectMenu name="id_menu" value={this.state.id_menu} onChange={this.changeInput} required></SelectMenu>
+
+
+                        </InputGroup>
+                    </FormGroup>
+
+
                     <tr>
                         <th>ID</th>
                         <th>Foto</th>
@@ -87,12 +120,27 @@ class ListaProduto extends Component {
                     {
                         this.state.lista.map((obj) => {
 
-                            if (this.state.showVisivel === 1) {
+                            if (this.state.id_menu === 1) {
 
                                 return (
+
                                     <tr key={obj.id_produto}>
                                         <td>{obj.id_produto}</td>
-                                        <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
+                                        <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
+
+                                    </tr>
+                                );
+                            }
+
+
+                            if (this.state.showVisivel === 1) {
+
+
+                                return (
+
+                                    <tr key={obj.id_produto}>
+                                        <td>{obj.id_produto}</td>
+                                        <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
                                         <td>{obj.nome_produto}</td>
                                         <td>{obj.descricao}</td>
 
@@ -144,7 +192,7 @@ class ListaProduto extends Component {
                                 return (
                                     <tr key={obj.id_produto}>
                                         <td>{obj.id_produto}</td>
-                                        <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
+                                        <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
                                         <td>{obj.nome_produto}</td>
                                         <td>{obj.descricao}</td>
 

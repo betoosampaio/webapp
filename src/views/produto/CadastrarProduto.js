@@ -104,7 +104,7 @@ class CadastrarProduto extends Component {
               <Label>Preço:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-money"></i></InputGroupText>
+                  <InputGroupText><i className="fa fa-money" > R$</i></InputGroupText>
                 </InputGroupAddon>
 
 

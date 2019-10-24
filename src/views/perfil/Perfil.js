@@ -81,8 +81,8 @@ class Perfil extends Component {
               <ListGroupItem>
                 <b>Endereço: </b>{this.state.dados.logradouro}
                 <b>, </b>{this.state.dados.numero}
-                <b> - Complemento: </b>{this.state.dados.complemento}
-                <b> - Bairro: </b>{this.state.dados.bairro}
+                <b> </b>{this.state.dados.complemento}
+                <b> - </b>{this.state.dados.bairro}
               </ListGroupItem>
               <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
                 <b> - Estado: </b>{this.state.dados.uf}
