@@ -33,6 +33,33 @@ class Step1 extends Component {
     else if (val.length < 11) {
       msg = 'Celular incompleto';
     }
+    else if (val.toString().includes('11111111111')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('22222222222')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('33333333333')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('44444444444')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('55555555555')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('66666666666')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('77777777777')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('88888888888')) {
+      msg = 'Celular Incorreto';
+    }
+    else if (val.toString().includes('99999999999')) {
+      msg = 'Celular Incorreto';
+    }
     else {
       ok = true;
     }

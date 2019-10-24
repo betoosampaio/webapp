@@ -41,7 +41,7 @@ class EditarProduto extends Component {
   editar = async (event) => {
     event.preventDefault();
 
-    let validar = this.state.preco.toString().includes('.');
+    let validar = this.state.preco.toString().includes(',');
 
   if(!validar){
     this.state.preco = this.state.preco.replace(',', '.');

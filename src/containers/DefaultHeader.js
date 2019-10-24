@@ -43,19 +43,7 @@ class DefaultHeader extends Component {
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem header tag="div" className="text-center"><strong>Conta</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-bell-o"></i> Notificações<Badge color="success">5</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-envelope-o"></i> Mensagens</DropdownItem>
-              <DropdownItem><i className="fa fa-tasks"></i> Tarefas</DropdownItem>
-              <DropdownItem><i className="fa fa-comments"></i> Comentários</DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Configuração</strong></DropdownItem>
-             
-              <DropdownItem onClick={() => {window.location.href="http://localhost:3000/#/perfil"}} ><i className="fa fa-user"></i>Perfil</DropdownItem>
-             
-              <DropdownItem><i className="fa fa-wrench"></i> Configurações</DropdownItem>
-              <DropdownItem><i className="fa fa-usd"></i> Recebimento</DropdownItem>
-              <DropdownItem><i className="fa fa-file"></i> Projetos</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem><i className="fa fa-shield"></i> Encerrar Conta</DropdownItem>
+              <DropdownItem onClick={() => { window.location.href = "http://localhost:3000/#/perfil" }} ><i className="fa fa-user"></i>Perfil</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
