@@ -106,7 +106,7 @@ class Perfil extends Component {
 
           <CardBody>
           <ListGroup>
-            <ListGroupItem><b>Aceita Pagamento via App: </b> {this.state.dados.pagamento_app === 1 ? 'Sim':'Não'} </ListGroupItem>
+            <ListGroupItem><b>Aceita pagamentos pelo App: </b> {this.state.dados.pagamento_app === 1 ? 'Sim':'Não'} </ListGroupItem>
             </ListGroup>
 
             {this.state.dados.pagamento_app === 1 &&
