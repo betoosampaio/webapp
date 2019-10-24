@@ -41,6 +41,9 @@ class Step3 extends Component {
     this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
   }
 
+  changeMultipleSelect = (event) => {
+    this.setState({ [event.target.name]: event.target.value[0] });
+  }
 
   render() {
     return (
@@ -64,7 +67,7 @@ class Step3 extends Component {
             <SelectBanco
               name="codigo_banco"
               value={this.state.codigo_banco}
-              onChange={this.changeInput}
+              onChange={this.changeMultipleSelect}
               disabled={this.state.pagamento_app ? false : true}>
             </SelectBanco>
 
