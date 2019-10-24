@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
-import { Card, CardHeader, CardBody, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { FormGroup, Label, InputGroup } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 
