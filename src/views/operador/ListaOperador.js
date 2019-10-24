@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, InputGroup, Label, FormGroup } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
+import { AppSwitch } from '@coreui/react'
 
 class ListaOperador extends Component {
 
@@ -10,6 +11,7 @@ class ListaOperador extends Component {
         super(props);
 
         this.state = {
+            showVisivel: "",
             showDelete: false,
             lista: [],
         };
@@ -34,10 +36,35 @@ class ListaOperador extends Component {
         }
     }
 
+    changeSwitch = (event) => {
+        this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
+    }
+
+
     render() {
         return (
             <Table striped bordered hover responsive>
+
+
+
+
                 <thead>
+
+                    <FormGroup className="mt-4">
+                        <InputGroup>
+                            <Label>Mostrar operadores inativos:</Label>
+
+                            <AppSwitch
+                                name="showVisivel"
+                                className={'mx-3'}
+                                variant={'pill'}
+                                color={'success'}
+                                checked={this.state.showVisivel ? true : false}
+                                onChange={this.changeSwitch}
+                            />
+
+                        </InputGroup>
+                    </FormGroup>
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
@@ -51,53 +78,105 @@ class ListaOperador extends Component {
                 <tbody>
                     {
                         this.state.lista.map((obj) => {
-                            return (
-                                <tr key={obj.id_operador}>
-                                    <td>{obj.id_operador}</td>
-                                    <td>{obj.nome_operador}</td>
-                                    <td>{obj.tipo_perfil}</td>
-                                    <td>{obj.login_operador}</td>
-                                    <td>{obj.ativo ? 'Operador Ativo' : 'Operador Desativado'}</td>
-                                    <td>
 
+                            if (this.state.showVisivel === 1) {
 
-                                        <Link to={{ pathname: `/operador/editar/${obj.id_operador}` }}>
-                                            <Button color="secondary" size="sm">
-                                                <i className="icon-note"></i>
+                                return (
+                                    <tr key={obj.id_operador}>
+                                        <td>{obj.id_operador}</td>
+                                        <td>{obj.nome_operador}</td>
+                                        <td>{obj.tipo_perfil}</td>
+                                        <td>{obj.login_operador}</td>
+
+                                        <td>{obj.ativo ? 'Operador Ativo' : 'Operador Desativado'}</td>
+                                        <td>
+                                            <Link to={{ pathname: `/operador/editar/${obj.id_operador}` }}>
+                                                <Button color="secondary" size="sm">
+                                                    <i className="icon-note"></i>
+                                                </Button>
+                                            </Link>
+                                        </td>
+
+                                        <td>
+
+                                            <Modal
+                                                size="sm"
+                                                aria-labelledby="contained-modal-title-vcenter"
+                                                centered
+                                                show={this.state.showDelete}
+                                                onHide={() => { this.setState({ showDelete: false }) }}
+                                                backdrop='static'
+                                            >
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Confirmação</Modal.Title>
+                                                </Modal.Header>
+
+                                                <Modal.Body>
+                                                    <p>Você tem certeza que deseja excluir ?</p>
+                                                </Modal.Body>
+
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_operador)}>Sim</Button>
+                                                </Modal.Footer>
+                                            </Modal>
+
+                                            <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
+                                                <i className="icon-close"></i>
                                             </Button>
-                                        </Link>
-                                    </td>
-                                    <td>
+                                        </td>
+                                    </tr>
+                                );
 
-                                        <Modal
-                                            size="sm"
-                                            aria-labelledby="contained-modal-title-vcenter"
-                                            centered
-                                            show={this.state.showDelete}
-                                            onHide={() => { this.setState({ showDelete: false }) }}
-                                            backdrop='static'
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>Confirmação</Modal.Title>
-                                            </Modal.Header>
+                            } if (obj.ativo === 1) {
 
-                                            <Modal.Body>
-                                                <p>Você tem certeza que deseja excluir ?</p>
-                                            </Modal.Body>
+                                return (
+                                    <tr key={obj.id_operador}>
+                                        <td>{obj.id_operador}</td>
+                                        <td>{obj.nome_operador}</td>
+                                        <td>{obj.tipo_perfil}</td>
+                                        <td>{obj.login_operador}</td>
 
-                                            <Modal.Footer>
-                                                <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
-                                                <Button variant="primary" color="success" onClick={() => this.remover(obj.id_operador)}>Sim, excluir</Button>
-                                            </Modal.Footer>
+                                        <td>{obj.ativo ? 'Operador Ativo' : 'Operador Desativado'}</td>
+                                        <td>
+                                            <Link to={{ pathname: `/operador/editar/${obj.id_operador}` }}>
+                                                <Button color="secondary" size="sm">
+                                                    <i className="icon-note"></i>
+                                                </Button>
+                                            </Link>
+                                        </td>
 
-                                        </Modal>
+                                        <td>
 
-                                        <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
-                                            <i className="icon-user-unfollow"></i>
-                                        </Button>
-                                    </td>
-                                </tr>
-                            );
+                                            <Modal
+                                                size="sm"
+                                                aria-labelledby="contained-modal-title-vcenter"
+                                                centered
+                                                show={this.state.showDelete}
+                                                onHide={() => { this.setState({ showDelete: false }) }}
+                                                backdrop='static'
+                                            >
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Confirmação</Modal.Title>
+                                                </Modal.Header>
+
+                                                <Modal.Body>
+                                                    <p>Você tem certeza que deseja excluir ?</p>
+                                                </Modal.Body>
+
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_operador)}>Sim</Button>
+                                                </Modal.Footer>
+                                            </Modal>
+
+                                            <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
+                                                <i className="icon-close"></i>
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                );
+                            }
                         })
                     }
                 </tbody>
