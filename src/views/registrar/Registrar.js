@@ -69,7 +69,7 @@ class Registrar extends Component {
       uf: this.state.Step2.uf,
 
       pagamento_app: this.state.Step3.pagamento_app || "0",
-      codigo_banco: this.state.Step3.codigo_banco || "0",   
+      codigo_banco: this.state.Step3.codigo_banco || "0",
       id_tipo_conta: this.state.Step3.id_tipo_conta || "0",
       agencia: this.state.Step3.agencia || "0",
       conta: this.state.Step3.conta || "0",
@@ -77,7 +77,7 @@ class Registrar extends Component {
       id_tipo_cadastro_conta: this.state.Step3.id_tipo_cadastro_conta || "0",
       cpfcnpj_conta: this.state.Step3.cpfcnpj_conta.replace(/\D/g, ''),
 
-      codigo_restaurante: this.state.Step4.codigo_restaurante,     
+      codigo_restaurante: this.state.Step4.codigo_restaurante,
       login: this.state.Step4.login,
       senha: this.state.Step4.senha,
     }
