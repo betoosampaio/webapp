@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
+import { Card, CardHeader, CardBody, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { AppSwitch } from '@coreui/react'
 
 class ListaProduto extends Component {
 
@@ -11,6 +13,7 @@ class ListaProduto extends Component {
         super(props);
 
         this.state = {
+            showVisivel: "",
             showDelete: false,
             lista: [],
         };
@@ -28,7 +31,6 @@ class ListaProduto extends Component {
     }
 
 
-
     remover = async (id) => {
 
         let dados = await serverRequest.request('/produto/remover', { "id_produto": id });
@@ -37,6 +39,11 @@ class ListaProduto extends Component {
             this.setState({ showDelete: false });
         }
 
+    }
+
+
+    changeSwitch = (event) => {
+        this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
     }
 
     render() {
@@ -48,6 +55,21 @@ class ListaProduto extends Component {
 
 
                 <thead>
+                    <FormGroup className="mt-4">
+                        <InputGroup>
+                            <Label>Mostrar produtos inativos:</Label>
+
+                            <AppSwitch
+                                name="showVisivel"
+                                className={'mx-3'}
+                                variant={'pill'}
+                                color={'success'}
+                                checked={this.state.showVisivel ? true : false}
+                                onChange={this.changeSwitch}
+                            />
+
+                        </InputGroup>
+                    </FormGroup>
                     <tr>
                         <th>ID</th>
                         <th>Foto</th>
@@ -65,66 +87,111 @@ class ListaProduto extends Component {
                     {
                         this.state.lista.map((obj) => {
 
-                            return (
-                                <tr key={obj.id_produto}>
-                                    <td>{obj.id_produto}</td>
-                                    <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
-                                    <td>{obj.nome_produto}</td>
-                                    <td>{obj.descricao}</td>
+                            if (this.state.showVisivel === 1) {
 
+                                return (
+                                    <tr key={obj.id_produto}>
+                                        <td>{obj.id_produto}</td>
+                                        <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
+                                        <td>{obj.nome_produto}</td>
+                                        <td>{obj.descricao}</td>
 
+                                        <td>R$ {obj.preco.toFixed(2).replace('.', ',')}</td>
 
+                                        <td>{obj.ds_menu}</td>
+                                        <td>{obj.visivel ? 'Sim' : 'Não'}</td>
+                                        <td>{obj.promocao ? 'Sim' : 'Não'}</td>
+                                        <td>
+                                            <Link to={{ pathname: `/cardapio/produto/editar/${obj.id_produto}` }}>
+                                                <Button color="secondary" size="sm">
+                                                    <i className="icon-note"></i>
+                                                </Button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Modal
+                                                size="sm"
+                                                aria-labelledby="contained-modal-title-vcenter"
+                                                centered
+                                                show={this.state.showDelete}
+                                                onHide={() => { this.setState({ showDelete: false }) }}
+                                                backdrop='static'
+                                            >
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Confirmação</Modal.Title>
+                                                </Modal.Header>
 
-                                    <td>R$ {obj.preco.toFixed(2).replace('.',',')}</td>
+                                                <Modal.Body>
+                                                    <p>Você tem certeza que deseja excluir ?</p>
+                                                </Modal.Body>
 
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
+                                                </Modal.Footer>
 
+                                            </Modal>
 
+                                            <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
 
-
-
-                                    <td>{obj.ds_menu}</td>
-                                    <td>{obj.visivel ? 'Sim' : 'Não'}</td>
-                                    <td>{obj.promocao ? 'Sim' : 'Não'}</td>
-                                    <td>
-                                        <Link to={{ pathname: `/cardapio/produto/editar/${obj.id_produto}` }}>
-                                            <Button color="secondary" size="sm">
-                                                <i className="icon-note"></i>
+                                                <i className="icon-close"></i>
                                             </Button>
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Modal
-                                            size="sm"
-                                            aria-labelledby="contained-modal-title-vcenter"
-                                            centered
-                                            show={this.state.showDelete}
-                                            onHide={() => { this.setState({ showDelete: false }) }}
-                                            backdrop='static'
-                                        >
-                                            <Modal.Header closeButton>
-                                                <Modal.Title>Confirmação</Modal.Title>
-                                            </Modal.Header>
+                                        </td>
+                                    </tr>
+                                );
+                            } if (obj.visivel === 1) {
 
-                                            <Modal.Body>
-                                                <p>Você tem certeza que deseja excluir ?</p>
-                                            </Modal.Body>
+                                return (
+                                    <tr key={obj.id_produto}>
+                                        <td>{obj.id_produto}</td>
+                                        <td><Foto src={obj.imagem} height="100" width="100"></Foto></td>
+                                        <td>{obj.nome_produto}</td>
+                                        <td>{obj.descricao}</td>
 
-                                            <Modal.Footer>
-                                                <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
-                                                <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
-                                            </Modal.Footer>
+                                        <td>R$ {obj.preco.toFixed(2).replace('.', ',')}</td>
 
-                                        </Modal>
+                                        <td>{obj.ds_menu}</td>
+                                        <td>{obj.visivel ? 'Sim' : 'Não'}</td>
+                                        <td>{obj.promocao ? 'Sim' : 'Não'}</td>
+                                        <td>
+                                            <Link to={{ pathname: `/cardapio/produto/editar/${obj.id_produto}` }}>
+                                                <Button color="secondary" size="sm">
+                                                    <i className="icon-note"></i>
+                                                </Button>
+                                            </Link>
+                                        </td>
+                                        <td>
+                                            <Modal
+                                                size="sm"
+                                                aria-labelledby="contained-modal-title-vcenter"
+                                                centered
+                                                show={this.state.showDelete}
+                                                onHide={() => { this.setState({ showDelete: false }) }}
+                                                backdrop='static'
+                                            >
+                                                <Modal.Header closeButton>
+                                                    <Modal.Title>Confirmação</Modal.Title>
+                                                </Modal.Header>
 
+                                                <Modal.Body>
+                                                    <p>Você tem certeza que deseja excluir ?</p>
+                                                </Modal.Body>
 
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
+                                                </Modal.Footer>
 
-                                        <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
+                                            </Modal>
 
-                                            <i className="icon-close"></i>
-                                        </Button>
-                                    </td>
-                                </tr>
-                            );
+                                            <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
+
+                                                <i className="icon-close"></i>
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                );
+                            }
                         })
                     }
                 </tbody>
