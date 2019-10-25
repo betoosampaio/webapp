@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
-import { FormGroup, Label, InputGroup } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
+import { FormGroup, InputGroup } from 'reactstrap';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class ListaProduto extends Component {
@@ -41,6 +40,7 @@ class ListaProduto extends Component {
       this.obterLista();
       this.setState({ showDelete: false });
     }
+  }
 
   }
 
@@ -126,7 +126,6 @@ class ListaProduto extends Component {
                   <tr key={obj.id_produto}>
                     <td>{obj.id_produto}</td>
                     <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
-
                   </tr>
                 );
               }

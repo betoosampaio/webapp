@@ -36,7 +36,7 @@ class Operador extends Component {
           </CardHeader>
           <CardBody>
 
-            <FormGroup className="mt-4">
+            <FormGroup className="pull-right">
               <InputGroup>
 
                 <Label>Mostrar operadores inativos:</Label>
