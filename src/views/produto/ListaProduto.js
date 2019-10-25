@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
-import { FormGroup, Label, InputGroup } from 'reactstrap';
-import { AppSwitch } from '@coreui/react'
+import { FormGroup, InputGroup } from 'reactstrap';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class ListaProduto extends Component {
