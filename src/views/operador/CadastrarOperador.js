@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import SelectPerfil from '../../components/selectPerfil/SelectPerfil'
 import serverRequest from '../../utils/serverRequest';
-import Modal from 'react-bootstrap/Modal'
+import Modal from 'react-bootstrap/Modal';
+import PasswordInput from '../../components/passwordInput/PasswordInput';
 
 
 class CadastrarOperador extends Component {
@@ -22,17 +23,13 @@ class CadastrarOperador extends Component {
     event.preventDefault();
     let dados = await serverRequest.request('/operador/cadastrar', this.state);
     if (dados) {
-      
-   this.setState({showCadastrado:true});
-      
+      this.setState({ showCadastrado: true });
     }
   }
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
-
-
 
   render() {
     return (
@@ -42,35 +39,6 @@ class CadastrarOperador extends Component {
             <strong>Cadastrar Operador</strong>
           </CardHeader>
           <CardBody>
-
-
-
-            <Modal
-              size="md"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              show={this.state.showCadastrado}
-              onHide={() => { this.setState({ showCadastrado: false }) }}
-              backdrop='static'
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Confirmação</Modal.Title>
-              </Modal.Header>
-
-              <Modal.Body>
-                <p>Operador Cadastrado com sucesso! </p>
-              </Modal.Body>
-
-              <Modal.Footer>
-        
-                <Button variant="primary" color="success" onClick={() => {window.location.href = '#/operador'}}  >OK</Button>
-              </Modal.Footer>
-
-            </Modal>
-
-
-
-
 
             <FormGroup>
               <Label>Nome:</Label>
@@ -98,18 +66,20 @@ class CadastrarOperador extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required placeholder="Login" />
+                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required minLength="4" placeholder="Login" />
               </InputGroup>
             </FormGroup>
 
             <FormGroup>
               <Label>Senha:</Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-key"></i></InputGroupText>
-                </InputGroupAddon>
-                <Input type="password" name="senha_operador" value={this.state.senha_operador} onChange={this.changeInput} required placeholder="senha" />
-              </InputGroup>
+              <PasswordInput
+                name="senha_operador"
+                value={this.state.senha_operador}
+                onChange={this.changeInput}
+                placeholder="senha"
+                minLength="8"
+                required
+              />
             </FormGroup>
 
           </CardBody>
@@ -117,6 +87,25 @@ class CadastrarOperador extends Component {
             <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
+
+        <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.showCadastrado}
+              onHide={() => { this.setState({ showCadastrado: false }) }}
+              backdrop='static' >
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmação</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>Operador Cadastrado com sucesso! </p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >OK</Button>
+              </Modal.Footer>
+            </Modal>
+
       </form>
     );
   }

@@ -50,68 +50,69 @@ class EditarOperador extends Component {
 
 	render() {
 		return (
+			<form onSubmit={this.editar}>
+				<Card>
+					<CardHeader>
+						<strong>Editar Operador</strong>
+					</CardHeader>
+					<CardBody>
+						<FormGroup>
+							<Label>Nome:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-user"></i></InputGroupText>
+								</InputGroupAddon>
+								<Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required minLength="4" placeholder="Nome do Operador" />
+							</InputGroup>
+						</FormGroup>
 
-			<Card>
-				<CardHeader>
-					<strong>Editar Operador</strong>
-				</CardHeader>
-				<CardBody>	
-					<FormGroup>
-						<Label>Nome:</Label>
-						<InputGroup>
-							<InputGroupAddon addonType="append">
-								<InputGroupText><i className="fa fa-user"></i></InputGroupText>
-							</InputGroupAddon>
-							<Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required minLength="4" placeholder="Nome do Operador" />
-						</InputGroup>
-					</FormGroup>
+						<FormGroup>
+							<Label>Perfil:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-group"></i></InputGroupText>
+								</InputGroupAddon>
+								<SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
+							</InputGroup>
+						</FormGroup>
 
-					<FormGroup>
-						<Label>Perfil:</Label>
-						<InputGroup>
-							<InputGroupAddon addonType="append">
-								<InputGroupText><i className="fa fa-group"></i></InputGroupText>
-							</InputGroupAddon>
-							<SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
-						</InputGroup>
-					</FormGroup>
+						<FormGroup>
+							<Label>Login:</Label>
+							<InputGroup>
+								<InputGroupAddon addonType="append">
+									<InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
+								</InputGroupAddon>
+								<Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required minLength="4" placeholder="gerente" />
+							</InputGroup>
+						</FormGroup>
 
-					<FormGroup>
-						<Label>Login:</Label>
-						<InputGroup>
-							<InputGroupAddon addonType="append">
-								<InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
-							</InputGroupAddon>
-							<Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required placeholder="gerente" />
-						</InputGroup>
-					</FormGroup>
+						<FormGroup>
+							<Label>Senha:</Label>
+							<PasswordInput
+								name="senha_operador"
+								value={this.state.senha_operador}
+								onChange={this.changeInput}
+								placeholder="senha"
+								required
+								minLength="8"
+							/>
+						</FormGroup>
 
-					<FormGroup>
-						<Label>Senha:</Label>
-						<PasswordInput
-							name="senha_operador"
-							value={this.state.senha_operador}
-							onChange={this.changeInput}
-							placeholder="senha"
-							required
-						/>
-					</FormGroup>
+						<FormGroup>
+							<Label>Ativo:</Label>
+							<InputGroup>
+								<AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
+							</InputGroup>
+						</FormGroup>
 
-					<FormGroup>
-						<Label>Ativo:</Label>
-						<InputGroup>
-							<AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
-						</InputGroup>
-					</FormGroup>
+					</CardBody>
 
-				</CardBody>
-
-				<Modal.Footer>
-					<Button variant="primary" color="danger" onClick={() => { window.location.href = '#/operador' }} >Cancelar</Button>
-					<Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-				</Modal.Footer>
-			</Card>
-
+					<Modal.Footer>
+						<Button variant="primary" color="danger" onClick={() => { window.location.href = '#/operador' }} >Cancelar</Button>
+						<Button type="submit" variant="primary" color="success">Salvar</Button>
+					</Modal.Footer>
+				</Card>
+			</form>
 		);
 	}
 }

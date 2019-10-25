@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, Label, FormGroup, InputGroup } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, Label, FormGroup } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
