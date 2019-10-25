@@ -174,8 +174,8 @@ class ListaProduto extends Component {
                                                 </Modal.Body>
 
                                                 <Modal.Footer>
-                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
-                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Confirmar</Button>
                                                 </Modal.Footer>
 
                                             </Modal>
@@ -226,8 +226,8 @@ class ListaProduto extends Component {
                                                 </Modal.Body>
 
                                                 <Modal.Footer>
-                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
-                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Sim Excluir</Button>
+                                                    <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
+                                                    <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Confirmar</Button>
                                                 </Modal.Footer>
 
                                             </Modal>
