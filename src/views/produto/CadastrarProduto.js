@@ -14,6 +14,7 @@ class CadastrarProduto extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      codigo_produto: "",
       nome_produto: "",
       descricao: "",
       preco: "",
@@ -81,6 +82,29 @@ class CadastrarProduto extends Component {
             </Modal>
 
             <FormGroup>
+              <Label>Código do Produto:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
+                </InputGroupAddon>
+
+
+                <Input 
+                minLength='1'
+                maxLength='50'
+                name="codigo_produto" 
+                value={this.state.codigo_produto} 
+                onChange={this.changeInput} 
+                required 
+                placeholder="001" 
+                />
+             
+             
+              </InputGroup>
+            </FormGroup>
+
+
+            <FormGroup>
               <Label>Nome do Produto:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
@@ -115,7 +139,9 @@ class CadastrarProduto extends Component {
                   name="preco"
                   className="form-control"
                   onChange={this.formChangeInput('preco')}
-                  required placeholder="R$ 10,00"
+                  placeholder="R$ 10,00"
+
+                  required
                 />
 
 

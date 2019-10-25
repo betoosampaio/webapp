@@ -87,10 +87,7 @@ class EditarOperador extends Component {
 						</Modal.Footer>
 					</Modal>
 
-					<FormGroup>
-						<Label>ID:</Label>
-						<Input disabled name="id_operador" value={this.state.id_operador} onChange={this.changeInput} />
-					</FormGroup>
+		
 
 					<FormGroup>
 						<Label>Nome:</Label>

@@ -20,6 +20,12 @@ class Produto extends Component {
       Header: 'Foto',
       accessor: 'imagem',
       headerClassName: "text-left",
+      Cell: props =>
+        <Link to={{ pathname: `/cardapio/produto/editar/${props.value}` }}>
+          <Button color="secondary" size="sm">
+            <i className="icon-note"></i>
+          </Button>
+        </Link>
     },
     {
       Header: 'Nome do produto',

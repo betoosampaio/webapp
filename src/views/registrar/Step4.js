@@ -69,15 +69,17 @@ class Step4 extends Component {
       newState.codigo_restaurante.ok = ok;
       newState.codigo_restaurante.msg = msg;
       this.setState({ validacao: newState });
+
+      let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
+      if (dados.exists) {
+        let newState = Object.assign({}, this.state.validacao);
+        newState.codigo_restaurante.ok = false;
+        newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
+        this.setState({ validacao: newState });
+      }
     }
 
-    let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
-    if (dados.exists) {
-      let newState = Object.assign({}, this.state.validacao);
-      newState.codigo_restaurante.ok = false;
-      newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
-      this.setState({ validacao: newState });
-    }
+
   }
 
   validarSenha = (event) => {
