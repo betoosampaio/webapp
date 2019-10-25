@@ -21,7 +21,7 @@ class Login extends Component {
 
     try {
       let res = await fetch(process.env.REACT_APP_SRV_PATH + '/login', {
-        method: 'POST',
+        method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
           'token': localStorage.getItem('token')
@@ -108,7 +108,7 @@ class Login extends Component {
                         </Col>
 
                         <Col xs="12" className="text-center">
-                          <Button color="link" className="px-0" onClick={() => { window.location.href = "http://localhost:3000/#/registrar" }}>Registrar-se</Button>
+                          <Button color="link" className="px-0" onClick={() => { window.location.href = "/#/registrar" }}>Registrar-se</Button>
                         </Col>
                       </Row>
                     </Form>
