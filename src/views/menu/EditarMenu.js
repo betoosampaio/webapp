@@ -50,31 +50,6 @@ class EditarMenu extends Component {
                     <strong>Editar Menu</strong>
                 </CardHeader>
                 <CardBody>
-
-                    <Modal
-                        size="md"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered
-                        show={this.state.showConfirm}
-                        onHide={() => { this.setState({ showConfirm: false }) }}
-                        backdrop='static'
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Confirmação</Modal.Title>
-                        </Modal.Header>
-
-                        <Modal.Body>
-                            <p>Tem certeza de que deseja Editar este Menu? </p>
-                        </Modal.Body>
-
-                        <Modal.Footer>
-
-                            <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
-                            <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-                        </Modal.Footer>
-
-                    </Modal>
-
                     <FormGroup>
                         <Label>Nome do menu:</Label>
                         <InputGroup>
@@ -84,7 +59,6 @@ class EditarMenu extends Component {
                             <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
                         </InputGroup>
                     </FormGroup>
-
                     <FormGroup>
                         <Label>Ativo:</Label>
                         <InputGroup>

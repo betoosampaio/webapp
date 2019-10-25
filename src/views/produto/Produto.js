@@ -21,11 +21,7 @@ class Produto extends Component {
       accessor: 'imagem',
       headerClassName: "text-left",
       Cell: props =>
-        <Link to={{ pathname: `/cardapio/produto/editar/${props.value}` }}>
-          <Button color="secondary" size="sm">
-            <i className="icon-note"></i>
-          </Button>
-        </Link>
+        <Foto src={props.value} height="50" width="50"></Foto>
     },
     {
       Header: 'Nome do produto',
@@ -120,7 +116,7 @@ class Produto extends Component {
     if (this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
     if (this.state.search) {
       lista = lista.filter(row => {
-        return (new RegExp(this.state.search, "i")).test([row.codigo_produto, row.nome_produto, row.descricao, row.promocao].join(''))
+        return (new RegExp(this.state.search, "i")).test([row.codigo_produto, row.menu, row.nome_produto, row.descricao, row.promocao].join(''))
       })
     }
 

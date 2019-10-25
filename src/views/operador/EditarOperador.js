@@ -63,32 +63,7 @@ class EditarOperador extends Component {
 				<CardHeader>
 					<strong>Editar Operador</strong>
 				</CardHeader>
-				<CardBody>
-
-					<Modal
-						size="md"
-						aria-labelledby="contained-modal-title-vcenter"
-						centered
-						show={this.state.showConfirm}
-						onHide={() => { this.setState({ showConfirm: false }) }}
-						backdrop='static'
-					>
-						<Modal.Header closeButton>
-							<Modal.Title>Confirmação</Modal.Title>
-						</Modal.Header>
-
-						<Modal.Body>
-							<p>Tem certeza de que deseja editar este Operador?</p>
-						</Modal.Body>
-
-						<Modal.Footer>
-							<Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
-							<Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-						</Modal.Footer>
-					</Modal>
-
-		
-
+				<CardBody>	
 					<FormGroup>
 						<Label>Nome:</Label>
 						<InputGroup>
