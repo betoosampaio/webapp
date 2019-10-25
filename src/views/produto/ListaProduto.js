@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal'
-import { FormGroup, InputGroup } from 'reactstrap';
+import { FormGroup, Label, InputGroup } from 'reactstrap';
+import { AppSwitch } from '@coreui/react'
 import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class ListaProduto extends Component {
@@ -40,7 +41,6 @@ class ListaProduto extends Component {
       this.obterLista();
       this.setState({ showDelete: false });
     }
-  }
 
   }
 
@@ -66,21 +66,7 @@ class ListaProduto extends Component {
 
 
         <thead>
-          <FormGroup className="mt-4">
-            <InputGroup>
-              <Label>Mostrar produtos inativos:</Label>
-
-              <AppSwitch
-                name="showVisivel"
-                className={'mx-3'}
-                variant={'pill'}
-                color={'success'}
-                checked={this.state.showVisivel ? true : false}
-                onChange={this.changeSwitch}
-              />
-
-            </InputGroup>
-          </FormGroup>
+        
 
 
 
@@ -126,6 +112,7 @@ class ListaProduto extends Component {
                   <tr key={obj.id_produto}>
                     <td>{obj.id_produto}</td>
                     <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
+
                   </tr>
                 );
               }
