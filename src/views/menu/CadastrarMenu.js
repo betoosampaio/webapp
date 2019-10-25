@@ -5,80 +5,80 @@ import Modal from 'react-bootstrap/Modal'
 
 class CadastrarMenu extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ds_menu: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      ds_menu: "",
 
-        };
+    };
+  }
+
+
+  cadastrar = async (event) => {
+    event.preventDefault();
+    let dados = await serverRequest.request('/menu/cadastrar', this.state);
+    if (dados) {
+
+      this.setState({ showCadastrado: true });
+
     }
+  }
 
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+  render() {
+    return (
 
-    cadastrar = async (event) => {
-        event.preventDefault();
-        let dados = await serverRequest.request('/menu/cadastrar', this.state);
-        if (dados) {
+      <form name="form" onSubmit={this.cadastrar}>
+        <Card>
+          <CardHeader>
+            <strong>Cadastrar Menu</strong>
+          </CardHeader>
+          <CardBody>
 
-            this.setState({ showCadastrado: true });
+            <Modal
+              size="md"
+              aria-labelledby="contained-modal-title-vcenter"
+              centered
+              show={this.state.showCadastrado}
+              onHide={() => { this.setState({ showCadastrado: false }) }}
+              backdrop='static'
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Confirmação</Modal.Title>
+              </Modal.Header>
 
-        }
-    }
+              <Modal.Body>
+                <p>Menu Cadastrado com sucesso</p>
+              </Modal.Body>
 
-    changeInput = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-    }
-    render() {
-        return (
+              <Modal.Footer>
 
-            <form name="form" onSubmit={this.cadastrar}>
-                <Card>
-                    <CardHeader>
-                        <strong>Cadastrar Menu</strong>
-                    </CardHeader>
-                    <CardBody>
+                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >OK</Button>
+              </Modal.Footer>
 
-                        <Modal
-                            size="md"
-                            aria-labelledby="contained-modal-title-vcenter"
-                            centered
-                            show={this.state.showCadastrado}
-                            onHide={() => { this.setState({ showCadastrado: false }) }}
-                            backdrop='static'
-                        >
-                            <Modal.Header closeButton>
-                                <Modal.Title>Confirmação</Modal.Title>
-                            </Modal.Header>
+            </Modal>
 
-                            <Modal.Body>
-                                <p>Menu Cadastrado com sucesso</p>
-                            </Modal.Body>
+            <FormGroup>
+              <Label>Nome do menu:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                </InputGroupAddon>
+                <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
+              </InputGroup>
+            </FormGroup>
 
-                            <Modal.Footer>
+          </CardBody>
+          <CardFooter>
+            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+          </CardFooter>
+        </Card>
+      </form>
 
-                                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >OK</Button>
-                            </Modal.Footer>
-
-                        </Modal>
-
-                        <FormGroup>
-                            <Label>Nome do menu:</Label>
-                            <InputGroup>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
-                                </InputGroupAddon>
-                                <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
-                            </InputGroup>
-                        </FormGroup>
-
-                    </CardBody>
-                    <CardFooter>
-                        <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-                    </CardFooter>
-                </Card>
-            </form>
-
-        );
-    }
+    );
+  }
 }
 
 export default CadastrarMenu;
