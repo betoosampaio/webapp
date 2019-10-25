@@ -11,6 +11,7 @@ class EditarOperador extends Component {
 
 		super(props);
 		this.state = {
+			showPassword: false,
 			showConfirm: false,
 			id_operador: "",
 			nome_operador: "",
@@ -23,6 +24,12 @@ class EditarOperador extends Component {
 
 	componentDidMount() {
 		this.obter(this.props.match.params.id);
+	}
+
+
+	mostrarPassword = () =>{
+		const {showPassword} = this.state;
+		this.setState({showPassword: !showPassword});
 	}
 
 	obter = async (id) => {
@@ -49,6 +56,7 @@ class EditarOperador extends Component {
 	}
 
 	render() {
+		const{showPassword} = this.state;
 		return (
 
 			<Card>
@@ -120,7 +128,21 @@ class EditarOperador extends Component {
 							<InputGroupAddon addonType="append">
 								<InputGroupText><i className="fa fa-key"></i></InputGroupText>
 							</InputGroupAddon>
-							<Input type="password" name="senha_operador" value={this.state.senha_operador} onChange={this.changeInput} required placeholder="senha" />
+							<Input
+								type={(showPassword) ? "text" : "password"}
+								name="senha_operador"
+								value={this.state.senha_operador}
+								onChange={this.changeInput}
+								required
+								placeholder="senha"
+							
+							/>
+
+							<i
+							 className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"} password-icon`}
+							 onClick={this.mostrarPassword}
+							 />
+
 						</InputGroup>
 					</FormGroup>
 

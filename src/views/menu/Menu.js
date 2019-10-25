@@ -151,8 +151,8 @@ class ListaMenu extends Component {
             <p>Você tem certeza que deseja excluir ?</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
-            <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Sim</Button>
+            <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
+            <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
