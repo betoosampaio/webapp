@@ -61,7 +61,7 @@ class Step4 extends Component {
       msg = 'Campo obrigatório';
     }
     else if (val.length < 4) {
-      msg = 'Senha deve conter 4 dígitos';
+      msg = 'Código do restuarante deve conter 4 caracteres';
     }
     else {
       ok = true;
@@ -87,7 +87,7 @@ class Step4 extends Component {
       msg = 'Campo obrigatório';
     }
     else if (val.length < 8) {
-      msg = 'Senha deve conter 8 dígitos';
+      msg = 'Senha deve conter 8 caracteres';
     }
     else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])/).test(val)) {
       msg = 'Senha deve conter letras e números';
@@ -137,7 +137,7 @@ class Step4 extends Component {
               name="codigo_restaurante"
               value={this.state.codigo_restaurante}
               onChange={this.changeInput}
-              placeholder="restaurante_freedapp"
+              placeholder="login do restaurante"
               onBlur={this.validarCodigoRestaurante}
               required
               id="informativoCodigo"
@@ -166,6 +166,7 @@ class Step4 extends Component {
               onChange={this.changeInput}
               placeholder="Administrador"
               required
+              minLength="4"
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>

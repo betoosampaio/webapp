@@ -131,6 +131,7 @@ class Step3 extends Component {
               guide={false}
               disabled={this.state.pagamento_app ? false : true}
             />
+            <Label> - </Label>
             <MaskedInput
               className="form-control"
               name="digito"
@@ -171,7 +172,7 @@ class Step3 extends Component {
 
         {this.state.id_tipo_cadastro_conta === "1" &&
           <FormGroup>
-            <Label>CPF:</Label>
+            
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
@@ -191,7 +192,7 @@ class Step3 extends Component {
 
         {this.state.id_tipo_cadastro_conta === "2" &&
           <FormGroup>
-            <Label>CNPJ:</Label>
+            
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>

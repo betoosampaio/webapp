@@ -48,9 +48,14 @@ class Step2 extends Component {
     let ok = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
 
-    if (!this.testarCNPJ(val)) {
+    if (val.length < 14) {
+      msg = 'Formato inválido';
+    }
+
+    else if (!this.testarCNPJ(val)) {
       msg = 'CNPJ incorreto';
     }
+
     else {
       ok = true;
     }
@@ -76,8 +81,9 @@ class Step2 extends Component {
     let ok = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (val.length < 8) {
-      msg = 'CEP Incompleto';
+      msg = 'Formato inválido';
     }
+    
     else {
       ok = true;
     }

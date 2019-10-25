@@ -34,31 +34,31 @@ class Step1 extends Component {
       msg = 'Celular incompleto';
     }
     else if (val.toString().includes('11111111111')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('22222222222')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('33333333333')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('44444444444')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('55555555555')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('66666666666')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('77777777777')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('88888888888')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('99999999999')) {
-      msg = 'Celular Incorreto';
+      msg = 'Formato inválido';
     }
     else {
       ok = true;
@@ -75,6 +75,9 @@ class Step1 extends Component {
     let val = event.target.value.replace(/\D/g, '');
     if (!val) {
       msg = 'Campo obrigatório';
+    }
+    else if (val.length < 11) {
+      msg = 'Formato inválido';
     }
     else if (!this.testarCPF(val)) {
       msg = 'CPF incorreto';
@@ -117,7 +120,7 @@ class Step1 extends Component {
       msg = 'Campo obrigatório';
     }
     else if (!/.+@.+\..+/.test(val)) {
-      msg = 'Email incorreto';
+      msg = 'Formato inválido';
     }
     else {
       ok = true;
@@ -156,8 +159,8 @@ class Step1 extends Component {
   render() {
     return (
       <Form name="form" onSubmit={this.prosseguir}>
-        <h4 className="text-center">Dados do Usuário</h4> 
-            
+        <h4 className="text-center">Dados do Usuário</h4>
+
         <FormGroup>
           <Label>CPF:</Label>
           <InputGroup>
@@ -170,11 +173,12 @@ class Step1 extends Component {
               className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
+              onBlur={this.validarCPF}
               onChange={this.changeInput}
               placeholder='000.000.000-00'
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
-              required
+              required              
             />
 
             <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
@@ -213,7 +217,7 @@ class Step1 extends Component {
 
             <MaskedInput
               className="form-control"
-              placeholder='(11) 98888-9999'
+              placeholder='(11) 99999-9999'
               name="celular"
               value={this.state.celular}
               onBlur={this.validarCelular}
