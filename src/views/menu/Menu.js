@@ -1,17 +1,77 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import ListaMenu from './ListaMenu';
-import { Card, CardHeader, CardBody, Button, InputGroup, Label, FormGroup } from 'reactstrap';
+import { Button, Card, CardHeader, CardBody, FormGroup, InputGroup, Label } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
+import { Link } from 'react-router-dom';
+import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
-class Produto extends Component {
+class ListaMenu extends Component {
+
+  columns = [
+    {
+      Header: 'Descrição',
+      accessor: 'ds_menu',
+      headerClassName: "text-left",
+    },
+    {
+      Header: 'Ativo',
+      accessor: 'ativo',
+      headerClassName: "text-left",
+      Cell: props => <span>{props.value ? "Sim" : "Não"}</span>
+    },
+    {
+      Header: 'Editar',
+      accessor: 'id_menu',
+      headerClassName: "text-left",
+      Cell: props =>
+        <Link to={{ pathname: `/cardapio/menu/editar/${props.value}` }}>
+          <Button color="secondary" size="sm">
+            <i className="icon-note"></i>
+          </Button>
+        </Link>
+    },
+    {
+      Header: 'Excluir',
+      accessor: 'id_menu',
+      headerClassName: "text-left",
+      Cell: props =>
+        <Button color="danger" size="sm" onClick={() => this.setState({ showDelete: true, idSelecionado: props.value })}>
+          <i className="icon-close"></i>
+        </Button>
+    },
+  ]
 
   constructor(props) {
     super(props);
 
     this.state = {
-      showVisivel: "",
+      lista: [],
+      showDelete: false,
+      idSelecionado: 0,
+      search: "",
+      somenteAtivos: true,
     };
+  }
+
+  componentDidMount() {
+    this.obterLista();
+  }
+
+  obterLista = async function () {
+    let dados = await serverRequest.request('/menu/listar');
+    if (dados) {
+      this.setState({ lista: dados });
+    }
+  }
+
+  remover = async (id) => {
+    let dados = await serverRequest.request('/menu/remover', { "id_menu": id });
+    if (dados) {
+      this.obterLista();
+      this.setState({ showDelete: false });
+    }
   }
 
   changeSwitch = (event) => {
@@ -19,6 +79,15 @@ class Produto extends Component {
   }
 
   render() {
+
+    let lista = this.state.lista
+    if(this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
+    if (this.state.search) {
+      lista = lista.filter(row => {
+        return (new RegExp(this.state.search, "i")).test(row.ds_menu)
+      })
+    }
+
     return (
       <div>
         <Card>
@@ -33,27 +102,63 @@ class Produto extends Component {
             </div>
           </CardHeader>
           <CardBody>
-            
-            <FormGroup className="mt-4">
-              <InputGroup>
-                <Label>Mostrar menus inativos:</Label>
-                <AppSwitch
-                  name="showVisivel"
-                  className={'mx-3'}
-                  variant={'pill'}
-                  color={'success'}
-                  checked={this.state.showVisivel ? true : false}
-                  onChange={this.changeSwitch}
-                />
 
-              </InputGroup>
+            <FormGroup className="pull-right">
+              <Label className="mr-2">Somente ativos:</Label>
+              <AppSwitch
+                name="somenteAtivos"
+                variant={'pill'}
+                color={'success'}
+                checked={this.state.somenteAtivos ? true : false}
+                onChange={this.changeSwitch}
+              />
             </FormGroup>
-            <ListaMenu showVisivel={this.state.showVisivel}></ListaMenu>
+
+            <FormGroup className="pull-left">
+              <Label className="mr-2">Procurar:</Label>
+              <input
+                value={this.state.search}
+                onChange={e => this.setState({ search: e.target.value })}
+              />
+            </FormGroup>
+
+
+            <ReactTable
+              data={lista}
+              columns={this.columns}
+              minRows={0}
+              previousText="Anterior"
+              nextText="Próxima"
+              noDataText="Nenhum registro encontrado"
+              pageText="Página"
+              ofText="de"
+              rowsText="registros"
+              loadingText="Carregando..."
+              className="table"
+            />
+
           </CardBody>
         </Card>
+
+        <Modal
+          size="sm"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={this.state.showDelete}
+          onHide={() => { this.setState({ showDelete: false }) }}
+          backdrop='static'>
+          <Modal.Body>
+            <p>Você tem certeza que deseja excluir ?</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Não</Button>
+            <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Sim</Button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     );
   }
 }
 
-export default Produto;
+export default ListaMenu;
