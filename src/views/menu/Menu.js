@@ -81,7 +81,7 @@ class ListaMenu extends Component {
   render() {
 
     let lista = this.state.lista
-    if(this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
+    if (this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
     if (this.state.search) {
       lista = lista.filter(row => {
         return (new RegExp(this.state.search, "i")).test(row.ds_menu)
@@ -146,14 +146,21 @@ class ListaMenu extends Component {
           centered
           show={this.state.showDelete}
           onHide={() => { this.setState({ showDelete: false }) }}
-          backdrop='static'>
+          backdrop='static'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmação</Modal.Title>
+          </Modal.Header>
+
           <Modal.Body>
             <p>Você tem certeza que deseja excluir ?</p>
           </Modal.Body>
+
           <Modal.Footer>
             <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
             <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Confirmar</Button>
           </Modal.Footer>
+
         </Modal>
 
       </div>

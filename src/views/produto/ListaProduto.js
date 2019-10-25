@@ -104,6 +104,7 @@ class ListaProduto extends Component {
                       </Link>
                     </td>
                     <td>
+
                       <Modal
                         size="sm"
                         aria-labelledby="contained-modal-title-vcenter"
@@ -124,7 +125,6 @@ class ListaProduto extends Component {
                           <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
                           <Button variant="primary" color="success" onClick={() => this.remover(obj.id_produto)}>Confirmar</Button>
                         </Modal.Footer>
-
                       </Modal>
 
                       <Button onClick={() => this.setState({ showDelete: true })} color="danger" size="sm">
