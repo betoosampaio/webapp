@@ -115,7 +115,9 @@ class CadastrarProduto extends Component {
                   name="preco"
                   className="form-control"
                   onChange={this.formChangeInput('preco')}
-                  required placeholder="R$ 10,00"
+                  placeholder="R$ 10,00"
+
+                  required
                 />
 
 

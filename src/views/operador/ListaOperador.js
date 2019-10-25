@@ -39,7 +39,7 @@ class ListaOperador extends Component {
 
         <thead>
           <tr>
-            <th>ID</th>
+          
             <th>Nome</th>
             <th>Perfil</th>
             <th>Login</th>
@@ -55,8 +55,7 @@ class ListaOperador extends Component {
               if (this.props.showVisivel === 1) {
 
                 return (
-                  <tr key={obj.id_operador}>
-                    <td>{obj.id_operador}</td>
+                  <tr key={obj.nome_operador}>
                     <td>{obj.nome_operador}</td>
                     <td>{obj.tipo_perfil}</td>
                     <td>{obj.login_operador}</td>
@@ -104,8 +103,8 @@ class ListaOperador extends Component {
               } if (obj.ativo === 1) {
 
                 return (
-                  <tr key={obj.id_operador}>
-                    <td>{obj.id_operador}</td>
+                  <tr key={obj.nome_operador}>
+                  
                     <td>{obj.nome_operador}</td>
                     <td>{obj.tipo_perfil}</td>
                     <td>{obj.login_operador}</td>
