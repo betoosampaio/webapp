@@ -16,6 +16,7 @@ class EditarProduto extends Component {
     this.state = {
       showConfirm: false,
       id_produto: "",
+      codigo_produto: "",
       nome_produto: "",
       descricao: "",
       preco: "",
@@ -43,9 +44,9 @@ class EditarProduto extends Component {
 
     let validar = this.state.preco.toString().includes(',');
 
-  if(!validar){
-    this.state.preco = this.state.preco.replace(',', '.');
-  } 
+    if (!validar) {
+      this.state.preco = this.state.preco.replace(',', '.');
+    }
 
     let dados = await serverRequest.request('/produto/editar', this.state);
     if (dados) {
@@ -71,7 +72,7 @@ class EditarProduto extends Component {
 
       <Card>
         <CardHeader>
-          <strong>Cadastrar Produto</strong>
+          <strong>Editar Produto</strong>
         </CardHeader>
         <CardBody>
           <Modal
@@ -92,15 +93,32 @@ class EditarProduto extends Component {
 
             <Modal.Footer>
 
-            <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
+              <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
               <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
             </Modal.Footer>
 
           </Modal>
 
           <FormGroup>
-            <Label>ID:</Label>
-            <Input disabled name="id_produto" value={this.state.id_produto} onChange={this.changeInput} />
+            <Label>Código do Produto:</Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
+              </InputGroupAddon>
+
+
+              <Input
+                minLength='1'
+                maxLength='50'
+                name="codigo_produto"
+                value={this.state.codigo_produto}
+                onChange={this.changeInput}
+                required
+                placeholder="001"
+              />
+
+
+            </InputGroup>
           </FormGroup>
 
           <FormGroup>
@@ -173,10 +191,10 @@ class EditarProduto extends Component {
           </FormGroup>
 
         </CardBody>
-				<Modal.Footer>
-					<Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/produto' }} >Cancelar</Button>
-					<Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-				</Modal.Footer>
+        <Modal.Footer>
+          <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/produto' }} >Cancelar</Button>
+          <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+        </Modal.Footer>
       </Card>
 
     );

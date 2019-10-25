@@ -9,24 +9,64 @@ class CadastrarMenu extends Component {
         super(props);
         this.state = {
             ds_menu: "",
-
-        };
+            validacao: {
+                ds_menu: { ok: true, msg: '' },
+            },
+        }
     }
 
 
     cadastrar = async (event) => {
         event.preventDefault();
-        let dados = await serverRequest.request('/menu/cadastrar', this.state);
-        if (dados) {
 
-            this.setState({ showCadastrado: true });
+        let ok = true;
 
+        Object.keys(this.state.validacao).forEach(p => {
+            if (!this.state.validacao[p].ok) {
+                ok = false;
+            }
+        });
+
+        if (ok) {
+            let dados = await serverRequest.request('/menu/cadastrar', this.state);
+            if (dados) {
+
+                this.setState({ showCadastrado: true });
+            }
         }
     }
 
     changeInput = (event) => {
         this.setState({ [event.target.name]: event.target.value });
     }
+
+    validarSeMenu = async (event) => {
+        let ok = false, msg = '';
+        let val = event.target.value;
+        if (!val) {
+            msg = 'Campo obrigatório';
+        }
+        else if (val.length < 4) {
+            msg = 'Código do restuarante deve conter 4 caracteres';
+        }
+        else {
+            ok = true;
+            let newState = Object.assign({}, this.state.validacao);
+            newState.ds_menu.ok = ok;
+            newState.ds_menu.msg = msg;
+            this.setState({ validacao: newState });
+        }
+
+        let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
+        if (dados.exists) {
+            let newState = Object.assign({}, this.state.validacao);
+            newState.ds_menu.ok = false;
+            newState.ds_menu.msg = 'Este login já está sendo utilizado';
+            this.setState({ validacao: newState });
+        }
+    }
+
+
     render() {
         return (
 
@@ -66,9 +106,20 @@ class CadastrarMenu extends Component {
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                                 </InputGroupAddon>
-                                <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
+                                <Input
+                                    name="ds_menu"
+                                    value={this.state.ds_menu}
+                                    onChange={this.changeInput}
+                                    required
+                                    minLength="4"
+                                    placeholder="Lanches"
+                                    onBlur={this.validarSeMenu}
+                                />
+                                <span style={{ color: 'red' }}>{this.state.validacao.ds_menu.msg}</span>
                             </InputGroup>
                         </FormGroup>
+
+
 
                     </CardBody>
                     <CardFooter>
