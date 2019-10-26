@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 
 const stateName = "Step1";
@@ -247,10 +247,9 @@ class Step1 extends Component {
               placeholder='E-mail'
               onBlur={this.validarEmail}
               required
+              invalid={!this.state.validacao.email.ok}
             />
-
-            <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
-
+            <FormFeedback invalid>{this.state.validacao.email.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import { UncontrolledTooltip } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 const stateName = "Step4";
@@ -143,6 +143,7 @@ class Step4 extends Component {
               onBlur={this.validarCodigoRestaurante}
               required
               id="informativoCodigo"
+              invalid={!this.state.validacao.codigo_restaurante.ok}
             />
 
 
@@ -150,7 +151,7 @@ class Step4 extends Component {
               O login do restaurante deve ser único e sempre será usado para acessar o sistema
            </UncontrolledTooltip>
 
-            <span style={{ color: 'red' }}>{this.state.validacao.codigo_restaurante.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -171,8 +172,6 @@ class Step4 extends Component {
               minLength="4"
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.login.msg}</span>
-
           </InputGroup>
         </FormGroup>
 
@@ -191,9 +190,10 @@ class Step4 extends Component {
               placeholder="Senha"
               onBlur={this.validarSenha}
               required
+              invalid={!this.state.validacao.senha.ok}
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.senha.msg}</span>
+            <FormFeedback>{this.state.validacao.senha.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -213,10 +213,9 @@ class Step4 extends Component {
               placeholder="Repita a senha"
               onBlur={this.conferirSenha}
               required
+              invalid={!this.state.validacao.validarSenha.ok}
             />
-
-            <span style={{ color: 'red' }}>{this.state.validacao.validarSenha.msg}</span>
-
+            <FormFeedback>{this.state.validacao.validarSenha.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
