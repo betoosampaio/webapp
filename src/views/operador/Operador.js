@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, Label, FormGroup } from 'reactstrap';
-import { AppSwitch } from '@coreui/react';
+import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
@@ -93,7 +92,7 @@ class Operador extends Component {
     if (this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
     if (this.state.search) {
       lista = lista.filter(row => {
-        return (new RegExp(this.state.search, "i")).test([row.nome_operador, row.login_operador, row.tipo_perfil ].join(''))
+        return (new RegExp(this.state.search, "i")).test([row.nome_operador, row.login_operador, row.tipo_perfil].join(''))
       })
     }
 
@@ -113,24 +112,27 @@ class Operador extends Component {
           </CardHeader>
           <CardBody>
 
-            <FormGroup className="pull-right">
-              <Label className="mr-2">Somente ativos:</Label>
-              <AppSwitch
-                name="somenteAtivos"
-                variant={'pill'}
-                color={'success'}
-                checked={this.state.somenteAtivos ? true : false}
-                onChange={this.changeSwitch}
-              />
-            </FormGroup>
+            <Form inline className="mb-3">
+              <FormGroup>
+                <Label className="mr-2">Procurar:</Label>
+                <input
+                  value={this.state.search}
+                  onChange={e => this.setState({ search: e.target.value })}
+                />
+              </FormGroup>
 
-            <FormGroup className="pull-left">
-              <Label className="mr-2">Procurar:</Label>
-              <input
-                value={this.state.search}
-                onChange={e => this.setState({ search: e.target.value })}
-              />
-            </FormGroup>
+              <FormGroup className="ml-auto">
+                <Label className="mr-2">Somente ativos:</Label>
+                <CustomInput
+                  id="somenteAtivos"
+                  type="switch"
+                  name="somenteAtivos"
+                  checked={this.state.somenteAtivos ? true : false}
+                  onChange={this.changeSwitch}
+                  valid
+                />
+              </FormGroup>
+            </Form>
 
             <ReactTable
               data={lista}

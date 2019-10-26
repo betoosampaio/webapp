@@ -163,7 +163,7 @@ class Produto extends Component {
               <FormGroup className="ml-auto">
                 <Label className="mr-2">Somente ativos:</Label>
                 <CustomInput
-                  id="teste"
+                  id="somenteAtivos"
                   type="switch"
                   name="somenteAtivos"
                   checked={this.state.somenteAtivos ? true : false}
