@@ -7,14 +7,12 @@ import SelectMenu from '../../components/selectMenu/SelectMenu';
 import UploadFoto from '../../components/uploadFoto/UploadFoto';
 import Modal from 'react-bootstrap/Modal'
 
-
 class EditarProduto extends Component {
 
   constructor(props) {
 
     super(props);
     this.state = {
-      showConfirm: false,
       id_produto: "",
       codigo_produto: "",
       nome_produto: "",
@@ -42,13 +40,10 @@ class EditarProduto extends Component {
   editar = async (event) => {
     event.preventDefault();
 
-    let validar = this.state.preco.toString().includes(',');
+    let obj = Object.assign({}, this.state);
+    obj.preco = String(obj.preco).replace('.', '').replace(',', '.');
 
-    if (!validar) {
-      this.state.preco = this.state.preco.replace(',', '.');
-    }
-
-    let dados = await serverRequest.request('/produto/editar', this.state);
+    let dados = await serverRequest.request('/produto/editar', obj);
     if (dados) {
       window.location.href = '#/cardapio/produto';
     }
@@ -57,6 +52,7 @@ class EditarProduto extends Component {
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
+
   formChangeInput = name => value => {
     let formNewState = Object.assign({}, this.state);
     formNewState[name] = value;
@@ -74,7 +70,7 @@ class EditarProduto extends Component {
         <CardHeader>
           <strong>Editar Produto</strong>
         </CardHeader>
-        <CardBody>  
+        <CardBody>
           <FormGroup>
             <Label>Código do Produto:</Label>
             <InputGroup>
@@ -121,7 +117,7 @@ class EditarProduto extends Component {
             <Label>Preço:</Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-money"> R$</i></InputGroupText>
+                <InputGroupText>R$</InputGroupText>
               </InputGroupAddon>
 
               <CurrencyInput
@@ -148,7 +144,7 @@ class EditarProduto extends Component {
           </FormGroup>
 
           <FormGroup>
-            <Label>Promoção:</Label>
+            <Label>Em promoção:</Label>
             <InputGroup>
               <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
             </InputGroup>

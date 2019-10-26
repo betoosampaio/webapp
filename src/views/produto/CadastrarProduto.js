@@ -17,7 +17,7 @@ class CadastrarProduto extends Component {
       codigo_produto: "",
       nome_produto: "",
       descricao: "",
-      preco: "",
+      preco: "0",
       id_menu: "",
       promocao: 0,
       imagem: "",
@@ -27,10 +27,12 @@ class CadastrarProduto extends Component {
 
   cadastrar = async (event) => {
     event.preventDefault();
-    this.state.preco = this.state.preco.replace(',', '.');
-    let dados = await serverRequest.request('/produto/cadastrar', this.state);
-    if (dados) {
 
+    let obj = Object.assign({}, this.state);
+    obj.preco = obj.preco.replace('.', '').replace(',', '.');
+    let dados = await serverRequest.request('/produto/cadastrar', obj);
+
+    if (dados) {
       this.setState({ showCadastrado: true });
     }
   }
@@ -58,28 +60,6 @@ class CadastrarProduto extends Component {
             <strong>Cadastrar Produto</strong>
           </CardHeader>
           <CardBody>
-            <Modal
-              size="md"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              show={this.state.showCadastrado}
-              onHide={() => { this.setState({ showCadastrado: false }) }}
-              backdrop='static'
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Confirmação</Modal.Title>
-              </Modal.Header>
-
-              <Modal.Body>
-                <p>Produto Cadastrado com sucesso!</p>
-              </Modal.Body>
-
-              <Modal.Footer>
-
-                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK</Button>
-              </Modal.Footer>
-
-            </Modal>
 
             <FormGroup>
               <Label>Código do Produto:</Label>
@@ -87,22 +67,17 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
                 </InputGroupAddon>
-
-
-                <Input 
-                minLength='1'
-                maxLength='50'
-                name="codigo_produto" 
-                value={this.state.codigo_produto} 
-                onChange={this.changeInput} 
-                required 
-                placeholder="001" 
+                <Input
+                  minLength='1'
+                  maxLength='50'
+                  name="codigo_produto"
+                  value={this.state.codigo_produto}
+                  onChange={this.changeInput}
+                  required
+                  placeholder="001"
                 />
-             
-             
               </InputGroup>
             </FormGroup>
-
 
             <FormGroup>
               <Label>Nome do Produto:</Label>
@@ -128,10 +103,8 @@ class CadastrarProduto extends Component {
               <Label>Preço:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-money" > R$</i></InputGroupText>
+                  <InputGroupText>R$</InputGroupText>
                 </InputGroupAddon>
-
-
                 <CurrencyInput
                   decimalSeparator=","
                   thousandSeparator="."
@@ -139,12 +112,9 @@ class CadastrarProduto extends Component {
                   name="preco"
                   className="form-control"
                   onChange={this.formChangeInput('preco')}
-                  placeholder="R$ 10,00"
-
+                  placeholder="10,00"
                   required
                 />
-
-
               </InputGroup>
             </FormGroup>
 
@@ -159,7 +129,7 @@ class CadastrarProduto extends Component {
             </FormGroup>
 
             <FormGroup>
-              <Label>Promoção:</Label>
+              <Label>Em promoção:</Label>
               <InputGroup>
                 <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
               </InputGroup>
@@ -175,6 +145,26 @@ class CadastrarProduto extends Component {
             <Button className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
+
+        <Modal
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={this.state.showCadastrado}
+          onHide={() => { this.setState({ showCadastrado: false }) }}
+          backdrop='static'
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmação</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Produto Cadastrado com sucesso!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK</Button>
+          </Modal.Footer>
+        </Modal>
+
       </form>
     );
   }

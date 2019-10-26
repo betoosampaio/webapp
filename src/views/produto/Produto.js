@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, Label, FormGroup } from 'reactstrap';
-import { AppSwitch } from '@coreui/react';
+import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/uploadFoto/Foto';
 import Modal from 'react-bootstrap/Modal';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import SelectMenu from '../../components/selectMenu/SelectMenu';
 
 class Produto extends Component {
 
@@ -44,9 +44,10 @@ class Produto extends Component {
       headerClassName: "text-left",
     },
     {
-      Header: 'Promoção',
+      Header: 'Em promoção',
       accessor: 'promocao',
       headerClassName: "text-left",
+      Cell: props => <span>{props.value ? "Sim" : "Não"}</span>
     },
     {
       Header: 'Ativo',
@@ -84,6 +85,7 @@ class Produto extends Component {
       showDelete: false,
       idSelecionado: 0,
       search: "",
+      filtrarMenu: "",
       somenteAtivos: true,
     };
   }
@@ -116,8 +118,11 @@ class Produto extends Component {
     if (this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
     if (this.state.search) {
       lista = lista.filter(row => {
-        return (new RegExp(this.state.search, "i")).test([row.codigo_produto, row.menu, row.nome_produto, row.descricao, row.promocao].join(''))
+        return (new RegExp(this.state.search, "i")).test([row.codigo_produto, row.nome_produto, row.descricao].join(''))
       })
+    }
+    if (this.state.filtrarMenu) {
+      lista = lista.filter(row => String(row.id_menu) === String(this.state.filtrarMenu))
     }
 
     return (
@@ -136,24 +141,38 @@ class Produto extends Component {
 
           <CardBody>
 
-            <FormGroup className="pull-right">
-              <Label className="mr-2">Somente ativos:</Label>
-              <AppSwitch
-                name="somenteAtivos"
-                variant={'pill'}
-                color={'success'}
-                checked={this.state.somenteAtivos ? true : false}
-                onChange={this.changeSwitch}
-              />
-            </FormGroup>
+            <Form inline className="mb-4">
 
-            <FormGroup className="pull-left">
-              <Label className="mr-2">Procurar:</Label>
-              <input
-                value={this.state.search}
-                onChange={e => this.setState({ search: e.target.value })}
-              />
-            </FormGroup>
+
+              <FormGroup className="mr-3">
+                <Label className="mr-2">Procurar:</Label>
+                <input
+                  value={this.state.search}
+                  onChange={e => this.setState({ search: e.target.value })}
+                />
+              </FormGroup>
+
+              <FormGroup className="mr-3">
+                <Label className="mr-2">Filtrar Menu:</Label>
+                <SelectMenu
+                  value={this.state.filtrarMenu}
+                  onChange={e => this.setState({ filtrarMenu: e.target.value })}
+                />
+              </FormGroup>
+
+              <FormGroup className="ml-auto">
+                <Label className="mr-2">Somente ativos:</Label>
+                <CustomInput
+                  id="teste"
+                  type="switch"
+                  name="somenteAtivos"
+                  checked={this.state.somenteAtivos ? true : false}
+                  onChange={this.changeSwitch}
+                  valid
+                />
+              </FormGroup>
+            </Form>
+
 
             <ReactTable
               data={lista}
