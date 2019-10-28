@@ -1,7 +1,7 @@
 export default {
   items: [
     {
-      name: 'Gerenciar',
+      name: 'Mesas',
       url: '/meuperfil',
       icon: 'icon-grid',
     },

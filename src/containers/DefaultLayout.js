@@ -77,7 +77,7 @@ class DefaultLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/" to="/gerenciar" />
+                  <Redirect from="/" to="/mesas" />
                 </Switch>
               </Suspense>
             </Container>
