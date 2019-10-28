@@ -225,7 +225,7 @@ class Step2 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Razão Social:</Label>
+          <Label>Razão social:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
@@ -244,7 +244,7 @@ class Step2 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Nome Restaurante:</Label>
+          <Label>Nome do restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
@@ -252,7 +252,7 @@ class Step2 extends Component {
             <Input name="nome_restaurante"
               value={this.state.nome_restaurante}
               onChange={this.changeInput}
-              placeholder="Nome do Restaurante"
+              placeholder="Nome do restaurante"
               id="informativoCodigo"
               required
             />
@@ -272,13 +272,15 @@ class Step2 extends Component {
               required
               name="id_especialidade"
               value={this.state.id_especialidade}
-              onChange={this.changeInput}>
+              onChange={this.changeInput}
+              placeholder="Escreva aqui"
+            >
             </SelectEspecialidade>
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Cep:</Label>
+          <Label>CEP:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-map"></i></InputGroupText>
@@ -290,7 +292,7 @@ class Step2 extends Component {
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
-              placeholder='00000-000'
+              placeholder='CEP do restaurante'
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
               guide={true}
               required
@@ -311,7 +313,7 @@ class Step2 extends Component {
               value={this.state.logradouro}
               onChange={this.changeInput}
               type='text'
-              placeholder='Avenida Paulista'
+              placeholder='Logradouro do restaurante'
               disabled={this.state.enderecoDisabled}
               required
             />
@@ -329,21 +331,21 @@ class Step2 extends Component {
               value={this.state.numero}
               onChange={this.changeInput}
               type='text'
-              placeholder='1234'
+              placeholder='Número do restaurante'
               required
             />
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Complemento:</Label>
+          <Label>Complemento (opcional):</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               type='text'
-              placeholder='Bloco C'
+              placeholder='Complemento do restaurante'
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
@@ -363,7 +365,7 @@ class Step2 extends Component {
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='Bela Vista'
+              placeholder='Bairro do restaurante'
               required
             />
           </InputGroup>
@@ -397,9 +399,11 @@ class Step2 extends Component {
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='Selecione Aqui'
+              placeholder='Município do restaurante'
               required
-            ></SuggestMunicipio>
+            >
+
+            </SuggestMunicipio>
           </InputGroup>
         </FormGroup>
 
