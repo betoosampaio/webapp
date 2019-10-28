@@ -271,7 +271,7 @@ class Step2 extends Component {
           <Label>Cep:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
 
             <MaskedInput
@@ -293,7 +293,7 @@ class Step2 extends Component {
           <Label>Endereço:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
 
             <Input
@@ -309,10 +309,10 @@ class Step2 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Número:</Label>
+          <Label>Número: </Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               name="numero"
@@ -329,7 +329,7 @@ class Step2 extends Component {
           <Label>Complemento:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               type='text'
@@ -345,7 +345,7 @@ class Step2 extends Component {
           <Label>Bairro:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               name="bairro"
@@ -363,7 +363,7 @@ class Step2 extends Component {
           <Label>Estado:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <SelectUF
               name="uf"
@@ -379,7 +379,7 @@ class Step2 extends Component {
           <Label>Município:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-cursor"></i></InputGroupText>
+              <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <SuggestMunicipio
               name="municipio"

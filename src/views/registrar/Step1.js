@@ -212,7 +212,7 @@ class Step1 extends Component {
           <Label>Celular:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-user"></i></InputGroupText>
+              <InputGroupText><i className="icon-phone"></i></InputGroupText>
             </InputGroupAddon>
 
             <MaskedInput
@@ -236,7 +236,7 @@ class Step1 extends Component {
           <Label>Email:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
-              <InputGroupText><i className="icon-user"></i></InputGroupText>
+              <InputGroupText><i className="icon-envelope-open"></i></InputGroupText>
             </InputGroupAddon>
 
             <Input
