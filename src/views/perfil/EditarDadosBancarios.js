@@ -112,7 +112,7 @@ class EditarDadosBancarios extends Component {
             <Label><b>Instituição: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
               <SelectBanco
                 required
@@ -128,7 +128,7 @@ class EditarDadosBancarios extends Component {
             <Label><b>Tipo cadastro conta: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 required
@@ -148,7 +148,7 @@ class EditarDadosBancarios extends Component {
             <Label><b>Tipo conta: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 required
@@ -168,7 +168,7 @@ class EditarDadosBancarios extends Component {
             <Label><b>Agência: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
               <Input className="form-control"
                 name="agencia"
@@ -185,7 +185,7 @@ class EditarDadosBancarios extends Component {
             <Label><b>Conta: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
               <Input className="form-control"
                 name="conta"

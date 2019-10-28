@@ -205,7 +205,7 @@ class EditarDadosPessoais extends Component {
             <Label><b>E-mail do Administrador: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="icon-envelope"></i></InputGroupText>
+                <InputGroupText><i className="icon-envelope-open"></i></InputGroupText>
               </InputGroupAddon>
 
               <Input

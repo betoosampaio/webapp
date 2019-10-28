@@ -238,7 +238,7 @@ class EditarDadosRestaurante extends Component {
 
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-cup"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 name="razao_social"
@@ -274,7 +274,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>CEP: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
 
               <MaskedInput
@@ -296,7 +296,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Logradouro: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 name="logradouro"
@@ -314,7 +314,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Número: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 name="numero"
@@ -331,7 +331,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Complemento</b> (opcional): </Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 type='text'
@@ -347,7 +347,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Bairro: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <Input
                 name="bairro"
@@ -365,7 +365,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Munícipio: </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <SuggestMunicipio
                 name="municipio"
@@ -383,7 +383,7 @@ class EditarDadosRestaurante extends Component {
             <Label><b>Estado (UF): </b></Label>
             <InputGroup>
               <InputGroupAddon addonType="append">
-                <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
+                <InputGroupText><i className="icon-map"></i></InputGroupText>
               </InputGroupAddon>
               <SelectUF
                 name="uf"
