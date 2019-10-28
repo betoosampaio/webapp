@@ -41,7 +41,7 @@ class EditarDadosBancarios extends Component {
     let obj = {
       cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
       nome_administrador: this.state.nome_administrador,
-   
+
       email: this.state.email,
 
       cnpj: this.state.cnpj.replace(/\D/g, ''),
@@ -57,7 +57,7 @@ class EditarDadosBancarios extends Component {
       uf: this.state.uf,
 
       pagamento_app: this.state.pagamento_app || "0",
-      codigo_banco: this.state.codigo_banco || "0",   
+      codigo_banco: this.state.codigo_banco || "0",
       id_tipo_conta: this.state.id_tipo_conta || "0",
       agencia: this.state.agencia || "0",
       conta: this.state.conta || "0",
@@ -65,7 +65,7 @@ class EditarDadosBancarios extends Component {
       id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
       cpfcnpj_conta: this.state.cpfcnpj_conta.replace(/\D/g, ''),
 
-      codigo_restaurante: this.state.codigo_restaurante,     
+      codigo_restaurante: this.state.codigo_restaurante,
       login: this.state.login,
       senha: this.state.senha,
     }
@@ -100,30 +100,6 @@ class EditarDadosBancarios extends Component {
           <h5><b>Editar dados bancários</b></h5>
         </CardHeader>
         <CardBody>
-
-          <Modal
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            show={this.state.showConfirm}
-            onHide={() => { this.setState({ showConfirm: false }) }}
-            backdrop='static'
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Confirmação</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-              <p>Tem certeza de que deseja Editar Dados Bancários? </p>
-            </Modal.Body>
-
-            <Modal.Footer>
-
-              <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
-              <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-            </Modal.Footer>
-
-          </Modal>
 
           <FormGroup className="mt-4">
             <InputGroup>
@@ -237,7 +213,7 @@ class EditarDadosBancarios extends Component {
 
         <Modal.Footer>
           <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
-          <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+          <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
         </Modal.Footer>
       </Card>
 

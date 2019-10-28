@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody,  Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
@@ -229,29 +229,6 @@ class EditarDadosRestaurante extends Component {
           <h5><b>Editar dados do restaurante</b></h5>
         </CardHeader>
         <CardBody>
-          <Modal
-            size="md"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            show={this.state.showConfirm}
-            onHide={() => { this.setState({ showConfirm: false }) }}
-            backdrop='static'
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Confirmação</Modal.Title>
-            </Modal.Header>
-
-            <Modal.Body>
-              <p>Tem certeza de que deseja Editar Dados do Restaurante? </p>
-            </Modal.Body>
-
-            <Modal.Footer>
-
-              <Button variant="primary" color="danger" onClick={() => this.setState({ showConfirm: false })} >Cancelar</Button>
-              <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
-            </Modal.Footer>
-
-          </Modal>
 
           <FormGroup>
             <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
@@ -421,7 +398,7 @@ class EditarDadosRestaurante extends Component {
         </CardBody>
         <Modal.Footer>
           <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
-          <Button type="submit" className="pull-right" color="success" onClick={() => this.setState({ showConfirm: true })} ><i className="fa fa-check"></i> Confirmar</Button>
+          <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
         </Modal.Footer>
       </Card>
     );
