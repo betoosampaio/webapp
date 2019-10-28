@@ -11,7 +11,7 @@ class Step3 extends Component {
   constructor(props) {
     super(props);
     this.state = props.state[stateName] || {
-      pagamento_app: true,
+      pagamento_app: 1,
       codigo_banco: "",
       id_tipo_cadastro_conta: "1",
       id_tipo_conta: "",
