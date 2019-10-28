@@ -11,7 +11,7 @@ class Step3 extends Component {
   constructor(props) {
     super(props);
     this.state = props.state[stateName] || {
-      pagamento_app: "",
+      pagamento_app: true,
       codigo_banco: "",
       id_tipo_cadastro_conta: "1",
       id_tipo_conta: "",
@@ -53,7 +53,16 @@ class Step3 extends Component {
         <FormGroup className="mt-4">
           <InputGroup>
             <Label>Aceitar pagamentos pelo App:</Label>
-            <AppSwitch name="pagamento_app" className={'mx-3'} variant={'pill'} color={'success'} checked={this.state.pagamento_app ? true : false} onChange={this.changeSwitch} />
+
+            <AppSwitch
+              name="pagamento_app"
+              className={'mx-3'}
+              variant={'pill'}
+              color={'success'}
+              checked={this.state.pagamento_app ? true : false}
+              onChange={this.changeSwitch}
+            />
+
           </InputGroup>
         </FormGroup>
 
@@ -146,25 +155,25 @@ class Step3 extends Component {
         </FormGroup>
 
         <FormGroup check inline>
-          <Input 
-            className="form-check-input" 
-            type="radio" 
-            id="cpf-radio" 
-            name="id_tipo_cadastro_conta" 
-            value="1" 
-            checked={this.state.id_tipo_cadastro_conta === "1"? true : false}
+          <Input
+            className="form-check-input"
+            type="radio"
+            id="cpf-radio"
+            name="id_tipo_cadastro_conta"
+            value="1"
+            checked={this.state.id_tipo_cadastro_conta === "1" ? true : false}
             onChange={this.changeInput}
             disabled={this.state.pagamento_app ? false : true} />
           <Label className="form-check-label" check htmlFor="cpf-radio">CPF</Label>
         </FormGroup>
         <FormGroup check inline>
-          <Input 
-            className="form-check-input" 
-            type="radio" 
-            id="cnpj-radio" 
-            name="id_tipo_cadastro_conta" 
+          <Input
+            className="form-check-input"
+            type="radio"
+            id="cnpj-radio"
+            name="id_tipo_cadastro_conta"
             value="2"
-            checked={this.state.id_tipo_cadastro_conta === "2"? true : false}
+            checked={this.state.id_tipo_cadastro_conta === "2" ? true : false}
             onChange={this.changeInput}
             disabled={this.state.pagamento_app ? false : true} />
           <Label className="form-check-label" check htmlFor="cnpj-radio">CNPJ</Label>
@@ -172,7 +181,7 @@ class Step3 extends Component {
 
         {this.state.id_tipo_cadastro_conta === "1" &&
           <FormGroup>
-            
+
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
@@ -192,7 +201,7 @@ class Step3 extends Component {
 
         {this.state.id_tipo_cadastro_conta === "2" &&
           <FormGroup>
-            
+
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>

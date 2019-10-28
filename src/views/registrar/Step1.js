@@ -31,7 +31,7 @@ class Step1 extends Component {
       msg = 'Campo obrigatório';
     }
     else if (val.length < 11) {
-      msg = 'Celular incompleto';
+      msg = 'Formato inválido';
     }
     else if (val.toString().includes('11111111111')) {
       msg = 'Formato inválido';

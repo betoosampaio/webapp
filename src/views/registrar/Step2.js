@@ -387,7 +387,7 @@ class Step2 extends Component {
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='São Paulo'
+              placeholder='Selecione Aqui'
               required
             ></SuggestMunicipio>
           </InputGroup>
