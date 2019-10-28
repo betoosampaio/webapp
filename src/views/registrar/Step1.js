@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
-import MaskedInput from 'react-text-mask';
 
 const stateName = "Step1";
 
@@ -81,6 +80,33 @@ class Step1 extends Component {
     }
     else if (!this.testarCPF(val)) {
       msg = 'CPF incorreto';
+    }
+    else if (val.toString().includes('11111111111')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('22222222222')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('33333333333')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('44444444444')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('55555555555')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('66666666666')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('77777777777')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('88888888888')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('99999999999')) {
+      msg = 'Formato inválido';
     }
     else {
       ok = true;
@@ -169,7 +195,7 @@ class Step1 extends Component {
             </InputGroupAddon>
 
 
-            <MaskedInput
+            <Input
               className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
@@ -178,10 +204,11 @@ class Step1 extends Component {
               placeholder='000.000.000-00'
               mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
-              required              
+              invalid={!this.state.validacao.cpf_administrador.ok}
+              required
             />
 
-            <span style={{ color: 'red' }}>{this.state.validacao.cpf_administrador.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.cpf_administrador.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -198,12 +225,14 @@ class Step1 extends Component {
               value={this.state.nome_administrador}
               onChange={this.changeInput}
               onBlur={this.validarCampoVazio}
-              placeholder='Nome do administrador'
+              placeholder='Nome do administrador'              
+              invalid={!this.state.validacao.nome_administrador.ok}
               required
               minLength="4"
               maxLength="255"
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.nome_administrador.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
+
 
           </InputGroup>
         </FormGroup>
@@ -215,7 +244,7 @@ class Step1 extends Component {
               <InputGroupText><i className="icon-phone"></i></InputGroupText>
             </InputGroupAddon>
 
-            <MaskedInput
+            <Input
               className="form-control"
               placeholder='(11) 99999-9999'
               name="celular"
@@ -224,10 +253,10 @@ class Step1 extends Component {
               onChange={this.changeInput}
               mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
               guide={true}
+              invalid={!this.state.validacao.celular.ok}
               required
             />
-
-            <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.celular.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
