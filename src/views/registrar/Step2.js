@@ -5,6 +5,7 @@ import SelectUF from '../../components/selectUF/SelectUf';
 import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
+import { UncontrolledTooltip } from 'reactstrap';
 
 const stateName = "Step2";
 
@@ -83,7 +84,7 @@ class Step2 extends Component {
     if (val.length < 8) {
       msg = 'Formato inválido';
     }
-    
+
     else {
       ok = true;
     }
@@ -248,7 +249,16 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required />
+            <Input name="nome_restaurante"
+              value={this.state.nome_restaurante}
+              onChange={this.changeInput}
+              placeholder="Nome do Restaurante"
+              id="informativoCodigo"
+              required
+            />
+            <UncontrolledTooltip placement="top" target="informativoCodigo">
+              Este será o nome que irá aparecer no aplicativo
+           </UncontrolledTooltip>
           </InputGroup>
         </FormGroup>
 
