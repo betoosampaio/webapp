@@ -7,6 +7,7 @@ import { mapToCssModules } from 'reactstrap/lib/utils';
 const propTypes = {
   header: PropTypes.string,
   mainText: PropTypes.string,
+  valorTotal: PropTypes.string,
   icon: PropTypes.string,
   color: PropTypes.string,
   variant: PropTypes.string,
@@ -20,6 +21,7 @@ const propTypes = {
 const defaultProps = {
   header: '$1,999.50',
   mainText: 'Income',
+  valorTotal: 'Income',
   icon: 'fa fa-cogs',
   color: 'primary',
   variant: '0',
@@ -28,7 +30,7 @@ const defaultProps = {
 
 class CardMesa extends Component {
   render() {
-    const { className, cssModule, header, mainText, icon, color, footer, link, children, variant, ...attributes } = this.props;
+    const { className, cssModule, header, mainText, valorTotal,  icon, color, footer, link, children, variant, ...attributes } = this.props;
 
     // demo purposes only
     const padding = (variant === '0' ? { card: 'p-3', icon: 'p-3', lead: 'mt-2' } : (variant === '1' ? {
@@ -56,7 +58,10 @@ class CardMesa extends Component {
       <Card>
         <CardBody className={card.classes} {...attributes}>
           <div className={lead.classes}>{header}</div>
-          <div className="text-muted text-uppercase font-weight-bold font-xs">{mainText}</div>
+    
+          <div className="text-muted font-weight-bold font-xs">{mainText}</div>
+   
+          <div className="text-muted font-weight-bold font-xs">{valorTotal}</div>
         </CardBody>
         {cardFooter()}
       </Card>

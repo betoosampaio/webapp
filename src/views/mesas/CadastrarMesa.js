@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
-import Modal from 'react-bootstrap/Modal';
+import serverRequest from '../../utils/serverRequest';
 
 class CadastrarMesa extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      showCadastrado: false,
-     
+      numero: "",
     };
   }
 
 
+  cadastrar = async (event) => {
+    event.preventDefault();
+    let obj = {
+      numero: this.state.numero,
+    }
+
+    console.log(obj);
+
+    let dados = await serverRequest.request('/mesa/cadastrar', obj);
+    if (dados) {
+      window.location.href = '/#/mesas';
+    }
+  }
+
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
   render() {
     return (
@@ -24,22 +40,14 @@ class CadastrarMesa extends Component {
           </CardHeader>
           <CardBody>
 
+
             <FormGroup>
-              <Label>Nome:</Label>
+              <Label>Número da mesa:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-user"></i></InputGroupText>
+                  <InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
                 </InputGroupAddon>
-
-                <Input
-                  name="nome_operador"
-
-                  onChange={this.changeInput}
-                  required
-                  minLength="4"
-                  placeholder="Nome do Operador"
-                />
-
+                <Input name="numero" value={this.state.numero} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
 
@@ -49,24 +57,6 @@ class CadastrarMesa extends Component {
             <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
           </CardFooter>
         </Card>
-
-        <Modal
-          size="md"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          show={this.state.showCadastrado}
-          onHide={() => { this.setState({ showCadastrado: false }) }}
-          backdrop='static' >
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmação</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Operador Cadastrado com sucesso! </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >OK</Button>
-          </Modal.Footer>
-        </Modal>
 
       </form>
 
