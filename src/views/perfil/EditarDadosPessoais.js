@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
@@ -34,7 +34,34 @@ class EditarDadosPessoais extends Component {
       msg = 'Campo obrigatório';
     }
     else if (val.length < 11) {
-      msg = 'Celular incompleto';
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('11111111111')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('22222222222')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('33333333333')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('44444444444')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('55555555555')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('66666666666')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('77777777777')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('88888888888')) {
+      msg = 'Formato inválido';
+    }
+    else if (val.toString().includes('99999999999')) {
+      msg = 'Formato inválido';
     }
     else {
       ok = true;
@@ -170,7 +197,10 @@ class EditarDadosPessoais extends Component {
                 name="nome_administrador"
                 value={this.state.nome_administrador}
                 onChange={this.changeInput}
+                invalid={!this.state.validacao.nome_administrador.ok}
               />
+
+              <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
 
 
 
@@ -214,9 +244,10 @@ class EditarDadosPessoais extends Component {
                 onChange={this.changeInput}
                 type="email"
                 onBlur={this.validarEmail}
+                required
+                invalid={!this.state.validacao.email.ok}
               />
-
-              <span style={{ color: 'red' }}>{this.state.validacao.email.msg}</span>
+              <FormFeedback invalid>{this.state.validacao.email.msg}</FormFeedback>
 
             </InputGroup>
           </FormGroup>
@@ -230,7 +261,7 @@ class EditarDadosPessoais extends Component {
 
               <MaskedInput
                 className="form-control"
-                placeholder='(11) 98888-9999'
+                placeholder='(11) 99999-9999'
                 name="celular"
                 onBlur={this.validarCelular}
                 value={this.state.celular}
