@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import SelectPerfil from '../../components/SelectPerfil'
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
-import PasswordInput from '../../components/passwordInput/PasswordInput';
+import PasswordInput from '../../components/PasswordInput';
 
 
 class CadastrarOperador extends Component {

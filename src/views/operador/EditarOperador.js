@@ -4,7 +4,7 @@ import { AppSwitch } from '@coreui/react';
 import SelectPerfil from '../../components/SelectPerfil';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
-import PasswordInput from '../../components/passwordInput/PasswordInput';
+import PasswordInput from '../../components/PasswordInput';
 
 class EditarOperador extends Component {
 
