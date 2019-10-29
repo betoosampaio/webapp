@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
+import serverRequest from '../utils/serverRequest';
 
 class SelectPerfil extends Component {
 
