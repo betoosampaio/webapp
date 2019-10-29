@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MultipleSelect from '../multipleSelect/MultipleSelect';
-import serverRequest from '../../utils/serverRequest';
+import MultipleSelect from './MultipleSelect';
+import serverRequest from '../utils/serverRequest';
 
 class SelectBanco extends Component {
 
