@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 
@@ -8,8 +8,14 @@ class CadastrarMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ds_menu: "",
-    };
+      ds_menu: '',
+      validarSeMenuExiste: '',
+
+      validacao: {
+        ds_menu: { ok: true, msg: '' },
+        validarSeMenuExiste: { ok: true, msg: '' },
+      },
+    }
   }
 
 
@@ -24,6 +30,33 @@ class CadastrarMenu extends Component {
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
+
+  validarSeMenuExiste = async (event) => {
+    let ok = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Formato incorreto';
+    }
+    else {
+      ok = true;
+      let newState = Object.assign({}, this.state.validacao);
+      newState.ds_menu.ok = ok;
+      newState.ds_menu.msg = msg;
+      this.setState({ validacao: newState });
+
+      let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
+      if (dados.exists) {
+        let newState = Object.assign({}, this.state.validacao);
+        newState.ds_menu.ok = false;
+        newState.ds_menu.msg = 'Esta descrição de menu já está sendo utilizada';
+        this.setState({ validacao: newState });
+      }
+    }
+  }
+
   render() {
     return (
       <form name="form" onSubmit={this.cadastrar}>
@@ -38,12 +71,24 @@ class CadastrarMenu extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="ds_menu" value={this.state.ds_menu} onChange={this.changeInput} required minLength="4" placeholder="Lanches" />
+
+                <Input
+                  name="ds_menu"
+                  value={this.state.ds_menu}
+                  onChange={this.changeInput}
+                  placeholder="Lanches"
+                  onBlur={this.validarSeMenuExiste}
+                  required
+                  invalid={!this.state.validacao.ds_menu.ok}
+                />
+
+                <FormFeedback invalid>{this.state.validacao.ds_menu.msg}</FormFeedback>
+
               </InputGroup>
             </FormGroup>
           </CardBody>
           <CardFooter>
-            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
+            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i>Confirmar</Button>
           </CardFooter>
         </Card>
 
