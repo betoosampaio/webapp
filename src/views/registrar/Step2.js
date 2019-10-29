@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
-import SelectUF from '../../components/selectUF/SelectUf';
+import SelectUF from '../../components/SelectUf';
 import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import SuggestMunicipio from '../../components/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
