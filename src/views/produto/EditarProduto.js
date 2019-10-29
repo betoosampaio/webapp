@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup
 import { AppSwitch } from '@coreui/react';
 import CurrencyInput from 'react-currency-input';
 import serverRequest from '../../utils/serverRequest';
-import SelectMenu from '../../components/selectMenu/SelectMenu';
+import SelectMenu from '../../components/SelectMenu';
 import UploadFoto from '../../components/UploadFoto';
 import Modal from 'react-bootstrap/Modal'
 

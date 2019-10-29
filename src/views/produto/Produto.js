@@ -6,7 +6,7 @@ import Foto from '../../components/Foto';
 import Modal from 'react-bootstrap/Modal';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import SelectMenu from '../../components/selectMenu/SelectMenu';
+import SelectMenu from '../../components/SelectMenu';
 
 class Produto extends Component {
 
