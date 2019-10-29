@@ -58,10 +58,10 @@ class CadastrarMenu extends Component {
             <Modal.Title>Confirmação</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p>Menu Cadastrado com sucesso</p>
+            <p>Menu Cadastrado com sucesso!</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >OK</Button>
+            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >Confirmar</Button>
           </Modal.Footer>
         </Modal>
       </form>
