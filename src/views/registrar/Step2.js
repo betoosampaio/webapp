@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
+import { UncontrolledTooltip } from 'reactstrap';
 
 const stateName = "Step2";
 
@@ -83,7 +84,7 @@ class Step2 extends Component {
     if (val.length < 8) {
       msg = 'Formato inválido';
     }
-    
+
     else {
       ok = true;
     }
@@ -208,7 +209,7 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
-            <MaskedInput
+            <Input
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
@@ -217,14 +218,15 @@ class Step2 extends Component {
               placeholder='00.000.000/0000-00'
               mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
               guide={true}
+              invalid={!this.state.validacao.cnpj.ok}
               required
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.cnpj.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Razão Social:</Label>
+          <Label>Razão social:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
@@ -235,20 +237,36 @@ class Step2 extends Component {
               onChange={this.changeInput}
               type='text'
               placeholder='Razão social da empresa'
+              invalid={!this.state.validacao.razao_social.ok}
               required
               minLength="4"
               maxLength="255"
             />
+            <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
+
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Nome Restaurante:</Label>
+          <Label>Nome do restaurante:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
-            <Input name="nome_restaurante" value={this.state.nome_restaurante} onChange={this.changeInput} placeholder="Nome do Restaurante" required />
+
+            <Input
+              name="nome_restaurante"
+              value={this.state.nome_restaurante}
+              onChange={this.changeInput}
+              placeholder="Nome do restaurante"
+              id="informativoCodigo"
+              invalid={!this.state.validacao.nome_restaurante.ok}
+              required
+            />
+            <UncontrolledTooltip placement="top" target="informativoCodigo">
+              Este será o nome que irá aparecer no aplicativo
+           </UncontrolledTooltip>
+            <FormFeedback invalid>{this.state.validacao.nome_restaurante.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -259,33 +277,38 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
             <SelectEspecialidade
+              invalid={!this.state.validacao.id_especialidade.ok}
               required
               name="id_especialidade"
               value={this.state.id_especialidade}
-              onChange={this.changeInput}>
+              onChange={this.changeInput}
+              placeholder="Escreva aqui"
+            >
             </SelectEspecialidade>
+            <FormFeedback invalid>{this.state.validacao.id_especialidade.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Cep:</Label>
+          <Label>CEP:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
 
-            <MaskedInput
+            <Input
               name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
-              placeholder='00000-000'
+              placeholder='CEP do restaurante'
               mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
               guide={true}
+              invalid={!this.state.validacao.cep.ok}
               required
             />
-            <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
+            <FormFeedback invalid>{this.state.validacao.cep.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -301,10 +324,13 @@ class Step2 extends Component {
               value={this.state.logradouro}
               onChange={this.changeInput}
               type='text'
-              placeholder='Avenida Paulista'
+              placeholder='Logradouro do restaurante'
               disabled={this.state.enderecoDisabled}
+              invalid={!this.state.validacao.logradouro.ok}
               required
             />
+            <FormFeedback invalid>{this.state.validacao.logradouro.msg}</FormFeedback>
+
           </InputGroup>
         </FormGroup>
 
@@ -319,21 +345,24 @@ class Step2 extends Component {
               value={this.state.numero}
               onChange={this.changeInput}
               type='text'
-              placeholder='1234'
+              placeholder='Número do restaurante'
+              invalid={!this.state.validacao.numero.ok}
               required
             />
+            <FormFeedback invalid>{this.state.validacao.numero.msg}</FormFeedback>
+
           </InputGroup>
         </FormGroup>
 
         <FormGroup>
-          <Label>Complemento:</Label>
+          <Label>Complemento (opcional):</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
             <Input
               type='text'
-              placeholder='Bloco C'
+              placeholder='Complemento do restaurante'
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
@@ -353,9 +382,12 @@ class Step2 extends Component {
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='Bela Vista'
+              placeholder='Bairro do restaurante'
+              invalid={!this.state.validacao.bairro.ok}
               required
             />
+            <FormFeedback invalid>{this.state.validacao.bairro.msg}</FormFeedback>
+
           </InputGroup>
         </FormGroup>
 
@@ -387,9 +419,11 @@ class Step2 extends Component {
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
               type='text'
-              placeholder='Selecione Aqui'
+              placeholder='Município do restaurante'
               required
-            ></SuggestMunicipio>
+            >
+
+            </SuggestMunicipio>
           </InputGroup>
         </FormGroup>
 

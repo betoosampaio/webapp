@@ -69,7 +69,7 @@ class EditarMenu extends Component {
                 </CardBody>
                 <Modal.Footer>
                     <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/cardapio/menu' }} >Cancelar</Button>
-                    <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+                    <Button variant="primary" color="success" onClick={this.editar}  >Confirmar</Button>
                 </Modal.Footer>
             </Card>
 

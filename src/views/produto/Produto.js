@@ -202,7 +202,7 @@ class Produto extends Component {
           </Modal.Header>
 
           <Modal.Body>
-            <p>Você tem certeza que deseja excluir ?</p>
+            <p>Você tem certeza que deseja excluir?</p>
           </Modal.Body>
 
           <Modal.Footer>

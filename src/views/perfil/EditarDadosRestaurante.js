@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
@@ -249,7 +249,11 @@ class EditarDadosRestaurante extends Component {
                 required
                 minLength="4"
                 maxLength="255"
+                invalid={!this.state.validacao.razao_social.ok}
               />
+
+              <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
+
             </InputGroup>
           </FormGroup>
 
@@ -398,7 +402,7 @@ class EditarDadosRestaurante extends Component {
         </CardBody>
         <Modal.Footer>
           <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
-          <Button variant="primary" color="success" onClick={this.editar}  >Salvar</Button>
+          <Button variant="primary" color="success" onClick={this.editar}  >Confirmar</Button>
         </Modal.Footer>
       </Card>
     );
