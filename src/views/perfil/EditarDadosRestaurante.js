@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
-import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
+import SuggestMunicipio from '../../components/SuggestMunicipio';
 import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'

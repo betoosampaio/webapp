@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import serverRequest from '../../utils/serverRequest';
-import AutoSuggest from '../autoSuggest/AutoSuggest';
+import serverRequest from '../utils/serverRequest';
+import AutoSuggest from './AutoSuggest';
 
 class SuggestMunicipio extends Component {
     constructor(props) {

@@ -3,7 +3,7 @@ import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, In
 import MaskedInput from 'react-text-mask';
 import SelectUF from '../../components/selectUF/SelectUf';
 import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
-import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
+import SuggestMunicipio from '../../components/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 import { UncontrolledTooltip } from 'reactstrap';
 

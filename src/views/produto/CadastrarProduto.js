@@ -4,7 +4,7 @@ import { AppSwitch } from '@coreui/react'
 import CurrencyInput from 'react-currency-input';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/selectMenu/SelectMenu';
-import UploadFoto from '../../components/uploadFoto/UploadFoto';
+import UploadFoto from '../../components/UploadFoto';
 import Modal from 'react-bootstrap/Modal'
 
 

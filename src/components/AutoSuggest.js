@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import '../../scss/styles/autoSuggest.css';
+import '../scss/styles/autoSuggest.css';
 
 
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
-import Foto from '../../components/uploadFoto/Foto';
+import Foto from '../../components/Foto';
 import Modal from 'react-bootstrap/Modal';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
