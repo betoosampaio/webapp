@@ -109,7 +109,7 @@ class EditarOperador extends Component {
 
 					<Modal.Footer>
 						<Button variant="primary" color="danger" onClick={() => { window.location.href = '#/operador' }} >Cancelar</Button>
-						<Button type="submit" variant="primary" color="success">Salvar</Button>
+						<Button type="submit" variant="primary" color="success">Confirmar</Button>
 					</Modal.Footer>
 				</Card>
 			</form>
