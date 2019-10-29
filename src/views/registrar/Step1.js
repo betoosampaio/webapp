@@ -227,9 +227,7 @@ class Step1 extends Component {
               onBlur={this.validarCampoVazio}
               placeholder='Nome do administrador'              
               invalid={!this.state.validacao.nome_administrador.ok}
-              required
-              minLength="4"
-              maxLength="255"
+              required              
             />
             <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
 

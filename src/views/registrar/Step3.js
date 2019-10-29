@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
+import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback  } from 'reactstrap';
 import MaskedInput from 'react-text-mask';
 import SelectBanco from '../../components/selectBanco/SelectBanco';
 import { AppSwitch } from '@coreui/react';
