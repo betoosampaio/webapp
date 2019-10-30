@@ -30,16 +30,17 @@ class Step2 extends Component {
       enderecoDisabled: false,
       validacao: {
         cnpj: { valid: false, invalid: false, msg: '' },
-        razao_social: { ok: true, msg: '' },
-        nome_restaurante: { ok: true, msg: '' },
+        razao_social: { valid: false, invalid: false, msg: '' },
+        nome_restaurante: { valid: false, invalid: false, msg: '' },
         id_especialidade: { ok: true, msg: '' },
-        cep: { ok: true, msg: '' },
-        logradouro: { ok: true, msg: '' },
-        numero: { ok: true, msg: '' },
-        bairro: { ok: true, msg: '' },
-        municipio: { ok: true, msg: '' },
-        uf: { ok: true, msg: '' },
-        complemento: { ok: true },
+        cep: { valid: false, invalid: false, msg: '' },
+        logradouro: { valid: false, invalid: false, msg: '' },
+        numero: { valid: false, invalid: false, msg: '' },
+        complemento: { valid: false },
+        bairro: { valid: false, invalid: false, msg: '' },
+        municipio: { valid: false, invalid: false, msg: '' },
+        uf: { valid: false, msg: '' },
+
       },
     };
   }
@@ -80,18 +81,20 @@ class Step2 extends Component {
   }
 
   validarCEP = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (val.length < 8) {
       msg = 'Formato inválido';
     }
 
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cep.ok = ok;
+    newState.cep.valid = valid;
+    newState.cep.invalid = invalid;
     newState.cep.msg = msg;
     this.setState({ validacao: newState });
 
@@ -170,6 +173,162 @@ class Step2 extends Component {
     return true;
   }
 
+  validarRazaoSocial = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.razao_social.valid = valid;
+    newState.razao_social.invalid = invalid;
+    newState.razao_social.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarNomedoRestaurante = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.nome_restaurante.valid = valid;
+    newState.nome_restaurante.invalid = invalid;
+    newState.nome_restaurante.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarLogradouro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 3 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.logradouro.valid = valid;
+    newState.logradouro.invalid = invalid;
+    newState.logradouro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarNumero = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 1) {
+      msg = 'Este campo deve conter 1 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.numero.valid = valid;
+    newState.numero.invalid = invalid;
+    newState.numero.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarComplemento = (event) => {
+    let valid = false;
+    let val = event.target.value;
+    if (!val) {
+    }
+    else {
+      valid = true;
+    }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.complemento.valid = valid;
+    this.setState({ validacao: newState });
+  }
+
+  validarBairro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.bairro.valid = valid;
+    newState.bairro.invalid = invalid;
+    newState.bairro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarMunicipio = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.municipio.valid = valid;
+    newState.municipio.invalid = invalid;
+    newState.municipio.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarEstado = (event) => {
+    let valid = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else {
+      valid = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.uf.valid = valid;
+    newState.uf.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+
   prosseguir = (event) => {
     event.preventDefault();
 
@@ -220,7 +379,7 @@ class Step2 extends Component {
               placeholder='00.000.000/0000-00'
               pattern="99.999.999/9999-99"
               invalid={this.state.validacao.cnpj.invalid}
-              valid={this.state.validacao.cnpj.valid}              
+              valid={this.state.validacao.cnpj.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>
@@ -233,19 +392,19 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
+
             <Input
               name="razao_social"
               value={this.state.razao_social}
               onChange={this.changeInput}
+              onBlur={this.validarRazaoSocial}
               type='text'
               placeholder='Razão social da empresa'
-              invalid={!this.state.validacao.razao_social.ok}
+              invalid={this.state.validacao.razao_social.invalid}
+              valid={this.state.validacao.razao_social.valid}
               required
-              minLength="4"
-              maxLength="255"
             />
             <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
-
           </InputGroup>
         </FormGroup>
 
@@ -260,14 +419,17 @@ class Step2 extends Component {
               name="nome_restaurante"
               value={this.state.nome_restaurante}
               onChange={this.changeInput}
+              onBlur={this.validarNomedoRestaurante}
               placeholder="Nome do restaurante"
               id="informativoCodigo"
-              invalid={!this.state.validacao.nome_restaurante.ok}
+              invalid={this.state.validacao.nome_restaurante.invalid}
+              valid={this.state.validacao.nome_restaurante.valid}
               required
             />
             <UncontrolledTooltip placement="top" target="informativoCodigo">
               Este será o nome que irá aparecer no aplicativo
            </UncontrolledTooltip>
+
             <FormFeedback invalid>{this.state.validacao.nome_restaurante.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
@@ -298,16 +460,16 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Input
+            <MaskedInput
               name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
               placeholder='CEP do restaurante'
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
-              guide={true}
-              invalid={!this.state.validacao.cep.ok}
+              pattern="99999-999 "
+              invalid={this.state.validacao.cep.invalid}
+              valid={this.state.validacao.cep.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.cep.msg}</FormFeedback>
@@ -325,10 +487,12 @@ class Step2 extends Component {
               name="logradouro"
               value={this.state.logradouro}
               onChange={this.changeInput}
+              onBlur={this.validarLogradouro}
               type='text'
               placeholder='Logradouro do restaurante'
               disabled={this.state.enderecoDisabled}
-              invalid={!this.state.validacao.logradouro.ok}
+              invalid={this.state.validacao.logradouro.invalid}
+              valid={this.state.validacao.logradouro.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.logradouro.msg}</FormFeedback>
@@ -346,9 +510,11 @@ class Step2 extends Component {
               name="numero"
               value={this.state.numero}
               onChange={this.changeInput}
+              onBlur={this.validarNumero}
               type='text'
               placeholder='Número do restaurante'
-              invalid={!this.state.validacao.numero.ok}
+              invalid={this.state.validacao.numero.invalid}
+              valid={this.state.validacao.numero.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.numero.msg}</FormFeedback>
@@ -368,6 +534,8 @@ class Step2 extends Component {
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
+              onBlur={this.validarComplemento}
+              valid={this.state.validacao.complemento.valid}
             />
           </InputGroup>
         </FormGroup>
@@ -383,9 +551,11 @@ class Step2 extends Component {
               value={this.state.bairro}
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
+              onBlur={this.validarBairro}
               type='text'
               placeholder='Bairro do restaurante'
-              invalid={!this.state.validacao.bairro.ok}
+              invalid={this.state.validacao.bairro.invalid}
+              valid={this.state.validacao.bairro.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.bairro.msg}</FormFeedback>
@@ -403,6 +573,8 @@ class Step2 extends Component {
               name="uf"
               value={this.state.uf}
               onChange={this.changeInput}
+              onBlur={this.validarEstado}
+              valid={this.state.validacao.uf.valid}
               disabled={this.state.enderecoDisabled}
               required>
             </SelectUF>
@@ -419,12 +591,15 @@ class Step2 extends Component {
               name="municipio"
               value={this.state.municipio}
               onChange={this.changeInput}
+              onBlur={this.validarMunicipio}
               disabled={this.state.enderecoDisabled}
               type='text'
               placeholder='Município do restaurante'
+              invalid={this.state.validacao.municipio.invalid}
+              valid={this.state.validacao.municipio.valid}
               required
             >
-
+              <FormFeedback invalid>{this.state.validacao.municipio.msg}</FormFeedback>
             </SuggestMunicipio>
           </InputGroup>
         </FormGroup>

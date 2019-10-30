@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import { UncontrolledTooltip } from 'reactstrap';
+import MaskedInput from '../../components/MaskedInput';
 import serverRequest from '../../utils/serverRequest';
 const stateName = "Step4";
+
 
 class Step4 extends Component {
 
@@ -14,10 +16,10 @@ class Step4 extends Component {
       senha: '',
       validarSenha: '',
       validacao: {
-        codigo_restaurante: { ok: true, msg: '' },
-        login: { ok: true, msg: '' },
-        senha: { ok: true, msg: '' },
-        validarSenha: { ok: true, msg: '' },
+        codigo_restaurante: { valid: false, msg: '' },
+        login: { valid: false, invalid: false, msg: '' },
+        senha: { valid: false, msg: '' },
+        validarSenha: { valid: false, msg: '' },
       },
     }
 
@@ -55,7 +57,7 @@ class Step4 extends Component {
   }
 
   validarCodigoRestaurante = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -64,16 +66,16 @@ class Step4 extends Component {
       msg = 'Código do restuarante deve conter 4 caracteres';
     }
     else {
-      ok = true;
+      valid = true;
       let newState = Object.assign({}, this.state.validacao);
-      newState.codigo_restaurante.ok = ok;
+      newState.codigo_restaurante.valid = valid;
       newState.codigo_restaurante.msg = msg;
       this.setState({ validacao: newState });
 
       let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
-        newState.codigo_restaurante.ok = false;
+        newState.codigo_restaurante.valid = false;
         newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
         this.setState({ validacao: newState });
       }
@@ -82,8 +84,29 @@ class Step4 extends Component {
 
   }
 
+  validarLogin = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.login.valid = valid;
+    newState.login.invalid = invalid;
+    newState.login.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   validarSenha = (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -95,17 +118,17 @@ class Step4 extends Component {
       msg = 'Senha deve conter letras e números';
     }
     else {
-      ok = true;
+      valid = true;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.senha.ok = ok;
+    newState.senha.valid = valid;
     newState.senha.msg = msg;
     this.setState({ validacao: newState });
   }
 
   conferirSenha = (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
 
     let val = this.state.validarSenha;
     let senha = this.state.senha;
@@ -114,11 +137,11 @@ class Step4 extends Component {
       msg = 'Senha não confere';
     }
     else {
-      ok = true;
+      valid = true;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.validarSenha.ok = ok;
+    newState.validarSenha.valid = valid;
     newState.validarSenha.msg = msg;
     this.setState({ validacao: newState });
   }
@@ -141,9 +164,9 @@ class Step4 extends Component {
               onChange={this.changeInput}
               placeholder="login do restaurante"
               onBlur={this.validarCodigoRestaurante}
+              valid={this.state.validacao.codigo_restaurante.valid}
               required
               id="informativoCodigo"
-              invalid={!this.state.validacao.codigo_restaurante.ok}
             />
 
 
@@ -151,7 +174,7 @@ class Step4 extends Component {
               O login do restaurante deve ser único e sempre será usado para acessar o sistema
            </UncontrolledTooltip>
 
-            <FormFeedback invalid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
+            <FormFeedback valid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -163,14 +186,16 @@ class Step4 extends Component {
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Input
+            <MaskedInput
               name="login"
               value={this.state.login}
               onChange={this.changeInput}
               placeholder="Administrador"
+              onBlur={this.validarLogin}
+              valid={this.state.validacao.login.valid}
               required
-              minLength="4"
             />
+            <FormFeedback invalid>{this.state.validacao.login.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -182,17 +207,16 @@ class Step4 extends Component {
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Input
+            <MaskedInput
               type="password"
               name="senha"
               value={this.state.senha}
               onChange={this.changeInput}
               placeholder="Senha"
               onBlur={this.validarSenha}
+              valid={this.state.validacao.senha.valid}
               required
-              invalid={!this.state.validacao.senha.ok}
             />
-
             <FormFeedback>{this.state.validacao.senha.msg}</FormFeedback>
 
           </InputGroup>
@@ -213,7 +237,7 @@ class Step4 extends Component {
               placeholder="Repita a senha"
               onBlur={this.conferirSenha}
               required
-              invalid={!this.state.validacao.validarSenha.ok}
+              valid={this.state.validacao.validarSenha.valid}
             />
             <FormFeedback>{this.state.validacao.validarSenha.msg}</FormFeedback>
           </InputGroup>
