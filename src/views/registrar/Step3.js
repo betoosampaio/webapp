@@ -351,7 +351,7 @@ class Step3 extends Component {
               value={this.state.agencia}
               onChange={this.changeInput}
               onBlur={this.validarAgencia}
-              pattern="9999"
+              mascara="9999"
               invalid={this.state.validacao.agencia.invalid}
               valid={this.state.validacao.agencia.valid}
               disabled={this.state.pagamento_app ? false : true}
@@ -374,7 +374,7 @@ class Step3 extends Component {
               onChange={this.changeInput}
               onBlur={this.validarConta}
               placeholder="Conta"
-              pattern="999999999"
+              mascara="999999999"
               invalid={this.state.validacao.conta.invalid}
               valid={this.state.validacao.conta.valid}
               disabled={this.state.pagamento_app ? false : true}
@@ -389,7 +389,7 @@ class Step3 extends Component {
               onChange={this.changeInput}
               placeholder="Dígito"
               onBlur={this.validarDigito}
-              pattern="9"
+              mascara="99"
               invalid={this.state.validacao.digito.invalid}
               valid={this.state.validacao.digito.valid}
               disabled={this.state.pagamento_app ? false : true}
@@ -410,7 +410,7 @@ class Step3 extends Component {
             onBlur={this.validarCPF}
             onChange={this.changeInput}
             placeholder='000.000.000-00'
-            pattern="999.999.999-99"
+            mascara="999.999.999-99"
             invalid={this.state.validacao.cpf_administrador.invalid}
             valid={this.state.validacao.cpf_administrador.valid}
             required
@@ -431,7 +431,7 @@ class Step3 extends Component {
             onChange={this.changeInput}
             onBlur={this.validarCNPJ}
             placeholder='00.000.000/0000-00'
-            pattern="99.999.999/9999-99"
+            mascara="99.999.999/9999-99"
             invalid={this.state.validacao.cnpj.invalid}
             valid={this.state.validacao.cnpj.valid}
             required
@@ -454,7 +454,7 @@ class Step3 extends Component {
                 onChange={this.changeInput}
                 onBlur={this.validarCPF}
                 placeholder='000.000.000-00'
-                pattern="999.999.999-99"
+                mascara="999.999.999-99"
                 disabled={this.state.pagamento_app ? false : true}
               />
 
@@ -475,7 +475,7 @@ class Step3 extends Component {
                 onChange={this.changeInput}
                 onBlur={this.validarCNPJ}
                 placeholder='00.000.000/0000-00'
-                pattern="99.999.999/9999-99"
+                mascara="99.999.999/9999-99"
                 disabled={this.state.pagamento_app ? false : true}
               />
             </InputGroup>

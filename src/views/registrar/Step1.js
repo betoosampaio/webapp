@@ -231,7 +231,7 @@ class Step1 extends Component {
               onBlur={this.validarCPF}
               onChange={this.changeInput}
               placeholder='000.000.000-00'
-              pattern="999.999.999-99"
+              mascara="999.999.999-99"
               invalid={this.state.validacao.cpf_administrador.invalid}
               valid={this.state.validacao.cpf_administrador.valid}
               required
@@ -280,7 +280,7 @@ class Step1 extends Component {
               value={this.state.celular}
               onBlur={this.validarCelular}
               onChange={this.changeInput}
-              pattern="(99) 99999-9999"
+              mascara="(99) 99999-9999"
               invalid={this.state.validacao.celular.invalid}
               valid={this.state.validacao.celular.valid}
               required

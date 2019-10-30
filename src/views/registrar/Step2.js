@@ -379,7 +379,7 @@ class Step2 extends Component {
               onChange={this.changeInput}
               onBlur={this.validarCNPJ}
               placeholder='00.000.000/0000-00'
-              pattern="99.999.999/9999-99"
+              mascara="99.999.999/9999-99"
               invalid={this.state.validacao.cnpj.invalid}
               valid={this.state.validacao.cnpj.valid}
               required
@@ -470,7 +470,7 @@ class Step2 extends Component {
               onChange={this.changeInput}
               onBlur={this.validarCEP}
               placeholder='CEP do restaurante'
-              pattern="99999-999 "
+              mascara="99999-999 "
               invalid={this.state.validacao.cep.invalid}
               valid={this.state.validacao.cep.valid}
               required
