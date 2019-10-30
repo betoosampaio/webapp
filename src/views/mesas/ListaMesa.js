@@ -53,9 +53,6 @@ class ListaMesa extends Component {
     var minutes = Math.floor(delta / 60) % 60;
     delta -= minutes * 60;
 
-    // what's left is seconds
-    var seconds = delta % 60;  // in theory the modulus is not required
-
    return(hours + "h " +  minutes + "m");
 
   }
@@ -90,7 +87,7 @@ class ListaMesa extends Component {
                     mainText={"Aberta a " + this.dateDif(new Date(obj.data_abertura) ,  new Date())}
                     valorTotal="Valor total: R$ 20,50"
                     color="primary"
-                    footer link="#/gerenciar/detalhemesa"
+                    footer link="#/mesas/detalhemesa"
                   />
 
                 </Col>
