@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
+import serverRequest from '../utils/serverRequest';
 
-class SelectBanco extends Component {
+class SelectPerfil extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class SelectBanco extends Component {
     }
 
     obterDados = async () => {
-        let dados = await serverRequest.request('/obterEspecialidades');
+        let dados = await serverRequest.request('/perfil/listar');
         if (dados) {
             this.setState({ lista: dados });
         }
@@ -30,7 +30,7 @@ class SelectBanco extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.id_especialidade} value={obj.id_especialidade}>{obj.ds_especialidade}</option>
+                            <option key={obj.id_perfil} value={obj.id_perfil}>{obj.tipo_perfil}</option>
                         )
                     })
                 }
@@ -39,4 +39,4 @@ class SelectBanco extends Component {
     }
 }
 
-export default SelectBanco;
+export default SelectPerfil;

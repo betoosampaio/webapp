@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import serverRequest from '../../utils/serverRequest';
+import serverRequest from '../utils/serverRequest';
 import Foto from './Foto';
 
 class UploadFoto extends Component {

@@ -29,7 +29,7 @@ class Step2 extends Component {
       complemento: '',
       enderecoDisabled: false,
       validacao: {
-        cnpj: { ok: true, msg: '' },
+        cnpj: { valid: false, invalid: false, msg: '' },
         razao_social: { ok: true, msg: '' },
         nome_restaurante: { ok: true, msg: '' },
         id_especialidade: { ok: true, msg: '' },
@@ -45,7 +45,7 @@ class Step2 extends Component {
   }
 
   validarCNPJ = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
 
     if (val.length < 14) {
@@ -57,11 +57,13 @@ class Step2 extends Component {
     }
 
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cnpj.ok = ok;
+    newState.cnpj.valid = valid;
+    newState.cnpj.invalid = invalid;
     newState.cnpj.msg = msg;
     this.setState({ validacao: newState });
 
@@ -69,8 +71,8 @@ class Step2 extends Component {
       let dados = await serverRequest.request('/restaurante/checarSeCNPJExiste', { cnpj: val });
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
-        newState.cnpj.ok = false;
-        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
+        newState.cnpj.valid = false;
+        newState.cnpj.invalid = 'Este CNPJ já está cadastrado';
         this.setState({ validacao: newState });
       }
     }
@@ -208,16 +210,17 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
-            <Input
+
+            <MaskedInput
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
               onChange={this.changeInput}
               onBlur={this.validarCNPJ}
               placeholder='00.000.000/0000-00'
-              mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-              guide={true}
-              invalid={!this.state.validacao.cnpj.ok}
+              pattern="99.999.999/9999-99"
+              invalid={this.state.validacao.cnpj.invalid}
+              valid={this.state.validacao.cnpj.valid}              
               required
             />
             <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>

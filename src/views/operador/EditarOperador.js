@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
-import SelectPerfil from '../../components/selectPerfil/SelectPerfil';
+import SelectPerfil from '../../components/SelectPerfil';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
-import PasswordInput from '../../components/passwordInput/PasswordInput';
+import PasswordInput from '../../components/PasswordInput';
 
 class EditarOperador extends Component {
 

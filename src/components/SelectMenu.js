@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
+import serverRequest from '../utils/serverRequest';
 
-class SelectPerfil extends Component {
+class SelectMenu extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class SelectPerfil extends Component {
     }
 
     obterDados = async () => {
-        let dados = await serverRequest.request('/perfil/listar');
+        let dados = await serverRequest.request('/menu/listar');
         if (dados) {
             this.setState({ lista: dados });
         }
@@ -30,7 +30,7 @@ class SelectPerfil extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.id_perfil} value={obj.id_perfil}>{obj.tipo_perfil}</option>
+                            <option key={obj.id_menu} value={obj.id_menu}>{obj.ds_menu}</option>
                         )
                     })
                 }
@@ -39,4 +39,4 @@ class SelectPerfil extends Component {
     }
 }
 
-export default SelectPerfil;
+export default SelectMenu;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Input } from 'reactstrap';
-import serverRequest from '../../utils/serverRequest';
+import serverRequest from '../utils/serverRequest';
 
-class SelectMenu extends Component {
+class SelectBanco extends Component {
 
     constructor(props) {
         super(props);
@@ -17,7 +17,7 @@ class SelectMenu extends Component {
     }
 
     obterDados = async () => {
-        let dados = await serverRequest.request('/menu/listar');
+        let dados = await serverRequest.request('/obterEspecialidades');
         if (dados) {
             this.setState({ lista: dados });
         }
@@ -30,7 +30,7 @@ class SelectMenu extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.id_menu} value={obj.id_menu}>{obj.ds_menu}</option>
+                            <option key={obj.id_especialidade} value={obj.id_especialidade}>{obj.ds_especialidade}</option>
                         )
                     })
                 }
@@ -39,4 +39,4 @@ class SelectMenu extends Component {
     }
 }
 
-export default SelectMenu;
+export default SelectBanco;
