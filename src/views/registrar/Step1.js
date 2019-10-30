@@ -273,7 +273,7 @@ class Step1 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="11"
+              maxlength="15"
               className="form-control"
               placeholder='(11) 99999-9999'
               name="celular"
@@ -299,6 +299,7 @@ class Step1 extends Component {
 
             <Input
               name="email"
+              maxlength="255"
               value={this.state.email}
               onChange={this.changeInput}
               type='text'
