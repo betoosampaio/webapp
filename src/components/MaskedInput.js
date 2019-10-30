@@ -6,8 +6,8 @@ import vanilla from 'vanilla-masker';
 class MaskedInput extends Component {
 
   componentDidMount() {
-    if (this.props.pattern)
-      vanilla(ReactDOM.findDOMNode(this.refs.input)).maskPattern(this.props.pattern);
+    if (this.props.mascara)
+      vanilla(ReactDOM.findDOMNode(this.refs.input)).maskPattern(this.props.mascara);
   }
 
   render() {
