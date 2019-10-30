@@ -186,7 +186,7 @@ class Step4 extends Component {
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
-            <MaskedInput
+            <Input
               name="login"
               value={this.state.login}
               onChange={this.changeInput}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import SelectPerfil from '../../components/SelectPerfil'
+import MaskedInput from '../../components/MaskedInput';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
 import PasswordInput from '../../components/PasswordInput';
@@ -16,7 +17,92 @@ class CadastrarOperador extends Component {
       id_perfil: "",
       login_operador: "",
       senha_operador: "",
+
+      validacao: {
+        nome_operador: { valid: false, invalid: false, msg: '' },
+        id_perfil: { valid: false, msg: '' },
+        login_operador: { valid: false, invalid: false, msg: '' },
+        senha_operador: { valid: false, invalid: false, msg: '' },
+      },
     };
+  }
+
+  validarNomeOperador = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.nome_operador.valid = valid;
+    newState.nome_operador.invalid = invalid;
+    newState.nome_operador.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarIdPerfil = (event) => {
+    let valid = false;
+    let val = event.target.value;
+    if (!val) {
+    }
+    else {
+      valid = true;
+    }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.id_perfil.valid = valid;
+    this.setState({ validacao: newState });
+  }
+
+  validarLoginOperador = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.login_operador.valid = valid;
+    newState.login_operador.invalid = invalid;
+    newState.login_operador.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarSenhaOperador = (event) => {
+    let valid = false, invalid = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 8) {
+      msg = 'Senha deve conter 8 caracteres';
+    }
+    else if (!(/^(?=.*[a-zA-Z])(?=.*[0-9])/).test(val)) {
+      msg = 'Senha deve conter letras e números';
+    }
+    else {
+      valid = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.senha_operador.valid = valid;
+    newState.senha_operador.invalid = invalid;
+    newState.senha_operador.msg = msg;
+    this.setState({ validacao: newState });
   }
 
   cadastrar = async (event) => {
@@ -46,7 +132,19 @@ class CadastrarOperador extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-user"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required minLength="4" placeholder="Nome do Operador" />
+                <Input
+                  name="nome_operador"
+                  value={this.state.nome_operador}
+                  onChange={this.changeInput}
+                  onBlur={this.validarNomeOperador}
+                  minLength="4"
+                  maxLength="255"
+                  placeholder="Nome do Operador"
+                  invalid={this.state.validacao.nome_operador.invalid}
+                  valid={this.state.validacao.nome_operador.valid}
+                  required
+                />
+                <FormFeedback invalid>{this.state.validacao.nome_operador.msg}</FormFeedback>
               </InputGroup>
             </FormGroup>
 
@@ -56,7 +154,15 @@ class CadastrarOperador extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-group"></i></InputGroupText>
                 </InputGroupAddon>
-                <SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
+                <SelectPerfil
+                  name="id_perfil"
+                  value={this.state.id_perfil}
+                  onChange={this.changeInput}
+                  onBlur={this.validarIdPerfil}
+                  valid={this.state.validacao.id_perfil.valid}
+                  required
+                >             
+                </SelectPerfil>
               </InputGroup>
             </FormGroup>
 
@@ -66,7 +172,20 @@ class CadastrarOperador extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
                 </InputGroupAddon>
-                <Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required minLength="4" placeholder="Login" />
+                <Input
+                  name="login_operador"
+                  value={this.state.login_operador}
+                  onChange={this.changeInput}
+                  minLength="4"
+                  maxLength="100"
+                  placeholder="Login"
+                  onBlur={this.validarLoginOperador}
+                  invalid={this.state.validacao.login_operador.invalid}
+                  valid={this.state.validacao.login_operador.valid}
+                  required
+
+                />
+                <FormFeedback invalid>{this.state.validacao.login_operador.msg}</FormFeedback>
               </InputGroup>
             </FormGroup>
 
@@ -78,8 +197,13 @@ class CadastrarOperador extends Component {
                 onChange={this.changeInput}
                 placeholder="senha"
                 minLength="8"
+                onBlur={this.validarSenhaOperador}
+                valid={this.state.validacao.senha_operador.valid}
+                invalid={this.state.validacao.senha_operador.invalid}
                 required
               />
+              <FormFeedback>{this.state.validacao.senha_operador.msg}</FormFeedback>
+
             </FormGroup>
 
           </CardBody>
@@ -89,22 +213,22 @@ class CadastrarOperador extends Component {
         </Card>
 
         <Modal
-              size="md"
-              aria-labelledby="contained-modal-title-vcenter"
-              centered
-              show={this.state.showCadastrado}
-              onHide={() => { this.setState({ showCadastrado: false }) }}
-              backdrop='static' >
-              <Modal.Header closeButton>
-                <Modal.Title>Confirmação</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <p>Operador Cadastrado com sucesso! </p>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >OK</Button>
-              </Modal.Footer>
-            </Modal>
+          size="md"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          show={this.state.showCadastrado}
+          onHide={() => { this.setState({ showCadastrado: false }) }}
+          backdrop='static' >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmação</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Operador Cadastrado com sucesso! </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >OK</Button>
+          </Modal.Footer>
+        </Modal>
 
       </form>
     );
