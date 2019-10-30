@@ -31,10 +31,10 @@ class Step2 extends Component {
       enderecoDisabled: false,
       validacao: {
         cnpj: { valid: false, invalid: false, msg: '' },
-        razao_social: { ok: true, msg: '' },
-        nome_restaurante: { ok: true, msg: '' },
+        razao_social: { valid: false, invalid: false, msg: '' },
+        nome_restaurante: { valid: false, invalid: false, msg: '' },
         id_especialidade: { ok: true, msg: '' },
-        cep: { ok: true, msg: '' },
+        cep: { valid: false, invalid: false, msg: '' },
         logradouro: { ok: true, msg: '' },
         numero: { ok: true, msg: '' },
         bairro: { ok: true, msg: '' },
@@ -81,18 +81,20 @@ class Step2 extends Component {
   }
 
   validarCEP = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (val.length < 8) {
       msg = 'Formato inválido';
     }
 
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cep.ok = ok;
+    newState.cep.valid = valid;
+    newState.cep.invalid = invalid;
     newState.cep.msg = msg;
     this.setState({ validacao: newState });
 
@@ -171,6 +173,48 @@ class Step2 extends Component {
     return true;
   }
 
+  validarRazaoSocial = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.razao_social.valid = valid;
+    newState.razao_social.invalid = invalid;
+    newState.razao_social.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarNomedoRestaurante = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.nome_restaurante.valid = valid;
+    newState.nome_restaurante.invalid = invalid;
+    newState.nome_restaurante.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   prosseguir = (event) => {
     event.preventDefault();
 
@@ -221,7 +265,7 @@ class Step2 extends Component {
               placeholder='00.000.000/0000-00'
               pattern="99.999.999/9999-99"
               invalid={this.state.validacao.cnpj.invalid}
-              valid={this.state.validacao.cnpj.valid}              
+              valid={this.state.validacao.cnpj.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>
@@ -234,19 +278,19 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
+
             <Input
               name="razao_social"
               value={this.state.razao_social}
               onChange={this.changeInput}
+              onBlur={this.validarRazaoSocial}
               type='text'
               placeholder='Razão social da empresa'
-              invalid={!this.state.validacao.razao_social.ok}
+              invalid={this.state.validacao.razao_social.invalid}
+              valid={this.state.validacao.razao_social.valid}
               required
-              minLength="4"
-              maxLength="255"
             />
             <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
-
           </InputGroup>
         </FormGroup>
 
@@ -261,14 +305,17 @@ class Step2 extends Component {
               name="nome_restaurante"
               value={this.state.nome_restaurante}
               onChange={this.changeInput}
+              onBlur={this.validarNomedoRestaurante}
               placeholder="Nome do restaurante"
               id="informativoCodigo"
-              invalid={!this.state.validacao.nome_restaurante.ok}
+              invalid={this.state.validacao.nome_restaurante.invalid}
+              valid={this.state.validacao.nome_restaurante.valid}
               required
             />
             <UncontrolledTooltip placement="top" target="informativoCodigo">
               Este será o nome que irá aparecer no aplicativo
            </UncontrolledTooltip>
+
             <FormFeedback invalid>{this.state.validacao.nome_restaurante.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
@@ -299,16 +346,16 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-map"></i></InputGroupText>
             </InputGroupAddon>
 
-            <Input
+            <MaskedInput
               name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
               placeholder='CEP do restaurante'
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
-              guide={true}
-              invalid={!this.state.validacao.cep.ok}
+              pattern="99999-999 "
+              invalid={this.state.validacao.cep.invalid}
+              valid={this.state.validacao.cep.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.cep.msg}</FormFeedback>
