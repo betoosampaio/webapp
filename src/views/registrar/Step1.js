@@ -173,7 +173,7 @@ class Step1 extends Component {
     }
     else if (val.length < 4) {
       msg = 'Campo deve conter mais do que 4 caracteres';
-    }   
+    }
     else {
       valid = true;
       invalid = false;
@@ -224,6 +224,7 @@ class Step1 extends Component {
 
 
             <MaskedInput
+              maxlength="14"
               className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
@@ -272,6 +273,7 @@ class Step1 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
+              maxlength="11"
               className="form-control"
               placeholder='(11) 99999-9999'
               name="celular"

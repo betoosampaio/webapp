@@ -344,6 +344,7 @@ class Step3 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
+              maxlength="4"
               className="form-control"
               name="agencia"
               placeholder="Agência"
@@ -366,6 +367,7 @@ class Step3 extends Component {
               <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
             </InputGroupAddon>
             <MaskedInput
+              maxlength="9"
               className="form-control"
               name="conta"
               value={this.state.conta}
@@ -380,6 +382,7 @@ class Step3 extends Component {
             <FormFeedback invalid>{this.state.validacao.conta.msg}</FormFeedback>
             <Label> - </Label>
             <MaskedInput
+              maxlength="2"
               className="form-control"
               name="digito"
               value={this.state.digito}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
-import SelectUF from '../../components/selectUF/SelectUf';
-import SelectEspecialidade from '../../components/selectEspecialidade/SelectEspecialidade';
-import SuggestMunicipio from '../../components/suggestMunicipio/SuggestMunicipio';
+import MaskedInput from '../../components/MaskedInput';
+import SelectUF from '../../components/SelectUf';
+import SelectEspecialidade from '../../components/SelectEspecialidade';
+import SuggestMunicipio from '../../components/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 import { UncontrolledTooltip } from 'reactstrap';
 
@@ -371,6 +372,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
+              maxlength="14"
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
@@ -461,6 +463,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
+              maxlength="8"
               name="cep"
               className="form-control"
               value={this.state.cep}
