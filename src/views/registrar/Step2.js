@@ -37,11 +37,11 @@ class Step2 extends Component {
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
-        complemento: { ok: true },
+        complemento: { valid: false },
         bairro: { valid: false, invalid: false, msg: '' },
-        municipio: { ok: true, msg: '' },
-        uf: { ok: true, msg: '' },
-        
+        municipio: { valid: false, invalid: false, msg: '' },
+        uf: { valid: false, msg: '' },
+
       },
     };
   }
@@ -261,8 +261,8 @@ class Step2 extends Component {
   validarComplemento = (event) => {
     let valid = false;
     let val = event.target.value;
-    if (!val) {      
-    }    
+    if (!val) {
+    }
     else {
       valid = true;
     }
@@ -291,6 +291,44 @@ class Step2 extends Component {
     newState.bairro.msg = msg;
     this.setState({ validacao: newState });
   }
+
+  validarMunicipio = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.municipio.valid = valid;
+    newState.municipio.invalid = invalid;
+    newState.municipio.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarEstado = (event) => {
+    let valid = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else {
+      valid = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.uf.valid = valid;
+    newState.uf.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
 
   prosseguir = (event) => {
     event.preventDefault();
@@ -518,7 +556,7 @@ class Step2 extends Component {
               type='text'
               placeholder='Bairro do restaurante'
               invalid={this.state.validacao.bairro.invalid}
-              valid={this.state.validacao.bairro.valid}              
+              valid={this.state.validacao.bairro.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.bairro.msg}</FormFeedback>
@@ -536,6 +574,8 @@ class Step2 extends Component {
               name="uf"
               value={this.state.uf}
               onChange={this.changeInput}
+              onBlur={this.validarEstado}
+              valid={this.state.validacao.uf.valid}
               disabled={this.state.enderecoDisabled}
               required>
             </SelectUF>
@@ -552,12 +592,15 @@ class Step2 extends Component {
               name="municipio"
               value={this.state.municipio}
               onChange={this.changeInput}
+              onBlur={this.validarMunicipio}
               disabled={this.state.enderecoDisabled}
               type='text'
               placeholder='Município do restaurante'
+              invalid={this.state.validacao.municipio.invalid}
+              valid={this.state.validacao.municipio.valid}
               required
             >
-
+              <FormFeedback invalid>{this.state.validacao.municipio.msg}</FormFeedback>
             </SuggestMunicipio>
           </InputGroup>
         </FormGroup>
