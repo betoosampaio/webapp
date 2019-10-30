@@ -38,7 +38,7 @@ class Step2 extends Component {
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
         complemento: { ok: true },
-        bairro: { ok: true, msg: '' },
+        bairro: { valid: false, invalid: false, msg: '' },
         municipio: { ok: true, msg: '' },
         uf: { ok: true, msg: '' },
         
@@ -271,6 +271,27 @@ class Step2 extends Component {
     this.setState({ validacao: newState });
   }
 
+  validarBairro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.bairro.valid = valid;
+    newState.bairro.invalid = invalid;
+    newState.bairro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   prosseguir = (event) => {
     event.preventDefault();
 
@@ -493,9 +514,11 @@ class Step2 extends Component {
               value={this.state.bairro}
               onChange={this.changeInput}
               disabled={this.state.enderecoDisabled}
+              onBlur={this.validarBairro}
               type='text'
               placeholder='Bairro do restaurante'
-              invalid={!this.state.validacao.bairro.ok}
+              invalid={this.state.validacao.bairro.invalid}
+              valid={this.state.validacao.bairro.valid}              
               required
             />
             <FormFeedback invalid>{this.state.validacao.bairro.msg}</FormFeedback>
