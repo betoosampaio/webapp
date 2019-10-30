@@ -36,11 +36,12 @@ class Step2 extends Component {
         id_especialidade: { ok: true, msg: '' },
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
-        numero: { ok: true, msg: '' },
+        numero: { valid: false, invalid: false, msg: '' },
+        complemento: { ok: true },
         bairro: { ok: true, msg: '' },
         municipio: { ok: true, msg: '' },
         uf: { ok: true, msg: '' },
-        complemento: { ok: true },
+        
       },
     };
   }
@@ -236,6 +237,40 @@ class Step2 extends Component {
     this.setState({ validacao: newState });
   }
 
+  validarNumero = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 1) {
+      msg = 'Este campo deve conter 1 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.numero.valid = valid;
+    newState.numero.invalid = invalid;
+    newState.numero.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarComplemento = (event) => {
+    let valid = false;
+    let val = event.target.value;
+    if (!val) {      
+    }    
+    else {
+      valid = true;
+    }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.complemento.valid = valid;
+    this.setState({ validacao: newState });
+  }
+
   prosseguir = (event) => {
     event.preventDefault();
 
@@ -417,9 +452,11 @@ class Step2 extends Component {
               name="numero"
               value={this.state.numero}
               onChange={this.changeInput}
+              onBlur={this.validarNumero}
               type='text'
               placeholder='Número do restaurante'
-              invalid={!this.state.validacao.numero.ok}
+              invalid={this.state.validacao.numero.invalid}
+              valid={this.state.validacao.numero.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.numero.msg}</FormFeedback>
@@ -439,6 +476,8 @@ class Step2 extends Component {
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
+              onBlur={this.validarComplemento}
+              valid={this.state.validacao.complemento.valid}
             />
           </InputGroup>
         </FormGroup>
