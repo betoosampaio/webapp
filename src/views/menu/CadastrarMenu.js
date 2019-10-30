@@ -12,8 +12,8 @@ class CadastrarMenu extends Component {
       validarSeMenuExiste: '',
 
       validacao: {
-        ds_menu: { ok: true, msg: '' },
-        validarSeMenuExiste: { ok: true, msg: '' },
+        ds_menu: { valid: false, msg: '' },
+        validarSeMenuExiste:  { valid: false, msg: '' },
       },
     }
   }
@@ -31,8 +31,21 @@ class CadastrarMenu extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  validarDsMenu = (event) => {
+    let valid = false;
+    let val = event.target.value;
+    if (!val) {
+    }
+    else {
+      valid = true;
+    }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.ds_menu.valid = valid;
+    this.setState({ validacao: newState });
+  }
+
   validarSeMenuExiste = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -41,16 +54,16 @@ class CadastrarMenu extends Component {
       msg = 'Formato incorreto';
     }
     else {
-      ok = true;
+      valid = true;
       let newState = Object.assign({}, this.state.validacao);
-      newState.ds_menu.ok = ok;
+      newState.ds_menu.valid = valid;
       newState.ds_menu.msg = msg;
       this.setState({ validacao: newState });
 
       let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
-        newState.ds_menu.ok = false;
+        newState.ds_menu.valid = false;
         newState.ds_menu.msg = 'Esta descrição de menu já está sendo utilizada';
         this.setState({ validacao: newState });
       }
@@ -77,9 +90,11 @@ class CadastrarMenu extends Component {
                   value={this.state.ds_menu}
                   onChange={this.changeInput}
                   placeholder="Lanches"
-                  onBlur={this.validarSeMenuExiste}
+                  onBlur={this.validarSeMenuExiste}                  
+                  valid={this.state.validacao.ds_menu.valid}
                   required
-                  invalid={!this.state.validacao.ds_menu.ok}
+                  minLength="3"
+                  maaxLenght="100"
                 />
 
                 <FormFeedback invalid>{this.state.validacao.ds_menu.msg}</FormFeedback>
