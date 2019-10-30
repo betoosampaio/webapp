@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
-import MaskedInput from 'react-text-mask';
+import MaskedInput from '../../components/MaskedInput';
 import SelectBanco from '../../components/SelectBanco';
 import { AppSwitch } from '@coreui/react';
 import serverRequest from '../../utils/serverRequest';
@@ -23,14 +23,17 @@ class Step3 extends Component {
       cpfcnpj_conta: "",
 
       validacao: {
-        cpf_administrador: { ok: true, msg: '' },
-        cnpj: { ok: true, msg: '' }
+        cpf_administrador: { valid: false, msg: '' },
+        cnpj: { valid: false, msg: '' },
+        agencia: { valid: false, invalid: false, msg: '' },
+        conta: { valid: false, invalid: false, msg: '' },
+        digito: { valid: false, invalid: false, msg: '' },
       }
     }
   };
 
   validarCPF = (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (!val) {
       msg = 'Campo obrigatório';
@@ -69,11 +72,13 @@ class Step3 extends Component {
       msg = 'Formato inválido';
     }
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cpf_administrador.ok = ok;
+    newState.cpf_administrador.valid = valid;
+    newState.cpf_administrador.invalid = invalid;
     newState.cpf_administrador.msg = msg;
     this.setState({ validacao: newState });
   }
@@ -100,7 +105,7 @@ class Step3 extends Component {
   }
 
   validarCNPJ = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
 
     if (val.length < 14) {
@@ -112,11 +117,13 @@ class Step3 extends Component {
     }
 
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cnpj.ok = ok;
+    newState.cnpj.valid = valid;
+    newState.cnpj.invalid = invalid;
     newState.cnpj.msg = msg;
     this.setState({ validacao: newState });
 
@@ -124,8 +131,8 @@ class Step3 extends Component {
       let dados = await serverRequest.request('/restaurante/checarSeCNPJExiste', { cnpj: val });
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
-        newState.cnpj.ok = false;
-        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
+        newState.cnpj.valid = false;
+        newState.cnpj.invalid = 'Este CNPJ já está cadastrado';
         this.setState({ validacao: newState });
       }
     }
@@ -183,6 +190,68 @@ class Step3 extends Component {
     return true;
   }
 
+  validarAgencia = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.agencia.valid = valid;
+    newState.agencia.invalid = invalid;
+    newState.agencia.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarConta = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 9) {
+      msg = 'Este campo deve conter 9 caracteres';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.conta.valid = valid;
+    newState.conta.invalid = invalid;
+    newState.conta.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarDigito = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 1) {
+      msg = 'Este campo deve conter 1 caracter';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.digito.valid = valid;
+    newState.digito.invalid = invalid;
+    newState.digito.msg = msg;
+    this.setState({ validacao: newState });
+  }
 
 
   prosseguir = (event) => {
@@ -280,10 +349,13 @@ class Step3 extends Component {
               placeholder="Agência"
               value={this.state.agencia}
               onChange={this.changeInput}
-              mask={[/\d/, /\d/, /\d/, /\d/]}
+              onBlur={this.validarAgencia}
+              pattern="9999"
+              invalid={this.state.validacao.agencia.invalid}
+              valid={this.state.validacao.agencia.valid}
               disabled={this.state.pagamento_app ? false : true}
             />
-
+            <FormFeedback invalid>{this.state.validacao.agencia.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -298,11 +370,14 @@ class Step3 extends Component {
               name="conta"
               value={this.state.conta}
               onChange={this.changeInput}
+              onBlur={this.validarConta}
               placeholder="Conta"
-              mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-              guide={false}
+              pattern="999999999"
+              invalid={this.state.validacao.conta.invalid}
+              valid={this.state.validacao.conta.valid}
               disabled={this.state.pagamento_app ? false : true}
             />
+            <FormFeedback invalid>{this.state.validacao.conta.msg}</FormFeedback>
             <Label> - </Label>
             <MaskedInput
               className="form-control"
@@ -310,34 +385,40 @@ class Step3 extends Component {
               value={this.state.digito}
               onChange={this.changeInput}
               placeholder="Dígito"
-              mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
-              guide={false}
+              onBlur={this.validarDigito}
+              pattern="9"
+              invalid={this.state.validacao.digito.invalid}
+              valid={this.state.validacao.digito.valid}
               disabled={this.state.pagamento_app ? false : true}
             />
+            <FormFeedback invalid>{this.state.validacao.digito.msg}</FormFeedback>
+
           </InputGroup>
         </FormGroup>
 
         <FormGroup check inline>
-          <Input
+          <MaskedInput
             className="form-check-input"
             type="radio"
             id="cpf-radio"
             name="id_tipo_cadastro_conta"
             value="1"
             checked={this.state.id_tipo_cadastro_conta === "1" ? true : false}
-            onChange={this.changeInput}
             onBlur={this.validarCPF}
-            disabled={this.state.pagamento_app ? false : true}
-            guide={true}
-            invalid={!this.state.validacao.cpf_administrador.ok}
+            onChange={this.changeInput}
+            placeholder='000.000.000-00'
+            pattern="999.999.999-99"
+            invalid={this.state.validacao.cpf_administrador.invalid}
+            valid={this.state.validacao.cpf_administrador.valid}
             required
           />
-          <FormFeedback invalid>{this.state.validacao.cpf_administrador.msg}</FormFeedback>
+           <FormFeedback invalid>{this.state.validacao.cpf_administrador.msg}</FormFeedback>
           <Label className="form-check-label" check htmlFor="cpf-radio">CPF</Label>
+         
         </FormGroup>
-        
+
         <FormGroup check inline>
-          <Input
+          <MaskedInput
             className="form-check-input"
             type="radio"
             id="cnpj-radio"
@@ -346,9 +427,10 @@ class Step3 extends Component {
             checked={this.state.id_tipo_cadastro_conta === "2" ? true : false}
             onChange={this.changeInput}
             onBlur={this.validarCNPJ}
-            disabled={this.state.pagamento_app ? false : true}
-            guide={true}
-            invalid={!this.state.validacao.cnpj.ok}
+            placeholder='00.000.000/0000-00'
+            pattern="99.999.999/9999-99"
+            invalid={this.state.validacao.cnpj.invalid}
+            valid={this.state.validacao.cnpj.valid}
             required
           />
           <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>
@@ -367,11 +449,12 @@ class Step3 extends Component {
                 name="cpfcnpj_conta"
                 value={this.state.cpfcnpj_conta}
                 onChange={this.changeInput}
+                onBlur={this.validarCPF}
                 placeholder='000.000.000-00'
-                mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-                guide={true}
+                pattern="999.999.999-99"
                 disabled={this.state.pagamento_app ? false : true}
               />
+
             </InputGroup>
           </FormGroup>}
 
@@ -387,9 +470,9 @@ class Step3 extends Component {
                 className="form-control"
                 value={this.state.cpfcnpj_conta}
                 onChange={this.changeInput}
+                onBlur={this.validarCNPJ}
                 placeholder='00.000.000/0000-00'
-                mask={[/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-                guide={true}
+                pattern="99.999.999/9999-99"
                 disabled={this.state.pagamento_app ? false : true}
               />
             </InputGroup>
