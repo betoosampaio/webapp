@@ -35,7 +35,7 @@ class Step2 extends Component {
         nome_restaurante: { valid: false, invalid: false, msg: '' },
         id_especialidade: { ok: true, msg: '' },
         cep: { valid: false, invalid: false, msg: '' },
-        logradouro: { ok: true, msg: '' },
+        logradouro: { valid: false, invalid: false, msg: '' },
         numero: { ok: true, msg: '' },
         bairro: { ok: true, msg: '' },
         municipio: { ok: true, msg: '' },
@@ -215,6 +215,27 @@ class Step2 extends Component {
     this.setState({ validacao: newState });
   }
 
+  validarLogradouro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 3 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.logradouro.valid = valid;
+    newState.logradouro.invalid = invalid;
+    newState.logradouro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   prosseguir = (event) => {
     event.preventDefault();
 
@@ -373,10 +394,12 @@ class Step2 extends Component {
               name="logradouro"
               value={this.state.logradouro}
               onChange={this.changeInput}
+              onBlur={this.validarLogradouro}
               type='text'
               placeholder='Logradouro do restaurante'
               disabled={this.state.enderecoDisabled}
-              invalid={!this.state.validacao.logradouro.ok}
+              invalid={this.state.validacao.logradouro.invalid}
+              valid={this.state.validacao.logradouro.valid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.logradouro.msg}</FormFeedback>
