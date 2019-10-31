@@ -237,7 +237,7 @@ class CadastrarProduto extends Component {
                   value={this.state.preco}
                   name="preco"
                   className="form-control"
-                  onChange={this.formChangeInput('preco')}
+                  onChange={this.changeInput}
                   placeholder="10,00"
                   onBlur={this.validarPreco}
                   invalid={this.state.validacao.preco.invalid}
