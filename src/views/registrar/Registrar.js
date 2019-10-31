@@ -14,7 +14,7 @@ class Registrar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: 2
+      step: 3
     }
   }
 

@@ -74,7 +74,8 @@ class Step2 extends Component {
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
         newState.cnpj.valid = false;
-        newState.cnpj.invalid = 'Este CNPJ já está cadastrado';
+        newState.cnpj.invalid = true;
+        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
         this.setState({ validacao: newState });
       }
     }
