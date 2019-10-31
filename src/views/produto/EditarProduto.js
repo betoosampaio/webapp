@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
-import CurrencyInput from 'react-currency-input';
+import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
 import UploadFoto from '../../components/UploadFoto';
@@ -120,7 +120,7 @@ class EditarProduto extends Component {
                 <InputGroupText>R$</InputGroupText>
               </InputGroupAddon>
 
-              <CurrencyInput
+              <MaskedMoneyInput
                 decimalSeparator=","
                 thousandSeparator="."
                 value={this.state.preco}
