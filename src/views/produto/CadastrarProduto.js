@@ -18,7 +18,7 @@ class CadastrarProduto extends Component {
       codigo_produto: "",
       nome_produto: "",
       descricao: "",
-      preco: "0",
+      preco: "",
       id_menu: "",
       promocao: 0,
       imagem: "",
@@ -234,6 +234,7 @@ class CadastrarProduto extends Component {
                   <InputGroupText>R$</InputGroupText>
                 </InputGroupAddon>
                 <MaskedMoneyInput
+                 
                   value={this.state.preco}
                   name="preco"
                   className="form-control"

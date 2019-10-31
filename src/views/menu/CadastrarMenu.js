@@ -13,7 +13,7 @@ class CadastrarMenu extends Component {
 
       validacao: {
         ds_menu: { valid: false, msg: '' },
-        validarSeMenuExiste: { valid: false, invalid: false, msg: '' },
+        validar_SeMenuExiste: { valid: false, invalid: false, msg: '' },
       },
     };
   }
@@ -60,16 +60,16 @@ class CadastrarMenu extends Component {
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.validarSeMenuExiste.valid = valid;
-    newState.validarSeMenuExiste.invalid = invalid;
-    newState.validarSeMenuExiste.msg = msg;
+    newState.validar_SeMenuExiste.valid = valid;
+    newState.validar_SeMenuExiste.invalid = invalid;
+    newState.validar_SeMenuExiste.msg = msg;
     this.setState({ validacao: newState });
 
     let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
-      newState.validarSeMenuExiste.valid = false;
-      newState.validarSeMenuExiste.invalid = 'Esta descrição de menu já está sendo utilizada';
+      newState.validar_SeMenuExiste.valid = false;
+      newState.validar_SeMenuExiste.invalid = 'Esta descrição de menu já está sendo utilizada';
       this.setState({ validacao: newState });
     }
   }
@@ -97,14 +97,14 @@ class CadastrarMenu extends Component {
                   onChange={this.changeInput}
                   placeholder="Lanches"
                   onBlur={this.validarSeMenuExiste}
-                  valid={this.state.validacao.validarSeMenuExiste.valid}
-                  invalid={this.state.validacao.validarSeMenuExiste.invalid}
+                  valid={this.state.validacao.validar_SeMenuExiste.valid}
+                  invalid={this.state.validacao.validar_SeMenuExiste.invalid}
                   required
                   minLength="3"
                   maaxLenght="100"
                 />
 
-                <FormFeedback invalid>{this.state.validacao.validarSeMenuExiste.msg}</FormFeedback>
+                <FormFeedback invalid>{this.state.validacao.validar_SeMenuExiste.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>

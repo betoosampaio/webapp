@@ -96,13 +96,13 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
               </InputGroupAddon>
-              <Input 
-              name="nome_produto" 
-              value={this.state.nome_produto} 
-              onChange={this.changeInput} 
-              placeholder="X-Salada" 
-              required
-            />
+              <Input
+                name="nome_produto"
+                value={this.state.nome_produto}
+                onChange={this.changeInput}
+                placeholder="X-Salada"
+                required
+              />
             </InputGroup>
           </FormGroup>
 
@@ -112,11 +112,11 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input 
-              name="descricao" 
-              value={this.state.descricao} 
-              onChange={this.changeInput} 
-              placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"
+              <Input
+                name="descricao"
+                value={this.state.descricao}
+                onChange={this.changeInput}
+                placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"
               />
             </InputGroup>
           </FormGroup>
@@ -129,6 +129,9 @@ class EditarProduto extends Component {
               </InputGroupAddon>
 
               <MaskedMoneyInput
+                precision="2"
+                separator=","
+                delimiter="."
                 value={this.state.preco}
                 name="preco"
                 className="form-control"
