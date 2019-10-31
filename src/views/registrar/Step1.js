@@ -189,21 +189,20 @@ class Step1 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    let ok = true;
+    let valid = true;
 
     Object.keys(this.state.validacao).forEach(p => {
-      if (!this.state.validacao[p].ok) {
-        ok = false;
+      if (!this.state.validacao[p].valid) {
+        valid = false;
       }
     });
 
-    if (ok) {
+    if (valid) {
       this.props.saveValues(stateName, this.state);
       this.props.nextStep();
     }
     else
-      alert('Preencha todos os campos corretamente');
-
+      alert('Preencha todos os campos corretamente.');
   }
 
   changeInput = (event) => {
