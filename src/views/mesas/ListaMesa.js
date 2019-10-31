@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 import CardMesa from './CardMesa';
 
 
@@ -11,8 +12,11 @@ class ListaMesa extends Component {
     super(props);
 
     this.state = {
+      _id: '',
+      desconto: '',
+      taxa_servico: '',
+      confirmFecharConta: false,
       lista: [],
-      cronometro: "",
     };
   }
 
@@ -34,7 +38,7 @@ class ListaMesa extends Component {
     var dateFuture = dataIni;
 
     console.log(dateFuture);
-    
+
     var dateNow = dataFim;
 
     console.log(dataFim);
@@ -53,14 +57,25 @@ class ListaMesa extends Component {
     var minutes = Math.floor(delta / 60) % 60;
     delta -= minutes * 60;
 
-   return(hours + "h " +  minutes + "m");
+    return (hours + "h " + minutes + "m");
 
+  }
+
+
+
+  remover = async (id_mesa) => {
+    let dados = await serverRequest.request('/mesa/fechar', { "id_mesa": id_mesa });
+    if (dados) {
+      this.obterLista();
+      this.setState({ showDelete: false });
+    }
   }
 
 
   render() {
     return (
       <div>
+
 
 
         <Link to="/mesas/cadastrar">
@@ -78,36 +93,52 @@ class ListaMesa extends Component {
               return (
 
 
-
-
                 <Col xs="12" sm="6" lg="3">
+
+
+                  <Modal
+                    size="sm"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    show={this.state.confirmFecharConta}
+                    onHide={() => { this.setState({ confirmFecharConta: false }) }}
+                    backdrop='static'
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title id="contained-modal-title-vcenter">
+                        Fechamento da Conta
+        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      Confirmar o fechamento da conta?
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button onClick={() => this.remover(obj._id)} >Close</Button>
+                    </Modal.Footer>
+                  </Modal>
 
                   <CardMesa
                     header={"Mesa " + obj.numero}
-                    mainText={"Aberta a " + this.dateDif(new Date(obj.data_abertura) ,  new Date())}
-                    valorTotal="Valor total: R$ 20,50"
+                    mainText={this.dateDif(new Date(obj.data_abertura), new Date())}
+                    valorTotal="R$ 20,50"
+                    fecharMesa={
+                      <Button color="success" size="md" onClick={() => this.setState({ confirmFecharConta: true })}>
+                        <i className="fa fa-shopping-cart"></i>
+                      </Button>
+                    }
+
                     color="primary"
-                    footer link="#/mesas/detalhemesa"
-                  />
+                    footer link={`/#/mesas/detalhemesa/${obj._id}`}
+                />
 
                 </Col>
-
 
 
               );
             })
 
-
           }
         </Row>
-
-
-
-
-
-
-
-
 
 
       </div>
