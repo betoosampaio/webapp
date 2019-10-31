@@ -391,7 +391,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="14"
+              maxlength="18"
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
@@ -486,14 +486,14 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="8"
+              maxlength="9"
               name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
               placeholder='CEP do restaurante'
-              mascara="99999-999 "
+              mascara="99999-999"
               invalid={this.state.validacao.cep.invalid}
               valid={this.state.validacao.cep.valid}
               required
