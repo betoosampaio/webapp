@@ -18,9 +18,9 @@ class PasswordInput extends Component {
         <InputGroupAddon addonType="append">
           <InputGroupText><i className="fa fa-key"></i></InputGroupText>
         </InputGroupAddon>
-        <Input
-          type={(show) ? "text" : "password"}
+        <Input     
           {...this.props}
+          type={(show) ? "text" : "password"}
         />
         <InputGroupAddon
           addonType="append"

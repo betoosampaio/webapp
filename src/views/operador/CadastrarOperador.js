@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import SelectPerfil from '../../components/SelectPerfil'
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
+import PasswordInput from '../../components/PasswordInput';
 
 
 class CadastrarOperador extends Component {
@@ -202,13 +203,7 @@ class CadastrarOperador extends Component {
 
             <FormGroup>
               <Label>Senha:</Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText> <i className="icon-lock"></i> </InputGroupText>
-                </InputGroupAddon>
-
-                <MaskedInput
-                  type="password"
+                <PasswordInput
                   name="senha_operador"
                   value={this.state.senha_operador}
                   onChange={this.changeInput}
@@ -220,8 +215,6 @@ class CadastrarOperador extends Component {
                   required
                 />
                 <FormFeedback>{this.state.validacao.senha_operador.msg}</FormFeedback>
-
-              </InputGroup>
             </FormGroup>
           </CardBody>
           <CardFooter>
