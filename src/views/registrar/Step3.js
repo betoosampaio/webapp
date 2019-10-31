@@ -407,6 +407,7 @@ class Step3 extends Component {
             name="id_tipo_cadastro_conta"
             value="1"
             checked={this.state.id_tipo_cadastro_conta === "1" ? true : false}
+            maxlength="14"
             onBlur={this.validarCPF}
             onChange={this.changeInput}
             placeholder='000.000.000-00'
@@ -430,6 +431,7 @@ class Step3 extends Component {
             checked={this.state.id_tipo_cadastro_conta === "2" ? true : false}
             onChange={this.changeInput}
             onBlur={this.validarCNPJ}
+            maxlength="18"
             placeholder='00.000.000/0000-00'
             mascara="99.999.999/9999-99"
             invalid={this.state.validacao.cnpj.invalid}
@@ -453,6 +455,7 @@ class Step3 extends Component {
                 value={this.state.cpfcnpj_conta}
                 onChange={this.changeInput}
                 onBlur={this.validarCPF}
+                maxlength="14"
                 placeholder='000.000.000-00'
                 mascara="999.999.999-99"
                 disabled={this.state.pagamento_app ? false : true}
@@ -471,6 +474,7 @@ class Step3 extends Component {
               <MaskedInput
                 name="cpfcnpj_conta"
                 className="form-control"
+                maxlength="18"
                 value={this.state.cpfcnpj_conta}
                 onChange={this.changeInput}
                 onBlur={this.validarCNPJ}
