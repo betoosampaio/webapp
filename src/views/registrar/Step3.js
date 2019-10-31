@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
+import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button } from 'reactstrap';
 import SelectBanco from '../../components/SelectBanco';
 import { AppSwitch } from '@coreui/react';
-import serverRequest from '../../utils/serverRequest';
 import MaskedInput from '../../components/MaskedInput';
 
 

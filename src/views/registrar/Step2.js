@@ -392,7 +392,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="18"
+              maxLength="18"
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
