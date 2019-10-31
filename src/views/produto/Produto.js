@@ -38,6 +38,7 @@ class Produto extends Component {
       Header: 'Preço',
       accessor: 'preco',
       headerClassName: "text-left",
+      Cell: props => <span>{`R$ ${props.value.toFixed(2)}`}</span>
     },
     {
       Header: 'Menu',

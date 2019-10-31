@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import { UncontrolledTooltip } from 'reactstrap';
-import MaskedInput from '../../components/MaskedInput';
 import serverRequest from '../../utils/serverRequest';
 const stateName = "Step4";
 
@@ -61,10 +60,14 @@ class Step4 extends Component {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
+      valid = false;
+      invalid = true;
       msg = 'Campo obrigatório';
     }
     else if (val.length < 4) {
-      msg = 'Código do restuarante deve conter 4 caracteres';
+      valid = false;
+      invalid = true;
+      msg = 'Deve conter 4 ou mais caracteres';
     }
     else {
       valid = true;
@@ -77,15 +80,17 @@ class Step4 extends Component {
     newState.codigo_restaurante.msg = msg;
     this.setState({ validacao: newState });
 
-
-    let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
-    if (dados.exists) {
-      let newState = Object.assign({}, this.state.validacao);
-      newState.codigo_restaurante.valid = false;
-      newState.codigo_restaurante.invalid = true;
-      newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
-      this.setState({ validacao: newState });
+    if (valid) {
+      let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
+      if (dados.exists) {
+        let newState = Object.assign({}, this.state.validacao);
+        newState.codigo_restaurante.valid = false;
+        newState.codigo_restaurante.invalid = true;
+        newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
+        this.setState({ validacao: newState });
+      }
     }
+
   }
 
 
@@ -180,7 +185,7 @@ class Step4 extends Component {
               maxLength="255"
               id="informativoCodigo"
             />
-            <FormFeedback invalid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
 
             <UncontrolledTooltip placement="top" target="informativoCodigo">
               O login do restaurante deve ser único e sempre será usado para acessar o sistema
@@ -206,7 +211,7 @@ class Step4 extends Component {
               invalid={this.state.validacao.login.invalid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.login.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.login.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -218,7 +223,7 @@ class Step4 extends Component {
               <InputGroupText><i className="icon-user"></i></InputGroupText>
             </InputGroupAddon>
 
-            <MaskedInput
+            <Input
               type="password"
               name="senha"
               value={this.state.senha}

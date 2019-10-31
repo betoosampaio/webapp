@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import SelectPerfil from '../../components/SelectPerfil'
-import MaskedInput from '../../components/MaskedInput';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
 import PasswordInput from '../../components/PasswordInput';
