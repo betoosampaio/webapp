@@ -53,12 +53,6 @@ class EditarProduto extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  formChangeInput = name => value => {
-    let formNewState = Object.assign({}, this.state);
-    formNewState[name] = value;
-    this.setState(formNewState);
-  }
-
   changeSwitch = (event) => {
     this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
   }

@@ -74,7 +74,8 @@ class Step2 extends Component {
       if (dados.exists) {
         let newState = Object.assign({}, this.state.validacao);
         newState.cnpj.valid = false;
-        newState.cnpj.invalid = 'Este CNPJ já está cadastrado';
+        newState.cnpj.invalid = true;
+        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
         this.setState({ validacao: newState });
       }
     }
@@ -352,15 +353,15 @@ class Step2 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    let ok = true;
+    let valid = true;
 
     Object.keys(this.state.validacao).forEach(p => {
-      if (!this.state.validacao[p].ok) {
-        ok = false;
+      if (!this.state.validacao[p].valid) {
+        valid = false;
       }
     });
 
-    if (ok) {
+    if (valid) {
       this.props.saveValues(stateName, this.state);
       this.props.nextStep();
     }

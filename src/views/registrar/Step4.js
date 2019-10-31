@@ -29,16 +29,16 @@ class Step4 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    let ok = true;
+    let valid = true;
     this.conferirSenha();
 
     Object.keys(this.state.validacao).forEach(p => {
-      if (!this.state.validacao[p].ok) {
-        ok = false;
+      if (!this.state.validacao[p].valid) {
+        valid = false;
       }
     });
 
-    if (ok) {
+    if (valid) {
       this.props.saveValues(stateName, this.state, () => {
         this.props.cadastrar();
       });
@@ -82,7 +82,8 @@ class Step4 extends Component {
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
       newState.codigo_restaurante.valid = false;
-      newState.codigo_restaurante.invalid = 'Este login já está sendo utilizado';
+      newState.codigo_restaurante.invalid = true;
+      newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
       this.setState({ validacao: newState });
     }
   }
@@ -149,7 +150,8 @@ class Step4 extends Component {
 
     let newState = Object.assign({}, this.state.validacao);
     newState.validarSenha.valid = valid;
-    newState.validarSenha.invalid = msg;
+    newState.validarSenha.invalid = invalid;
+    newState.validarSenha.msg = msg;
     this.setState({ validacao: newState });
   }
 
