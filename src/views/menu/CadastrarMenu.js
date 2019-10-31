@@ -105,6 +105,7 @@ class CadastrarMenu extends Component {
                 />
 
                 <FormFeedback invalid>{this.state.validacao.validar_SeMenuExiste.msg}</FormFeedback>
+                <FormFeedback invalid>{this.state.validacao.validar_SeMenuExiste.invalid}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
