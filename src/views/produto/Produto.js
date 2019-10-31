@@ -8,6 +8,7 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import SelectMenu from '../../components/SelectMenu';
 
+
 class Produto extends Component {
 
   columns = [

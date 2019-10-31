@@ -15,6 +15,7 @@ class Step4 extends Component {
       login: '',
       senha: '',
       validarSenha: '',
+
       validacao: {
         codigo_restaurante: { valid: false, msg: '' },
         login: { valid: false, invalid: false, msg: '' },
