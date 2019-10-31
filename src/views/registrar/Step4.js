@@ -82,7 +82,8 @@ class Step4 extends Component {
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
       newState.codigo_restaurante.valid = false;
-      newState.codigo_restaurante.invalid = 'Este login já está sendo utilizado';
+      newState.codigo_restaurante.invalid = true;
+      newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
       this.setState({ validacao: newState });
     }
   }
@@ -149,7 +150,8 @@ class Step4 extends Component {
 
     let newState = Object.assign({}, this.state.validacao);
     newState.validarSenha.valid = valid;
-    newState.validarSenha.invalid = msg;
+    newState.validarSenha.invalid = invalid;
+    newState.validarSenha.msg = msg;
     this.setState({ validacao: newState });
   }
 
