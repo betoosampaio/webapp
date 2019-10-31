@@ -202,8 +202,7 @@ class Step1 extends Component {
       this.props.nextStep();
     }
     else
-      alert('Preencha todos os campos corretamente');
-
+      alert('Preencha todos os campos corretamente.');
   }
 
   changeInput = (event) => {
