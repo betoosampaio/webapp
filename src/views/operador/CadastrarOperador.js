@@ -3,7 +3,6 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import SelectPerfil from '../../components/SelectPerfil'
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal';
-import PasswordInput from '../../components/PasswordInput';
 
 
 class CadastrarOperador extends Component {
@@ -24,6 +23,12 @@ class CadastrarOperador extends Component {
         senha_operador: { valid: false, invalid: false, msg: '' },
       },
     };
+  }
+
+
+
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   validarNomeOperador = (event) => {
@@ -60,7 +65,7 @@ class CadastrarOperador extends Component {
     this.setState({ validacao: newState });
   }
 
-  validarLoginOperador = (event) => {
+  validarLoginOperador = async (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
@@ -79,10 +84,19 @@ class CadastrarOperador extends Component {
     newState.login_operador.invalid = invalid;
     newState.login_operador.msg = msg;
     this.setState({ validacao: newState });
+
+    let dados = await serverRequest.request('/operador/checarSeLoginExiste', { login_operador: val });
+    if (dados.exists) {
+      let newState = Object.assign({}, this.state.validacao);
+      newState.login_operador.valid = false;
+      newState.login_operador.invalid = true;
+      newState.login_operador.msg = 'Esta login já está sendo utilizado.';
+      this.setState({ validacao: newState });
+    }
   }
 
   validarSenhaOperador = (event) => {
-    let valid = false, invalid = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -95,6 +109,7 @@ class CadastrarOperador extends Component {
     }
     else {
       valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
@@ -110,10 +125,6 @@ class CadastrarOperador extends Component {
     if (dados) {
       this.setState({ showCadastrado: true });
     }
-  }
-
-  changeInput = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
@@ -160,7 +171,7 @@ class CadastrarOperador extends Component {
                   onBlur={this.validarIdPerfil}
                   valid={this.state.validacao.id_perfil.valid}
                   required
-                >             
+                >
                 </SelectPerfil>
               </InputGroup>
             </FormGroup>
@@ -188,23 +199,30 @@ class CadastrarOperador extends Component {
               </InputGroup>
             </FormGroup>
 
+
             <FormGroup>
               <Label>Senha:</Label>
-              <PasswordInput
-                name="senha_operador"
-                value={this.state.senha_operador}
-                onChange={this.changeInput}
-                placeholder="senha"
-                minLength="8"
-                onBlur={this.validarSenhaOperador}
-                valid={this.state.validacao.senha_operador.valid}
-                invalid={this.state.validacao.senha_operador.invalid}
-                required
-              />
-              <FormFeedback>{this.state.validacao.senha_operador.msg}</FormFeedback>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText> <i className="icon-lock"></i> </InputGroupText>
+                </InputGroupAddon>
 
+                <MaskedInput
+                  type="password"
+                  name="senha_operador"
+                  value={this.state.senha_operador}
+                  onChange={this.changeInput}
+                  placeholder="Senha"
+                  minLength="8"
+                  onBlur={this.validarSenhaOperador}
+                  valid={this.state.validacao.senha_operador.valid}
+                  invalid={this.state.validacao.senha_operador.invalid}
+                  required
+                />
+                <FormFeedback>{this.state.validacao.senha_operador.msg}</FormFeedback>
+
+              </InputGroup>
             </FormGroup>
-
           </CardBody>
           <CardFooter>
             <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
