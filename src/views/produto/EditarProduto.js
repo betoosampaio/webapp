@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { AppSwitch } from '@coreui/react';
-import CurrencyInput from 'react-currency-input';
+import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
 import UploadFoto from '../../components/UploadFoto';
@@ -77,8 +77,6 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
               </InputGroupAddon>
-
-
               <Input
                 minLength='1'
                 maxLength='50'
@@ -89,7 +87,6 @@ class EditarProduto extends Component {
                 placeholder="001"
               />
 
-
             </InputGroup>
           </FormGroup>
 
@@ -99,7 +96,13 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-tag"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="nome_produto" value={this.state.nome_produto} onChange={this.changeInput} placeholder="X-Salada" required />
+              <Input
+                name="nome_produto"
+                value={this.state.nome_produto}
+                onChange={this.changeInput}
+                placeholder="X-Salada"
+                required
+              />
             </InputGroup>
           </FormGroup>
 
@@ -109,7 +112,12 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-pencil"></i></InputGroupText>
               </InputGroupAddon>
-              <Input name="descricao" value={this.state.descricao} onChange={this.changeInput} placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese" />
+              <Input
+                name="descricao"
+                value={this.state.descricao}
+                onChange={this.changeInput}
+                placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"
+              />
             </InputGroup>
           </FormGroup>
 
@@ -120,13 +128,14 @@ class EditarProduto extends Component {
                 <InputGroupText>R$</InputGroupText>
               </InputGroupAddon>
 
-              <CurrencyInput
-                decimalSeparator=","
-                thousandSeparator="."
+              <MaskedMoneyInput
+                precision="2"
+                separator=","
+                delimiter="."
                 value={this.state.preco}
                 name="preco"
                 className="form-control"
-                onChange={this.formChangeInput('preco')}
+                onChange={this.changeInput}
                 required placeholder="R$ 10,00"
               />
 

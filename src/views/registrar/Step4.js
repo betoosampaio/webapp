@@ -15,15 +15,16 @@ class Step4 extends Component {
       login: '',
       senha: '',
       validarSenha: '',
+
       validacao: {
-        codigo_restaurante: { valid: false, msg: '' },
+        codigo_restaurante: { valid: false, invalid: false, msg: '' },
         login: { valid: false, invalid: false, msg: '' },
-        senha: { valid: false, msg: '' },
-        validarSenha: { valid: false, msg: '' },
+        senha: { valid: false, invalid: false, msg: '' },
+        validarSenha: { valid: false, invalid: false, msg: '' },
       },
     }
 
-  }
+  };
 
   prosseguir = (event) => {
     event.preventDefault();
@@ -57,7 +58,7 @@ class Step4 extends Component {
   }
 
   validarCodigoRestaurante = async (event) => {
-    let valid = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -67,22 +68,25 @@ class Step4 extends Component {
     }
     else {
       valid = true;
-      let newState = Object.assign({}, this.state.validacao);
-      newState.codigo_restaurante.valid = valid;
-      newState.codigo_restaurante.msg = msg;
-      this.setState({ validacao: newState });
-
-      let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
-      if (dados.exists) {
-        let newState = Object.assign({}, this.state.validacao);
-        newState.codigo_restaurante.valid = false;
-        newState.codigo_restaurante.msg = 'Este login já está sendo utilizado';
-        this.setState({ validacao: newState });
-      }
+      invalid = false;
     }
 
+    let newState = Object.assign({}, this.state.validacao);
+    newState.codigo_restaurante.valid = valid;
+    newState.codigo_restaurante.invalid = invalid;
+    newState.codigo_restaurante.msg = msg;
+    this.setState({ validacao: newState });
 
+
+    let dados = await serverRequest.request('/restaurante/checarSeCodigoExiste', { codigo_restaurante: val });
+    if (dados.exists) {
+      let newState = Object.assign({}, this.state.validacao);
+      newState.codigo_restaurante.valid = false;
+      newState.codigo_restaurante.invalid = 'Este login já está sendo utilizado';
+      this.setState({ validacao: newState });
+    }
   }
+
 
   validarLogin = (event) => {
     let valid = false, invalid = true, msg = '';
@@ -106,7 +110,7 @@ class Step4 extends Component {
   }
 
   validarSenha = (event) => {
-    let valid = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -119,16 +123,18 @@ class Step4 extends Component {
     }
     else {
       valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
     newState.senha.valid = valid;
+    newState.senha.invalid = invalid;
     newState.senha.msg = msg;
     this.setState({ validacao: newState });
   }
 
   conferirSenha = (event) => {
-    let valid = false, msg = '';
+    let valid = false, invalid = true, msg = '';
 
     let val = this.state.validarSenha;
     let senha = this.state.senha;
@@ -138,11 +144,12 @@ class Step4 extends Component {
     }
     else {
       valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
     newState.validarSenha.valid = valid;
-    newState.validarSenha.msg = msg;
+    newState.validarSenha.invalid = msg;
     this.setState({ validacao: newState });
   }
 
@@ -165,16 +172,17 @@ class Step4 extends Component {
               placeholder="login do restaurante"
               onBlur={this.validarCodigoRestaurante}
               valid={this.state.validacao.codigo_restaurante.valid}
+              invalid={this.state.validacao.codigo_restaurante.invalid}
               required
+              minLength="4"
+              maxLength="255"
               id="informativoCodigo"
             />
-
+            <FormFeedback invalid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
 
             <UncontrolledTooltip placement="top" target="informativoCodigo">
               O login do restaurante deve ser único e sempre será usado para acessar o sistema
            </UncontrolledTooltip>
-
-            <FormFeedback valid>{this.state.validacao.codigo_restaurante.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -193,6 +201,7 @@ class Step4 extends Component {
               placeholder="Administrador"
               onBlur={this.validarLogin}
               valid={this.state.validacao.login.valid}
+              invalid={this.state.validacao.login.invalid}
               required
             />
             <FormFeedback invalid>{this.state.validacao.login.msg}</FormFeedback>
@@ -215,6 +224,7 @@ class Step4 extends Component {
               placeholder="Senha"
               onBlur={this.validarSenha}
               valid={this.state.validacao.senha.valid}
+              invalid={this.state.validacao.senha.invalid}
               required
             />
             <FormFeedback>{this.state.validacao.senha.msg}</FormFeedback>
@@ -238,6 +248,7 @@ class Step4 extends Component {
               onBlur={this.conferirSenha}
               required
               valid={this.state.validacao.validarSenha.valid}
+              invalid={this.state.validacao.validarSenha.invalid}
             />
             <FormFeedback>{this.state.validacao.validarSenha.msg}</FormFeedback>
           </InputGroup>
@@ -251,5 +262,6 @@ class Step4 extends Component {
     );
   }
 }
+
 
 export default Step4;

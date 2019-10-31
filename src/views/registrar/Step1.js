@@ -262,7 +262,6 @@ class Step1 extends Component {
             />
             <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
 
-
           </InputGroup>
         </FormGroup>
 

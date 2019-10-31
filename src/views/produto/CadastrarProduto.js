@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
 import { AppSwitch } from '@coreui/react'
-import CurrencyInput from 'react-currency-input';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
 import UploadFoto from '../../components/UploadFoto';
 import Modal from 'react-bootstrap/Modal'
-import MaskedInput from '../../components/MaskedInput';
+import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 
 
 
@@ -19,7 +18,7 @@ class CadastrarProduto extends Component {
       codigo_produto: "",
       nome_produto: "",
       descricao: "",
-      preco: "0",
+      preco: "",
       id_menu: "",
       promocao: 0,
       imagem: "",
@@ -106,6 +105,27 @@ class CadastrarProduto extends Component {
     newState.id_menu.valid = valid;
     newState.id_menu.invalid = invalid;
     newState.id_menu.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarPreco = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 1) {
+      msg = 'Este campo deve conter 1 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.preco.valid = valid;
+    newState.preco.invalid = invalid;
+    newState.preco.msg = msg;
     this.setState({ validacao: newState });
   }
 
@@ -213,16 +233,20 @@ class CadastrarProduto extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText>R$</InputGroupText>
                 </InputGroupAddon>
-                <CurrencyInput
-                  decimalSeparator=","
-                  thousandSeparator="."
+                <MaskedMoneyInput
+                 
                   value={this.state.preco}
                   name="preco"
                   className="form-control"
-                  onChange={this.formChangeInput('preco')}
+                  onChange={this.changeInput}
                   placeholder="10,00"
+                  onBlur={this.validarPreco}
+                  invalid={this.state.validacao.preco.invalid}
+                  valid={this.state.validacao.preco.valid}
                   required
                 />
+                <FormFeedback invalid>{this.state.validacao.preco.msg}</FormFeedback>
+
               </InputGroup>
             </FormGroup>
 

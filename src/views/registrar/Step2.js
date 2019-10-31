@@ -33,7 +33,7 @@ class Step2 extends Component {
         cnpj: { valid: false, invalid: false, msg: '' },
         razao_social: { valid: false, invalid: false, msg: '' },
         nome_restaurante: { valid: false, invalid: false, msg: '' },
-        id_especialidade: { ok: true, msg: '' },
+        id_especialidade: { valid: false, invalid: false, msg: '' },
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
@@ -216,6 +216,25 @@ class Step2 extends Component {
     this.setState({ validacao: newState });
   }
 
+  validarIdEspecialidade = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.id_especialidade.valid = valid;
+    newState.id_especialidade.invalid = invalid;
+    newState.id_especialidade.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   validarLogradouro = (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
@@ -372,7 +391,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="14"
+              maxlength="18"
               name="cnpj"
               className="form-control"
               value={this.state.cnpj}
@@ -443,14 +462,18 @@ class Step2 extends Component {
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
             <SelectEspecialidade
-              invalid={!this.state.validacao.id_especialidade.ok}
               required
+              onBlur={this.validarIdEspecialidade}
               name="id_especialidade"
               value={this.state.id_especialidade}
               onChange={this.changeInput}
               placeholder="Escreva aqui"
+              valid={this.state.validacao.id_especialidade.valid}
+              invalid={this.state.validacao.id_especialidade.invalid}
             >
+
             </SelectEspecialidade>
+
             <FormFeedback invalid>{this.state.validacao.id_especialidade.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
@@ -463,14 +486,14 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="8"
+              maxlength="9"
               name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
               onBlur={this.validarCEP}
               placeholder='CEP do restaurante'
-              mascara="99999-999 "
+              mascara="99999-999"
               invalid={this.state.validacao.cep.invalid}
               valid={this.state.validacao.cep.valid}
               required

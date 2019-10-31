@@ -13,9 +13,9 @@ class CadastrarMenu extends Component {
 
       validacao: {
         ds_menu: { valid: false, msg: '' },
-        validarSeMenuExiste:  { valid: false, msg: '' },
+        validar_SeMenuExiste: { valid: false, invalid: false, msg: '' },
       },
-    }
+    };
   }
 
 
@@ -37,7 +37,7 @@ class CadastrarMenu extends Component {
     if (!val) {
     }
     else {
-      valid = true;
+      valid = false;
     }
     let newState = Object.assign({}, this.state.validacao);
     newState.ds_menu.valid = valid;
@@ -45,7 +45,7 @@ class CadastrarMenu extends Component {
   }
 
   validarSeMenuExiste = async (event) => {
-    let valid = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -53,22 +53,28 @@ class CadastrarMenu extends Component {
     else if (val.length < 4) {
       msg = 'Formato incorreto';
     }
+
     else {
       valid = true;
-      let newState = Object.assign({}, this.state.validacao);
-      newState.ds_menu.valid = valid;
-      newState.ds_menu.msg = msg;
-      this.setState({ validacao: newState });
+      invalid = false;
+    }
 
-      let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
-      if (dados.exists) {
-        let newState = Object.assign({}, this.state.validacao);
-        newState.ds_menu.valid = false;
-        newState.ds_menu.msg = 'Esta descrição de menu já está sendo utilizada';
-        this.setState({ validacao: newState });
-      }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.validar_SeMenuExiste.valid = valid;
+    newState.validar_SeMenuExiste.invalid = invalid;
+    newState.validar_SeMenuExiste.msg = msg;
+    this.setState({ validacao: newState });
+
+    let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
+    if (dados.exists) {
+      let newState = Object.assign({}, this.state.validacao);
+      newState.validar_SeMenuExiste.valid = false;
+      newState.validar_SeMenuExiste.invalid = 'Esta descrição de menu já está sendo utilizada';
+      this.setState({ validacao: newState });
     }
   }
+
+
 
   render() {
     return (
@@ -90,14 +96,15 @@ class CadastrarMenu extends Component {
                   value={this.state.ds_menu}
                   onChange={this.changeInput}
                   placeholder="Lanches"
-                  onBlur={this.validarSeMenuExiste}                  
-                  valid={this.state.validacao.ds_menu.valid}
+                  onBlur={this.validarSeMenuExiste}
+                  valid={this.state.validacao.validar_SeMenuExiste.valid}
+                  invalid={this.state.validacao.validar_SeMenuExiste.invalid}
                   required
                   minLength="3"
                   maaxLenght="100"
                 />
 
-                <FormFeedback invalid>{this.state.validacao.ds_menu.msg}</FormFeedback>
+                <FormFeedback invalid>{this.state.validacao.validar_SeMenuExiste.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
