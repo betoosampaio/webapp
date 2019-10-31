@@ -69,7 +69,8 @@ class CadastrarMenu extends Component {
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
       newState.validar_SeMenuExiste.valid = false;
-      newState.validar_SeMenuExiste.invalid = 'Esta descrição de menu já está sendo utilizada';
+      newState.validar_SeMenuExiste.invalid = true;
+      newState.validar_SeMenuExiste.msg = 'Esta descrição de menu já está sendo utilizada';
       this.setState({ validacao: newState });
     }
   }
