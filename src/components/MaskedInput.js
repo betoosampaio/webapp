@@ -5,14 +5,14 @@ import vanilla from 'vanilla-masker';
 
 class MaskedInput extends Component {
 
-  componentDidMount() {
-    if (this.props.mascara)
-      vanilla(ReactDOM.findDOMNode(this.refs.input)).maskPattern(this.props.mascara);
+  onChange = (event) => {
+    event.target.value = vanilla.toPattern(event.target.value, this.props.mascara)
+    this.props.onChange(event);
   }
 
   render() {
     return (
-      <Input {...this.props} ref="input"></Input>
+      <Input {...this.props} onChange={this.onChange}></Input>
     )
   }
 }
