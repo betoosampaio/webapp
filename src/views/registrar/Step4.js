@@ -29,16 +29,16 @@ class Step4 extends Component {
   prosseguir = (event) => {
     event.preventDefault();
 
-    let ok = true;
+    let valid = true;
     this.conferirSenha();
 
     Object.keys(this.state.validacao).forEach(p => {
-      if (!this.state.validacao[p].ok) {
-        ok = false;
+      if (!this.state.validacao[p].valid) {
+        valid = false;
       }
     });
 
-    if (ok) {
+    if (valid) {
       this.props.saveValues(stateName, this.state, () => {
         this.props.cadastrar();
       });
