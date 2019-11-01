@@ -15,7 +15,7 @@ class DetalheMesa extends Component {
       id_mesa: "",
       codigo_produto: "",
       id_produto: "",
-      quantidade: "",
+      quantidade: 0,
 
     };
   }
@@ -41,7 +41,7 @@ class DetalheMesa extends Component {
   qtdProdutos = (produtos) => {
     let qt = 0;
     qt = this.state.produtos.reduce((sum, key) =>
-      sum + (key.removido ? 0 : key.quantidade), 0)
+      sum + (key.removido ? 0 : parseInt(key.quantidade)), 0)
     return qt;
   }
 
@@ -103,6 +103,19 @@ class DetalheMesa extends Component {
     }
   }
 
+  decrementar() {
+    if(this.state.quantidade <= 0){
+ 
+    }else{   
+      this.setState({ quantidade: this.state.quantidade - 1 })
+    }
+
+  }
+
+  incrementar() {
+    this.setState({ quantidade: this.state.quantidade + 1 })
+  }
+
 
 
   render() {
@@ -137,23 +150,39 @@ class DetalheMesa extends Component {
                   onChange={this.changeInput}
                   required></SelectProduto>
 
-
               </InputGroup>
 
             </FormGroup>
 
+
+
+            <Button onClick={this.incrementar.bind(this)} color="success" size="sm" style={{marginRight:"5px"}}>
+              <i className="icon-plus"></i>
+            </Button>
+ 
+            <Button onClick={this.decrementar.bind(this)} color="danger" size="sm">
+              <i className="icon-minus"></i>
+            </Button>
+
+
+<p></p>
+
+<label>Quantidade</label>
             <Input
               name="quantidade"
               placeholder="Quantidade"
               value={this.state.quantidade}
-              onChange={this.changeInput}
-              required
+        
             />
+
+
+
+
 
 
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.cadastrar}>Close</Button>
+            <Button color="success" onClick={this.cadastrar}>Incluir</Button>
           </Modal.Footer>
         </Modal>
 
@@ -191,7 +220,7 @@ class DetalheMesa extends Component {
                       <tr>
                         <td>{obj.nome_produto}</td>
                         <td>{obj.quantidade}</td>
-                        <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2)}`}</td>
+                        <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2).replace('.', ',')}`}</td>
                       </tr>
                     );
                   })
@@ -207,7 +236,7 @@ class DetalheMesa extends Component {
             </Table>
           </CardBody>
           <CardFooter>
-            <Button className="pull-right" color="success" onClick={()=> this.fecharMesa(this.state._id)}><i className="icon-check"></i> Encerrar Conta</Button>
+            <Button className="pull-right" color="success" onClick={() => this.fecharMesa(this.state._id)}><i className="icon-check"></i> Encerrar Conta</Button>
             <Button title="Cancelar Conta" className="pull-right mr-2" color="danger" onClick={() => this.removerMesa(this.state._id)} ><i className="icon-ban"></i></Button>
           </CardFooter>
         </Card>
