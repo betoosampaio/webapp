@@ -34,7 +34,7 @@ class CadastrarProduto extends Component {
     }
   };
 
-  validarCodigoProduto = (event) => {
+  validarCodigoProduto = async (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
@@ -53,6 +53,15 @@ class CadastrarProduto extends Component {
     newState.codigo_produto.invalid = invalid;
     newState.codigo_produto.msg = msg;
     this.setState({ validacao: newState });
+
+    let dados = await serverRequest.request('/produto/checarSeCodigoProdutoExiste', { codigo_produto: val });
+    if (dados.exists) {
+      let newState = Object.assign({}, this.state.validacao);
+      newState.codigo_produto.valid = false;
+      newState.codigo_produto.invalid = true;
+      newState.codigo_produto.msg = 'Este código de produto já está sendo utilizada';
+      this.setState({ validacao: newState });
+    }
   }
 
   validarNomeProduto = (event) => {
@@ -227,7 +236,7 @@ class CadastrarProduto extends Component {
                   <InputGroupText>R$</InputGroupText>
                 </InputGroupAddon>
                 <MaskedMoneyInput
-                 
+
                   value={this.state.preco}
                   name="preco"
                   className="form-control"
