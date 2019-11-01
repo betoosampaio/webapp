@@ -155,7 +155,7 @@ class CadastrarOperador extends Component {
                   valid={this.state.validacao.nome_operador.valid}
                   required
                 />
-                <FormFeedback invalid>{this.state.validacao.nome_operador.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.nome_operador.msg}</FormFeedback>
               </InputGroup>
             </FormGroup>
 
@@ -196,7 +196,7 @@ class CadastrarOperador extends Component {
                   required
 
                 />
-                <FormFeedback invalid>{this.state.validacao.login_operador.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.login_operador.msg}</FormFeedback>
               </InputGroup>
             </FormGroup>
 

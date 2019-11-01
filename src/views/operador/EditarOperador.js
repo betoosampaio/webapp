@@ -62,7 +62,14 @@ class EditarOperador extends Component {
 								<InputGroupAddon addonType="append">
 									<InputGroupText><i className="fa fa-user"></i></InputGroupText>
 								</InputGroupAddon>
-								<Input name="nome_operador" value={this.state.nome_operador} onChange={this.changeInput} required minLength="4" placeholder="Nome do Operador" />
+								<Input
+									name="nome_operador"
+									value={this.state.nome_operador}
+									onChange={this.changeInput}
+									required
+									minLength="4"
+									placeholder="Nome do Operador"
+								/>
 							</InputGroup>
 						</FormGroup>
 
@@ -72,7 +79,13 @@ class EditarOperador extends Component {
 								<InputGroupAddon addonType="append">
 									<InputGroupText><i className="fa fa-group"></i></InputGroupText>
 								</InputGroupAddon>
-								<SelectPerfil name="id_perfil" value={this.state.id_perfil} onChange={this.changeInput} required></SelectPerfil>
+								<SelectPerfil
+									name="id_perfil"
+									value={this.state.id_perfil}
+									onChange={this.changeInput}
+									required
+								>
+								</SelectPerfil>
 							</InputGroup>
 						</FormGroup>
 
@@ -82,7 +95,14 @@ class EditarOperador extends Component {
 								<InputGroupAddon addonType="append">
 									<InputGroupText><i className="fa fa-id-card"></i></InputGroupText>
 								</InputGroupAddon>
-								<Input name="login_operador" value={this.state.login_operador} onChange={this.changeInput} required minLength="4" placeholder="gerente" />
+								<Input 
+								name="login_operador" 
+								value={this.state.login_operador} 
+								onChange={this.changeInput} 
+								required 
+								minLength="4" 
+								placeholder="gerente"
+								/>
 							</InputGroup>
 						</FormGroup>
 
@@ -101,7 +121,14 @@ class EditarOperador extends Component {
 						<FormGroup>
 							<Label>Ativo:</Label>
 							<InputGroup>
-								<AppSwitch name="ativo" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.ativo ? true : false} onChange={this.changeSwitch} />
+								<AppSwitch 
+								name="ativo" 
+								className={'mx-1'} 
+								variant={'pill'} 
+								color={'success'} 
+								checked={this.state.ativo ? true : false} 
+								onChange={this.changeSwitch}
+								/>
 							</InputGroup>
 						</FormGroup>
 
