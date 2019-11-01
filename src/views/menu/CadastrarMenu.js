@@ -117,7 +117,7 @@ class CadastrarMenu extends Component {
                   maxLength="100"
                 />
 
-                <FormFeedback invalid>{this.state.validacao.ds_menu.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.ds_menu.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
