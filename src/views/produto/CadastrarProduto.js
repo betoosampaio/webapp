@@ -8,8 +8,6 @@ import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 
 
-
-
 class CadastrarProduto extends Component {
 
   constructor(props) {
@@ -34,6 +32,11 @@ class CadastrarProduto extends Component {
     }
   };
 
+
+  componentDidMount() {
+    this.obter(this.props.match.params.id);
+  }
+
   validarCodigoProduto = async (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
@@ -41,7 +44,7 @@ class CadastrarProduto extends Component {
       msg = 'Campo obrigatório';
     }
     else if (val.length < 1) {
-      msg = 'Este campo deve conter 1 caracteres ou mais';
+      msg = 'Este campo deve conter 1 caracter ou mais';
     }
     else {
       valid = true;
@@ -59,7 +62,7 @@ class CadastrarProduto extends Component {
       let newState = Object.assign({}, this.state.validacao);
       newState.codigo_produto.valid = false;
       newState.codigo_produto.invalid = true;
-      newState.codigo_produto.msg = 'Este código de produto já está sendo utilizada';
+      newState.codigo_produto.msg = 'Este código de produto já está sendo utilizado';
       this.setState({ validacao: newState });
     }
   }
