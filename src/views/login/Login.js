@@ -86,7 +86,9 @@ class Login extends Component {
                           autoComplete="usuario"
                           name="login_operador"
                           value={this.state.login_operador}
-                          onChange={this.changeInput} required />
+                          onChange={this.changeInput}
+                          required
+                          />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
