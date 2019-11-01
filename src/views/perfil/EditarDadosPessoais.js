@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
-
+import MaskedInput from '../../components/MaskedInput';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
-import MaskedInput from 'react-text-mask';
 
 
 class EditarDadosPessoais extends Component {
@@ -221,8 +220,7 @@ class EditarDadosPessoais extends Component {
                 onBlur={this.validarCPF}
                 onChange={this.changeInput}
                 placeholder='000.000.000-00'
-                mask={[/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/,]}
-                guide={true}
+                mascara="999.999.999-99"
                 required
               />
 
@@ -266,8 +264,8 @@ class EditarDadosPessoais extends Component {
                 onBlur={this.validarCelular}
                 value={this.state.celular}
                 onChange={this.changeInput}
-                mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/,]}
-                guide={true}
+                mascara="(99) 99999-9999"
+
               />
 
               <span style={{ color: 'red' }}>{this.state.validacao.celular.msg}</span>

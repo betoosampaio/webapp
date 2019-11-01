@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText, FormFeedback } from 'reactstrap';
-import MaskedInput from 'react-text-mask';
+import MaskedInput from '../../components/MaskedInput';
 import SelectUF from '../../components/SelectUf';
 import SuggestMunicipio from '../../components/SuggestMunicipio';
 import SelectEspecialidade from '../../components/SelectEspecialidade';
@@ -288,8 +288,7 @@ class EditarDadosRestaurante extends Component {
                 onChange={this.changeInput}
                 onBlur={this.validarCEP}
                 placeholder='00000-000'
-                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/,]}
-                guide={true}
+                mascara="99999-999"
                 required
               />
               <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
