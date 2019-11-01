@@ -223,7 +223,7 @@ class Step1 extends Component {
 
 
             <MaskedInput
-              maxlength="14"
+              maxLength="14"
               className="form-control"
               name="cpf_administrador"
               value={this.state.cpf_administrador}
@@ -260,7 +260,7 @@ class Step1 extends Component {
               maxLength="255"
               required
             />
-            <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.nome_administrador.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -273,7 +273,7 @@ class Step1 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="15"
+              maxLength="15"
               className="form-control"
               placeholder='(11) 99999-9999'
               name="celular"
@@ -285,7 +285,7 @@ class Step1 extends Component {
               valid={this.state.validacao.celular.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.celular.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.celular.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -299,7 +299,7 @@ class Step1 extends Component {
 
             <Input
               name="email"
-              maxlength="255"
+              maxLength="255"
               value={this.state.email}
               onChange={this.changeInput}
               type='text'
@@ -309,7 +309,7 @@ class Step1 extends Component {
               invalid={this.state.validacao.email.invalid}
               valid={this.state.validacao.email.valid}
             />
-            <FormFeedback invalid>{this.state.validacao.email.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.email.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 

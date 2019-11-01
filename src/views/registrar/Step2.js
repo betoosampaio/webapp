@@ -404,7 +404,7 @@ class Step2 extends Component {
               valid={this.state.validacao.cnpj.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.cnpj.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.cnpj.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -426,7 +426,7 @@ class Step2 extends Component {
               valid={this.state.validacao.razao_social.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.razao_social.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -452,7 +452,7 @@ class Step2 extends Component {
               Este será o nome que irá aparecer no aplicativo
            </UncontrolledTooltip>
 
-            <FormFeedback invalid>{this.state.validacao.nome_restaurante.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.nome_restaurante.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -475,7 +475,7 @@ class Step2 extends Component {
 
             </SelectEspecialidade>
 
-            <FormFeedback invalid>{this.state.validacao.id_especialidade.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.id_especialidade.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -487,7 +487,7 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxlength="9"          
+              maxLength="9"          
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
@@ -498,7 +498,7 @@ class Step2 extends Component {
               valid={this.state.validacao.cep.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.cep.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.cep.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
@@ -521,7 +521,7 @@ class Step2 extends Component {
               valid={this.state.validacao.logradouro.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.logradouro.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.logradouro.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -543,7 +543,7 @@ class Step2 extends Component {
               valid={this.state.validacao.numero.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.numero.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.numero.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -584,7 +584,7 @@ class Step2 extends Component {
               valid={this.state.validacao.bairro.valid}
               required
             />
-            <FormFeedback invalid>{this.state.validacao.bairro.msg}</FormFeedback>
+            <FormFeedback>{this.state.validacao.bairro.msg}</FormFeedback>
 
           </InputGroup>
         </FormGroup>
@@ -625,7 +625,7 @@ class Step2 extends Component {
               valid={this.state.validacao.municipio.valid}
               required
             >
-              <FormFeedback invalid>{this.state.validacao.municipio.msg}</FormFeedback>
+              <FormFeedback>{this.state.validacao.municipio.msg}</FormFeedback>
             </SuggestMunicipio>
           </InputGroup>
         </FormGroup>
