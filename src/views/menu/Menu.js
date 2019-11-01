@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, Card, CardHeader, CardBody, FormGroup, Label, Form, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
-import Modal from 'react-bootstrap/Modal';
 import ReactTable from 'react-table';
+import Confirm from 'reactstrap-confirm';
 import 'react-table/react-table.css';
 
 class ListaMenu extends Component {
@@ -36,7 +36,7 @@ class ListaMenu extends Component {
       accessor: 'id_menu',
       headerClassName: "text-left",
       Cell: props =>
-        <Button color="danger" size="sm" onClick={() => this.setState({ showDelete: true, idSelecionado: props.value })}>
+        <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
           <i className="icon-close"></i>
         </Button>
     },
@@ -46,9 +46,7 @@ class ListaMenu extends Component {
     super(props);
 
     this.state = {
-      lista: [],
-      showDelete: false,
-      idSelecionado: 0,
+      lista: [],   
       search: "",
       somenteAtivos: true,
     };
@@ -66,10 +64,18 @@ class ListaMenu extends Component {
   }
 
   remover = async (id) => {
-    let dados = await serverRequest.request('/menu/remover', { "id_menu": id });
-    if (dados) {
-      this.obterLista();
-      this.setState({ showDelete: false });
+
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que quer remover este menu?",
+      confirmColor: "danger",
+      confirmText: "Sim",
+      cancelText: "Não",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/menu/remover', { "id_menu": id });
+      if (dados) this.obterLista();
     }
   }
 
@@ -101,7 +107,6 @@ class ListaMenu extends Component {
             </div>
           </CardHeader>
           <CardBody>
-
           <Form inline className="mb-3">
               <FormGroup>
                 <Label className="mr-2">Procurar:</Label>
@@ -123,8 +128,6 @@ class ListaMenu extends Component {
                 />
               </FormGroup>
             </Form>
-
-
             <ReactTable
               data={lista}
               columns={this.columns}
@@ -138,33 +141,8 @@ class ListaMenu extends Component {
               loadingText="Carregando..."
               className="table"
             />
-
           </CardBody>
         </Card>
-
-        <Modal
-          size="sm"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          show={this.state.showDelete}
-          onHide={() => { this.setState({ showDelete: false }) }}
-          backdrop='static'
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmação</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-            <p>Você tem certeza que deseja excluir?</p>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
-            <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Confirmar</Button>
-          </Modal.Footer>
-
-        </Modal>
-
       </div>
     );
   }

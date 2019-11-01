@@ -212,9 +212,10 @@ class CadastrarOperador extends Component {
                   onBlur={this.validarSenhaOperador}
                   valid={this.state.validacao.senha_operador.valid}
                   invalid={this.state.validacao.senha_operador.invalid}
+                  feedbackMessage={this.state.validacao.senha_operador.msg}
                   required
                 />
-                <FormFeedback>{this.state.validacao.senha_operador.msg}</FormFeedback>
+                
             </FormGroup>
           </CardBody>
           <CardFooter>

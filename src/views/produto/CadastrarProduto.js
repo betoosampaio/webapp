@@ -33,6 +33,17 @@ class CadastrarProduto extends Component {
     }
   };
 
+  componentDidMount(){
+    this.obterProximoCodigoProduto();
+  }
+
+  obterProximoCodigoProduto = async () =>{
+    let dados = await serverRequest.request('/produto/obterProximoCodigoProduto');
+    if(dados){
+      this.setState({codigo_produto: dados[0].codigo_produto})
+    }
+  }
+
   validarCodigoProduto = async (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
@@ -142,6 +153,7 @@ class CadastrarProduto extends Component {
 
     let obj = Object.assign({}, this.state);
     obj.preco = obj.preco.replace('.', '').replace(',', '.');
+    obj.codigo_produto = String(obj.codigo_produto);
     let dados = await serverRequest.request('/produto/cadastrar', obj);
 
     if (dados) {

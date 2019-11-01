@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Table, Card, CardHeader, CardBody, CardFooter, Button, Input, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import SelectProduto from '../../components/SelectProduto';
@@ -11,6 +11,11 @@ class DetalheMesa extends Component {
     super(props);
     this.state = {
       produtos: [],
+      id_mesa: "",
+      codigo_produto: "",
+      id_produto: "",
+      quantidade: "",
+
     };
   }
 
@@ -43,6 +48,23 @@ class DetalheMesa extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  cadastrar = async (event) => {
+    let obj = {
+
+      id_mesa: this.state._id,
+      id_produto: this.state.codigo_produto[0],
+      quantidade: this.state.quantidade,
+
+    }
+
+    console.log(obj)
+
+    let dados = await serverRequest.request('/mesa/incluirItem', obj);
+
+    if (dados) {
+      this.setState({ showCadastrado: true });
+    }
+  }
 
   render() {
     return (
@@ -69,13 +91,29 @@ class DetalheMesa extends Component {
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
                 </InputGroupAddon>
-                <SelectProduto name="codigo_produto" value={this.state.codigo_produto} onChange={this.changeInput} required></SelectProduto>
+
+                <SelectProduto
+                  name="codigo_produto"
+                  value={this.state.codigo_produto}
+                  onChange={this.changeInput}
+                  required></SelectProduto>
+
+
               </InputGroup>
+
             </FormGroup>
+
+            <Input
+              name="quantidade"
+              value={this.state.quantidade}
+              onChange={this.changeInput}
+              required
+            />
+
 
           </Modal.Body>
           <Modal.Footer>
-            <Button>Close</Button>
+            <Button onClick={this.cadastrar}>Close</Button>
           </Modal.Footer>
         </Modal>
 
@@ -133,7 +171,7 @@ class DetalheMesa extends Component {
             <Button title="Cancelar Conta" className="pull-right mr-2" color="danger"><i className="icon-ban"></i></Button>
           </CardFooter>
         </Card>
-      </div>
+      </div >
     );
   }
 }

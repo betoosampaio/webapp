@@ -3,10 +3,10 @@ import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Foto from '../../components/Foto';
-import Modal from 'react-bootstrap/Modal';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import SelectMenu from '../../components/SelectMenu';
+import Confirm from 'reactstrap-confirm';
 
 
 class Produto extends Component {
@@ -73,7 +73,7 @@ class Produto extends Component {
       accessor: 'id_produto',
       headerClassName: "text-left",
       Cell: props =>
-        <Button color="danger" size="sm" onClick={() => this.setState({ showDelete: true, idSelecionado: props.value })}>
+        <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
           <i className="icon-close"></i>
         </Button>
     },
@@ -84,8 +84,6 @@ class Produto extends Component {
 
     this.state = {
       lista: [],
-      showDelete: false,
-      idSelecionado: 0,
       search: "",
       filtrarMenu: "",
       somenteAtivos: true,
@@ -104,10 +102,17 @@ class Produto extends Component {
   }
 
   remover = async (id) => {
-    let dados = await serverRequest.request('/produto/remover', { "id_produto": id });
-    if (dados) {
-      this.obterLista();
-      this.setState({ showDelete: false });
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que quer remover este produto?",
+      confirmColor: "danger",
+      confirmText: "Sim",
+      cancelText: "Não",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/produto/remover', { "id_produto": id });
+      if (dados) this.obterLista();
     }
   }
   changeSwitch = (event) => {
@@ -140,12 +145,8 @@ class Produto extends Component {
               </Link>
             </div>
           </CardHeader>
-
           <CardBody>
-
             <Form inline className="mb-4">
-
-
               <FormGroup className="mr-3">
                 <Label className="mr-2">Procurar:</Label>
                 <input
@@ -153,7 +154,6 @@ class Produto extends Component {
                   onChange={e => this.setState({ search: e.target.value })}
                 />
               </FormGroup>
-
               <FormGroup className="mr-3">
                 <Label className="mr-2">Filtrar Menu:</Label>
                 <SelectMenu
@@ -161,7 +161,6 @@ class Produto extends Component {
                   onChange={e => this.setState({ filtrarMenu: e.target.value })}
                 />
               </FormGroup>
-
               <FormGroup className="ml-auto">
                 <Label className="mr-2">Somente ativos:</Label>
                 <CustomInput
@@ -174,8 +173,6 @@ class Produto extends Component {
                 />
               </FormGroup>
             </Form>
-
-
             <ReactTable
               data={lista}
               columns={this.columns}
@@ -191,28 +188,6 @@ class Produto extends Component {
             />
           </CardBody>
         </Card>
-        <Modal
-          size="sm"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          show={this.state.showDelete}
-          onHide={() => { this.setState({ showDelete: false }) }}
-          backdrop='static'
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmação</Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-            <p>Você tem certeza que deseja excluir?</p>
-          </Modal.Body>
-
-          <Modal.Footer>
-            <Button variant="secondary" color="danger" onClick={() => this.setState({ showDelete: false })}>Cancelar</Button>
-            <Button variant="primary" color="success" onClick={() => this.remover(this.state.idSelecionado)}>Confirmar</Button>
-          </Modal.Footer>
-
-        </Modal>
       </div>
     );
   }
