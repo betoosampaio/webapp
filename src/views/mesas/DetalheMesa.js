@@ -85,6 +85,23 @@ class DetalheMesa extends Component {
 
     }
   }
+  removerItem = async (id_mesa, id_item) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que quer remover esse item ?",
+      confirmColor: "danger",
+      confirmText: "Sim",
+      cancelText: "Não",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/removerItem', { "id_mesa": id_mesa, "id_item": id_item });
+      if (dados) {
+        window.parent.location.reload();
+      }
+
+    }
+  }
 
   fecharMesa = async (id_mesa) => {
     let confirm = await Confirm({
@@ -104,9 +121,9 @@ class DetalheMesa extends Component {
   }
 
   decrementar() {
-    if(this.state.quantidade <= 0){
- 
-    }else{   
+    if (this.state.quantidade <= 0) {
+
+    } else {
       this.setState({ quantidade: this.state.quantidade - 1 })
     }
 
@@ -155,29 +172,24 @@ class DetalheMesa extends Component {
             </FormGroup>
 
 
-
-            <Button onClick={this.incrementar.bind(this)} color="success" size="sm" style={{marginRight:"5px"}}>
+            <Button onClick={this.incrementar.bind(this)} color="success" size="sm" style={{ marginRight: "5px" }}>
               <i className="icon-plus"></i>
             </Button>
- 
+
             <Button onClick={this.decrementar.bind(this)} color="danger" size="sm">
               <i className="icon-minus"></i>
             </Button>
 
 
-<p></p>
+            <p></p>
 
-<label>Quantidade</label>
+            <label>Quantidade</label>
             <Input
               name="quantidade"
               placeholder="Quantidade"
               value={this.state.quantidade}
-        
+
             />
-
-
-
-
 
 
           </Modal.Body>
@@ -185,9 +197,6 @@ class DetalheMesa extends Component {
             <Button color="success" onClick={this.cadastrar}>Incluir</Button>
           </Modal.Footer>
         </Modal>
-
-
-
 
         <h2>
           Mesa {this.state.numero}
@@ -211,18 +220,33 @@ class DetalheMesa extends Component {
                   <th>Produto</th>
                   <th>Quantidade</th>
                   <th>Valor</th>
+                  <th>Excluir</th>
+
                 </tr>
               </thead>
               <tbody>
                 {
                   this.state.produtos.map((obj) => {
-                    return (
-                      <tr>
-                        <td>{obj.nome_produto}</td>
-                        <td>{obj.quantidade}</td>
-                        <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2).replace('.', ',')}`}</td>
-                      </tr>
-                    );
+
+                    if (!obj.removido) {
+
+                      return (
+                        <tr>
+                          <td>{obj.nome_produto}</td>
+                          <td>{obj.quantidade}</td>
+                          <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2).replace('.', ',')}`}</td>
+
+                          <td>
+                            <Button color="danger" size="sm" onClick={() => this.removerItem(this.state._id, obj.id_item)} >
+                              <i className="icon-close"></i>
+                            </Button>
+                          </td>
+
+
+                        </tr>
+                      );
+                    }
+
                   })
                 }
               </tbody>
