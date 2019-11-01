@@ -33,6 +33,7 @@ class EditarProduto extends Component {
   obter = async (id) => {
     let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
     if (dados) {
+      dados[0].preco = String(dados[0].preco).replace('.',',');
       this.setState(dados[0]);
     }
   }
