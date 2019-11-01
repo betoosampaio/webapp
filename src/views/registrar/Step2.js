@@ -40,7 +40,7 @@ class Step2 extends Component {
         complemento: { valid: false },
         bairro: { valid: false, invalid: false, msg: '' },
         municipio: { valid: false, invalid: false, msg: '' },
-        uf: { valid: false, msg: '' },
+        uf: { valid: false, invalid: false, msg: '' },
 
       },
     };
@@ -110,6 +110,13 @@ class Step2 extends Component {
         formNewState['municipio'] = dados.localidade;
         formNewState['uf'] = dados.uf;
         formNewState['enderecoDisabled'] = true;
+
+        let valid = {valid: true, invalid: false, msg: ''}
+        formNewState.validacao.logradouro = valid;
+        formNewState.validacao.bairro = valid;
+        formNewState.validacao.municipio = valid;
+        formNewState.validacao.uf = valid;
+
         this.setState(formNewState);
       }
       else {
@@ -119,6 +126,13 @@ class Step2 extends Component {
         formNewState['municipio'] = '';
         formNewState['uf'] = '';
         formNewState['enderecoDisabled'] = false;
+
+        let valid = {valid: false, invalid: true, msg: 'Campo obrigatório'}
+        formNewState.validacao.logradouro = valid;
+        formNewState.validacao.bairro = valid;
+        formNewState.validacao.municipio = valid;
+        formNewState.validacao.uf = valid;
+
         this.setState(formNewState);
       }
     }
@@ -488,7 +502,7 @@ class Step2 extends Component {
 
             <MaskedInput
               maxLength="9"
-              type="cep"
+              name="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}
@@ -602,9 +616,11 @@ class Step2 extends Component {
               onChange={this.changeInput}
               onBlur={this.validarEstado}
               valid={this.state.validacao.uf.valid}
+              invalid={this.state.validacao.uf.invalid}
               disabled={this.state.enderecoDisabled}
               required>
             </SelectUF>
+            <FormFeedback>{this.state.validacao.uf.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 

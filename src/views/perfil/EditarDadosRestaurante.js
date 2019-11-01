@@ -26,59 +26,78 @@ class EditarDadosRestaurante extends Component {
       id_especialidade: "",
       enderecoDisabled: false,
       validacao: {
-        cnpj: { ok: true, msg: '' },
-        razao_social: { ok: true, msg: '' },
-        nome_restaurante: { ok: true, msg: '' },
-        cep: { ok: true, msg: '' },
-        logradouro: { ok: true, msg: '' },
-        numero: { ok: true, msg: '' },
-        bairro: { ok: true, msg: '' },
-        municipio: { ok: true, msg: '' },
-        uf: { ok: true, msg: '' },
+        razao_social: { valid: false, invalid: false, msg: '' },
+        nome_restaurante: { valid: false, invalid: false, msg: '' },
+        id_especialidade: { valid: false, invalid: false, msg: '' },
+        cep: { valid: false, invalid: false, msg: '' },
+        logradouro: { valid: false, invalid: false, msg: '' },
+        numero: { valid: false, invalid: false, msg: '' },
+        complemento: { valid: false },
+        bairro: { valid: false, invalid: false, msg: '' },
+        municipio: { valid: false, invalid: false, msg: '' },
+        uf: { valid: false, msg: '' },
       },
     };
   }
 
-  validarCNPJ = async (event) => {
-    let ok = false, msg = '';
-    let val = event.target.value.replace(/\D/g, '');
 
-    if (!this.testarCNPJ(val)) {
-      msg = 'CNPJ incorreto';
+  validarRazaoSocial = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
     }
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cnpj.ok = ok;
-    newState.cnpj.msg = msg;
+    newState.razao_social.valid = valid;
+    newState.razao_social.invalid = invalid;
+    newState.razao_social.msg = msg;
     this.setState({ validacao: newState });
+  }
 
-    if (val.length === 14) {
-      let dados = await serverRequest.request('/restaurante/checarSeCNPJExiste', { cnpj: val });
-      if (dados.exists) {
-        let newState = Object.assign({}, this.state.validacao);
-        newState.cnpj.ok = false;
-        newState.cnpj.msg = 'Este CNPJ já está cadastrado';
-        this.setState({ validacao: newState });
-      }
+  validarNomedoRestaurante = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
     }
 
+    let newState = Object.assign({}, this.state.validacao);
+    newState.nome_restaurante.valid = valid;
+    newState.nome_restaurante.invalid = invalid;
+    newState.nome_restaurante.msg = msg;
+    this.setState({ validacao: newState });
   }
 
   validarCEP = async (event) => {
-    let ok = false, msg = '';
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (val.length < 8) {
-      msg = 'CEP Incompleto';
+      msg = 'Formato inválido';
     }
+
     else {
-      ok = true;
+      valid = true;
+      invalid = false;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cep.ok = ok;
+    newState.cep.valid = valid;
+    newState.cep.invalid = invalid;
     newState.cep.msg = msg;
     this.setState({ validacao: newState });
 
@@ -106,56 +125,138 @@ class EditarDadosRestaurante extends Component {
     }
   }
 
-  testarCNPJ = (cnpj) => {
-
-    if (cnpj === '') return false;
-
-    if (cnpj.length !== 14)
-      return false;
-
-    // Elimina CNPJs invalidos conhecidos
-    if (cnpj === "00000000000000" ||
-      cnpj === "11111111111111" ||
-      cnpj === "22222222222222" ||
-      cnpj === "33333333333333" ||
-      cnpj === "44444444444444" ||
-      cnpj === "55555555555555" ||
-      cnpj === "66666666666666" ||
-      cnpj === "77777777777777" ||
-      cnpj === "88888888888888" ||
-      cnpj === "99999999999999")
-      return false;
-
-    // Valida DVs
-    let tamanho = cnpj.length - 2
-    let numeros = cnpj.substring(0, tamanho);
-    let digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2)
-        pos = 9;
+  validarIdEspecialidade = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
     }
-    let resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado.toString() !== digitos.charAt(0))
-      return false;
-    tamanho = tamanho + 1;
-    numeros = cnpj.substring(0, tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-    for (let i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--;
-      if (pos < 2)
-        pos = 9;
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
-    if (resultado.toString() !== digitos.charAt(1))
-      return false;
 
-    return true;
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.id_especialidade.valid = valid;
+    newState.id_especialidade.invalid = invalid;
+    newState.id_especialidade.msg = msg;
+    this.setState({ validacao: newState });
   }
+
+  validarLogradouro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 3 caracteres ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.logradouro.valid = valid;
+    newState.logradouro.invalid = invalid;
+    newState.logradouro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarNumero = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 1) {
+      msg = 'Este campo deve conter 1 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.numero.valid = valid;
+    newState.numero.invalid = invalid;
+    newState.numero.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarComplemento = (event) => {
+    let valid = false;
+    let val = event.target.value;
+    if (!val) {
+    }
+    else {
+      valid = true;
+    }
+    let newState = Object.assign({}, this.state.validacao);
+    newState.complemento.valid = valid;
+    this.setState({ validacao: newState });
+  }
+
+  validarBairro = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.bairro.valid = valid;
+    newState.bairro.invalid = invalid;
+    newState.bairro.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarMunicipio = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else if (val.length < 4) {
+      msg = 'Este campo deve conter 4 caracter ou mais';
+    }
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.municipio.valid = valid;
+    newState.municipio.invalid = invalid;
+    newState.municipio.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarEstado = (event) => {
+    let valid = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+    else {
+      valid = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.uf.valid = valid;
+    newState.uf.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
 
   componentDidMount() {
     this.obter(this.props.match.params.id);
@@ -173,15 +274,15 @@ class EditarDadosRestaurante extends Component {
 
     let obj = {
 
-      cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
+      cpf_administrador: this.state.cpf_administrador,//.replace(/\D/g, '')//,
       nome_administrador: this.state.nome_administrador,
-      celular: this.state.celular.toString().replace(/\D/g, ''),
+      celular: this.state.celular,//.replace(/\D/g, '')//,.toString().replace(/\D/g, ''),
       email: this.state.email,
 
       cnpj: this.state.cnpj,
       razao_social: this.state.razao_social,
       nome_restaurante: this.state.nome_restaurante,
-      cep: this.state.cep.replace(/\D/g, ''),
+      cep: this.state.cep,//.replace(/\D/g, '')//,.replace(/\D/g, ''),
       logradouro: this.state.logradouro,
       numero: this.state.numero,
       complemento: this.state.complemento,
@@ -245,15 +346,14 @@ class EditarDadosRestaurante extends Component {
                 value={this.state.razao_social}
                 onChange={this.changeInput}
                 type='text'
-                placeholder='Razão social da empresa'
                 required
                 minLength="4"
                 maxLength="255"
-                invalid={!this.state.validacao.razao_social.ok}
+                placeholder='Razão social da empresa'
+                invalid={this.state.validacao.razao_social.invalid}
+                valid={this.state.validacao.razao_social.valid}
               />
-
               <FormFeedback>{this.state.validacao.razao_social.msg}</FormFeedback>
-
             </InputGroup>
           </FormGroup>
 
@@ -268,8 +368,14 @@ class EditarDadosRestaurante extends Component {
                 required
                 name="id_especialidade"
                 value={this.state.id_especialidade}
-                onChange={this.changeInput}>
+                onChange={this.changeInput}
+                placeholder="Escreva aqui"
+                valid={this.state.validacao.id_especialidade.valid}
+                invalid={this.state.validacao.id_especialidade.invalid}
+              >
               </SelectEspecialidade>
+              <FormFeedback>{this.state.validacao.id_especialidade.msg}</FormFeedback>
+
             </InputGroup>
           </FormGroup>
 
@@ -286,12 +392,14 @@ class EditarDadosRestaurante extends Component {
                 name="cep"
                 className="form-control"
                 value={this.state.cep}
-                onChange={this.changeInput}        
+                onChange={this.changeInput}
                 placeholder='CEP do restaurante'
                 mascara="99999-999"
+                invalid={this.state.validacao.cep.invalid}
+                valid={this.state.validacao.cep.valid}
                 required
               />
-              <span style={{ color: 'red' }}>{this.state.validacao.cep.msg}</span>
+              <FormFeedback>{this.state.validacao.cep.msg}</FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -308,8 +416,11 @@ class EditarDadosRestaurante extends Component {
                 type='text'
                 placeholder='Avenida Paulista'
                 disabled={this.state.enderecoDisabled}
+                invalid={this.state.validacao.logradouro.invalid}
+                valid={this.state.validacao.logradouro.valid}
                 required
               />
+              <FormFeedback>{this.state.validacao.logradouro.msg}</FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -324,9 +435,12 @@ class EditarDadosRestaurante extends Component {
                 value={this.state.numero}
                 onChange={this.changeInput}
                 type='text'
-                placeholder='1234'
+                placeholder='Número do restaurante'
+                invalid={this.state.validacao.numero.invalid}
+                valid={this.state.validacao.numero.valid}
                 required
               />
+              <FormFeedback>{this.state.validacao.numero.msg}</FormFeedback>
             </InputGroup>
           </FormGroup>
 
@@ -342,6 +456,8 @@ class EditarDadosRestaurante extends Component {
                 name="complemento"
                 value={this.state.complemento}
                 onChange={this.changeInput}
+                onBlur={this.validarComplemento}
+                valid={this.state.validacao.complemento.valid}
               />
             </InputGroup>
           </FormGroup>
@@ -359,8 +475,12 @@ class EditarDadosRestaurante extends Component {
                 disabled={this.state.enderecoDisabled}
                 type='text'
                 placeholder='Bela Vista'
+                invalid={this.state.validacao.bairro.invalid}
+                valid={this.state.validacao.bairro.valid}
                 required
               />
+              <FormFeedback>{this.state.validacao.bairro.msg}</FormFeedback>
+
             </InputGroup>
           </FormGroup>
 
@@ -376,9 +496,13 @@ class EditarDadosRestaurante extends Component {
                 onChange={this.changeInput}
                 disabled={this.state.enderecoDisabled}
                 type='text'
-                placeholder='São Paulo'
+                placeholder='Município do restaurante'
+                invalid={this.state.validacao.municipio.invalid}
+                valid={this.state.validacao.municipio.valid}
                 required
-              ></SuggestMunicipio>
+              >
+                <FormFeedback>{this.state.validacao.municipio.msg}</FormFeedback>
+              </SuggestMunicipio>
             </InputGroup>
           </FormGroup>
 
@@ -393,8 +517,11 @@ class EditarDadosRestaurante extends Component {
                 value={this.state.uf}
                 onChange={this.changeInput}
                 disabled={this.state.enderecoDisabled}
-                required>
-              </SelectUF>valid
+                onBlur={this.validarEstado}
+                valid={this.state.validacao.uf.valid}
+                required
+              >
+              </SelectUF>
             </InputGroup>
           </FormGroup>
 
