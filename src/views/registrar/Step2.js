@@ -487,7 +487,8 @@ class Step2 extends Component {
             </InputGroupAddon>
 
             <MaskedInput
-              maxLength="9"          
+              maxLength="9"
+              type="cep"
               className="form-control"
               value={this.state.cep}
               onChange={this.changeInput}

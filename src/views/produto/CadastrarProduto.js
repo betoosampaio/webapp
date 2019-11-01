@@ -6,6 +6,7 @@ import SelectMenu from '../../components/SelectMenu';
 import UploadFoto from '../../components/UploadFoto';
 import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
+import { UncontrolledTooltip } from 'reactstrap';
 
 
 class CadastrarProduto extends Component {
@@ -31,11 +32,6 @@ class CadastrarProduto extends Component {
       },
     }
   };
-
-
-  componentDidMount() {
-    this.obter(this.props.match.params.id);
-  }
 
   validarCodigoProduto = async (event) => {
     let valid = false, invalid = true, msg = '';
@@ -186,8 +182,12 @@ class CadastrarProduto extends Component {
                   invalid={this.state.validacao.codigo_produto.invalid}
                   valid={this.state.validacao.codigo_produto.valid}
                   placeholder="001"
+                  id="informativoCodigo"
                   required
                 />
+                <UncontrolledTooltip placement="top" target="informativoCodigo">
+                  Escolha um código de produto diferente para cada produto
+           </UncontrolledTooltip>
                 <FormFeedback>{this.state.validacao.codigo_produto.msg}</FormFeedback>
 
               </InputGroup>
