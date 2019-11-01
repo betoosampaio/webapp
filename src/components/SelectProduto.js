@@ -30,7 +30,7 @@ class SelectProduto extends Component {
         {
           this.state.lista.map(obj => {
             return (
-              <option key={obj.codigo_produto} value={obj.codigo_produto}>{`${obj.codigo_produto} - ${obj.nome_produto}`}</option>
+              <option key={obj.codigo_produto} value={obj.codigo_produto}>{`${obj.codigo_produto} - ${obj.nome_produto} - ${"R$   " + obj.preco}`}</option>
             )
           })
         }

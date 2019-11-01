@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Card, CardHeader, CardBody, CardFooter, Button, Input, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
+import Confirm from 'reactstrap-confirm';
 import SelectProduto from '../../components/SelectProduto';
 
 
@@ -62,9 +63,47 @@ class DetalheMesa extends Component {
     let dados = await serverRequest.request('/mesa/incluirItem', obj);
 
     if (dados) {
-      this.setState({ showCadastrado: true });
+      this.setState({ modalAdicionarItem: false });
+      window.parent.location.reload();
     }
   }
+
+  removerMesa = async (id_mesa) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que quer cancelar essa conta?",
+      confirmColor: "danger",
+      confirmText: "Sim",
+      cancelText: "Não",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/remover', { "id_mesa": id_mesa });
+      if (dados) {
+        window.location.href = '/#/mesas'
+      }
+
+    }
+  }
+
+  fecharMesa = async (id_mesa) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que quer encerrar essa conta?",
+      confirmColor: "success",
+      confirmText: "Sim",
+      cancelText: "Não",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/fechar', { "id_mesa": id_mesa });
+      if (dados) {
+        window.location.href = '/#/mesas'
+      }
+    }
+  }
+
+
 
   render() {
     return (
@@ -105,6 +144,7 @@ class DetalheMesa extends Component {
 
             <Input
               name="quantidade"
+              placeholder="Quantidade"
               value={this.state.quantidade}
               onChange={this.changeInput}
               required
@@ -167,8 +207,8 @@ class DetalheMesa extends Component {
             </Table>
           </CardBody>
           <CardFooter>
-            <Button className="pull-right" color="success"><i className="icon-check"></i> Encerrar Conta</Button>
-            <Button title="Cancelar Conta" className="pull-right mr-2" color="danger"><i className="icon-ban"></i></Button>
+            <Button className="pull-right" color="success" onClick={()=> this.fecharMesa(this.state._id)}><i className="icon-check"></i> Encerrar Conta</Button>
+            <Button title="Cancelar Conta" className="pull-right mr-2" color="danger" onClick={() => this.removerMesa(this.state._id)} ><i className="icon-ban"></i></Button>
           </CardFooter>
         </Card>
       </div >
