@@ -282,12 +282,12 @@ class EditarDadosRestaurante extends Component {
               </InputGroupAddon>
 
               <MaskedInput
+                maxlength="9"
                 name="cep"
                 className="form-control"
                 value={this.state.cep}
-                onChange={this.changeInput}
-                onBlur={this.validarCEP}
-                placeholder='00000-000'
+                onChange={this.changeInput}        
+                placeholder='CEP do restaurante'
                 mascara="99999-999"
                 required
               />
@@ -394,7 +394,7 @@ class EditarDadosRestaurante extends Component {
                 onChange={this.changeInput}
                 disabled={this.state.enderecoDisabled}
                 required>
-              </SelectUF>
+              </SelectUF>valid
             </InputGroup>
           </FormGroup>
 

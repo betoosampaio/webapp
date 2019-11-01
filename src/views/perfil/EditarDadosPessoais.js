@@ -221,9 +221,7 @@ class EditarDadosPessoais extends Component {
                 onBlur={this.validarCPF}
                 onChange={this.changeInput}
                 placeholder='000.000.000-00'
-                mascara="999.999.999-99"
-                invalid={this.state.validacao.cpf_administrador.invalid}
-                valid={this.state.validacao.cpf_administrador.valid}
+                mascara="999.999.999-99" 
                 required
               />
 
