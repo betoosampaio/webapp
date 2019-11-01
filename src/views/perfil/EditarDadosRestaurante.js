@@ -252,7 +252,7 @@ class EditarDadosRestaurante extends Component {
                 invalid={!this.state.validacao.razao_social.ok}
               />
 
-              <FormFeedback invalid>{this.state.validacao.razao_social.msg}</FormFeedback>
+              <FormFeedback>{this.state.validacao.razao_social.msg}</FormFeedback>
 
             </InputGroup>
           </FormGroup>
@@ -282,7 +282,7 @@ class EditarDadosRestaurante extends Component {
               </InputGroupAddon>
 
               <MaskedInput
-                maxlength="9"
+                maxLength="9"
                 name="cep"
                 className="form-control"
                 value={this.state.cep}

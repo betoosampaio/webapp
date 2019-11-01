@@ -199,7 +199,7 @@ class EditarDadosPessoais extends Component {
                 invalid={!this.state.validacao.nome_administrador.valid}
               />
 
-              <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
+              <FormFeedback>{this.state.validacao.nome_administrador.msg}</FormFeedback>
 
 
 
@@ -214,7 +214,7 @@ class EditarDadosPessoais extends Component {
               </InputGroupAddon>
 
               <MaskedInput
-                maxlength="14"
+                maxLength="14"
                 className="form-control"
                 name="cpf_administrador"
                 value={this.state.cpf_administrador}
@@ -246,7 +246,7 @@ class EditarDadosPessoais extends Component {
                 required
                 invalid={!this.state.validacao.email.valid}
               />
-              <FormFeedback invalid>{this.state.validacao.email.msg}</FormFeedback>
+              <FormFeedback>{this.state.validacao.email.msg}</FormFeedback>
 
             </InputGroup>
           </FormGroup>

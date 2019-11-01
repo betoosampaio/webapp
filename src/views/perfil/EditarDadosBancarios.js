@@ -4,6 +4,8 @@ import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import SelectBanco from '../../components/SelectBanco'
 import Modal from 'react-bootstrap/Modal'
+import MaskedInput from '../../components/MaskedInput';
+
 
 
 
@@ -170,13 +172,14 @@ class EditarDadosBancarios extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
-              <Input className="form-control"
+              <MaskedInput
+                className="form-control"
                 name="agencia"
                 placeholder="Agência"
-                maxlength="4"
+                maxLength="4"
                 value={this.state.agencia}
                 onChange={this.changeInput}
-                mask={[/\d/, /\d/, /\d/, /\d/]}
+                mascara="9999"
                 disabled={this.state.pagamento_app ? false : true} />
             </InputGroup>
           </FormGroup>
@@ -187,24 +190,25 @@ class EditarDadosBancarios extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-credit-card"></i></InputGroupText>
               </InputGroupAddon>
-              <Input className="form-control"
+              <MaskedInput
+                className="form-control"
                 name="conta"
                 value={this.state.conta}
                 onChange={this.changeInput}
                 placeholder="Conta"
-                maxlength="11"
-                mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-                guide={false}
+                maxLength="11"
+                mascara="999999999"
                 disabled={this.state.pagamento_app ? false : true}
               />
-              <Label> <b> - </b> </Label> <Input className="form-control"
+              <Label> <b> - </b> </Label>
+              <MaskedInput
+                className="form-control"
                 name="digito"
                 value={this.state.digito}
                 onChange={this.changeInput}
                 placeholder="Dígito"
-                maxlength="2"
-                mask={[/[a-zA-Z0-9]/, /[a-zA-Z0-9]/]}
-                guide={false}
+                maxLength="2"
+                mascara="SS"
                 disabled={this.state.pagamento_app ? false : true} />
             </InputGroup>
           </FormGroup>
