@@ -6,14 +6,38 @@ import SelectProduto from '../../components/SelectProduto';
 
 
 class DetalheMesa extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      modalAdicionarItem: false,
-      codigo_produto:"",
+      produtos: [],
     };
   }
 
+  componentDidMount() {
+    this.obter(this.props.match.params.id);
+  }
+
+  obter = async (id) => {
+    let dados = await serverRequest.request('/mesa/obter', { "id_mesa": id });
+    if (dados) {
+      this.setState(dados[0]);
+    }
+  }
+
+  vlrProdutos = () => {
+    let vl = 0;
+    vl = this.state.produtos.reduce((sum, key) =>
+      sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
+    return `R$ ${vl.toFixed(2)}`;
+  }
+
+  qtdProdutos = (produtos) => {
+    let qt = 0;
+    qt = this.state.produtos.reduce((sum, key) =>
+      sum + (key.removido ? 0 : key.quantidade), 0)
+    return qt;
+  }
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -58,10 +82,11 @@ class DetalheMesa extends Component {
 
 
 
-        <h2>Mesa xxxx
-                    <Button className="pull-right" color="success"><i className="fa fa-check"></i> Fechar Mesa</Button>
-          <Button className="pull-right margin-right-10" color="danger"><i className="fa fa-remove"></i> Cancelar Mesa</Button>
+        <h2>
+          Mesa {this.state.numero}
+
         </h2>
+
         <br></br>
         <Card>
           <CardHeader>
@@ -82,32 +107,30 @@ class DetalheMesa extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Hamburguer</td>
-                  <td>2</td>
-                  <td>R$ 45,80</td>
-                </tr>
-                <tr>
-                  <td>Refrigerante</td>
-                  <td>3</td>
-                  <td>R$ 24,30</td>
-                </tr>
-                <tr>
-                  <td>Batata Frita</td>
-                  <td>2</td>
-                  <td>R$ 12,00</td>
-                </tr>
+                {
+                  this.state.produtos.map((obj) => {
+                    return (
+                      <tr>
+                        <td>{obj.nome_produto}</td>
+                        <td>{obj.quantidade}</td>
+                        <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2)}`}</td>
+                      </tr>
+                    );
+                  })
+                }
               </tbody>
               <tfoot>
                 <tr>
                   <th>Total</th>
-                  <th>7</th>
-                  <th>R$ 82,10</th>
+                  <th>{this.qtdProdutos()}</th>
+                  <th>{this.vlrProdutos()}</th>
                 </tr>
               </tfoot>
             </Table>
           </CardBody>
           <CardFooter>
+            <Button className="pull-right" color="success"><i className="icon-check"></i> Encerrar Conta</Button>
+            <Button title="Cancelar Conta" className="pull-right mr-2" color="danger"><i className="icon-ban"></i></Button>
           </CardFooter>
         </Card>
       </div>

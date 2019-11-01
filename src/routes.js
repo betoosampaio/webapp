@@ -34,7 +34,7 @@ const routes = [
   { path: '/perfil/editarDadosRestaurante', name: 'Editar Dados Restaurante', component: EditarDadosRestaurante },
   { path: '/perfil/editarDadosBancario', name: 'Editar Dados Bancários', component: EditarDadosBancarios },
   { path: '/mesas', exact: true, name: 'Mesas', component: Gerenciar },
-  { path: '/mesas/detalhemesa', name: 'Detalhe Mesa', component: DetalheMesa },
+  { path: '/mesas/detalhemesa/:id', name: 'Detalhe Mesa', component: DetalheMesa },
   { path: '/mesas/cadastrar', name: 'Cadastrar', component: CadastrarMesa },
   
 ];

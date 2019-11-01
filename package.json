@@ -27,6 +27,7 @@
     "react-select": "^3.0.4",
     "react-table": "^6.10.3",
     "reactstrap": "^8.0.1",
+    "reactstrap-confirm": "^1.2.0",
     "simple-line-icons": "^2.4.1",
     "socket.io-client": "^2.3.0",
     "vanilla-masker": "^1.2.0"
