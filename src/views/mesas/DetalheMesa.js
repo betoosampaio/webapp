@@ -172,8 +172,7 @@ class DetalheMesa extends Component {
               name="quantidade"
               placeholder="Quantidade"
               value={this.state.quantidade}
-              onChange={this.changeInput}
-              required
+        
             />
 
 
