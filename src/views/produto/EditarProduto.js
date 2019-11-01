@@ -142,27 +142,53 @@ class EditarProduto extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
               </InputGroupAddon>
-              <SelectMenu name="id_menu" value={this.state.id_menu} onChange={this.changeInput} required></SelectMenu>
+              <SelectMenu
+                name="id_menu"
+                value={this.state.id_menu}
+                onChange={this.changeInput}
+                required
+              >
+              </SelectMenu>
             </InputGroup>
           </FormGroup>
 
           <FormGroup>
             <Label>Em promoção:</Label>
             <InputGroup>
-              <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
+              <AppSwitch
+                name="promocao"
+                className={'mx-1'}
+                variant={'pill'}
+                color={'success'}
+                checked={this.state.promocao ? true : false}
+                onChange={this.changeSwitch}
+              />
             </InputGroup>
           </FormGroup>
 
           <FormGroup>
             <Label>Visível:</Label>
             <InputGroup>
-              <AppSwitch name="visivel" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.visivel ? true : false} onChange={this.changeSwitch} />
+              <AppSwitch
+                name="visivel"
+                className={'mx-1'}
+                variant={'pill'}
+                color={'success'}
+                checked={this.state.visivel ? true : false}
+                onChange={this.changeSwitch}
+              />
             </InputGroup>
           </FormGroup>
 
           <FormGroup>
             <Label>Foto:</Label>
-            <UploadFoto name="imagem" onChange={this.changeInput} path={this.state.imagem}></UploadFoto>
+            <UploadFoto
+              name="imagem"
+              onChange={this.changeInput}
+              path={this.state.imagem}
+            >
+
+            </UploadFoto>
           </FormGroup>
 
         </CardBody>

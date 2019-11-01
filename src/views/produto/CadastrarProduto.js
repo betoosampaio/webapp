@@ -176,7 +176,7 @@ class CadastrarProduto extends Component {
                   placeholder="001"
                   required
                 />
-                <FormFeedback invalid>{this.state.validacao.codigo_produto.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.codigo_produto.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
@@ -197,7 +197,7 @@ class CadastrarProduto extends Component {
                   invalid={this.state.validacao.nome_produto.invalid}
                   valid={this.state.validacao.nome_produto.valid}
                 />
-                <FormFeedback invalid>{this.state.validacao.nome_produto.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.nome_produto.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
@@ -238,7 +238,7 @@ class CadastrarProduto extends Component {
                   valid={this.state.validacao.preco.valid}
                   required
                 />
-                <FormFeedback invalid>{this.state.validacao.preco.msg}</FormFeedback>
+                <FormFeedback>{this.state.validacao.preco.msg}</FormFeedback>
 
               </InputGroup>
             </FormGroup>
@@ -258,7 +258,7 @@ class CadastrarProduto extends Component {
                   invalid={this.state.validacao.id_menu.invalid}
                   valid={this.state.validacao.id_menu.valid}
                 >
-                  <FormFeedback invalid>{this.state.validacao.id_menu.msg}</FormFeedback>
+                  <FormFeedback>{this.state.validacao.id_menu.msg}</FormFeedback>
 
                 </SelectMenu>
               </InputGroup>
