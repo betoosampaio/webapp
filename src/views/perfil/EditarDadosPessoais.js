@@ -17,17 +17,17 @@ class EditarDadosPessoais extends Component {
       email: "",
       celular: "",
       validacao: {
-        cpf_administrador: { ok: true, msg: '' },
-        nome_administrador: { ok: true, msg: '' },
-        celular: { ok: true, msg: '' },
-        email: { ok: true, msg: '' },
+        cpf_administrador: { valid: true, msg: '' },
+        nome_administrador: { valid: true, msg: '' },
+        celular: { valid: true, msg: '' },
+        email: { valid: true, msg: '' },
       },
     }
 
   };
 
   validarCelular = (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (!val) {
       msg = 'Campo obrigatório';
@@ -63,17 +63,17 @@ class EditarDadosPessoais extends Component {
       msg = 'Formato inválido';
     }
     else {
-      ok = true;
+      valid = true;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.celular.ok = ok;
+    newState.celular.valid = valid;
     newState.celular.msg = msg;
     this.setState({ validacao: newState });
   }
 
   validarCPF = (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value.replace(/\D/g, '');
     if (!val) {
       msg = 'Campo obrigatório';
@@ -82,11 +82,11 @@ class EditarDadosPessoais extends Component {
       msg = 'CPF incorreto';
     }
     else {
-      ok = true;
+      valid = true;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.cpf_administrador.ok = ok;
+    newState.cpf_administrador.valid = valid;
     newState.cpf_administrador.msg = msg;
     this.setState({ validacao: newState });
   }
@@ -113,7 +113,7 @@ class EditarDadosPessoais extends Component {
   }
 
   validarEmail = (event) => {
-    let ok = false, msg = '';
+    let valid = false, msg = '';
     let val = event.target.value;
     if (!val) {
       msg = 'Campo obrigatório';
@@ -122,11 +122,11 @@ class EditarDadosPessoais extends Component {
       msg = 'Email incorreto';
     }
     else {
-      ok = true;
+      valid = true;
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.email.ok = ok;
+    newState.email.valid = valid;
     newState.email.msg = msg;
     this.setState({ validacao: newState });
   }
@@ -196,7 +196,7 @@ class EditarDadosPessoais extends Component {
                 name="nome_administrador"
                 value={this.state.nome_administrador}
                 onChange={this.changeInput}
-                invalid={!this.state.validacao.nome_administrador.ok}
+                invalid={!this.state.validacao.nome_administrador.valid}
               />
 
               <FormFeedback invalid>{this.state.validacao.nome_administrador.msg}</FormFeedback>
@@ -214,6 +214,7 @@ class EditarDadosPessoais extends Component {
               </InputGroupAddon>
 
               <MaskedInput
+                maxlength="14"
                 className="form-control"
                 name="cpf_administrador"
                 value={this.state.cpf_administrador}
@@ -221,6 +222,8 @@ class EditarDadosPessoais extends Component {
                 onChange={this.changeInput}
                 placeholder='000.000.000-00'
                 mascara="999.999.999-99"
+                invalid={this.state.validacao.cpf_administrador.invalid}
+                valid={this.state.validacao.cpf_administrador.valid}
                 required
               />
 
@@ -243,7 +246,7 @@ class EditarDadosPessoais extends Component {
                 type="email"
                 onBlur={this.validarEmail}
                 required
-                invalid={!this.state.validacao.email.ok}
+                invalid={!this.state.validacao.email.valid}
               />
               <FormFeedback invalid>{this.state.validacao.email.msg}</FormFeedback>
 
