@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
+import { InputGroup, InputGroupAddon, InputGroupText, Input, FormFeedback } from 'reactstrap';
 
 class PasswordInput extends Component {
 
@@ -30,6 +30,7 @@ class PasswordInput extends Component {
             <i className={`fa ${show ? "fa-eye-slash" : "fa-eye"} form-control-feedback`} />
           </InputGroupText>
         </InputGroupAddon>
+        <FormFeedback>{this.props.feedbackMessage}</FormFeedback>
       </InputGroup>
     )
   }
