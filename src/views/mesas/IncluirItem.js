@@ -10,7 +10,6 @@ class DetalheMesa extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      codigo_produto: "",
       id_produto: "",
       quantidade: 1,
     };
@@ -25,15 +24,15 @@ class DetalheMesa extends Component {
 
     let obj = {
       id_mesa: this.props.id_mesa,
-      id_produto: this.state.codigo_produto[0],
+      id_produto: this.state.id_produto[0],
       quantidade: parseInt(this.state.quantidade),
     }
 
     let dados = await serverRequest.request('/mesa/incluirItem', obj);
 
-    if (dados) {
-      this.setState({ modalAdicionarItem: false });
-      this.props.onChange();
+    if (dados) {  
+      this.setState({ id_produto: "", quantidade: 1 }); 
+      this.props.onChange(); 
     }
   }
 
@@ -46,8 +45,6 @@ class DetalheMesa extends Component {
   incrementar() {
     this.setState({ quantidade: parseInt(this.state.quantidade) + 1 })
   }
-
-
 
   render() {
     return (
@@ -64,19 +61,11 @@ class DetalheMesa extends Component {
           <Modal.Body>
             <Row>
               <Col xs={12} sm={7} md={8} lg={9}>
-                <FormGroup>
-                  <Label>Produto:</Label>
-                  <InputGroup>
-                    <InputGroupAddon addonType="append">
-                      <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
-                    </InputGroupAddon>
-                    <SelectProduto
-                      name="codigo_produto"
-                      value={this.state.codigo_produto}
-                      onChange={this.changeInput}
-                      required />
-                  </InputGroup>
-                </FormGroup>
+                <SelectProduto
+                  name="id_produto"
+                  value={this.state.id_produto}
+                  onChange={this.changeInput}
+                  required />
               </Col>
               <Col xs={6} sm={5} md={4} lg={3}>
                 <FormGroup>

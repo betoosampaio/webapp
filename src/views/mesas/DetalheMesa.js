@@ -61,7 +61,7 @@ class DetalheMesa extends Component {
 
     }
   }
-  
+
   removerItem = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
@@ -74,7 +74,7 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/removerItem', { "id_mesa": id_mesa, "id_item": id_item });
       if (dados) {
-        window.parent.location.reload();
+        this.obter(this.props.match.params.id);
       }
 
     }

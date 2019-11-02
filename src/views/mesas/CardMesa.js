@@ -17,7 +17,7 @@ class CardMesa extends Component {
     let m = Math.floor(delta / 60) % 60;
     delta -= m * 60;
 
-    return `${d ? d + "d" : ""} ${h ? h + "h" : ""} ${m}m`;
+    return ` ${d ? d + "d" : ""} ${h ? h + "h" : ""} ${m}m`;
   }
 
   valorProdutos = (produtos) => {

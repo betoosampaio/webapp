@@ -3,6 +3,7 @@ import MultipleSelect from './MultipleSelect';
 import serverRequest from '../utils/serverRequest';
 import ReactDOMServer from 'react-dom/server';
 import Foto from './Foto';
+import { FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Table } from 'reactstrap';
 
 class SelectProduto extends Component {
 
@@ -11,7 +12,6 @@ class SelectProduto extends Component {
 
     this.state = {
       lista: [],
-      value: [],
     };
   }
 
@@ -48,25 +48,60 @@ class SelectProduto extends Component {
       },
     }
 
+    let produtoSelecionado = this.state.lista.filter(p => String(p.id_produto) === this.props.value[0])[0];
+
     return (
-      <MultipleSelect id="select-produto" options={options} {...this.props}>
-        <option value="">Selecione</option>
+      <div>
+        <FormGroup>
+          <Label>Produto:</Label>
+          <InputGroup>
+            <InputGroupAddon addonType="append">
+              <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+            </InputGroupAddon>
+            <MultipleSelect id="select-produto" options={options} {...this.props}>
+              <option value="">Selecione</option>
+              {
+                this.state.lista.map(obj => {
+                  return (
+                    <option
+                      key={obj.codigo_produto}
+                      value={obj.id_produto}
+                      data-codigo={obj.codigo_produto}
+                      data-preco={obj.preco}
+                      data-nome={obj.nome_produto}
+                      data-imagem={obj.imagem}>
+                      {obj.codigo_produto}{obj.nome_produto}
+                    </option>
+                  )
+                })
+              }
+            </MultipleSelect>
+          </InputGroup>
+        </FormGroup>
         {
-          this.state.lista.map(obj => {
-            return (
-              <option
-                key={obj.codigo_produto}
-                value={obj.id_produto}
-                data-codigo={obj.codigo_produto}
-                data-preco={obj.preco}
-                data-nome={obj.nome_produto}
-                data-imagem={obj.imagem}>
-                {obj.codigo_produto}{obj.nome_produto}
-              </option>
-            )
-          })
+          produtoSelecionado
+            ?
+            <Table responsive className="table-outline mb-0 d-none d-sm-table">
+              <thead className="thead-light">
+                <tr>
+                  <th>Imagem</th>
+                  <th>Código</th>
+                  <th>Produto</th>
+                  <th>Preço Un</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><Foto src={produtoSelecionado.imagem} height="50" width="50"></Foto></td>
+                  <td>{produtoSelecionado.codigo_produto}</td>
+                  <td>{produtoSelecionado.nome_produto}</td>
+                  <td>R$ {parseFloat(produtoSelecionado.preco).toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </Table>
+            : null
         }
-      </MultipleSelect>
+      </div>
     )
   }
 }
