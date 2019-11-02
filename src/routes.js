@@ -13,7 +13,7 @@ const Perfil = React.lazy(() => import('./views/perfil/Perfil'));
 const EditarDadosPessoais = React.lazy(() => import('./views/perfil/EditarDadosPessoais'));
 const EditarDadosRestaurante = React.lazy(() => import('./views/perfil/EditarDadosRestaurante'));
 const EditarDadosBancarios = React.lazy(() => import('./views/perfil/EditarDadosBancarios'));
-const Gerenciar = React.lazy(() => import('./views/mesas/Gerenciar'));
+const ListaMesa = React.lazy(() => import('./views/mesas/ListaMesa'));
 const DetalheMesa = React.lazy(() => import('./views/mesas/DetalheMesa'));
 
 const routes = [
@@ -32,7 +32,7 @@ const routes = [
   { path: '/perfil/editarDadosPessoais', name: 'Editar Dados Pessoais', component: EditarDadosPessoais },
   { path: '/perfil/editarDadosRestaurante', name: 'Editar Dados Restaurante', component: EditarDadosRestaurante },
   { path: '/perfil/editarDadosBancario', name: 'Editar Dados Bancários', component: EditarDadosBancarios },
-  { path: '/mesas', exact: true, name: 'Mesas', component: Gerenciar },
+  { path: '/mesas', exact: true, name: 'Mesas', component: ListaMesa },
   { path: '/mesas/detalhemesa/:id', name: 'Detalhe Mesa', component: DetalheMesa },
   
 ];
