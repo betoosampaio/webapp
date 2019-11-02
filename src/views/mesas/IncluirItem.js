@@ -60,6 +60,11 @@ class DetalheMesa extends Component {
     this.setState({ quantidade: parseInt(this.state.quantidade) + 1 })
   }
 
+  onHide = () => {
+    this.setState({ id_produto: "", quantidade: 1 });
+    this.props.onHide();
+  }
+
   render() {
 
     const multipleSelectOptions = {
@@ -92,7 +97,7 @@ class DetalheMesa extends Component {
         centered
         backdrop='static'
         show={this.props.show}
-        onHide={this.props.onHide}>
+        onHide={this.onHide}>
         <form onSubmit={this.incluirItem}>
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">Adicionar novo item a mesa</Modal.Title>
@@ -158,7 +163,7 @@ class DetalheMesa extends Component {
                 {
                   produtoSelecionado
                     ?
-                    <Table responsive className="table-outline mb-0 d-none d-sm-table">
+                    <Table responsive className="table-outline">
                       <thead className="thead-light">
                         <tr>
                           <th>Imagem</th>
