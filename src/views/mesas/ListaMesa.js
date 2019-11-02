@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Col, Row, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import CardMesa from './CardMesa';
-
+import NovaMesa from './NovaMesa';
 class ListaMesa extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      lista: []
+      lista: [],
     };
   }
 
@@ -25,14 +24,17 @@ class ListaMesa extends Component {
     }
   }
 
+  mesaAdicionada = () => {
+    this.setState({ modalNovaMesa: false })
+    this.obterLista();
+  }
+
   render() {
     return (
       <div>
-        <Link to="/mesas/cadastrar">
-          <Button color="success" size="sm">
-            <i className="icon-plus mr-1"></i>Nova Mesa
-            </Button>
-        </Link>
+        <Button color="success" size="sm" onClick={() => this.setState({ modalNovaMesa: true })}>
+          <i className="icon-plus mr-1"></i>Nova Mesa
+        </Button>
         <p></p>
         <Row>
           {
@@ -45,6 +47,10 @@ class ListaMesa extends Component {
             })
           }
         </Row>
+        <NovaMesa
+          show={this.state.modalNovaMesa}
+          onHide={() => { this.setState({ modalNovaMesa: false }) }}
+          mesaadicionada={this.mesaAdicionada} />
       </div>
     );
   }

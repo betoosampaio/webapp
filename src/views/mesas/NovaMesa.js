@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
+import Modal from 'react-bootstrap/Modal'
 
-class CadastrarMesa extends Component {
+class NovaMesa extends Component {
 
   constructor(props) {
     super(props);
@@ -11,18 +12,16 @@ class CadastrarMesa extends Component {
     };
   }
 
-
   cadastrar = async (event) => {
     event.preventDefault();
     let obj = {
       numero: this.state.numero,
     }
 
-    console.log(obj);
-
     let dados = await serverRequest.request('/mesa/cadastrar', obj);
     if (dados) {
-      window.location.href = '/#/mesas';
+      this.setState({ numero: "" });
+      this.props.mesaadicionada();
     }
   }
 
@@ -32,15 +31,18 @@ class CadastrarMesa extends Component {
 
   render() {
     return (
-
-      <form name="form" onSubmit={this.cadastrar}>
-        <Card>
-          <CardHeader>
-            <strong>Cadastrar Operador</strong>
-          </CardHeader>
-          <CardBody>
-
-
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop='static'
+        show={this.props.show}
+        onHide={this.onHide}>
+        <form name="form" onSubmit={this.cadastrar}>
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">Iniciar Mesa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <FormGroup>
               <Label>Número da mesa:</Label>
               <InputGroup>
@@ -50,18 +52,14 @@ class CadastrarMesa extends Component {
                 <Input name="numero" value={this.state.numero} onChange={this.changeInput} />
               </InputGroup>
             </FormGroup>
-
-
-          </CardBody>
-          <CardFooter>
-            <Button type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Confirmar</Button>
-          </CardFooter>
-        </Card>
-
-      </form>
-
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit" color="success"><i className="fa fa-check"></i> Incluir</Button>
+          </Modal.Footer>
+        </form>
+      </Modal >
     );
   }
 }
 
-export default CadastrarMesa;
+export default NovaMesa;
