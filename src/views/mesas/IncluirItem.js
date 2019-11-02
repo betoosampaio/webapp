@@ -163,7 +163,7 @@ class DetalheMesa extends Component {
                 {
                   produtoSelecionado
                     ?
-                    <Table responsive className="table-outline">
+                    <Table striped bordered hover responsive>
                       <thead className="thead-light">
                         <tr>
                           <th>Imagem</th>
