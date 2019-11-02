@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import MultipleSelect from './MultipleSelect';
 import serverRequest from '../utils/serverRequest';
+import ReactDOMServer from 'react-dom/server';
+import Foto from './Foto';
 
 class SelectProduto extends Component {
 
@@ -9,6 +11,7 @@ class SelectProduto extends Component {
 
     this.state = {
       lista: [],
+      value: [],
     };
   }
 
@@ -24,13 +27,42 @@ class SelectProduto extends Component {
   }
 
   render() {
+    const options = {
+      filter: true,
+      single: true,
+      displayValues: true,
+      placeholder: "Selecione",
+      textTemplate: (el) => {
+        if (el[0].value) {
+          return ReactDOMServer.renderToStaticMarkup(
+            <span>
+              <Foto src={el[0].dataset.imagem} height="30" width="30"></Foto>
+              <span className="ml-2 text-muted">[{el[0].dataset.codigo}]</span>
+              <span className="ml-2 font-weight-bold">{el[0].dataset.nome}</span>
+              <div className="pull-right">R$ {parseFloat(el[0].dataset.preco).toFixed(2)}</div>
+            </span>
+          )
+        }
+        else
+          return el[0].innerHTML;
+      },
+    }
+
     return (
-      <MultipleSelect id="select-produto" options={{ filter: true, single: true }} {...this.props}>
+      <MultipleSelect id="select-produto" options={options} {...this.props}>
         <option value="">Selecione</option>
         {
           this.state.lista.map(obj => {
             return (
-              <option key={obj.codigo_produto} value={obj.codigo_produto}>{`${obj.codigo_produto} - ${obj.nome_produto} - ${"R$   " + obj.preco}`}</option>
+              <option
+                key={obj.codigo_produto}
+                value={obj.id_produto}
+                data-codigo={obj.codigo_produto}
+                data-preco={obj.preco}
+                data-nome={obj.nome_produto}
+                data-imagem={obj.imagem}>
+                {obj.codigo_produto}{obj.nome_produto}
+              </option>
             )
           })
         }

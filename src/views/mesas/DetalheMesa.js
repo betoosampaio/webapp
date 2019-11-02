@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Card, CardHeader, CardBody, CardFooter, Button, Input, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Table, Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
-import Modal from 'react-bootstrap/Modal'
 import Confirm from 'reactstrap-confirm';
-import SelectProduto from '../../components/SelectProduto';
-
+import IncluirItem from './IncluirItem';
 
 class DetalheMesa extends Component {
 
@@ -13,10 +11,6 @@ class DetalheMesa extends Component {
     this.state = {
       produtos: [],
       id_mesa: "",
-      codigo_produto: "",
-      id_produto: "",
-      quantidade: 0,
-
     };
   }
 
@@ -38,34 +32,16 @@ class DetalheMesa extends Component {
     return `R$ ${vl.toFixed(2)}`;
   }
 
-  qtdProdutos = (produtos) => {
+  qtdProdutos = () => {
     let qt = 0;
     qt = this.state.produtos.reduce((sum, key) =>
       sum + (key.removido ? 0 : parseInt(key.quantidade)), 0)
     return qt;
   }
 
-  changeInput = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  cadastrar = async (event) => {
-    let obj = {
-
-      id_mesa: this.state._id,
-      id_produto: this.state.codigo_produto[0],
-      quantidade: this.state.quantidade,
-
-    }
-
-    console.log(obj)
-
-    let dados = await serverRequest.request('/mesa/incluirItem', obj);
-
-    if (dados) {
-      this.setState({ modalAdicionarItem: false });
-      window.parent.location.reload();
-    }
+  itemIncluso = () => {
+    this.setState({ modalAdicionarItem: false })
+    this.obter(this.props.match.params.id);
   }
 
   removerMesa = async (id_mesa) => {
@@ -85,6 +61,7 @@ class DetalheMesa extends Component {
 
     }
   }
+  
   removerItem = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
@@ -120,97 +97,16 @@ class DetalheMesa extends Component {
     }
   }
 
-  decrementar() {
-    if (this.state.quantidade <= 0) {
-
-    } else {
-      this.setState({ quantidade: this.state.quantidade - 1 })
-    }
-
-  }
-
-  incrementar() {
-    this.setState({ quantidade: this.state.quantidade + 1 })
-  }
-
-
-
   render() {
     return (
       <div>
-
-        <Modal
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          show={this.state.modalAdicionarItem}
-          onHide={() => { this.setState({ modalAdicionarItem: false }) }}
-          backdrop='static'
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              Adicionar novo item a mesa
-        </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-
-            <FormGroup>
-              <Label>Produto:</Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
-                </InputGroupAddon>
-
-                <SelectProduto
-                  name="codigo_produto"
-                  value={this.state.codigo_produto}
-                  onChange={this.changeInput}
-                  required></SelectProduto>
-
-              </InputGroup>
-
-            </FormGroup>
-
-
-            <Button onClick={this.incrementar.bind(this)} color="success" size="sm" style={{ marginRight: "5px" }}>
-              <i className="icon-plus"></i>
-            </Button>
-
-            <Button onClick={this.decrementar.bind(this)} color="danger" size="sm">
-              <i className="icon-minus"></i>
-            </Button>
-
-
-            <p></p>
-
-            <label>Quantidade</label>
-            <Input
-              name="quantidade"
-              placeholder="Quantidade"
-              value={this.state.quantidade}
-
-            />
-
-
-          </Modal.Body>
-          <Modal.Footer>
-            <Button color="success" onClick={this.cadastrar}>Incluir</Button>
-          </Modal.Footer>
-        </Modal>
-
-        <h2>
-          Mesa {this.state.numero}
-
-        </h2>
-
-        <br></br>
-        <Card>
+        <h2>Mesa {this.state.numero}</h2>
+        <Card className="mt-4">
           <CardHeader>
             <i className='icon-list'></i>&nbsp; Produtos
                         <div className="card-header-actions">
               <Button onClick={() => this.setState({ modalAdicionarItem: true })} color="success" size="sm">
-                <i className="icon-plus"></i>&nbsp;Incluir
-                        </Button>
+                <i className="icon-plus"></i>&nbsp;Incluir</Button>
             </div>
           </CardHeader>
           <CardBody>
@@ -221,32 +117,26 @@ class DetalheMesa extends Component {
                   <th>Quantidade</th>
                   <th>Valor</th>
                   <th>Excluir</th>
-
                 </tr>
               </thead>
               <tbody>
                 {
                   this.state.produtos.map((obj) => {
-
-                    if (!obj.removido) {
-
-                      return (
-                        <tr>
-                          <td>{obj.nome_produto}</td>
-                          <td>{obj.quantidade}</td>
-                          <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2).replace('.', ',')}`}</td>
-
-                          <td>
-                            <Button color="danger" size="sm" onClick={() => this.removerItem(this.state._id, obj.id_item)} >
+                    return (
+                      <tr key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
+                        <td>{obj.nome_produto}</td>
+                        <td>{obj.quantidade}</td>
+                        <td>{`R$ ${(obj.preco * obj.quantidade).toFixed(2).replace('.', ',')}`}</td>
+                        <td>
+                          {obj.removido
+                            ? null
+                            : <Button color="danger" size="sm" onClick={() => this.removerItem(this.state._id, obj.id_item)} >
                               <i className="icon-close"></i>
                             </Button>
-                          </td>
-
-
-                        </tr>
-                      );
-                    }
-
+                          }
+                        </td>
+                      </tr>
+                    );
                   })
                 }
               </tbody>
@@ -254,7 +144,7 @@ class DetalheMesa extends Component {
                 <tr>
                   <th>Total</th>
                   <th>{this.qtdProdutos()}</th>
-                  <th>{this.vlrProdutos()}</th>
+                  <th colSpan="2">{this.vlrProdutos()}</th>
                 </tr>
               </tfoot>
             </Table>
@@ -264,6 +154,11 @@ class DetalheMesa extends Component {
             <Button title="Cancelar Conta" className="pull-right mr-2" color="danger" onClick={() => this.removerMesa(this.state._id)} ><i className="icon-ban"></i></Button>
           </CardFooter>
         </Card>
+        <IncluirItem
+          show={this.state.modalAdicionarItem}
+          onHide={() => { this.setState({ modalAdicionarItem: false }) }}
+          id_mesa={this.state._id}
+          onChange={this.itemIncluso} />
       </div >
     );
   }
