@@ -28,7 +28,7 @@ class SelectMenu extends Component {
             <Input type="select" {...this.props}>
                 <option value="">Selecione</option>
                 {
-                    this.state.lista.map(obj => {
+                    this.state.lista.filter(m => m.ativo).map(obj => {
                         return (
                             <option key={obj.id_menu} value={obj.id_menu}>{obj.ds_menu}</option>
                         )
