@@ -158,7 +158,7 @@ class DetalheMesa extends Component {
           show={this.state.modalAdicionarItem}
           onHide={() => { this.setState({ modalAdicionarItem: false }) }}
           id_mesa={this.state._id}
-          onChange={this.itemIncluso} />
+          itemincluso={this.itemIncluso} />
       </div >
     );
   }
