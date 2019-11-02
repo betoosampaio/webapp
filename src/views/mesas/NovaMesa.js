@@ -29,6 +29,11 @@ class NovaMesa extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  onHide = () => {
+    this.setState({ numero: "" });
+    this.props.onHide();
+  }
+
   render() {
     return (
       <Modal
