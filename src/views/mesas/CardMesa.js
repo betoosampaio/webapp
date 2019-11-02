@@ -43,22 +43,6 @@ class CardMesa extends Component {
     }
   }
 
-  removerMesa = async (id_mesa) => {
-    let confirm = await Confirm({
-      title: "Confirmação",
-      message: "Tem certeza que quer cancelar essa conta?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
-    });
-
-    if (confirm) {
-      let dados = await serverRequest.request('/mesa/remover', { "id_mesa": id_mesa });
-      if (dados) this.props.atualizar();
-
-    }
-  }
-
   render() {
     return (
       <Card>
@@ -66,8 +50,7 @@ class CardMesa extends Component {
           <i className="icon-calculator"></i>
           <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
           <div className="card-header-actions">
-            <Button onClick={() => this.fecharMesa(this.props.mesa._id)} title="Encerrar Conta" color="link" className="card-header-action"><i className="icon-check"></i></Button>
-            <Button onClick={() => this.removerMesa(this.props.mesa._id)} title="Cancelar Conta" color="link" className="card-header-action"><i className="icon-ban"></i></Button>
+            <Button onClick={() => this.fecharMesa(this.props.mesa._id)} title="Encerrar Conta" color="link" className="card-header-action"><i className="icon-basket-loaded"></i></Button>
           </div>
         </CardHeader>
         <CardBody>
