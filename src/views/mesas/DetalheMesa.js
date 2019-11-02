@@ -43,6 +43,27 @@ class DetalheMesa extends Component {
     return qt;
   }
 
+  vlrServicos = () => {
+    let
+      txservico = parseFloat(this.state.taxa_servico) || 0,
+      desconto = parseFloat(this.state.desconto) || 0;
+    return `R$ ${(txservico - desconto).toFixed(2)}`;
+  }
+
+  vlrTxServico = () => { return `R$ ${(parseFloat(this.state.taxa_servico) || 0).toFixed(2)}` }
+  vlrDesconto = () => { return `R$ -${(parseFloat(this.state.desconto) || 0).toFixed(2)}` }
+
+  vlrTotal = () => {
+    let
+      vl = 0,
+      txservico = parseFloat(this.state.taxa_servico) || 0,
+      desconto = parseFloat(this.state.desconto) || 0;
+
+    vl = this.state.produtos.reduce((sum, key) =>
+      sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
+    return `R$ ${(vl + txservico - desconto).toFixed(2)}`;
+  }
+
   itemIncluso = () => {
     this.setState({ modalAdicionarItem: false })
     this.obter(this.props.match.params.id);
@@ -110,7 +131,7 @@ class DetalheMesa extends Component {
             <Card>
               <CardBody>
                 <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+                  <ButtonDropdown id='card1' isOpen={this.state.menuSituacao} toggle={() => { this.setState({ menuSituacao: !this.state.menuSituacao }); }}>
                     <DropdownToggle caret className="p-0" color="black">
                       <i className="icon-settings"></i>
                     </DropdownToggle>
@@ -133,7 +154,7 @@ class DetalheMesa extends Component {
           <Col xs="12" sm="6" lg="4">
             <Card className="text-white bg-success">
               <CardBody>
-                <div className="text-value">{this.vlrProdutos()}</div>
+                <div className="text-value">{this.vlrTotal()}</div>
                 <div>Valor Total</div>
               </CardBody>
             </Card>
@@ -194,16 +215,32 @@ class DetalheMesa extends Component {
           </Col>
           <Col xs={12} md={4} lg={5}>
             <Card>
-              <CardHeader><i className='fa fa-list-ul'></i>Serviços</CardHeader>
+              <CardHeader><i className='fa fa-list-ul'></i>Serviços
+              <ButtonGroup className="float-right">
+                  <ButtonDropdown id='card1' isOpen={this.state.menuServicos} toggle={() => { this.setState({ menuServicos: !this.state.menuServicos }); }}>
+                    <DropdownToggle caret className="p-0" color="black">
+                      <i className="icon-settings"></i>
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <i className="icon-calculator" /> Editar Taxa de Serviço
+                      </DropdownItem>
+                      <DropdownItem>
+                        <i className="fa fa-dollar" /> Aplicar Desconto
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </ButtonDropdown>
+                </ButtonGroup>
+              </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem>Taxa de Serviço <span className="pull-right">R$ 15,00</span></ListGroupItem>
-                  <ListGroupItem>Desconto <span className="pull-right">R$ 0,00</span></ListGroupItem>
+                  <ListGroupItem>Taxa de Serviço <span className="pull-right">{this.vlrTxServico()}</span></ListGroupItem>
+                  <ListGroupItem>Desconto <span className="pull-right">{this.vlrDesconto()}</span></ListGroupItem>
                 </ListGroup>
               </CardBody>
               <CardFooter>
                 <b>Total</b>
-                <b className="pull-right">R$ 15,00</b>
+                <b className="pull-right">{this.vlrServicos()}</b>
               </CardFooter>
             </Card>
           </Col>
