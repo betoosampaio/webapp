@@ -394,6 +394,7 @@ class EditarDadosRestaurante extends Component {
                 value={this.state.cep}
                 onChange={this.changeInput}
                 placeholder='CEP do restaurante'
+                onBlur={this.validarCEP}
                 mascara="99999-999"
                 invalid={this.state.validacao.cep.invalid}
                 valid={this.state.validacao.cep.valid}

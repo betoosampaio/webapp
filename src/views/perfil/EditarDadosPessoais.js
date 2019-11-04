@@ -16,6 +16,7 @@ class EditarDadosPessoais extends Component {
       cpf_administrador: "",
       email: "",
       celular: "",
+      
       validacao: {
         cpf_administrador: { valid: false, invalid: false, msg: '' },
         nome_administrador: { valid: false, invalid: false, msg: '' },
@@ -251,7 +252,6 @@ class EditarDadosPessoais extends Component {
                 value={this.state.nome_administrador}
                 onChange={this.changeInput}
                 onBlur={this.validarNomeAdmin}
-
                 invalid={this.state.validacao.nome_administrador.invalid}
                 valid={this.state.validacao.nome_administrador.valid}
                 minLength="4"
@@ -259,8 +259,6 @@ class EditarDadosPessoais extends Component {
                 required
               />
               <FormFeedback>{this.state.validacao.nome_administrador.msg}</FormFeedback>
-
-
 
             </InputGroup>
           </FormGroup>
@@ -285,9 +283,7 @@ class EditarDadosPessoais extends Component {
                 valid={this.state.validacao.cpf_administrador.valid}
                 required
               />
-
               <FormFeedback invalid>{this.state.validacao.cpf_administrador.msg}</FormFeedback>
-
             </InputGroup>
           </FormGroup>
 
@@ -309,7 +305,6 @@ class EditarDadosPessoais extends Component {
                 valid={this.state.validacao.email.valid}
               />
               <FormFeedback>{this.state.validacao.email.msg}</FormFeedback>
-
             </InputGroup>
           </FormGroup>
 
@@ -333,7 +328,6 @@ class EditarDadosPessoais extends Component {
                 required
               />
               <FormFeedback>{this.state.validacao.celular.msg}</FormFeedback>
-
             </InputGroup>
           </FormGroup>
 
