@@ -19,7 +19,7 @@ class CadastrarOperador extends Component {
 
       validacao: {
         nome_operador: { valid: false, invalid: false, msg: '' },
-        id_perfil: { valid: false, msg: '' },
+        id_perfil: { valid: false, invalid: false, msg: '' },
         login_operador: { valid: false, invalid: false, msg: '' },
         senha_operador: { valid: false, invalid: false, msg: '' },
       },
@@ -54,15 +54,19 @@ class CadastrarOperador extends Component {
   }
 
   validarIdPerfil = (event) => {
-    let valid = false;
+    let valid = false, invalid = true, msg = '';
     let val = event.target.value;
     if (!val) {
+      msg = 'Campo obrigatório';
     }
     else {
       valid = true;
+      invalid = false;
     }
     let newState = Object.assign({}, this.state.validacao);
     newState.id_perfil.valid = valid;
+    newState.id_perfil.invalid = invalid;
+    newState.id_perfil.msg = msg;
     this.setState({ validacao: newState });
   }
 
@@ -171,9 +175,12 @@ class CadastrarOperador extends Component {
                   onChange={this.changeInput}
                   onBlur={this.validarIdPerfil}
                   valid={this.state.validacao.id_perfil.valid}
+                  invalid={this.state.validacao.id_perfil.invalid}
                   required
                 >
                 </SelectPerfil>
+                <FormFeedback>{this.state.validacao.id_perfil.msg}</FormFeedback>
+
               </InputGroup>
             </FormGroup>
 
@@ -204,20 +211,20 @@ class CadastrarOperador extends Component {
 
             <FormGroup>
               <Label>Senha:</Label>
-                <PasswordInput
-                  name="senha_operador"
-                  value={this.state.senha_operador}
-                  onChange={this.changeInput}
-                  placeholder="Senha"
-                  minLength="8"
-                  onBlur={this.validarSenhaOperador}
-                  valid={this.state.validacao.senha_operador.valid}
-                  invalid={this.state.validacao.senha_operador.invalid}
-                  feedbackMessage={this.state.validacao.senha_operador.msg}
-                  autocomplete="new-password"
-                  required
-                />
-                
+              <PasswordInput
+                name="senha_operador"
+                value={this.state.senha_operador}
+                onChange={this.changeInput}
+                placeholder="Senha"
+                minLength="8"
+                onBlur={this.validarSenhaOperador}
+                valid={this.state.validacao.senha_operador.valid}
+                invalid={this.state.validacao.senha_operador.invalid}
+                feedbackMessage={this.state.validacao.senha_operador.msg}
+                autocomplete="new-password"
+                required
+              />
+
             </FormGroup>
           </CardBody>
           <CardFooter>
