@@ -104,10 +104,11 @@ class Produto extends Component {
   remover = async (id) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer remover este produto?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
+      message: "Tem certeza que deseja remover este produto?",
+      confirmColor: "success",
+      confirmText: "Confimar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
