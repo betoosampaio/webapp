@@ -259,13 +259,21 @@ class EditarDadosRestaurante extends Component {
 
 
   componentDidMount() {
-    this.obter(this.props.match.params.id);
+    this.obter();
   }
 
-  obter = async (id) => {
-    let dados = await serverRequest.request('/restaurante/obter', { "id_restaurante": id });
+  obter = async () => {
+    let dados = await serverRequest.request('/restaurante/obter');
+
     if (dados) {
-      this.setState(dados[0]);
+
+      let obj = dados[0];
+
+      obj.cnpj = obj.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+      obj.cep = obj.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+
+      this.setState( obj );
+
     }
   }
 

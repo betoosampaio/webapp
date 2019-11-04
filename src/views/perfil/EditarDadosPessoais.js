@@ -190,13 +190,24 @@ class EditarDadosPessoais extends Component {
   }
 
   componentDidMount() {
-    this.obter(this.props.match.params.id);
+    this.obter();
   }
 
-  obter = async (id) => {
-    let dados = await serverRequest.request('/restaurante/obter', { "id_restaurante": id });
+
+  obter = async () => {
+    let dados = await serverRequest.request('/restaurante/obter');
+
     if (dados) {
-      this.setState(dados[0]);
+
+      let obj = dados[0];
+
+
+      obj.cpf_administrador = obj.cpf_administrador.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+      obj.celular = obj.celular.toString().replace(/(\d{2})(\d{5})(\d{3})/, "($1) $2-$3");
+
+
+      this.setState( obj );
+
     }
   }
 
