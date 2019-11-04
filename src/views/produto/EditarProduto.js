@@ -21,7 +21,6 @@ class EditarProduto extends Component {
       id_menu: "",
       promocao: "",
       imagem: "",
-      visivel: "",
       ativo: "",
     };
   }
@@ -33,7 +32,7 @@ class EditarProduto extends Component {
   obter = async (id) => {
     let dados = await serverRequest.request('/produto/obter', { "id_produto": id });
     if (dados) {
-      dados[0].preco = String(dados[0].preco).replace('.',',');
+      dados[0].preco = String(dados[0].preco).replace('.', ',');
       this.setState(dados[0]);
     }
   }
@@ -168,14 +167,14 @@ class EditarProduto extends Component {
           </FormGroup>
 
           <FormGroup>
-            <Label>Visível:</Label>
+            <Label>Ativo:</Label>
             <InputGroup>
               <AppSwitch
-                name="visivel"
+                name="ativo"
                 className={'mx-1'}
                 variant={'pill'}
                 color={'success'}
-                checked={this.state.visivel ? true : false}
+                checked={this.state.ativo ? true : false}
                 onChange={this.changeSwitch}
               />
             </InputGroup>
