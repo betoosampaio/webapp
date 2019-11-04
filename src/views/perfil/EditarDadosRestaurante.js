@@ -274,15 +274,15 @@ class EditarDadosRestaurante extends Component {
 
     let obj = {
 
-      cpf_administrador: this.state.cpf_administrador,//.replace(/\D/g, '')//,
+      cpf_administrador: this.state.cpf_administrador.replace(/\D/g, ''),
       nome_administrador: this.state.nome_administrador,
-      celular: this.state.celular,//.replace(/\D/g, '')//,.toString().replace(/\D/g, ''),
+      celular: this.state.celular.replace(/\D/g, '').toString().replace(/\D/g, ''),
       email: this.state.email,
 
       cnpj: this.state.cnpj,
       razao_social: this.state.razao_social,
       nome_restaurante: this.state.nome_restaurante,
-      cep: this.state.cep,//.replace(/\D/g, '')//,.replace(/\D/g, ''),
+      cep: this.state.cep.replace(/\D/g, '').replace(/\D/g, ''),
       logradouro: this.state.logradouro,
       numero: this.state.numero,
       complemento: this.state.complemento,

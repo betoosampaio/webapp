@@ -180,6 +180,7 @@ class Step4 extends Component {
               onBlur={this.validarCodigoRestaurante}
               valid={this.state.validacao.codigo_restaurante.valid}
               invalid={this.state.validacao.codigo_restaurante.invalid}
+              autocomplete="new-password"
               required
               minLength="4"
               maxLength="255"
@@ -209,6 +210,7 @@ class Step4 extends Component {
               onBlur={this.validarLogin}
               valid={this.state.validacao.login.valid}
               invalid={this.state.validacao.login.invalid}
+              autocomplete="new-password"
               required
             />
             <FormFeedback>{this.state.validacao.login.msg}</FormFeedback>
@@ -232,6 +234,7 @@ class Step4 extends Component {
               onBlur={this.validarSenha}
               valid={this.state.validacao.senha.valid}
               invalid={this.state.validacao.senha.invalid}
+              autocomplete="new-password"
               required
             />
             <FormFeedback>{this.state.validacao.senha.msg}</FormFeedback>
