@@ -76,10 +76,11 @@ class Operador extends Component {
   remover = async (id) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer remover este operador?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
+      message: "Tem certeza que deseja remover este operador?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
