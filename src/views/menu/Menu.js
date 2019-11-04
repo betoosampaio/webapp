@@ -67,10 +67,11 @@ class ListaMenu extends Component {
 
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer remover este menu?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
+      message: "Tem certeza que deseja remover este menu?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
