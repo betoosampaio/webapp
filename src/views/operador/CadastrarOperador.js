@@ -193,6 +193,7 @@ class CadastrarOperador extends Component {
                   onBlur={this.validarLoginOperador}
                   invalid={this.state.validacao.login_operador.invalid}
                   valid={this.state.validacao.login_operador.valid}
+                  autocomplete="new-password"
                   required
 
                 />
@@ -213,6 +214,7 @@ class CadastrarOperador extends Component {
                   valid={this.state.validacao.senha_operador.valid}
                   invalid={this.state.validacao.senha_operador.invalid}
                   feedbackMessage={this.state.validacao.senha_operador.msg}
+                  autocomplete="new-password"
                   required
                 />
                 
