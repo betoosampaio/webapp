@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import {
-  Table, Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, ButtonGroup, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem
+  Table, Card, CardHeader, CardBody, CardFooter, Button, Input, Row, Col, ListGroup,
+  ListGroupItem, InputGroup, TextInputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
 import Foto from '../../components/Foto';
+import Modal from 'react-bootstrap/Modal';
 
 class DetalheMesa extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      servicoPorcentagem: '',
+      descontoPorcentagem: '',
+      servico: '',
+      desconto: '',
+      showEditarDesconto: false,
+      showEditarTaxaServico: false,
       produtos: [],
       pagamentos: [],
       id_mesa: "",
@@ -21,6 +28,16 @@ class DetalheMesa extends Component {
 
   componentDidMount() {
     this.obter(this.props.match.params.id);
+  }
+
+  componentDidUpdate() {
+
+    let valorTotal = this.vlrTotal();
+
+    if (valorTotal !== this.state.valorTotal) {
+      this.setState({ valorTotal: valorTotal }, () => console.log(this.state.valorTotal));
+    }
+
   }
 
   obter = async (id) => {
@@ -51,7 +68,7 @@ class DetalheMesa extends Component {
     return vl;
   }
 
-  vlrTxServico = () => { return parseFloat(this.state.taxa_servico) || 0}
+  vlrTxServico = () => { return parseFloat(this.state.taxa_servico) || 0 }
   vlrDesconto = () => { return parseFloat(this.state.desconto) || 0 }
 
   vlrTotal = () => {
@@ -131,35 +148,44 @@ class DetalheMesa extends Component {
     }
   }
 
+  changeInputDesconto = (event) => {
+    if (event.target.name === "desconto") {
+
+      let porcentagem = event.target.value * 100 / this.state.valorTotal;
+
+      this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
+
+    } else {
+      let valor = (event.target.value * this.state.valorTotal) / 100;
+
+      this.setState({ descontoPorcentagem: event.target.value, desconto: valor });
+    }
+
+  }
+  changeInputServico = (event) => {
+    if (event.target.name === "servico") {
+
+      let porcentagem = event.target.value * 100 / this.state.valorTotal;
+
+      this.setState({ servico: event.target.value, servicoPorcentagem: porcentagem });
+
+    } else {
+      let valor = (event.target.value * this.state.valorTotal) / 100;
+
+      this.setState({ servicoPorcentagem: event.target.value, servico: valor });
+    }
+
+  }
+
   render() {
     return (
       <div>
+
+
         <h2 className="mb-4">Mesa {this.state.numero}</h2>
+
         <Row>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-secondary">
-              <CardBody>
-                <div className="text-value">{this.moneyFormat(this.vlrTotal())}</div>
-                <div>Valor Total</div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-success">
-              <CardBody>
-                <div className="text-value">{this.moneyFormat(this.vlrPagamentos())}</div>
-                <div>Valor Pago</div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-primary">
-              <CardBody>
-                <div className="text-value">{this.moneyFormat(this.vlrRestante())}</div>
-                <div>Valor Restante</div>
-              </CardBody>
-            </Card>
-          </Col>
+
           <Col xs="12" sm="6" lg="3">
             <Card>
               <CardBody>
@@ -177,80 +203,35 @@ class DetalheMesa extends Component {
                   title="Encerrar">
                   <i className="icon-basket-loaded" />
                 </Button>
-                <div className="text-value">{this.state.aberta ? "Aberta" : "Fechada"}</div>
-                <div>Situação</div>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} md={4} lg={5}>
-            <Card>
-              <CardHeader><i className='icon-calculator'></i>Resumo
-              </CardHeader>
-              <CardBody>
-                <ListGroup>
-                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
-                    <Button size="sm" className="pull-right">{this.moneyFormat(this.vlrTxServico())}</Button>
-                  </ListGroupItem>
-                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
-                    <Button size="sm" className="pull-right">{this.moneyFormat(this.vlrDesconto()*-1)}</Button>
-                  </ListGroupItem>
-                  <ListGroupItem><i className="fa fa-cutlery mr-2 text-muted" />Produtos
-                    <span className="pull-right">{this.moneyFormat(this.vlrProdutos())}</span>
-                  </ListGroupItem>
-                </ListGroup>
-              </CardBody>
-              <CardFooter>
-                <b>Total</b>
-                <b className="pull-right">{this.vlrTotal()}</b>
-              </CardFooter>
-            </Card>
-
-            <Card>
-              <CardHeader><i className='fa fa-money'></i>
-                Pagamentos
-                <Button className="pull-right" color="success" size="sm">
-                  <i className="icon-plus"></i>&nbsp;Incluir
+                <Button
+                  className="pull-right bg-primitive mr-1"
+                  onClick={() => this.fecharMesa(this.state._id)}
+                  size="sm"
+                  title="Encerrar">
+                  <i className="icon-credit-card" />
                 </Button>
-              </CardHeader>
-              <CardBody>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>Forma</th>
-                      <th>Valor</th>
-                      <th>Excluir</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      this.state.pagamentos.map((obj) => {
-                        return (
-                          <tr key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
-                            <td>{obj.ds_forma_pagamento}</td>
-                            <td>{this.moneyFormat(obj.valor)}</td>
-                            <td>
-                              {obj.removido
-                                ? null
-                                : <Button color="danger" size="sm">
-                                  <i className="icon-close"></i>
-                                </Button>
-                              }
-                            </td>
-                          </tr>
-                        );
-                      })
-                    }
-                  </tbody>
-                </Table>
+                <div className="text-value">{this.state.aberta ? "Aberta" : "Fechada"}</div>
+                <div>Status</div>
               </CardBody>
-              <CardFooter>
-                <b>Total</b>
-                <b className="pull-right">{this.moneyFormat(this.vlrPagamentos())}</b>
-              </CardFooter>
             </Card>
           </Col>
+
+          <Col xs="12" sm="6" lg="3">
+            <Card className="text-white bg-success">
+              <CardBody>
+                <div className="text-valor">Valor Total&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;{this.moneyFormat(this.vlrTotal())}</div>
+                <div className="text-valor">Valor Pago&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{this.moneyFormat(this.vlrPagamentos())}</div>
+                <div className="text-valor">Valor Pendente&nbsp; {this.moneyFormat(this.vlrRestante())} </div>
+              </CardBody>
+            </Card>
+          </Col>
+
+        </Row>
+
+
+
+        <Row>
+
           <Col xs={12} md={8} lg={7}>
             <Card>
               <CardHeader>
@@ -301,7 +282,143 @@ class DetalheMesa extends Component {
             </Card>
           </Col>
 
+          <Col xs={12} md={4} lg={5}>
+
+            <Card>
+              <CardHeader><i className='icon-calculator'></i>Resumo
+              </CardHeader>
+              <CardBody>
+                <ListGroup>
+
+                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
+
+                <p></p>
+
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>R$</InputGroupText>
+                      </InputGroupAddon>
+
+                      <Input
+                        name="servico"
+                        value={this.state.servico}
+                        onChange={this.changeInputServico}
+                        placeholder="Servico"
+                      />
+
+                    </InputGroup>
+
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>%&nbsp; </InputGroupText>
+                      </InputGroupAddon>
+
+                      <Input
+                        name="servicoPorcentagem"
+                        value={this.state.servicoPorcentagem}
+                        onChange={this.changeInputServico}
+                        placeholder="Porcentagem Serviço"
+                      />
+
+                    </InputGroup>
+                  </ListGroupItem>
+
+
+                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
+                  <p></p>
+
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>R$</InputGroupText>
+                      </InputGroupAddon>
+
+                      <Input
+                        name="desconto"
+                        value={this.state.desconto}
+                        onChange={this.changeInputDesconto}
+                        placeholder="Desconto"
+                      />
+
+                    </InputGroup>
+
+
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>%&nbsp; </InputGroupText>
+                      </InputGroupAddon>
+
+
+                      <Input
+                        name="descontoPorcentagem"
+                        value={this.state.descontoPorcentagem}
+                        onChange={this.changeInputDesconto}
+                        placeholder="Porcentagem Desconto"
+                      />
+
+                    </InputGroup>
+
+
+
+                  </ListGroupItem>
+                 
+                </ListGroup>
+              </CardBody>
+              <CardFooter>
+                <b>Total</b>
+                <b className="pull-right">{this.moneyFormat(this.vlrTotal ())}</b>
+              </CardFooter>
+            </Card>
+
+            <Card>
+
+              <CardHeader><i className='fa fa-money'></i>
+                Pagamentos
+                <Button className="pull-right" color="success" size="sm">
+                  <i className="icon-plus"></i>&nbsp;Incluir
+                </Button>
+              </CardHeader>
+              <CardBody>
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Forma</th>
+                      <th>Valor</th>
+                      <th>Excluir</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      this.state.pagamentos.map((obj) => {
+                        return (
+                          <tr key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
+                            <td>{obj.ds_forma_pagamento}</td>
+                            <td>{this.moneyFormat(obj.valor)}</td>
+                            <td>
+                              {obj.removido
+                                ? null
+                                : <Button color="danger" size="sm">
+                                  <i className="icon-close"></i>
+                                </Button>
+                              }
+                            </td>
+                          </tr>
+                        );
+                      })
+                    }
+                  </tbody>
+                </Table>
+              </CardBody>
+              <CardFooter>
+                <b>Total</b>
+                <b className="pull-right">{this.moneyFormat(this.vlrPagamentos())}</b>
+              </CardFooter>
+            </Card>
+          </Col>
+
+
         </Row>
+
+
         <IncluirItem
           show={this.state.modalAdicionarItem}
           onHide={() => { this.setState({ modalAdicionarItem: false }) }}
