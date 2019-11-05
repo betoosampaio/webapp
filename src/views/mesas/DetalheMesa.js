@@ -8,6 +8,7 @@ import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
 import Foto from '../../components/Foto';
 import Modal from 'react-bootstrap/Modal';
+import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 
 class DetalheMesa extends Component {
 
@@ -67,7 +68,7 @@ class DetalheMesa extends Component {
       sum + (key.removido ? 0 : key.valor), 0)
     return vl;
   }
-
+c
   vlrTxServico = () => { return parseFloat(this.state.taxa_servico) || 0 }
   vlrDesconto = () => { return parseFloat(this.state.desconto) || 0 }
 
@@ -149,7 +150,7 @@ class DetalheMesa extends Component {
   }
 
   changeInputDesconto = (event) => {
-    if (event.target.name === "desconto") {
+    if (event.target.name === "desconto") { 
 
       let porcentagem = event.target.value * 100 / this.state.valorTotal;
 
@@ -157,7 +158,10 @@ class DetalheMesa extends Component {
       this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
 
     } else {
-      let valor = (event.target.value * this.state.valorTotal) / 100;
+
+      let evento = event.target.value.replace(',','');
+      
+      let valor = (evento * this.state.valorTotal) / 100;
 
       this.setState({ descontoPorcentagem: event.target.value, desconto: valor });
     }
@@ -176,6 +180,20 @@ class DetalheMesa extends Component {
       this.setState({ servicoPorcentagem: event.target.value, servico: valor });
     }
 
+  }
+
+  adicionarDesconto = async (id_mesa, desconto) => {
+
+    let obj = {
+      desconto: parseInt(this.state.desconto),
+      id_mesa: this.state._id,
+    }
+
+    let dados = await serverRequest.request('/mesa/editarDesconto', obj);
+    if (dados) {
+      window.parent.location.reload();
+
+    }
   }
 
   render() {
@@ -221,9 +239,9 @@ class DetalheMesa extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card>
               <CardBody>
-                <div className="text- valor">Valor Total<span className="pull-right" color="primary"  >{this.moneyFormat(this.vlrTotal())}</span></div>
-                <div className="text-valor">Valor Pago <span className="pull-right" color="success">{this.moneyFormat(this.vlrPagamentos())}</span></div>
-                <div className="text-valor">Valor Pendente<span className="pull-right" color-text="danger">{this.moneyFormat(this.vlrRestante())}</span> </div>
+                <div className="fs-15">Valor Total<span className="pull-right" color="primary"  >{this.moneyFormat(this.vlrTotal())}</span></div>
+                <div className="fs-15">Valor Pago <span className="pull-right" color="success">{this.moneyFormat(this.vlrPagamentos())}</span></div>
+                <div className="fs-15">Valor Pendente<span className="pull-right" color-text="danger">{this.moneyFormat(this.vlrRestante())}</span> </div>
               </CardBody>
             </Card>
           </Col>
@@ -301,7 +319,7 @@ class DetalheMesa extends Component {
                         <InputGroupText>R$</InputGroupText>
                       </InputGroupAddon>
 
-                      <Input
+                      <MaskedMoneyInput
                         name="servico"
                         value={this.state.servico}
                         onChange={this.changeInputServico}
@@ -337,7 +355,7 @@ class DetalheMesa extends Component {
                         <InputGroupText>R$</InputGroupText>
                       </InputGroupAddon>
 
-                      <Input
+                      <MaskedMoneyInput
                         name="desconto"
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
