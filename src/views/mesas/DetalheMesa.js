@@ -165,11 +165,9 @@ class DetalheMesa extends Component {
             <Card>
               <CardHeader>
                 <i className='fa fa-cutlery'></i>Produtos
-            <div className="card-header-actions">
-                  <Button onClick={() => this.setState({ modalAdicionarItem: true })} color="success" size="sm">
-                    <i className="icon-plus"></i>&nbsp;Incluir
-              </Button>
-                </div>
+                <Button onClick={() => this.setState({ modalAdicionarItem: true })} className="pull-right" color="success" size="sm">
+                  <i className="icon-plus"></i>&nbsp;Incluir
+                </Button>
               </CardHeader>
               <CardBody>
                 <Table striped bordered hover responsive>
@@ -213,19 +211,19 @@ class DetalheMesa extends Component {
             </Card>
           </Col>
           <Col xs={12} md={4} lg={5}>
+
             <Card>
               <CardHeader><i className='icon-calculator'></i>Resumo
-
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted"/>Taxa de Serviço
+                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                     <Button size="sm" className="pull-right">{this.vlrTxServico()}</Button>
                   </ListGroupItem>
-                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted"/>Desconto
+                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
                     <Button size="sm" className="pull-right">{this.vlrDesconto()}</Button>
                   </ListGroupItem>
-                  <ListGroupItem><i className="fa fa-cutlery mr-2 text-muted"/>Produtos
+                  <ListGroupItem><i className="fa fa-cutlery mr-2 text-muted" />Produtos
                     <span className="pull-right">{this.vlrProdutos()}</span>
                   </ListGroupItem>
                 </ListGroup>
@@ -233,6 +231,37 @@ class DetalheMesa extends Component {
               <CardFooter>
                 <b>Total</b>
                 <b className="pull-right">{this.vlrTotal()}</b>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader><i className='fa fa-money'></i>
+                Pagamentos
+                <Button className="pull-right" color="success" size="sm">
+                  <i className="icon-plus"></i>&nbsp;Incluir
+                </Button>
+              </CardHeader>
+              <CardBody>
+                <Table striped bordered hover responsive>
+                  <thead>
+                    <tr>
+                      <th>Forma</th>
+                      <th>Valor</th>
+                      <th>Excluir</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Dinheiro</td>
+                      <td>R$ 50,00</td>
+                      <td><Button color="danger" size="sm"><i className="icon-close"></i></Button></td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </CardBody>
+              <CardFooter>
+                <b>Total</b>
+                <b className="pull-right">R$ 50,00</b>
               </CardFooter>
             </Card>
           </Col>
