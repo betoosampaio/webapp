@@ -35,7 +35,7 @@ class DetalheMesa extends Component {
     let valorTotal = this.vlrTotal();
 
     if (valorTotal !== this.state.valorTotal) {
-      this.setState({ valorTotal: valorTotal }, () => console.log(this.state.valorTotal));
+      this.setState({ valorTotal: valorTotal }, () => console.log("valor Total didup" + this.state.valorTotal));
     }
 
   }
@@ -153,6 +153,7 @@ class DetalheMesa extends Component {
 
       let porcentagem = event.target.value * 100 / this.state.valorTotal;
 
+
       this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
 
     } else {
@@ -212,16 +213,17 @@ class DetalheMesa extends Component {
                 </Button>
                 <div className="text-value">{this.state.aberta ? "Aberta" : "Fechada"}</div>
                 <div>Status</div>
+                <p></p>
               </CardBody>
             </Card>
           </Col>
 
           <Col xs="12" sm="6" lg="3">
-            <Card className="text-white bg-success">
+            <Card>
               <CardBody>
-                <div className="text-valor">Valor Total&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;{this.moneyFormat(this.vlrTotal())}</div>
-                <div className="text-valor">Valor Pago&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{this.moneyFormat(this.vlrPagamentos())}</div>
-                <div className="text-valor">Valor Pendente&nbsp; {this.moneyFormat(this.vlrRestante())} </div>
+                <div className="text-valor">Valor Total<span className="pull-right" color="primary"  >{this.moneyFormat(this.vlrTotal())}</span></div>
+                <div className="text-valor">Valor Pago <span className="pull-right" color="success">{this.moneyFormat(this.vlrPagamentos())}</span></div>
+                <div className="text-valor">Valor Pendente<span className="pull-right" color-text="danger">{this.moneyFormat(this.vlrRestante())}</span> </div>
               </CardBody>
             </Card>
           </Col>
@@ -324,8 +326,11 @@ class DetalheMesa extends Component {
                   </ListGroupItem>
 
 
-                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
-                  <p></p>
+
+
+                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Desconto
+
+                <p></p>
 
                     <InputGroup>
                       <InputGroupAddon addonType="append">
@@ -336,17 +341,15 @@ class DetalheMesa extends Component {
                         name="desconto"
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
-                        placeholder="Desconto"
+                        placeholder="Servico"
                       />
 
                     </InputGroup>
-
 
                     <InputGroup>
                       <InputGroupAddon addonType="append">
                         <InputGroupText>%&nbsp; </InputGroupText>
                       </InputGroupAddon>
-
 
                       <Input
                         name="descontoPorcentagem"
@@ -356,16 +359,16 @@ class DetalheMesa extends Component {
                       />
 
                     </InputGroup>
-
-
-
                   </ListGroupItem>
-                 
+
+
+
+
                 </ListGroup>
               </CardBody>
               <CardFooter>
                 <b>Total</b>
-                <b className="pull-right">{this.moneyFormat(this.vlrTotal ())}</b>
+                <b className="pull-right">{this.moneyFormat(this.vlrTotal())}</b>
               </CardFooter>
             </Card>
 
