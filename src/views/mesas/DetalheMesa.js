@@ -219,13 +219,13 @@ class DetalheMesa extends Component {
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem>Taxa de Serviço
+                  <ListGroupItem><i className="fa fa-wrench mr-2 text-muted"/>Taxa de Serviço
                     <Button size="sm" className="pull-right">{this.vlrTxServico()}</Button>
                   </ListGroupItem>
-                  <ListGroupItem>Desconto
+                  <ListGroupItem><i className="fa fa-dollar mr-2 text-muted"/>Desconto
                     <Button size="sm" className="pull-right">{this.vlrDesconto()}</Button>
                   </ListGroupItem>
-                  <ListGroupItem>Produtos
+                  <ListGroupItem><i className="fa fa-cutlery mr-2 text-muted"/>Produtos
                     <span className="pull-right">{this.vlrProdutos()}</span>
                   </ListGroupItem>
                 </ListGroup>
