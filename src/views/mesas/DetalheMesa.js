@@ -130,21 +130,20 @@ class DetalheMesa extends Component {
           <Col xs="12" sm="6" lg="4">
             <Card>
               <CardBody>
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.menuSituacao} toggle={() => { this.setState({ menuSituacao: !this.state.menuSituacao }); }}>
-                    <DropdownToggle caret className="p-0" color="black">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem onClick={() => this.fecharMesa(this.state._id)}>
-                        <i className="icon-check" /> Encerrar Conta
-                      </DropdownItem>
-                      <DropdownItem onClick={() => this.removerMesa(this.state._id)}>
-                        <i className="icon-ban" /> Cancelar Conta
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
+                <Button
+                  className="pull-right bg-danger"
+                  onClick={() => this.removerMesa(this.state._id)}
+                  size="sm"
+                  title="Remover">
+                  <i className="icon-ban" />
+                </Button>
+                <Button
+                  className="pull-right bg-success mr-1"
+                  onClick={() => this.fecharMesa(this.state._id)}
+                  size="sm"
+                  title="Encerrar">
+                  <i className="icon-basket-loaded" />
+                </Button>
                 <div className="text-value">{this.state.aberta ? "Aberta" : "Fechada"}</div>
                 <div>Situação</div>
               </CardBody>
@@ -215,32 +214,25 @@ class DetalheMesa extends Component {
           </Col>
           <Col xs={12} md={4} lg={5}>
             <Card>
-              <CardHeader><i className='fa fa-list-ul'></i>Serviços
-              <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.menuServicos} toggle={() => { this.setState({ menuServicos: !this.state.menuServicos }); }}>
-                    <DropdownToggle caret className="p-0" color="black">
-                      <i className="icon-settings"></i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        <i className="icon-calculator" /> Editar Taxa de Serviço
-                      </DropdownItem>
-                      <DropdownItem>
-                        <i className="fa fa-dollar" /> Aplicar Desconto
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
+              <CardHeader><i className='icon-calculator'></i>Resumo
+
               </CardHeader>
               <CardBody>
                 <ListGroup>
-                  <ListGroupItem>Taxa de Serviço <span className="pull-right">{this.vlrTxServico()}</span></ListGroupItem>
-                  <ListGroupItem>Desconto <span className="pull-right">{this.vlrDesconto()}</span></ListGroupItem>
+                  <ListGroupItem>Taxa de Serviço
+                    <Button size="sm" className="pull-right">{this.vlrTxServico()}</Button>
+                  </ListGroupItem>
+                  <ListGroupItem>Desconto
+                    <Button size="sm" className="pull-right">{this.vlrDesconto()}</Button>
+                  </ListGroupItem>
+                  <ListGroupItem>Produtos
+                    <span className="pull-right">{this.vlrProdutos()}</span>
+                  </ListGroupItem>
                 </ListGroup>
               </CardBody>
               <CardFooter>
                 <b>Total</b>
-                <b className="pull-right">{this.vlrServicos()}</b>
+                <b className="pull-right">{this.vlrTotal()}</b>
               </CardFooter>
             </Card>
           </Col>
