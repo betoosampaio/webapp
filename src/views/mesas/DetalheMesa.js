@@ -32,7 +32,7 @@ class DetalheMesa extends Component {
 
   componentDidUpdate() {
 
-    let valorTotal = this.vlrTotal();
+    let valorTotal = this.vlrProdutos();
 
     if (valorTotal !== this.state.valorTotal) {
       this.setState({ valorTotal: valorTotal }, () => console.log("valor Total didup" + this.state.valorTotal));
@@ -221,7 +221,7 @@ class DetalheMesa extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card>
               <CardBody>
-                <div className="text-valor">Valor Total<span className="pull-right" color="primary"  >{this.moneyFormat(this.vlrTotal())}</span></div>
+                <div className="text- valor">Valor Total<span className="pull-right" color="primary"  >{this.moneyFormat(this.vlrTotal())}</span></div>
                 <div className="text-valor">Valor Pago <span className="pull-right" color="success">{this.moneyFormat(this.vlrPagamentos())}</span></div>
                 <div className="text-valor">Valor Pendente<span className="pull-right" color-text="danger">{this.moneyFormat(this.vlrRestante())}</span> </div>
               </CardBody>
