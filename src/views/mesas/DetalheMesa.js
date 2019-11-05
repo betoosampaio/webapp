@@ -97,7 +97,7 @@ class DetalheMesa extends Component {
     });
 
     if (confirm) {
-      let dados = await serverRequest.request('/mesa/removerItem', { "id_mesa": id_mesa, "id_item": id_item });
+      let dados = await serverRequest.request('/mesa/item/remover', { "id_mesa": id_mesa, "id_item": id_item });
       if (dados) {
         this.obter(this.props.match.params.id);
       }

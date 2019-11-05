@@ -42,7 +42,7 @@ class DetalheMesa extends Component {
       quantidade: parseInt(this.state.quantidade),
     }
 
-    let dados = await serverRequest.request('/mesa/incluirItem', obj);
+    let dados = await serverRequest.request('/mesa/item/incluir', obj);
 
     if (dados) {
       this.setState({ id_produto: "", quantidade: 1 });
