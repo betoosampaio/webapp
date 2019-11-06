@@ -21,6 +21,18 @@ class DetalheMesaResumo extends Component {
     };
   }
 
+  componentDidUpdate() {
+
+    if (!this.state.desconto && this.state.desconto !== this.props.vlrDesconto) {
+      this.setState({ desconto: this.props.vlrDesconto });
+
+    }
+
+    if (!this.state.taxa_servico && this.state.taxa_servico !== this.state.desconto) {
+
+    }
+  }
+
   changeInputDesconto = (event) => {
     if (event.target.name === "desconto") {
 
@@ -43,8 +55,8 @@ class DetalheMesaResumo extends Component {
     if (event.target.name === "taxa_servico") {
 
       let evento = event.target.value.replace(',', '');
-      
-      let porcentagem = evento * 100 / this.props.vlrProdutos /100 ;
+
+      let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
       this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem });
 
@@ -90,7 +102,7 @@ class DetalheMesaResumo extends Component {
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, id_mesa } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -131,15 +143,17 @@ class DetalheMesaResumo extends Component {
                     </Col>
                     <Col xs="5">
                       <InputGroup>
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText>%</InputGroupText>
-                        </InputGroupAddon>
-                        <Input
+
+                        <Maskedpercentage
+                          precision='0'
                           name="servicoPorcentagem"
                           value={this.state.servicoPorcentagem}
                           onChange={this.changeInputServico}
                           placeholder="% Serviço"
                         />
+                        <InputGroupAddon addonType="append">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
                       </InputGroup>
                     </Col>
                     <Col xs="2">
@@ -173,15 +187,18 @@ class DetalheMesaResumo extends Component {
                   </Col>
                   <Col xs="5">
                     <InputGroup>
-                      <InputGroupAddon addonType="append">
-                        <InputGroupText>%</InputGroupText>
-                      </InputGroupAddon>
-                      <Input
+
+                      <MaskedMoneyInput
+                        precision= {0}
+                       
                         name="descontoPorcentagem"
                         value={this.state.descontoPorcentagem}
                         onChange={this.changeInputDesconto}
                         placeholder="% Desconto"
                       />
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>%</InputGroupText>
+                      </InputGroupAddon>
                     </InputGroup>
                   </Col>
                   <Col xs="2">

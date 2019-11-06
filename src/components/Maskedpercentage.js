@@ -8,12 +8,8 @@ class Maskedpercentage extends Component {
     event.target.value = vanilla.toMoney(event.target.value, {
 
 
-      precision: this.props.precision || 1,
-      
-      delimiter: this.props.delimiter || '%',
-      unit: this.props.unit,
-      suffixUnit: this.props.suffixUnit,
-      zeroCents: this.props.zeroCents || false
+      precision: this.props.precision || 0,
+
 
 
     })
