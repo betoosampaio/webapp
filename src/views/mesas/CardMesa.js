@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap';
+import { Card, CardHeader, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
@@ -46,30 +46,23 @@ class CardMesa extends Component {
 
   render() {
     return (
-      <Card>
-        <CardHeader>
-          <i className="icon-calculator"></i>
-          <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
-          <div className="card-header-actions">
-            <Button onClick={() => this.fecharMesa(this.props.mesa._id)} title="Encerrar Conta" color="link" className="card-header-action"><i className="icon-basket-loaded"></i></Button>
-          </div>
-        </CardHeader>
-        <CardBody>
-          <div className="text-muted font-weight-bold font-md mb-1">
-            {this.valorProdutos(this.props.mesa.produtos)}
-          </div>
-          <div className="font-xs">
-            <i className="fa fa-clock-o"></i>
-            {this.dateDiff(new Date(this.props.mesa.data_abertura), new Date())}
-          </div>
-        </CardBody>
-        <CardFooter className="px-3 py-2">
-          <Link to={`/mesas/detalhemesa/${this.props.mesa._id}`}>
-            <span className="font-weight-bold font-xs btn-block text-muted">Detalhes
-              <i className="fa fa-angle-right float-right font-lg"></i></span>
-          </Link>
-        </CardFooter>
-      </Card>
+      <Link to={`/mesas/detalhemesa/${this.props.mesa._id}`} style={{ textDecoration: 'none', color: 'black' }}>
+        <Card>
+          <CardHeader>
+            <i className="icon-calculator"></i>
+            <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
+          </CardHeader>
+          <CardBody>
+            <div className="text-muted font-weight-bold font-md mb-1">
+              {this.valorProdutos(this.props.mesa.produtos)}
+            </div>
+            <div className="font-xs">
+              <i className="fa fa-clock-o"></i>
+              {this.dateDiff(new Date(this.props.mesa.data_abertura), new Date())}
+            </div>
+          </CardBody>
+        </Card>
+      </Link>
     );
   }
 }
