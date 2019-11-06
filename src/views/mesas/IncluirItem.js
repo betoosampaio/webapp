@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Row, Col, Table } from 'reactstrap';
+import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Table } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import MaskedNumberInput from '../../components/MaskedNumberInput';
@@ -13,8 +13,8 @@ class DetalheMesa extends Component {
     super(props);
     this.state = {
       lista: [],
+      selecionados: [],
       id_produto: "",
-      quantidade: 1,
     };
   }
 
@@ -30,38 +30,60 @@ class DetalheMesa extends Component {
   }
 
   changeInput = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    let id_produto = event.target.value[0];
+    if (!id_produto) return;
+
+    let selecionado = this.state.lista.filter(p => (String(p.id_produto) === String(id_produto)))[0];
+    selecionado.quantidade = 1;
+    selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
+
+    this.setState({
+      selecionados: [...this.state.selecionados, selecionado],
+      id_produto: "",
+    });
   }
 
   incluirItem = async (event) => {
     event.preventDefault();
 
-    let obj = {
-      id_mesa: this.props.id_mesa,
-      id_produto: this.state.id_produto[0],
-      quantidade: parseInt(this.state.quantidade),
-    }
+    if (this.state.selecionados.length > 0) {
+      let obj = {
+        id_mesa: this.props.id_mesa,
+        produtos: this.state.selecionados,
+      }
 
-    let dados = await serverRequest.request('/mesa/item/incluir', obj);
-
-    if (dados) {
-      this.setState({ id_produto: "", quantidade: 1 });
-      this.props.itemincluso();
-    }
-  }
-
-  decrementar() {
-    if (this.state.quantidade > 1) {
-      this.setState({ quantidade: parseInt(this.state.quantidade) - 1 })
+      let dados = await serverRequest.request('/mesa/item/incluir', obj);
+      if (dados) {
+        this.setState({ id_produto: "", selecionados: [] });
+        this.props.itemincluso();
+      }
     }
   }
 
-  incrementar() {
-    this.setState({ quantidade: parseInt(this.state.quantidade) + 1 })
+  decrementar(id) {
+    let selecionados = Object.assign([], this.state.selecionados);
+    let selecionado = this.state.selecionados.find(p => p.id === id);
+    if (parseInt(selecionado.quantidade) > 1) {
+      selecionado.quantidade = parseInt(selecionado.quantidade) - 1;
+      this.setState({ selecionados: selecionados })
+    }
+  }
+
+  incrementar(id) {
+    let selecionados = Object.assign([], this.state.selecionados);
+    let selecionado = this.state.selecionados.find(p => p.id === id);
+    selecionado.quantidade = parseInt(selecionado.quantidade) + 1;
+    this.setState({ selecionados: selecionados })
+  }
+
+  remover(id){
+    let selecionados = Object.assign([], this.state.selecionados);
+    selecionados = selecionados.filter(p => p.id !== id);
+    this.setState({ selecionados: selecionados })
   }
 
   onHide = () => {
-    this.setState({ id_produto: "", quantidade: 1 });
+    this.setState({ id_produto: "", selecionados: [] });
     this.props.onHide();
   }
 
@@ -88,8 +110,6 @@ class DetalheMesa extends Component {
       },
     }
 
-    let produtoSelecionado = this.state.lista.filter(p => String(p.id_produto) === this.state.id_produto[0])[0];
-
     return (
       <Modal
         size="lg"
@@ -103,90 +123,87 @@ class DetalheMesa extends Component {
             <Modal.Title id="contained-modal-title-vcenter">Adicionar novo item a mesa</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Row>
-              <Col xs={12} sm={7} md={8} lg={9}>
-                <FormGroup>
-                  <Label>Produto:</Label>
-                  <InputGroup>
-                    <InputGroupAddon addonType="append">
-                      <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
-                    </InputGroupAddon>
-                    <MultipleSelect
-                      id="select-produto"
-                      options={multipleSelectOptions}
-                      name="id_produto"
-                      value={this.state.id_produto}
-                      onChange={this.changeInput}
-                      required>
-                      <option value="">Selecione</option>
-                      {
-                        this.state.lista.map(obj => {
-                          return (
-                            <option
-                              key={obj.codigo_produto}
-                              value={obj.id_produto}
-                              data-codigo={obj.codigo_produto}
-                              data-preco={obj.preco}
-                              data-nome={obj.nome_produto}
-                              data-imagem={obj.imagem}>
-                              {obj.codigo_produto}{obj.nome_produto}
-                            </option>
-                          )
-                        })
-                      }
-                    </MultipleSelect>
-                  </InputGroup>
-                </FormGroup>
-              </Col>
-              <Col xs={6} sm={5} md={4} lg={3}>
-                <FormGroup>
-                  <Label>Quantidade:</Label>
-                  <InputGroup>
-                    <InputGroupAddon onClick={this.decrementar.bind(this)} addonType="append" >
-                      <InputGroupText><i className="fa fa-minus"></i></InputGroupText>
-                    </InputGroupAddon>
-                    <MaskedNumberInput
-                      name="quantidade"
-                      placeholder="Quantidade"
-                      value={this.state.quantidade}
-                      onChange={this.changeInput}
-                      required />
-                    <InputGroupAddon onClick={this.incrementar.bind(this)} addonType="append">
-                      <InputGroupText><i className="fa fa-plus"></i></InputGroupText>
-                    </InputGroupAddon>
-                  </InputGroup>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                {
-                  produtoSelecionado
-                    ?
-                    <Table striped bordered hover responsive>
-                      <thead className="thead-light">
-                        <tr>
-                          <th>Imagem</th>
-                          <th>Código</th>
-                          <th>Produto</th>
-                          <th>Preço Unitário</th>
-                          <th>Preço Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><Foto src={produtoSelecionado.imagem} height="50" width="50"></Foto></td>
-                          <td>{produtoSelecionado.codigo_produto}</td>
-                          <td>{produtoSelecionado.nome_produto}</td>
-                          <td>R$ {parseFloat(produtoSelecionado.preco).toFixed(2)}</td>
-                          <td>R$ {(parseFloat(produtoSelecionado.preco) * parseInt(this.state.quantidade)).toFixed(2)}</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                    : null
-                }
-              </Col>
-            </Row>
+            <FormGroup>
+              <Label>Produto:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+                </InputGroupAddon>
+                <MultipleSelect
+                  id="select-produto"
+                  options={multipleSelectOptions}
+                  name="id_produto"
+                  value={this.state.id_produto}
+                  onChange={this.changeInput}>
+                  <option value="">Selecione</option>
+                  {
+                    this.state.lista.map(obj => {
+                      return (
+                        <option
+                          key={obj.codigo_produto}
+                          value={obj.id_produto}
+                          data-codigo={obj.codigo_produto}
+                          data-preco={obj.preco}
+                          data-nome={obj.nome_produto}
+                          data-imagem={obj.imagem}>
+                          {obj.codigo_produto}{obj.nome_produto}
+                        </option>
+                      )
+                    })
+                  }
+                </MultipleSelect>
+              </InputGroup>
+            </FormGroup>
+            <Table striped bordered hover responsive>
+              <thead className="thead-light">
+                <tr>
+                  <th>Imagem</th>
+                  <th>Código</th>
+                  <th>Produto</th>
+                  <th>Preço Unitário</th>
+                  <th>Preço Total</th>
+                  <th>Quantidade</th>
+                  <th>Remover</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.selecionados.map(obj => {
+                  return (
+                    <tr key={obj.id}>
+                      <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
+                      <td>{obj.codigo_produto}</td>
+                      <td>{obj.nome_produto}</td>
+                      <td>R$ {parseFloat(obj.preco).toFixed(2)}</td>
+                      <td>R$ {(parseFloat(obj.preco) * parseInt(obj.quantidade)).toFixed(2)}</td>
+                      <td>
+                        <FormGroup>
+                          <InputGroup>
+                            <InputGroupAddon onClick={() => this.decrementar(obj.id)} addonType="append" >
+                              <InputGroupText><i className="fa fa-minus"></i></InputGroupText>
+                            </InputGroupAddon>
+                            <MaskedNumberInput
+                              name="quantidade"
+                              placeholder="Quantidade"
+                              value={obj.quantidade}
+                              disabled={true}
+                              width="50px"
+                              required />
+                            <InputGroupAddon onClick={() => this.incrementar(obj.id)} addonType="append">
+                              <InputGroupText><i className="fa fa-plus"></i></InputGroupText>
+                            </InputGroupAddon>
+                          </InputGroup>
+                        </FormGroup>
+                      </td>
+                      <td>
+                        <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
+                          <i className="icon-close"></i>
+                        </Button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </Table>
           </Modal.Body>
           <Modal.Footer>
             <Button type="submit" color="success">Incluir</Button>

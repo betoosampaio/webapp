@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Table, Card, CardHeader, CardBody, CardFooter, Button, Input, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, TextInputGroup, InputGroupAddon, InputGroupText,
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
@@ -37,7 +37,7 @@ class DetalheMesa extends Component {
     let valorTotal = this.vlrProdutos();
 
     if (valorTotal !== this.state.valorTotal) {
-      this.setState({ valorTotal: valorTotal }, () => console.log("valor Total didup" + this.state.valorTotal));
+      this.setState({ valorTotal: valorTotal });
     }
 
   }
