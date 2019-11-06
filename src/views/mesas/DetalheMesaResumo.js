@@ -4,6 +4,8 @@ import {
   ListGroupItem, InputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
+import Maskedpercentage from '../../components/Maskedpercentage';
+import serverRequest from '../../utils/serverRequest';
 
 class DetalheMesaResumo extends Component {
 
@@ -22,16 +24,18 @@ class DetalheMesaResumo extends Component {
   changeInputDesconto = (event) => {
     if (event.target.name === "desconto") {
 
-      let porcentagem = event.target.value * 100 / this.props.vlrProdutos;
+      let evento = event.target.value.replace(',','');
+
+      console.log(evento);
+
+      let porcentagem = evento * 100 / this.props.vlrProdutos /100;
 
 
       this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
 
     } else {
 
-      let evento = event.target.value.replace(',', '');
-
-      let valor = (evento * this.props.vlrProdutos) / 100;
+      let valor = (event.target.value * this.props.vlrProdutos) / 100;
 
       this.setState({ descontoPorcentagem: event.target.value, desconto: valor });
     }
@@ -53,8 +57,18 @@ class DetalheMesaResumo extends Component {
 
   }
 
-  editarDesconto = async () => {
-    alert('EDITAR DESCONTO')
+  editarDesconto = async (id_mesa, desconto) => {
+
+    let obj = {
+      desconto: parseInt(this.state.desconto),
+      id_mesa: this.state._id,
+    }
+
+    let dados = await serverRequest.request('/mesa/editarDesconto', obj);
+    if (dados) {
+      window.parent.location.reload();
+
+    }
   }
 
   editarTxServico = async () => {
@@ -164,7 +178,7 @@ class DetalheMesaResumo extends Component {
                     </InputGroup>
                   </Col>
                   <Col xs="2">
-                    <Button onClick={this.editarDesconto}>OK</Button>
+                    <Button onClick={this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
                     </Col>
                 </Row>
                 : null

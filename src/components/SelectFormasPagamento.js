@@ -30,7 +30,7 @@ class SelectBanco extends Component {
 				{
 					this.state.lista.map(obj => {
 						return (
-							<option key={obj.id_forma_pagamento} value={obj.id_forma_pagamento}>{obj.id_forma_pagamento}</option>
+							<option key={obj.id_forma_pagamento} value={obj.id_forma_pagamento}>{obj.ds_forma_pagamento}</option>
 						)
 					})
 				}

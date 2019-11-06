@@ -18,13 +18,13 @@ class DetalheMesaPagamentos extends Component {
   }
 
   render() {
-    const { pagamentos, vlrPagamentos } = this.props;
+    const { pagamentos, vlrPagamentos, adicionarPagamento } = this.props;
     return (
       <Card>
 
         <CardHeader><i className='fa fa-money'></i>
           Pagamentos
-                <Button className="pull-right" color="success" size="sm">
+          <Button onClick={adicionarPagamento} className="pull-right" color="success" size="sm">
             <i className="icon-plus mr-1"></i>Incluir
                 </Button>
         </CardHeader>

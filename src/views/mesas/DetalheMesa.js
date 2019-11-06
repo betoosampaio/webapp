@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Button, Row, Col} from 'reactstrap';
+import { Card, CardBody, Button, Row, Col } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
+import FormaPagamento from './FormaPagamento';
 import DetalheMesaResumo from './DetalheMesaResumo';
 import DetalheMesaProdutos from './DetalheMesaProdutos';
 import DetalheMesaPagamentos from './DetalheMesaPagamentos';
@@ -49,7 +50,7 @@ class DetalheMesa extends Component {
       sum + (key.removido ? 0 : key.valor), 0)
     return vl;
   }
-  
+
   vlrTxServico = () => { return parseFloat(this.state.taxa_servico) || 0 }
   vlrDesconto = () => { return parseFloat(this.state.desconto) || 0 }
 
@@ -208,6 +209,7 @@ class DetalheMesa extends Component {
               vlrTotal={this.vlrTotal()} />
 
             <DetalheMesaPagamentos
+              adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
               pagamentos={this.state.pagamentos}
               vlrPagamentos={this.vlrPagamentos()}
               id_mesa={this.state._id} />
@@ -218,6 +220,12 @@ class DetalheMesa extends Component {
           onHide={() => { this.setState({ modalAdicionarItem: false }) }}
           id_mesa={this.state._id}
           itemincluso={this.itemIncluso} />
+
+        <FormaPagamento
+          show={this.state.modalAdicionarPagamento}
+          onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
+       />
+
       </div >
     );
   }
