@@ -207,6 +207,47 @@ class DetalheMesa extends Component {
 
         <Row>
 
+          
+
+
+          <Col xs="12" sm="6" lg="4">
+            <Card>
+              <CardBody>
+                <Button
+                  className="pull-right bg-danger"
+                  onClick={() => this.removerMesa(this.state._id)}
+                  size="sm"
+                  title="Cancelar Mesa">
+                  <i className="icon-ban" />
+                </Button>
+                <Button
+                  className="pull-right bg-primary mr-1"
+                  onClick={() => this.fecharMesa(this.state._id)}
+                  size="sm"
+                  title="Fechar Conta">
+                  <i className="icon-basket-loaded" />
+                </Button>
+                <Button
+                  className="pull-right bg-success mr-1"
+                  size="sm"
+                  title="Inserir Pagamento">
+                  <i className="fa fa-money" />
+                </Button>
+
+
+                <div className="callout">
+                  <small className="text-muted">Status</small>
+                  <br />
+                  <strong className="h4">{this.state.aberta ? "Aberta" : "Fechada"}</strong>
+                  <div className="chart-wrapper">
+
+                  </div>
+                </div>
+
+              </CardBody>
+            </Card>
+          </Col>
+
           <Col xs="12" sm="6" lg="8">
             <Card>
               <CardBody>
@@ -242,45 +283,6 @@ class DetalheMesa extends Component {
                     </div>
                   </Col>
                 </Row>
-              </CardBody>
-            </Card>
-          </Col>
-
-
-          <Col xs="12" sm="6" lg="4">
-            <Card>
-              <CardBody>
-                <Button
-                  className="pull-right bg-danger"
-                  onClick={() => this.removerMesa(this.state._id)}
-                  size="sm"
-                  title="Remover">
-                  <i className="icon-ban" />
-                </Button>
-                <Button
-                  className="pull-right bg-primary mr-1"
-                  onClick={() => this.fecharMesa(this.state._id)}
-                  size="sm"
-                  title="Encerrar">
-                  <i className="icon-basket-loaded" />
-                </Button>
-                <Button
-                  className="pull-right bg-success mr-1"
-                  size="sm"
-                  title="Novo Pagamento">
-                  <i className="fa fa-money" />
-                </Button>
-
-
-                <div className="callout">
-                  <small className="text-muted">Status</small>
-                  <br />
-                  <strong className="h4">{this.state.aberta ? "Aberta" : "Fechada"}</strong>
-                  <div className="chart-wrapper">
-
-                  </div>
-                </div>
-
               </CardBody>
             </Card>
           </Col>
