@@ -4,7 +4,7 @@ import {
   ListGroupItem, InputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
-import Maskedpercentage from '../../components/Maskedpercentage';
+import MaskedNumberInput from '../../components/MaskedNumberInput';
 import serverRequest from '../../utils/serverRequest';
 
 class DetalheMesaResumo extends Component {
@@ -21,15 +21,22 @@ class DetalheMesaResumo extends Component {
     };
   }
 
-  componentDidUpdate() {
-
-    if (!this.state.desconto && this.state.desconto !== this.props.vlrDesconto) {
-      this.setState({ desconto: this.props.vlrDesconto });
-
+  componentDidUpdate(){
+    if(this.props.vlrTxServico !== this.state.propsTxServico){
+      let porcentagem = this.props.vlrTxServico / this.props.vlrProdutos * 100;
+      this.setState({
+        propsTxServico: this.props.vlrTxServico,
+        taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.',','),
+        servicoPorcentagem: porcentagem.toFixed(0)
+      });
     }
-
-    if (!this.state.taxa_servico && this.state.taxa_servico !== this.state.desconto) {
-
+    if(this.props.vlrDesconto !== this.state.propsDesconto){
+      let porcentagem = this.props.vlrDesconto / this.props.vlrProdutos * 100;
+      this.setState({
+        propsDesconto: this.props.vlrDesconto,
+        desconto: this.props.vlrDesconto.toFixed(2).replace('.',','),
+        descontoPorcentagem: porcentagem.toFixed(0)
+      });
     }
   }
 
@@ -40,13 +47,13 @@ class DetalheMesaResumo extends Component {
 
       let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
-      this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
+      this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem.toFixed(0) });
 
     } else {
 
       let valor = (event.target.value * this.props.vlrProdutos) / 100;
 
-      this.setState({ descontoPorcentagem: event.target.value, desconto: valor });
+      this.setState({ descontoPorcentagem: event.target.value, desconto: valor.toFixed(2).replace('.',',') });
     }
 
   }
@@ -58,36 +65,32 @@ class DetalheMesaResumo extends Component {
 
       let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
-      this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem });
+      this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem.toFixed(0) });
 
     } else {
       let valor = (event.target.value * this.props.vlrProdutos) / 100;
 
-      this.setState({ servicoPorcentagem: event.target.value, taxa_servico: valor });
+      this.setState({ servicoPorcentagem: event.target.value, taxa_servico: valor.toFixed(2).replace('.',',') });
     }
 
   }
 
-  editarDesconto = async (id_mesa, desconto) => {
-
+  editarDesconto = async () => {
     let obj = {
-      desconto: parseInt(this.state.desconto),
+      desconto: parseFloat(this.state.desconto.replace('.','').replace(',','.')),
       id_mesa: this.props.id_mesa,
     }
-    console.log(obj);
     let dados = await serverRequest.request('/mesa/editarDesconto', obj);
     if (dados) {
       window.parent.location.reload();
     }
   }
 
-  editarTxServico = async (id_mesa, taxa_servico) => {
-
+  editarTxServico = async () => {
     let obj = {
-      taxa_servico: parseInt(this.state.taxa_servico),
+      taxa_servico: parseFloat(this.state.taxa_servico.replace('.','').replace(',','.')),
       id_mesa: this.props.id_mesa,
     }
-    console.log(obj);
     let dados = await serverRequest.request('/mesa/editarTaxaServico', obj);
     if (dados) {
       window.parent.location.reload();
@@ -143,17 +146,15 @@ class DetalheMesaResumo extends Component {
                     </Col>
                     <Col xs="5">
                       <InputGroup>
-
-                        <Maskedpercentage
-                          precision='0'
+                      <InputGroupAddon addonType="append">
+                          <InputGroupText>%</InputGroupText>
+                        </InputGroupAddon>
+                        <MaskedNumberInput
                           name="servicoPorcentagem"
                           value={this.state.servicoPorcentagem}
                           onChange={this.changeInputServico}
                           placeholder="% Serviço"
-                        />
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText>%</InputGroupText>
-                        </InputGroupAddon>
+                        />                       
                       </InputGroup>
                     </Col>
                     <Col xs="2">
@@ -187,18 +188,15 @@ class DetalheMesaResumo extends Component {
                   </Col>
                   <Col xs="5">
                     <InputGroup>
-
-                      <MaskedMoneyInput
-                        precision= {0}
-                       
+                    <InputGroupAddon addonType="append">
+                        <InputGroupText>%</InputGroupText>
+                      </InputGroupAddon>
+                      <MaskedNumberInput
                         name="descontoPorcentagem"
                         value={this.state.descontoPorcentagem}
                         onChange={this.changeInputDesconto}
                         placeholder="% Desconto"
-                      />
-                      <InputGroupAddon addonType="append">
-                        <InputGroupText>%</InputGroupText>
-                      </InputGroupAddon>
+                      />                   
                     </InputGroup>
                   </Col>
                   <Col xs="2">
