@@ -206,7 +206,8 @@ class DetalheMesa extends Component {
               vlrProdutos={this.vlrProdutos()}
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
-              vlrTotal={this.vlrTotal()} />
+              vlrTotal={this.vlrTotal()} 
+              id_mesa={this.state._id} />
 
             <DetalheMesaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
@@ -224,7 +225,7 @@ class DetalheMesa extends Component {
         <FormaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
-       />
+        />
 
       </div >
     );

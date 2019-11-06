@@ -14,7 +14,7 @@ class DetalheMesaResumo extends Component {
     this.state = {
       servicoPorcentagem: '',
       descontoPorcentagem: '',
-      servico: '',
+      taxa_servico: '',
       desconto: '',
       txServicoVisivel: false,
       descontoVisivel: false,
@@ -24,12 +24,9 @@ class DetalheMesaResumo extends Component {
   changeInputDesconto = (event) => {
     if (event.target.name === "desconto") {
 
-      let evento = event.target.value.replace(',','');
+      let evento = event.target.value.replace(',', '');
 
-      console.log(evento);
-
-      let porcentagem = evento * 100 / this.props.vlrProdutos /100;
-
+      let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
       this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem });
 
@@ -43,16 +40,18 @@ class DetalheMesaResumo extends Component {
   }
 
   changeInputServico = (event) => {
-    if (event.target.name === "servico") {
+    if (event.target.name === "taxa_servico") {
 
-      let porcentagem = event.target.value * 100 / this.props.vlrProdutos;
+      let evento = event.target.value.replace(',', '');
+      
+      let porcentagem = evento * 100 / this.props.vlrProdutos /100 ;
 
-      this.setState({ servico: event.target.value, servicoPorcentagem: porcentagem });
+      this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem });
 
     } else {
       let valor = (event.target.value * this.props.vlrProdutos) / 100;
 
-      this.setState({ servicoPorcentagem: event.target.value, servico: valor });
+      this.setState({ servicoPorcentagem: event.target.value, taxa_servico: valor });
     }
 
   }
@@ -61,29 +60,37 @@ class DetalheMesaResumo extends Component {
 
     let obj = {
       desconto: parseInt(this.state.desconto),
-      id_mesa: this.state._id,
+      id_mesa: this.props.id_mesa,
     }
-
+    console.log(obj);
     let dados = await serverRequest.request('/mesa/editarDesconto', obj);
     if (dados) {
       window.parent.location.reload();
-
     }
   }
 
-  editarTxServico = async () => {
-    alert('EDITAR TX SERVICO')
+  editarTxServico = async (id_mesa, taxa_servico) => {
+
+    let obj = {
+      taxa_servico: parseInt(this.state.taxa_servico),
+      id_mesa: this.props.id_mesa,
+    }
+    console.log(obj);
+    let dados = await serverRequest.request('/mesa/editarTaxaServico', obj);
+    if (dados) {
+      window.parent.location.reload();
+    }
   }
 
   moneyFormat = (valor) => {
-    if(valor)
+    if (valor)
       return `R$ ${valor.toFixed(2)}`;
     else
       return valor;
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, id_mesa } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -115,8 +122,8 @@ class DetalheMesaResumo extends Component {
                           <InputGroupText>R$</InputGroupText>
                         </InputGroupAddon>
                         <MaskedMoneyInput
-                          name="servico"
-                          value={this.state.servico}
+                          name="taxa_servico"
+                          value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
                           placeholder="Tx Serviço"
                         />
@@ -136,7 +143,7 @@ class DetalheMesaResumo extends Component {
                       </InputGroup>
                     </Col>
                     <Col xs="2">
-                      <Button onClick={this.editarTxServico}>OK</Button>
+                      <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
                     </Col>
                   </Row>
                   : null
@@ -178,8 +185,8 @@ class DetalheMesaResumo extends Component {
                     </InputGroup>
                   </Col>
                   <Col xs="2">
-                    <Button onClick={this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
-                    </Col>
+                    <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                  </Col>
                 </Row>
                 : null
               }
