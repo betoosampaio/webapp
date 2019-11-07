@@ -209,7 +209,8 @@ class DetalheMesa extends Component {
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
               vlrTotal={this.vlrTotal()} 
-              id_mesa={this.state._id} />
+              id_mesa={this.state._id}
+              atualizou={() => this.obter(this.props.match.params.id)} />
 
             <DetalheMesaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}

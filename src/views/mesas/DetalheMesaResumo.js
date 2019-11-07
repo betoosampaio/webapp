@@ -82,7 +82,8 @@ class DetalheMesaResumo extends Component {
     }
     let dados = await serverRequest.request('/mesa/editarDesconto', obj);
     if (dados) {
-      window.parent.location.reload();
+      this.setState({descontoVisivel: false});
+      this.props.atualizou();
     }
   }
 
@@ -93,7 +94,8 @@ class DetalheMesaResumo extends Component {
     }
     let dados = await serverRequest.request('/mesa/editarTaxaServico', obj);
     if (dados) {
-      window.parent.location.reload();
+      this.setState({txServicoVisivel: false});
+      this.props.atualizou();
     }
   }
 
