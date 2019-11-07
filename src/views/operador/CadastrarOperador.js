@@ -26,7 +26,23 @@ class CadastrarOperador extends Component {
     };
   }
 
+  limparStateOperador = () => {
 
+    this.setState({
+      showCadastrado: false,
+      nome_operador: "",
+      id_perfil: "",
+      login_operador: "",
+      senha_operador: "",
+
+      validacao: {
+        nome_operador: { valid: false, invalid: false, msg: '' },
+        id_perfil: { valid: false, invalid: false, msg: '' },
+        login_operador: { valid: false, invalid: false, msg: '' },
+        senha_operador: { valid: false, invalid: false, msg: '' },
+      },
+    });
+  }
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
@@ -131,6 +147,9 @@ class CadastrarOperador extends Component {
       this.setState({ showCadastrado: true });
     }
   }
+
+
+
 
   render() {
     return (
@@ -246,7 +265,7 @@ class CadastrarOperador extends Component {
             <p>Operador Cadastrado com sucesso! </p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/operador' }}  >OK</Button>
+          <Button variant="primary" color="success" onClick={this.limparStateOperador}  >Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
