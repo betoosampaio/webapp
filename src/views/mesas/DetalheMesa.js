@@ -225,6 +225,7 @@ class DetalheMesa extends Component {
         <FormaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
+          id_mesa={this.state._id}
         />
 
       </div >

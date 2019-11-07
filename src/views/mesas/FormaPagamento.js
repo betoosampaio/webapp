@@ -3,7 +3,7 @@ import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, 
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import MaskedNumberInput from '../../components/MaskedNumberInput';
-import MultipleSelect from '../../components/MultipleSelect';
+import SelectFormasPagamento from '../../components/SelectFormasPagamento';
 import ReactDOMServer from 'react-dom/server';
 import Foto from '../../components/Foto';
 
@@ -13,6 +13,8 @@ class FormaPagamento extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      valor: '',
+      id_forma_pagamento: '',
       lista: [],
       selecionados: [],
       id_produto: "",
@@ -30,44 +32,38 @@ class FormaPagamento extends Component {
     }
   }
 
-  changeInput = (event) => {
-    let id_produto = event.target.value[0];
-    if (!id_produto) return;
+  incluirPagamento = async () => {
+    let obj = {
+      valor: parseInt(this.state.valor),
+      id_forma_pagamento: this.state.id_forma_pagamento,
+      id_mesa: this.props.id_mesa,
+    }
+    let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
+    if (dados) {
+      window.parent.location.reload();
+    }
+  }
 
-    let selecionado = this.state.lista.filter(p => (String(p.id_produto) === String(id_produto)))[0];
+  changeInput1 = (event) => {
+    let id_forma_pagamento = event.target.value[0];
+    if (!id_forma_pagamento) return;
+
+    let selecionado = this.state.lista.filter(p => (String(p.id_forma_pagamento) === String(id_forma_pagamento)))[0];
     selecionado.quantidade = 1;
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
     this.setState({
       selecionados: [...this.state.selecionados, selecionado],
-      id_produto: "",
+      id_forma_pagamento: "",
     });
   }
 
 
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
   render() {
-
-    const multipleSelectOptions = {
-      filter: true,
-      single: true,
-      displayValues: true,
-      placeholder: "Selecione a forma de pagamento",
-      textTemplate: (el) => {
-        if (el[0].value) {
-          return ReactDOMServer.renderToStaticMarkup(
-            <span>
-            
-              <span className="ml-2 text-muted">[{el[0].dataset.codigo}]</span>
-             
-          
-            </span>
-          )
-        }
-        else
-          return el[0].innerHTML;
-      },
-    }
 
     return (
       <Modal
@@ -89,10 +85,13 @@ class FormaPagamento extends Component {
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className='fa fa-money'></i></InputGroupText>
               </InputGroupAddon>
-  
+
               <Input
                 placeholder="Digite aqui o valor"
-              /> 
+                name="valor"
+                value={this.state.valor}
+                onChange={this.changeInput}
+              />
 
             </InputGroup>
           </FormGroup>
@@ -105,38 +104,23 @@ class FormaPagamento extends Component {
                 <InputGroupText><i className="fa fa-credit-card"></i></InputGroupText>
               </InputGroupAddon>
 
-              <MultipleSelect
-                id="select-produto"
-                options={multipleSelectOptions}
-                name="id_produto"
-                value={this.state.id_produto}
-                onChange={this.changeInput}>
 
-                <option value="">Selecione</option>
-                
-                {
-                  this.state.lista.map(obj => {
-                    return (
-                      <option
-                        key={obj.id_forma_pagamento}
-                        value={obj.id_forma_pagamento}
-                        data-codigo={obj.ds_forma_pagamento}
-                        data-preco={obj.preco}
-                        data-nome={obj.nome_produto}
-                        data-imagem={obj.imagem}>
-                        {obj.codigo_produto}{obj.nome_produto}
-                      </option>
-                    )
-                  })
-                }
-              </MultipleSelect>
-              
+
+              <SelectFormasPagamento
+                name="id_forma_pagamento"
+                value={this.state.id_forma_pagamento}
+                onChange={this.changeInput}
+              >
+              </SelectFormasPagamento >
+
+              <Button type="submit" color="success" onClick={() => this.changeInput1}>Incluir</Button>
+
             </InputGroup>
           </FormGroup>
           <Table striped bordered hover responsive>
             <thead className="thead-light">
               <tr>
-                
+
                 <th>Valor</th>
                 <th>Forma de Pagamento</th>
                 <th>Horário</th>
@@ -147,30 +131,10 @@ class FormaPagamento extends Component {
               {this.state.selecionados.map(obj => {
                 return (
                   <tr key={obj.id}>
-                    <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
-                    <td>{obj.codigo_produto}</td>
-                    <td>{obj.nome_produto}</td>
-                    <td>R$ {parseFloat(obj.preco).toFixed(2)}</td>
-                    <td>R$ {(parseFloat(obj.preco) * parseInt(obj.quantidade)).toFixed(2)}</td>
-                    <td>
-                      <FormGroup>
-                        <InputGroup>
-                          <InputGroupAddon onClick={() => this.decrementar(obj.id)} addonType="append" >
-                            <InputGroupText><i className="fa fa-minus"></i></InputGroupText>
-                          </InputGroupAddon>
-                          <MaskedNumberInput
-                            name="quantidade"
-                            placeholder="Quantidade"
-                            value={obj.quantidade}
-                            disabled={true}
-                            width="50px"
-                            required />
-                          <InputGroupAddon onClick={() => this.incrementar(obj.id)} addonType="append">
-                            <InputGroupText><i className="fa fa-plus"></i></InputGroupText>
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </FormGroup>
-                    </td>
+                   
+                    <td>{obj.valor}</td>
+                    <td>{obj.id_forma_pagamento}</td>
+             
                     <td>
                       <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
                         <i className="icon-close"></i>
@@ -183,7 +147,7 @@ class FormaPagamento extends Component {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit" color="success">Incluir</Button>
+          <Button type="submit" color="success" onClick={this.incluirPagamento}>Incluir</Button>
         </Modal.Footer>
 
       </Modal>
