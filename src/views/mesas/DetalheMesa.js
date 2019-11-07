@@ -81,10 +81,11 @@ class DetalheMesa extends Component {
   removerMesa = async (id_mesa) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer cancelar essa conta?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
+      message: "Tem certeza que deseja cancelar essa conta?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
@@ -99,10 +100,11 @@ class DetalheMesa extends Component {
   fecharMesa = async (id_mesa) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer encerrar essa conta?",
+      message: "Tem certeza que deseja encerrar essa conta?",
       confirmColor: "success",
-      confirmText: "Sim",
-      cancelText: "Não",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
