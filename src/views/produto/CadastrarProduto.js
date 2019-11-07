@@ -33,14 +33,14 @@ class CadastrarProduto extends Component {
     }
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.obterProximoCodigoProduto();
   }
 
-  obterProximoCodigoProduto = async () =>{
+  obterProximoCodigoProduto = async () => {
     let dados = await serverRequest.request('/produto/obterProximoCodigoProduto');
-    if(dados){
-      this.setState({codigo_produto: dados[0].codigo_produto})
+    if (dados) {
+      this.setState({ codigo_produto: dados[0].codigo_produto })
     }
   }
 
@@ -159,6 +159,31 @@ class CadastrarProduto extends Component {
     if (dados) {
       this.setState({ showCadastrado: true });
     }
+  }
+
+  limparStateProduto = () => {
+
+    this.obterProximoCodigoProduto();
+
+    this.setState({
+      showCadastrado: false,
+      codigo_produto: "",
+      nome_produto: "",
+      descricao: "",
+      preco: "",
+      id_menu: "",
+      promocao: 0,
+      imagem: "",
+      visivel: 1,
+
+      validacao: {
+        codigo_produto: { valid: false, invalid: false, msg: '' },
+        nome_produto: { valid: false, invalid: false, msg: '' },
+        descricao: { valid: false },
+        preco: { valid: false, invalid: false, msg: '' },
+        id_menu: { valid: false, invalid: false, msg: '' }
+      },
+    });
   }
 
   changeInput = (event) => {
@@ -312,16 +337,15 @@ class CadastrarProduto extends Component {
           centered
           show={this.state.showCadastrado}
           onHide={() => { this.setState({ showCadastrado: false }) }}
-          backdrop='static'
-        >
+          backdrop='static'>
           <Modal.Header closeButton>
             <Modal.Title>Confirmação</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body >
             <p>Produto Cadastrado com sucesso!</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/produto' }}  >OK</Button>
+            <Button variant="primary" color="success" onClick={this.limparStateProduto}  >Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
