@@ -87,6 +87,19 @@ class CadastrarMenu extends Component {
     }
   }
 
+  limparStateMenu = () => {
+
+    this.setState({
+      ds_menu: '',
+      showCadastrado: false,
+      validarSeMenuExiste: '',
+
+      validacao: {
+        ds_menu: { valid: false, invalid: false, msg: '' },
+      },
+    });
+  }
+
 
 
   render() {
@@ -141,7 +154,7 @@ class CadastrarMenu extends Component {
             <p>Menu Cadastrado com sucesso!</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >Confirmar</Button>
+            <Button variant="primary" color="success" onClick={this.limparStateMenu}  >Confirmar</Button>
           </Modal.Footer>
         </Modal>
       </form>
