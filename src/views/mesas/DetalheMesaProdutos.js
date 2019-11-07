@@ -23,10 +23,11 @@ class DetalheMesaProdutos extends Component {
   removerItem = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que quer remover esse item ?",
-      confirmColor: "danger",
-      confirmText: "Sim",
-      cancelText: "Não",
+      message: "Tem certeza que deseja remover esse item ?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
     });
 
     if (confirm) {
