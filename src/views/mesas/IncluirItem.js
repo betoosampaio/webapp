@@ -111,6 +111,7 @@ class DetalheMesa extends Component {
     }
 
     return (
+      
       <Modal
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
