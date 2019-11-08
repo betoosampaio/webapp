@@ -137,7 +137,7 @@ class DetalheMesa extends Component {
                   title="Fechar Conta">
                   <i className="icon-basket-loaded" />
                 </Button>
-                <Button
+                <Button onClick={() => this.setState({modalAdicionarPagamento: true})}
                   className="pull-right bg-success mr-1"
                   size="sm"
                   title="Inserir Pagamento">

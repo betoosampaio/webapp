@@ -15,9 +15,9 @@ class FormaPagamento extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selecionados: '',
       valor: '',
       id_forma_pagamento: '',
+      ds_forma_pagamento:'',
       lista: [],
       selecionados: [],
       id_produto: "",
@@ -36,29 +36,39 @@ class FormaPagamento extends Component {
   }
 
   incluirPagamento = async () => {
-
+   
     if (this.state.selecionados.length > 0) {
+
+      let pagamentos = this.state.selecionados.map(p => ({id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.','').replace(',','.'))}) )
+
       let obj = {
+       
         id_mesa: this.props.id_mesa,
-        valor: parseInt(this.state.selecionados[0].valor.replace(',','.')),
-        id_forma_pagamento: this.state.selecionados[0].id_forma_pagamento,
+        pagamentos: pagamentos,
+
       }
-      console.log(obj)
+
+      console.log(pagamentos);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
       if (dados) {
-        
+
       }
     }
   }
 
+  remover(id){
+    let selecionados = Object.assign([], this.state.selecionados);
+    selecionados = selecionados.filter(p => p.id !== id);
+    this.setState({ selecionados: selecionados })
+  }
 
+  changeInput1 = (event) => {
 
-
-
-
-  changeInput1 = () => {
-
-    let selecionado = { id_forma_pagamento: this.state.id_forma_pagamento, valor: this.state.valor }
+    let selecionado = { 
+      id_forma_pagamento: this.state.id_forma_pagamento, 
+      valor: this.state.valor,
+      ds_forma_pagamento: this.state.ds_forma_pagamento 
+    }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
     this.setState({
@@ -103,17 +113,20 @@ class FormaPagamento extends Component {
                   onChange={this.changeInput}
                 />
 
+
+
+
+
               </InputGroup>
             </FormGroup>
 
 
             <FormGroup>
-              <Label>Forma de pagamento:</Label>
+              <Label>Forma de Pagamento:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-credit-card"></i></InputGroupText>
+                  <InputGroupText><i className='fa fa-money'></i></InputGroupText>
                 </InputGroupAddon>
-
 
 
                 <SelectFormasPagamento
@@ -125,8 +138,11 @@ class FormaPagamento extends Component {
 
                 <Button color="success" onClick={this.changeInput1}>Incluir</Button>
 
+
+
               </InputGroup>
             </FormGroup>
+
             <Table striped bordered hover responsive>
               <thead className="thead-light">
                 <tr>
@@ -135,6 +151,7 @@ class FormaPagamento extends Component {
                   <th>Forma de Pagamento</th>
                   <th>Horário</th>
                   <th>Usuário</th>
+                  <th>Remover</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,7 +160,10 @@ class FormaPagamento extends Component {
                     <tr key={obj.id}>
 
                       <td>{obj.valor}</td>
-                      <td>{obj.id_forma_pagamento}</td>
+                      <td>{obj.ds_forma_pagamento}</td>
+                      <td>{}</td>
+                      <td>{}</td>
+
 
                       <td>
                         <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
@@ -159,8 +179,8 @@ class FormaPagamento extends Component {
           <Modal.Footer>
             <Button type="submit" color="success">Incluir</Button>
           </Modal.Footer>
-        </form>
-      </Modal>
+        </form >
+      </Modal >
     );
   }
 }
