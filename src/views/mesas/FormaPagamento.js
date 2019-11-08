@@ -15,7 +15,6 @@ class FormaPagamento extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selecionados: '',
       valor: '',
       id_forma_pagamento: '',
       lista: [],
@@ -38,21 +37,21 @@ class FormaPagamento extends Component {
   incluirPagamento = async () => {
 
     if (this.state.selecionados.length > 0) {
+
       let obj = {
+        valor: this.setState(parseInt(this.state.selecionados[0].valor.replace(',', ''))),
         id_mesa: this.props.id_mesa,
-        valor: parseInt(this.state.selecionados[0].valor.replace(',','.')),
-        id_forma_pagamento: this.state.selecionados[0].id_forma_pagamento,
+        pagamentos: this.state.selecionados,
+
       }
-      console.log(obj)
+
+      console.log(this.state.selecionados[0]);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
       if (dados) {
-        
+
       }
     }
   }
-
-
-
 
 
 
@@ -90,7 +89,7 @@ class FormaPagamento extends Component {
           <Modal.Body>
 
             <FormGroup>
-              <Label>Valor:</Label>
+              <Label>Valor e forma de pagamento:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className='fa fa-money'></i></InputGroupText>
@@ -103,18 +102,7 @@ class FormaPagamento extends Component {
                   onChange={this.changeInput}
                 />
 
-              </InputGroup>
-            </FormGroup>
-
-
-            <FormGroup>
-              <Label>Forma de pagamento:</Label>
-              <InputGroup>
-                <InputGroupAddon addonType="append">
-                  <InputGroupText><i className="fa fa-credit-card"></i></InputGroupText>
-                </InputGroupAddon>
-
-
+        
 
                 <SelectFormasPagamento
                   name="id_forma_pagamento"
@@ -127,6 +115,9 @@ class FormaPagamento extends Component {
 
               </InputGroup>
             </FormGroup>
+
+
+         
             <Table striped bordered hover responsive>
               <thead className="thead-light">
                 <tr>
@@ -135,6 +126,7 @@ class FormaPagamento extends Component {
                   <th>Forma de Pagamento</th>
                   <th>Horário</th>
                   <th>Usuário</th>
+                  <th>Remover</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,6 +136,9 @@ class FormaPagamento extends Component {
 
                       <td>{obj.valor}</td>
                       <td>{obj.id_forma_pagamento}</td>
+                      <td>{}</td>
+                      <td>{}</td>
+
 
                       <td>
                         <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
