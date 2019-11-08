@@ -25,16 +25,15 @@ class CadastrarMenu extends Component {
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].valid) {
-        console.log(this.state.validacao[p]);
         valid = false;
       }
     });
 
-    if (valid) {
-      let dados = await serverRequest.request('/menu/cadastrar', this.state);
-      if (dados) {
-        this.setState({ showCadastrado: true });
-      }
+    if (!valid) return alert('Preencha todos os campos corretamente');
+
+    let dados = await serverRequest.request('/menu/cadastrar', this.state);
+    if (dados) {
+      this.setState({ showCadastrado: true });
     }
 
   }
@@ -85,6 +84,19 @@ class CadastrarMenu extends Component {
       newState.ds_menu.msg = 'Esta descrição de menu já está sendo utilizada';
       this.setState({ validacao: newState });
     }
+  }
+
+  limparStateMenu = () => {
+
+    this.setState({
+      ds_menu: '',
+      showCadastrado: false,
+      validarSeMenuExiste: '',
+
+      validacao: {
+        ds_menu: { valid: false, invalid: false, msg: '' },
+      },
+    });
   }
 
 
@@ -141,7 +153,7 @@ class CadastrarMenu extends Component {
             <p>Menu Cadastrado com sucesso!</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={() => { window.location.href = '#/cardapio/menu' }}  >Confirmar</Button>
+            <Button variant="primary" color="success" onClick={this.limparStateMenu}  >Confirmar</Button>
           </Modal.Footer>
         </Modal>
       </form>

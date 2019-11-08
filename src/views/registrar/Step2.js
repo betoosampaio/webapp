@@ -37,7 +37,6 @@ class Step2 extends Component {
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
-        complemento: { valid: false },
         bairro: { valid: false, invalid: false, msg: '' },
         municipio: { valid: false, invalid: false, msg: '' },
         uf: { valid: false, invalid: false, msg: '' },
@@ -289,19 +288,6 @@ class Step2 extends Component {
     newState.numero.valid = valid;
     newState.numero.invalid = invalid;
     newState.numero.msg = msg;
-    this.setState({ validacao: newState });
-  }
-
-  validarComplemento = (event) => {
-    let valid = false;
-    let val = event.target.value;
-    if (!val) {
-    }
-    else {
-      valid = true;
-    }
-    let newState = Object.assign({}, this.state.validacao);
-    newState.complemento.valid = valid;
     this.setState({ validacao: newState });
   }
 
@@ -575,8 +561,6 @@ class Step2 extends Component {
               name="complemento"
               value={this.state.complemento}
               onChange={this.changeInput}
-              onBlur={this.validarComplemento}
-              valid={this.state.validacao.complemento.valid}
             />
           </InputGroup>
         </FormGroup>
