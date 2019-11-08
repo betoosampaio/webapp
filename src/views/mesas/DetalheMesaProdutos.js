@@ -58,26 +58,17 @@ class DetalheMesaProdutos extends Component {
                 <th>Produto</th>
                 <th>Quantidade</th>
                 <th>Valor</th>
-                <th>Excluir</th>
               </tr>
             </thead>
             <tbody>
               {
                 produtos.map((obj) => {
                   return (
-                    <tr onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })} key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}  key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td><Foto src={obj.imagem} height="30" width="30"></Foto></td>
                       <td>{obj.nome_produto}</td>
                       <td>{obj.quantidade}</td>
                       <td>{this.moneyFormat(obj.preco * obj.quantidade)}</td>
-                      <td>
-                        {obj.removido
-                          ? null
-                          : <Button color="danger" size="sm" onClick={() => this.removerItem(id_mesa, obj.id_item)} >
-                            <i className="icon-close"></i>
-                          </Button>
-                        }
-                      </td>
                     </tr>
                   );
                 })
@@ -89,14 +80,15 @@ class DetalheMesaProdutos extends Component {
           <b>{qtdProdutos} items</b>
           <b className="pull-right">{this.moneyFormat(vlrProdutos)}</b>
 
-      
+
         </CardFooter>
-      <DetalheMesaItem
-      show={this.state.modalDetalheMesaItem}
-      onHide={() => { this.setState({ modalDetalheMesaItem: false}) }} 
-      item={this.state.detalheItemSelecionado}
-      />
-  
+        <DetalheMesaItem
+          show={this.state.modalDetalheMesaItem}
+          onHide={() => { this.setState({ modalDetalheMesaItem: false }) }}
+          item={this.state.detalheItemSelecionado}
+          id_mesa={id_mesa}
+        />
+
       </Card>
     )
   }
