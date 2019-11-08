@@ -17,6 +17,7 @@ class FormaPagamento extends Component {
     this.state = {
       valor: '',
       id_forma_pagamento: '',
+      ds_forma_pagamento:'',
       lista: [],
       selecionados: [],
       id_produto: "",
@@ -35,17 +36,19 @@ class FormaPagamento extends Component {
   }
 
   incluirPagamento = async () => {
-
+   
     if (this.state.selecionados.length > 0) {
 
+      let pagamentos = this.state.selecionados.map(p => ({id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.','').replace(',','.'))}) )
+
       let obj = {
-        valor: this.setState(parseInt(this.state.selecionados[0].valor.replace(',', ''))),
+       
         id_mesa: this.props.id_mesa,
-        pagamentos: this.state.selecionados,
+        pagamentos: pagamentos,
 
       }
 
-      console.log(this.state.selecionados[0]);
+      console.log(pagamentos);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
       if (dados) {
 
@@ -53,11 +56,19 @@ class FormaPagamento extends Component {
     }
   }
 
+  remover(id){
+    let selecionados = Object.assign([], this.state.selecionados);
+    selecionados = selecionados.filter(p => p.id !== id);
+    this.setState({ selecionados: selecionados })
+  }
 
+  changeInput1 = (event) => {
 
-  changeInput1 = () => {
-
-    let selecionado = { id_forma_pagamento: this.state.id_forma_pagamento, valor: this.state.valor }
+    let selecionado = { 
+      id_forma_pagamento: this.state.id_forma_pagamento, 
+      valor: this.state.valor,
+      ds_forma_pagamento: this.state.ds_forma_pagamento 
+    }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
     this.setState({
@@ -89,7 +100,7 @@ class FormaPagamento extends Component {
           <Modal.Body>
 
             <FormGroup>
-              <Label>Valor e forma de pagamento:</Label>
+              <Label>Valor:</Label>
               <InputGroup>
                 <InputGroupAddon addonType="append">
                   <InputGroupText><i className='fa fa-money'></i></InputGroupText>
@@ -102,7 +113,21 @@ class FormaPagamento extends Component {
                   onChange={this.changeInput}
                 />
 
-        
+
+
+
+
+              </InputGroup>
+            </FormGroup>
+
+
+            <FormGroup>
+              <Label>Forma de Pagamento:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className='fa fa-money'></i></InputGroupText>
+                </InputGroupAddon>
+
 
                 <SelectFormasPagamento
                   name="id_forma_pagamento"
@@ -113,11 +138,11 @@ class FormaPagamento extends Component {
 
                 <Button color="success" onClick={this.changeInput1}>Incluir</Button>
 
+
+
               </InputGroup>
             </FormGroup>
 
-
-         
             <Table striped bordered hover responsive>
               <thead className="thead-light">
                 <tr>
@@ -135,7 +160,7 @@ class FormaPagamento extends Component {
                     <tr key={obj.id}>
 
                       <td>{obj.valor}</td>
-                      <td>{obj.id_forma_pagamento}</td>
+                      <td>{obj.ds_forma_pagamento}</td>
                       <td>{}</td>
                       <td>{}</td>
 
@@ -154,8 +179,8 @@ class FormaPagamento extends Component {
           <Modal.Footer>
             <Button type="submit" color="success">Incluir</Button>
           </Modal.Footer>
-        </form>
-      </Modal>
+        </form >
+      </Modal >
     );
   }
 }
