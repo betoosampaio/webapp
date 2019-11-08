@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, Table } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button, Table, Row, Col } from 'reactstrap';
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
+import DetalheMesaItem from './DetalheMesaItem';
 import serverRequest from '../../utils/serverRequest';
 
 class DetalheMesaProdutos extends Component {
@@ -64,7 +65,7 @@ class DetalheMesaProdutos extends Component {
               {
                 produtos.map((obj) => {
                   return (
-                    <tr key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })} key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td><Foto src={obj.imagem} height="30" width="30"></Foto></td>
                       <td>{obj.nome_produto}</td>
                       <td>{obj.quantidade}</td>
@@ -87,7 +88,15 @@ class DetalheMesaProdutos extends Component {
         <CardFooter>
           <b>{qtdProdutos} items</b>
           <b className="pull-right">{this.moneyFormat(vlrProdutos)}</b>
+
+      
         </CardFooter>
+      <DetalheMesaItem
+      show={this.state.modalDetalheMesaItem}
+      onHide={() => { this.setState({ modalDetalheMesaItem: false}) }} 
+      item={this.state.detalheItemSelecionado}
+      />
+  
       </Card>
     )
   }
