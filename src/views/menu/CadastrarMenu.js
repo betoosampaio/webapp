@@ -25,16 +25,15 @@ class CadastrarMenu extends Component {
 
     Object.keys(this.state.validacao).forEach(p => {
       if (!this.state.validacao[p].valid) {
-        console.log(this.state.validacao[p]);
         valid = false;
       }
     });
 
-    if (valid) {
-      let dados = await serverRequest.request('/menu/cadastrar', this.state);
-      if (dados) {
-        this.setState({ showCadastrado: true });
-      }
+    if (!valid) return alert('Preencha todos os campos corretamente');
+
+    let dados = await serverRequest.request('/menu/cadastrar', this.state);
+    if (dados) {
+      this.setState({ showCadastrado: true });
     }
 
   }

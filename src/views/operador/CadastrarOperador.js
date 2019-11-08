@@ -142,14 +142,22 @@ class CadastrarOperador extends Component {
 
   cadastrar = async (event) => {
     event.preventDefault();
+
+    let valid = true;
+
+    Object.keys(this.state.validacao).forEach(p => {
+      if (!this.state.validacao[p].valid) {
+        valid = false;
+      }
+    });
+
+    if (!valid) return alert('Preencha todos os campos corretamente');
+
     let dados = await serverRequest.request('/operador/cadastrar', this.state);
     if (dados) {
       this.setState({ showCadastrado: true });
     }
   }
-
-
-
 
   render() {
     return (

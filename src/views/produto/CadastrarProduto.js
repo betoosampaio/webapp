@@ -26,7 +26,6 @@ class CadastrarProduto extends Component {
       validacao: {
         codigo_produto: { valid: false, invalid: false, msg: '' },
         nome_produto: { valid: false, invalid: false, msg: '' },
-        descricao: { valid: false },
         preco: { valid: false, invalid: false, msg: '' },
         id_menu: { valid: false, invalid: false, msg: '' },
       },
@@ -95,19 +94,6 @@ class CadastrarProduto extends Component {
     this.setState({ validacao: newState });
   }
 
-  validarDescricao = (event) => {
-    let valid = false;
-    let val = event.target.value;
-    if (!val) {
-    }
-    else {
-      valid = true;
-    }
-    let newState = Object.assign({}, this.state.validacao);
-    newState.descricao.valid = valid;
-    this.setState({ validacao: newState });
-  }
-
   validarIdMenu = (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
@@ -151,6 +137,16 @@ class CadastrarProduto extends Component {
   cadastrar = async (event) => {
     event.preventDefault();
 
+    let valid = true;
+
+    Object.keys(this.state.validacao).forEach(p => {
+      if (!this.state.validacao[p].valid) {
+        valid = false;
+      }
+    });
+
+    if (!valid) return alert('Preencha todos os campos corretamente');
+
     let obj = Object.assign({}, this.state);
     obj.preco = obj.preco.replace('.', '').replace(',', '.');
     obj.codigo_produto = String(obj.codigo_produto);
@@ -179,7 +175,6 @@ class CadastrarProduto extends Component {
       validacao: {
         codigo_produto: { valid: false, invalid: false, msg: '' },
         nome_produto: { valid: false, invalid: false, msg: '' },
-        descricao: { valid: false },
         preco: { valid: false, invalid: false, msg: '' },
         id_menu: { valid: false, invalid: false, msg: '' }
       },
@@ -263,8 +258,6 @@ class CadastrarProduto extends Component {
                   value={this.state.descricao}
                   onChange={this.changeInput}
                   placeholder="Delicioso lanche com pão de brioche, queijo, carne, alface, tomate e maionese"
-                  onBlur={this.validarDescricao}
-                  valid={this.state.validacao.descricao.valid}
                 />
               </InputGroup>
             </FormGroup>
