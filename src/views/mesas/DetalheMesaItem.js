@@ -50,40 +50,42 @@ class DetalheMNesaItem extends Component {
   render() {
     const item = this.props.item || {}
 
-    
+
 
     return (
-        <Modal
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          backdrop='static'
-          show={this.props.show}
-          onHide={this.onHide}>
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste produto</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <ListGroup>
-              <ListGroupItem> <Foto src={item.imagem} height="50" width="50"></Foto> </ListGroupItem>
-              <ListGroupItem><b>Código Produto:</b> {item.codigo_produto}</ListGroupItem>
-              <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
-              <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
-              <ListGroupItem><b>Valor:</b> R$ {item.preco} </ListGroupItem>
-              <ListGroupItem><b>Data e hora de inserção do produto:</b> {item.data_inclusao}</ListGroupItem>
-              <ListGroupItem><b>Operador que abriu a mesa:</b> {item.id_operador_abertura}</ListGroupItem>
-            </ListGroup>
-          </Modal.Body>
-          <Modal.Footer>
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        backdrop='static'
+        show={this.props.show}
+        onHide={this.onHide}
+        onBlur={this.moneyFormat}>
+        
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste produto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ListGroup>
+            <ListGroupItem> <Foto src={item.imagem} height="50" width="50"></Foto> </ListGroupItem>
+            <ListGroupItem><b>Código Produto:</b> {item.codigo_produto}</ListGroupItem>
+            <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
+            <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
+            <ListGroupItem><b>Valor:</b> {this.moneyFormat(item.preco)} </ListGroupItem>
+            <ListGroupItem><b>Data e hora de inserção do produto:</b> {item.data_inclusao}</ListGroupItem>
+            <ListGroupItem><b>Operador que inseriu o produto:</b> {item.id_operador_abertura}</ListGroupItem>
+          </ListGroup>
+        </Modal.Body>
+        <Modal.Footer>
 
-            <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)} 
-            className="icon-close"> Excluir produto          
+          <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)}
+            className="icon-close"> Excluir produto
             </Button>
 
-          </Modal.Footer>
+        </Modal.Footer>
 
-        </Modal >
-      );
+      </Modal >
+    );
   }
 }
 
