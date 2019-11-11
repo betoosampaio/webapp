@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, Table, Row, Col } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button, Table,} from 'reactstrap';
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
 import DetalheMesaItem from './DetalheMesaItem';
