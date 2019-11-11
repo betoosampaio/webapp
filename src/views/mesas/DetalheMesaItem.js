@@ -27,6 +27,13 @@ class DetalheMNesaItem extends Component {
     this.props.onHide();
   }
 
+  dateFormat = (data) => {
+    let dataRetornar = new Date(data).toLocaleString();
+  return dataRetornar;
+  
+  }
+
+
   removerItem = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
@@ -61,7 +68,7 @@ class DetalheMNesaItem extends Component {
         show={this.props.show}
         onHide={this.onHide}
         onBlur={this.moneyFormat}>
-        
+
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste produto</Modal.Title>
         </Modal.Header>
@@ -72,7 +79,9 @@ class DetalheMNesaItem extends Component {
             <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
             <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
             <ListGroupItem><b>Valor:</b> {this.moneyFormat(item.preco)} </ListGroupItem>
-            <ListGroupItem><b>Data e hora de inserção do produto:</b> {item.data_inclusao}</ListGroupItem>
+
+            <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
+
             <ListGroupItem><b>Operador que inseriu o produto:</b> {item.id_operador_abertura}</ListGroupItem>
           </ListGroup>
         </Modal.Body>

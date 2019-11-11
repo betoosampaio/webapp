@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText,
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, FormFeedback
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import MaskedNumberInput from '../../components/MaskedNumberInput';
@@ -177,8 +177,8 @@ class DetalheMesaResumo extends Component {
                         />
                       </InputGroup>
                       {this.state.msgValor === true &&
-
-                        <span style={{ color: "Red" }}>Não é o valor total</span>
+                       
+                      <span style={{ color: "Red" }}>Não é o valor total</span>
 
                       }
                     </Col>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, Table } from 'reactstrap';
+import DetalhePagamentoItem from './DetalhePagamentoItem';
 
 class DetalheMesaPagamentos extends Component {
 
@@ -18,7 +19,7 @@ class DetalheMesaPagamentos extends Component {
   }
 
   render() {
-    const { pagamentos, vlrPagamentos, adicionarPagamento } = this.props;
+    const { pagamentos, vlrPagamentos, adicionarPagamento, id_mesa } = this.props;
     return (
       <Card>
 
@@ -40,7 +41,7 @@ class DetalheMesaPagamentos extends Component {
               {
                 pagamentos.map((obj) => {
                   return (
-                    <tr key={obj.data_inclusao} style={{ textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr  onClick= {() =>  this.setState({ modalDetalhePagamentoItem: true, DetalhePagamentoItem: obj })} key={obj.data_inclusao} style={{ cursor:"pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td>{obj.ds_forma_pagamento}</td>
                       <td>{this.moneyFormat(obj.valor)}</td>
                     </tr>
@@ -54,6 +55,14 @@ class DetalheMesaPagamentos extends Component {
           <b>Total</b>
           <b className="pull-right">{this.moneyFormat(vlrPagamentos)}</b>
         </CardFooter>
+
+        <DetalhePagamentoItem
+          show={this.state.modalDetalhePagamentoItem}
+          onHide={() => { this.setState({ modalDetalhePagamentoItem: false }) }}
+          item={this.state.DetalhePagamentoItem}
+          id_mesa={id_mesa}
+        />
+
       </Card>
     )
   }
