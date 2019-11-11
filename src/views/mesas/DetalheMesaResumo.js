@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card, CardHeader, CardBody, CardFooter, Button, Input, Row, Col, ListGroup,
+  Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
   ListGroupItem, InputGroup, InputGroupAddon, InputGroupText,
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
@@ -12,6 +12,8 @@ class DetalheMesaResumo extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      msgDesconto: '',
+      msgValor: '',
       servicoPorcentagem: '',
       descontoPorcentagem: '',
       taxa_servico: '',
@@ -21,20 +23,20 @@ class DetalheMesaResumo extends Component {
     };
   }
 
-  componentDidUpdate(){
-    if(this.props.vlrTxServico !== this.state.propsTxServico){
+  componentDidUpdate() {
+    if (this.props.vlrTxServico !== this.state.propsTxServico) {
       let porcentagem = this.props.vlrTxServico / this.props.vlrProdutos * 100;
       this.setState({
         propsTxServico: this.props.vlrTxServico,
-        taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.',','),
+        taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.', ','),
         servicoPorcentagem: porcentagem.toFixed(0)
       });
     }
-    if(this.props.vlrDesconto !== this.state.propsDesconto){
+    if (this.props.vlrDesconto !== this.state.propsDesconto) {
       let porcentagem = this.props.vlrDesconto / this.props.vlrProdutos * 100;
       this.setState({
         propsDesconto: this.props.vlrDesconto,
-        desconto: this.props.vlrDesconto.toFixed(2).replace('.',','),
+        desconto: this.props.vlrDesconto.toFixed(2).replace('.', ','),
         descontoPorcentagem: porcentagem.toFixed(0)
       });
     }
@@ -44,16 +46,30 @@ class DetalheMesaResumo extends Component {
     if (event.target.name === "desconto") {
 
       let evento = event.target.value.replace(',', '');
+      let eventoDesconto = event.target.value.replace(',', '.');
 
-      let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
+      if (eventoDesconto > this.props.vlrTotal) {
+        this.setState({ msgValor: true });
+      }
+      else {
+        this.setState({ msgValor: false });
+        let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
-      this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem.toFixed(0) });
-
+        this.setState({ desconto: event.target.value, descontoPorcentagem: porcentagem.toFixed(0) });
+      }
     } else {
 
-      let valor = (event.target.value * this.props.vlrProdutos) / 100;
+      let evento = event.target.value;
 
-      this.setState({ descontoPorcentagem: event.target.value, desconto: valor.toFixed(2).replace('.',',') });
+      if (evento > 100) {
+        this.setState({ msgDesconto: true });
+      }
+      else {
+        this.setState({ msgDesconto: false });
+        let valor = (evento * this.props.vlrProdutos) / 100;
+
+        this.setState({ descontoPorcentagem: event.target.value, desconto: valor.toFixed(2).replace('.', ',') });
+      }
     }
 
   }
@@ -62,39 +78,54 @@ class DetalheMesaResumo extends Component {
     if (event.target.name === "taxa_servico") {
 
       let evento = event.target.value.replace(',', '');
+      let eventoDesconto = event.target.value.replace(',', '.');
 
-      let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
+      if (eventoDesconto > this.props.vlrTotal) {
+        this.setState({ msgValor: true });
+      }
+      else {
+        this.setState({ msgValor: false });
+        let porcentagem = evento * 100 / this.props.vlrProdutos / 100;
 
-      this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem.toFixed(0) });
-
+        this.setState({ taxa_servico: event.target.value, servicoPorcentagem: porcentagem.toFixed(0) });
+      }
     } else {
-      let valor = (event.target.value * this.props.vlrProdutos) / 100;
 
-      this.setState({ servicoPorcentagem: event.target.value, taxa_servico: valor.toFixed(2).replace('.',',') });
+      let evento = event.target.value;
+
+      if (evento > 100) {
+        this.setState({ msgDesconto: true });
+      }
+      else {
+        this.setState({ msgValor: false });
+        let valor = (evento * this.props.vlrProdutos) / 100;
+
+        this.setState({ servicoPorcentagem: event.target.value, taxa_servico: valor.toFixed(2).replace('.', ',') });
+      }
     }
 
   }
 
   editarDesconto = async () => {
     let obj = {
-      desconto: parseFloat(this.state.desconto.replace('.','').replace(',','.')),
+      desconto: parseFloat(this.state.desconto.replace('.', '').replace(',', '.')),
       id_mesa: this.props.id_mesa,
     }
     let dados = await serverRequest.request('/mesa/editarDesconto', obj);
     if (dados) {
-      this.setState({descontoVisivel: false});
+      this.setState({ descontoVisivel: false });
       this.props.atualizou();
     }
   }
 
   editarTxServico = async () => {
     let obj = {
-      taxa_servico: parseFloat(this.state.taxa_servico.replace('.','').replace(',','.')),
+      taxa_servico: parseFloat(this.state.taxa_servico.replace('.', '').replace(',', '.')),
       id_mesa: this.props.id_mesa,
     }
     let dados = await serverRequest.request('/mesa/editarTaxaServico', obj);
     if (dados) {
-      this.setState({txServicoVisivel: false});
+      this.setState({ txServicoVisivel: false });
       this.props.atualizou();
     }
   }
@@ -145,19 +176,33 @@ class DetalheMesaResumo extends Component {
                           placeholder="Tx Serviço"
                         />
                       </InputGroup>
+                      {this.state.msgValor === true &&
+
+                        <span style={{ color: "Red" }}>Não é o valor total</span>
+
+                      }
                     </Col>
                     <Col xs="5">
                       <InputGroup>
-                      <InputGroupAddon addonType="append">
+                        <InputGroupAddon addonType="append">
                           <InputGroupText>%</InputGroupText>
                         </InputGroupAddon>
+
                         <MaskedNumberInput
                           name="servicoPorcentagem"
                           value={this.state.servicoPorcentagem}
                           onChange={this.changeInputServico}
                           placeholder="% Serviço"
-                        />                       
+                          maxlength="3"
+
+                        />
+
                       </InputGroup>
+                      {this.state.msgDesconto === true &&
+
+                        <span style={{ color: "Red" }}>Maximo 100%</span>
+
+                      }
                     </Col>
                     <Col xs="2">
                       <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
@@ -187,10 +232,15 @@ class DetalheMesaResumo extends Component {
                         placeholder="Desconto"
                       />
                     </InputGroup>
+                    {this.state.msgValor === true &&
+
+                      <span style={{ color: "Red" }}>Não é o valor total</span>
+
+                    }
                   </Col>
                   <Col xs="5">
                     <InputGroup>
-                    <InputGroupAddon addonType="append">
+                      <InputGroupAddon addonType="append">
                         <InputGroupText>%</InputGroupText>
                       </InputGroupAddon>
                       <MaskedNumberInput
@@ -198,8 +248,18 @@ class DetalheMesaResumo extends Component {
                         value={this.state.descontoPorcentagem}
                         onChange={this.changeInputDesconto}
                         placeholder="% Desconto"
-                      />                   
+                        maxlength="3"
+                        id="informativoCodigo"
+                      />
+
                     </InputGroup>
+
+                    {this.state.msgDesconto === true &&
+
+                      <span style={{ color: "Red" }}>Maximo 100%</span>
+
+                    }
+
                   </Col>
                   <Col xs="2">
                     <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>

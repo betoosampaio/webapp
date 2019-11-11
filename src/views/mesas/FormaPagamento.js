@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Table } from 'reactstrap';
+import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Table } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
-import MaskedNumberInput from '../../components/MaskedNumberInput';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import SelectFormasPagamento from '../../components/SelectFormasPagamento';
-import ReactDOMServer from 'react-dom/server';
-import Foto from '../../components/Foto';
-import { thisExpression } from '@babel/types';
+
 
 class FormaPagamento extends Component {
 
@@ -39,7 +36,7 @@ class FormaPagamento extends Component {
    
     if (this.state.selecionados.length > 0) {
 
-      let pagamentos = this.state.selecionados.map(p => ({id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.','').replace(',','.'))}) )
+      let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.','').replace(',','.'))}) )
 
       let obj = {
        
@@ -47,6 +44,7 @@ class FormaPagamento extends Component {
         pagamentos: pagamentos,
 
       }
+    
 
       console.log(pagamentos);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
@@ -63,11 +61,12 @@ class FormaPagamento extends Component {
   }
 
   changeInput1 = (event) => {
-
+   let dsFormaPagamento =  this.state.lista.find(fm =>String(fm.id_forma_pagamento) === this.state.id_forma_pagamento).ds_forma_pagamento;
+   
     let selecionado = { 
       id_forma_pagamento: this.state.id_forma_pagamento, 
       valor: this.state.valor,
-      ds_forma_pagamento: this.state.ds_forma_pagamento 
+      ds_forma_pagamento: dsFormaPagamento,
     }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
@@ -112,9 +111,6 @@ class FormaPagamento extends Component {
                   value={this.state.valor}
                   onChange={this.changeInput}
                 />
-
-
-
 
 
               </InputGroup>
