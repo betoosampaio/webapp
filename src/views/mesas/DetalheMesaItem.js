@@ -6,7 +6,6 @@ import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
 
-
 class DetalheMNesaItem extends Component {
 
   constructor(props) {
@@ -17,11 +16,11 @@ class DetalheMNesaItem extends Component {
 
   }
 
-  moneyFormat = (valor) => {
-    if (valor)
-      return `R$ ${valor.toFixed(2)}`;
+  moneyFormat = (preco) => {
+    if (preco)
+      return `R$ ${preco.toFixed(2)}`;
     else
-      return valor;
+      return preco;
   }
 
   onHide = () => {
@@ -71,14 +70,14 @@ class DetalheMNesaItem extends Component {
               <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
               <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
               <ListGroupItem><b>Valor:</b> R$ {item.preco} </ListGroupItem>
-              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {item.data_inclusao}</ListGroupItem>
+              <ListGroupItem><b>Data e hora de inserção do produto:</b> {item.data_inclusao}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {item.id_operador_abertura}</ListGroupItem>
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
 
-            <Button color="danger" size="sm" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)} >
-              <i className="icon-close"> Excluir produto</i>
+            <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)} 
+            className="icon-close"> Excluir produto          
             </Button>
 
           </Modal.Footer>
