@@ -6,6 +6,7 @@ import IncluirItem from './IncluirItem';
 import FormaPagamento from './FormaPagamento';
 import DetalheMesaResumo from './DetalheMesaResumo';
 import DetalheMesaProdutos from './DetalheMesaProdutos';
+import Modal from 'react-bootstrap/Modal'
 import DetalheMesaPagamentos from './DetalheMesaPagamentos';
 
 class DetalheMesa extends Component {
@@ -13,6 +14,7 @@ class DetalheMesa extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalInfosMesa: false,
       produtos: [],
       pagamentos: [],
       id_mesa: "",
@@ -137,6 +139,13 @@ class DetalheMesa extends Component {
                   title="Fechar Conta">
                   <i className="icon-basket-loaded" />
                 </Button>
+                <Button
+                  className="pull-right bg-primary mr-1"
+                  onClick={() => this.setState({modalInfosMesa: true})}
+                  size="sm"
+                  title="Fechar Conta">
+                  <i className="icon-star" />
+                </Button>
 
                 <div className="callout">
                   <small className="text-muted">Status</small>
@@ -232,6 +241,34 @@ class DetalheMesa extends Component {
 
           id_mesa={this.state._id}
         />
+
+
+
+        <Modal
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          backdrop='static'
+          show={this.state.modalInfosMesa}
+          onHide={() => this.setState({modalInfosMesa: false })}
+        >
+
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste item</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            teste
+          </Modal.Body>
+          <Modal.Footer>
+
+            <Button variant="primary" color="danger" className="icon-close"> Excluir produto
+            </Button>
+
+          </Modal.Footer>
+
+        </Modal >
+
+
 
       </div >
     );
