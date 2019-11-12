@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Button, Row, Col } from 'reactstrap';
+import { Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
@@ -117,6 +117,12 @@ class DetalheMesa extends Component {
     }
   }
 
+  dateFormat = (data) => {
+    let dataRetornar = new Date(data).toLocaleString();
+    return dataRetornar;
+
+  }
+
   render() {
     return (
       <div>
@@ -140,8 +146,8 @@ class DetalheMesa extends Component {
                   <i className="icon-basket-loaded" />
                 </Button>
                 <Button
-                  className="pull-right bg-primary mr-1"
-                  onClick={() => this.setState({modalInfosMesa: true})}
+                  className="pull-right bg-secondary mr-1"
+                  onClick={() => this.setState({ modalInfosMesa: true })}
                   size="sm"
                   title="Fechar Conta">
                   <i className="icon-star" />
@@ -250,18 +256,26 @@ class DetalheMesa extends Component {
           centered
           backdrop='static'
           show={this.state.modalInfosMesa}
-          onHide={() => this.setState({modalInfosMesa: false })}
-        >
+          onHide={() => this.setState({ modalInfosMesa: false })}
+          onBlur={this.dateFormat}>
 
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste item</Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes desta mesa</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            teste
+            <ListGroup>
+              <ListGroupItem><b>Status:</b> {this.state.aberta ? "Aberta" : "Fechada"}</ListGroupItem>
+              <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.id_operador_abertura} </ListGroupItem>
+              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.data_abertura)} </ListGroupItem>
+
+            </ListGroup>
+
+
+
           </Modal.Body>
           <Modal.Footer>
 
-            <Button variant="primary" color="danger" className="icon-close"> Excluir produto
+            <Button variant="primary" color="warning" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
             </Button>
 
           </Modal.Footer>

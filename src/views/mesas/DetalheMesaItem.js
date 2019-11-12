@@ -29,8 +29,8 @@ class DetalheMNesaItem extends Component {
 
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
-  return dataRetornar;
-  
+    return dataRetornar;
+
   }
 
 
