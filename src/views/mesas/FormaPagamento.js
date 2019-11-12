@@ -14,7 +14,8 @@ class FormaPagamento extends Component {
     this.state = {
       valor: '',
       id_forma_pagamento: '',
-      ds_forma_pagamento:'',
+      ds_forma_pagamento: '',
+      nome_operador: '',
       lista: [],
       selecionados: [],
       id_produto: "",
@@ -33,18 +34,18 @@ class FormaPagamento extends Component {
   }
 
   incluirPagamento = async () => {
-   
+
     if (this.state.selecionados.length > 0) {
 
-      let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.','').replace(',','.'))}) )
+      let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.', '').replace(',', '.')) }))
 
       let obj = {
-       
+
         id_mesa: this.props.id_mesa,
         pagamentos: pagamentos,
 
       }
-    
+
 
       console.log(pagamentos);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
@@ -54,19 +55,22 @@ class FormaPagamento extends Component {
     }
   }
 
-  remover(id){
+  remover(id) {
     let selecionados = Object.assign([], this.state.selecionados);
     selecionados = selecionados.filter(p => p.id !== id);
     this.setState({ selecionados: selecionados })
   }
 
   changeInput1 = (event) => {
-   let dsFormaPagamento =  this.state.lista.find(fm =>String(fm.id_forma_pagamento) === this.state.id_forma_pagamento).ds_forma_pagamento;
-   
-    let selecionado = { 
-      id_forma_pagamento: this.state.id_forma_pagamento, 
+    let formaPagamento = this.state.lista.find(fm => String(fm.id_forma_pagamento) === this.state.id_forma_pagamento);
+
+
+    let selecionado = {
+      id_forma_pagamento: this.state.id_forma_pagamento,
       valor: this.state.valor,
-      ds_forma_pagamento: dsFormaPagamento,
+      ds_forma_pagamento: formaPagamento.ds_forma_pagamento,
+      nome_operador: formaPagamento.nome_operador,
+
     }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
@@ -145,8 +149,6 @@ class FormaPagamento extends Component {
 
                   <th>Valor</th>
                   <th>Forma de Pagamento</th>
-                  <th>Horário</th>
-                  <th>Usuário</th>
                   <th>Remover</th>
                 </tr>
               </thead>
@@ -157,8 +159,7 @@ class FormaPagamento extends Component {
 
                       <td>{obj.valor}</td>
                       <td>{obj.ds_forma_pagamento}</td>
-                      <td>{}</td>
-                      <td>{}</td>
+                  
 
 
                       <td>

@@ -53,6 +53,7 @@ class DetalhePagamentoItem extends Component {
             <ListGroupItem><b>Valor Pago:</b> {this.moneyFormat(item.valor)}</ListGroupItem>
             <ListGroupItem><b>Forma de pagamento:</b> {item.ds_forma_pagamento}</ListGroupItem>
             <ListGroupItem><b>Horário Pagamento:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
+            <ListGroupItem><b>Operador:</b> {item.nome_operador}</ListGroupItem>
 
 
           </ListGroup>

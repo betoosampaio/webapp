@@ -35,15 +35,17 @@ class DetalheMesaPagamentos extends Component {
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
+               
               </tr>
             </thead>
             <tbody>
               {
                 pagamentos.map((obj) => {
                   return (
-                    <tr  onClick= {() =>  this.setState({ modalDetalhePagamentoItem: true, DetalhePagamentoItem: obj })} key={obj.data_inclusao} style={{ cursor:"pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr onClick={() => this.setState({ modalDetalhePagamentoItem: true, DetalhePagamentoItem: obj })} key={obj.data_inclusao} style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td>{obj.ds_forma_pagamento}</td>
                       <td>{this.moneyFormat(obj.valor)}</td>
+                      
                     </tr>
                   );
                 })
