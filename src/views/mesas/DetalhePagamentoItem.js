@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ListGroup, ListGroupItem } from 'reactstrap';
 import Modal from 'react-bootstrap/Modal'
-import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
@@ -16,6 +15,10 @@ class DetalhePagamentoItem extends Component {
 
   }
 
+  onHide = () => {
+    this.props.onHide();
+  }
+
   moneyFormat = (preco) => {
     if (preco)
       return `R$ ${preco.toFixed(2)}`;
@@ -25,8 +28,28 @@ class DetalhePagamentoItem extends Component {
 
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
-  return dataRetornar;
-  
+    return dataRetornar;
+
+  }
+
+  removerItem = async (id_mesa, id_pagamento) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja remover esse pagamento?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/pagamento/remover', { "id_mesa": id_mesa, "id_pagamento": id_pagamento });
+      if (dados) {
+        this.onHide();
+        this.atualizou();
+      }
+
+    }
   }
 
 
@@ -42,27 +65,24 @@ class DetalhePagamentoItem extends Component {
         centered
         backdrop='static'
         show={this.props.show}
-        onHide={this.props.onHide}>
+        onHide={this.onHide}
+        atualizou={() => this.obter(this.match.params.id)} 
+
+      >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes do pagamento</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
-
-
             <ListGroupItem><b>Valor Pago:</b> {this.moneyFormat(item.valor)}</ListGroupItem>
             <ListGroupItem><b>Forma de pagamento:</b> {item.ds_forma_pagamento}</ListGroupItem>
             <ListGroupItem><b>Horário Pagamento:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
             <ListGroupItem><b>Operador:</b> {item.nome_operador}</ListGroupItem>
-
-
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
 
-          <Button variant="primary" color="danger" className="icon-close">
-            Excluir produto
-            </Button>
+          <Button variant="primary" color="danger" className="icon-close" onClick={() => this.removerItem(this.props.id_mesa, item.id_pagamento)} > Excluir pagamento</Button>
 
         </Modal.Footer>
 
