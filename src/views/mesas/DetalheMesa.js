@@ -275,7 +275,7 @@ class DetalheMesa extends Component {
           </Modal.Body>
           <Modal.Footer>
 
-            <Button variant="primary" color="warning" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
+            <Button variant="primary" color="success" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
             </Button>
 
           </Modal.Footer>
