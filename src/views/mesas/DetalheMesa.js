@@ -180,14 +180,15 @@ class DetalheMesa extends Component {
                     <div className="callout callout-success">
                       <small className="text-muted">Valor Pago</small>
                       <br />
-                      <strong className="h4">{this.moneyFormat(this.vlrPagamentos())}</strong>
-                      <div className="chart-wrapper">
+                      <strong className="h4">{this.moneyFormat(this.vlrPagamentos())}
                         <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                          className="bg-success mr-1"
+                          className="bg-success ml-2"
                           size="sm"
                           title="Inserir Pagamento">
                           <i className="fa fa-plus" />
                         </Button>
+                      </strong>
+                      <div className="chart-wrapper">
                       </div>
                     </div>
                   </Col>
