@@ -87,6 +87,7 @@ class DetalheMesaProdutos extends Component {
           onHide={() => { this.setState({ modalDetalheMesaItem: false }) }}
           item={this.state.detalheItemSelecionado}
           id_mesa={id_mesa}
+          atualizou={this.props.atualizou}
         />
 
       </Card>

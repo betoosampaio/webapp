@@ -17,10 +17,12 @@ class DetalheMNesaItem extends Component {
   }
 
   moneyFormat = (preco) => {
-    if (preco)
+    try {
       return `R$ ${preco.toFixed(2)}`;
-    else
+    }
+    catch{
       return preco;
+    }
   }
 
   onHide = () => {
@@ -47,6 +49,7 @@ class DetalheMNesaItem extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/item/remover', { "id_mesa": id_mesa, "id_item": id_item });
       if (dados) {
+        this.onHide();
         this.props.atualizou();
       }
 
@@ -82,7 +85,7 @@ class DetalheMNesaItem extends Component {
 
             <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
 
-            <ListGroupItem><b>Operador que inseriu o produto:</b> {item.id_operador_abertura}</ListGroupItem>
+            <ListGroupItem><b>Operador que inseriu o produto:</b> {item.nome_operador}</ListGroupItem>
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
