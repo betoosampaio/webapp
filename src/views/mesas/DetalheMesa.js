@@ -182,6 +182,12 @@ class DetalheMesa extends Component {
                       <br />
                       <strong className="h4">{this.moneyFormat(this.vlrPagamentos())}</strong>
                       <div className="chart-wrapper">
+                        <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                          className="bg-success mr-1"
+                          size="sm"
+                          title="Inserir Pagamento">
+                          <i className="fa fa-plus" />
+                        </Button>
                       </div>
                     </div>
                   </Col>
@@ -192,12 +198,7 @@ class DetalheMesa extends Component {
                       <strong className="h4">{this.moneyFormat(this.vlrRestante())}</strong>
                       <div className="chart-wrapper">
                       </div>
-                      <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                        className="pull-right bg-success mr-1"
-                        size="sm"
-                        title="Inserir Pagamento">
-                        <i className="fa fa-money" />
-                      </Button>
+
                     </div>
                   </Col>
                 </Row>
@@ -265,7 +266,7 @@ class DetalheMesa extends Component {
           <Modal.Body>
             <ListGroup>
               <ListGroupItem><b>Status:</b> {this.state.aberta ? "Aberta" : "Fechada"}</ListGroupItem>
-              <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.id_operador_abertura} </ListGroupItem>
+              <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.nome_operador} </ListGroupItem>
               <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abertura)} </ListGroupItem>
 
             </ListGroup>
