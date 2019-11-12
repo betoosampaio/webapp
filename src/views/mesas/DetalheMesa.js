@@ -7,6 +7,8 @@ import FormaPagamento from './FormaPagamento';
 import DetalheMesaResumo from './DetalheMesaResumo';
 import DetalheMesaProdutos from './DetalheMesaProdutos';
 import DetalheMesaPagamentos from './DetalheMesaPagamentos';
+import Modal from 'react-bootstrap/Modal';
+
 
 class DetalheMesa extends Component {
 
@@ -115,6 +117,17 @@ class DetalheMesa extends Component {
     }
   }
 
+  onHide = () => {
+    this.props.onHide();
+  }
+
+  dateFormat = (data) => {
+    let dataRetornar = new Date(data).toLocaleString();
+    return dataRetornar;
+
+  }
+
+
   render() {
     return (
       <div>
@@ -130,6 +143,28 @@ class DetalheMesa extends Component {
                   title="Mostrar detalhes desta mesa">
                   <i className="icon-ban" />
                 </Button>
+
+                <Modal
+                  className="pull-right bg-secondary"
+                  size="sm"
+                  aria-labelledby="contained-modal-title-vcenter"
+                  centered
+                  onHide={() => { this.setState({ modalMostrarDetalheMesa: true }) }}
+                  backdrop='static' >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Confirmação</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Operador Cadastrado com sucesso! </p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="primary" color="success" onClick={() => { window.location.href = '#/mesas/detalhemesa/' }}  >Confirmar</Button>
+                  </Modal.Footer>
+                </Modal>
+
+
+
+
                 <Button
                   className="pull-right bg-danger"
                   onClick={() => this.removerMesa(this.state._id)}

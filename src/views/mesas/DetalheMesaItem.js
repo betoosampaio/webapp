@@ -54,6 +54,8 @@ class DetalheMNesaItem extends Component {
   }
 
 
+  
+
   render() {
     const item = this.props.item || {}
 
@@ -70,7 +72,7 @@ class DetalheMNesaItem extends Component {
         onBlur={this.moneyFormat}>
 
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste produto</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes deste item</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
@@ -78,7 +80,7 @@ class DetalheMNesaItem extends Component {
             <ListGroupItem><b>Código Produto:</b> {item.codigo_produto}</ListGroupItem>
             <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
             <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
-            <ListGroupItem><b>Valor:</b> {this.moneyFormat(item.preco)} </ListGroupItem>
+            <ListGroupItem><b>Valor total:</b> {this.moneyFormat(item.preco * item.quantidade)} </ListGroupItem>
 
             <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
 
