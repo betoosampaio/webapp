@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import {UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
+import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
@@ -45,6 +45,7 @@ class DefaultHeader extends Component {
               <DropdownItem header tag="div" className="text-center"><strong>Conta</strong></DropdownItem>
               <DropdownItem onClick={() => { window.location.href = "/#/perfil" }} ><i className="fa fa-user"></i>Perfil</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+              <DropdownItem onClick={() => { window.location.href = "/#/configuracaoRestaurante" }} ><i className="icon-settings"></i>Configurações do Restaurante</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
