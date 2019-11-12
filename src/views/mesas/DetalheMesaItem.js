@@ -54,8 +54,6 @@ class DetalheMNesaItem extends Component {
   }
 
 
-  
-
   render() {
     const item = this.props.item || {}
 

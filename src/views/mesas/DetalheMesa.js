@@ -7,8 +7,6 @@ import FormaPagamento from './FormaPagamento';
 import DetalheMesaResumo from './DetalheMesaResumo';
 import DetalheMesaProdutos from './DetalheMesaProdutos';
 import DetalheMesaPagamentos from './DetalheMesaPagamentos';
-import Modal from 'react-bootstrap/Modal';
-
 
 class DetalheMesa extends Component {
 
@@ -117,17 +115,6 @@ class DetalheMesa extends Component {
     }
   }
 
-  onHide = () => {
-    this.props.onHide();
-  }
-
-  dateFormat = (data) => {
-    let dataRetornar = new Date(data).toLocaleString();
-    return dataRetornar;
-
-  }
-
-
   render() {
     return (
       <div>
@@ -136,35 +123,6 @@ class DetalheMesa extends Component {
           <Col xs="12" sm="6" lg="4">
             <Card>
               <CardBody>
-                <Button
-                  className="pull-right bg-secondary"
-                  onClick={() => this.removerMesa(this.state._id)}
-                  size="sm"
-                  title="Mostrar detalhes desta mesa">
-                  <i className="icon-ban" />
-                </Button>
-
-                <Modal
-                  className="pull-right bg-secondary"
-                  size="sm"
-                  aria-labelledby="contained-modal-title-vcenter"
-                  centered
-                  onHide={() => { this.setState({ modalMostrarDetalheMesa: true }) }}
-                  backdrop='static' >
-                  <Modal.Header closeButton>
-                    <Modal.Title>Confirmação</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>Operador Cadastrado com sucesso! </p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="primary" color="success" onClick={() => { window.location.href = '#/mesas/detalhemesa/' }}  >Confirmar</Button>
-                  </Modal.Footer>
-                </Modal>
-
-
-
-
                 <Button
                   className="pull-right bg-danger"
                   onClick={() => this.removerMesa(this.state._id)}
@@ -179,7 +137,12 @@ class DetalheMesa extends Component {
                   title="Fechar Conta">
                   <i className="icon-basket-loaded" />
                 </Button>
-
+                <Button onClick={() => this.setState({modalAdicionarPagamento: true})}
+                  className="pull-right bg-success mr-1"
+                  size="sm"
+                  title="Inserir Pagamento">
+                  <i className="fa fa-money" />
+                </Button>
                 <div className="callout">
                   <small className="text-muted">Status</small>
                   <br />
@@ -219,12 +182,6 @@ class DetalheMesa extends Component {
                       <strong className="h4">{this.moneyFormat(this.vlrRestante())}</strong>
                       <div className="chart-wrapper">
                       </div>
-                      <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                        className="pull-right bg-success mr-1"
-                        size="sm"
-                        title="Inserir Pagamento">
-                        <i className="fa fa-money" />
-                      </Button>
                     </div>
                   </Col>
                 </Row>
@@ -251,7 +208,7 @@ class DetalheMesa extends Component {
               vlrProdutos={this.vlrProdutos()}
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
-              vlrTotal={this.vlrTotal()}
+              vlrTotal={this.vlrTotal()} 
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
 
@@ -271,7 +228,7 @@ class DetalheMesa extends Component {
         <FormaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
-
+       
           id_mesa={this.state._id}
         />
 
