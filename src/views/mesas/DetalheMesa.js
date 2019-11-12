@@ -266,7 +266,7 @@ class DetalheMesa extends Component {
             <ListGroup>
               <ListGroupItem><b>Status:</b> {this.state.aberta ? "Aberta" : "Fechada"}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.id_operador_abertura} </ListGroupItem>
-              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.data_abertura)} </ListGroupItem>
+              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abertura)} </ListGroupItem>
 
             </ListGroup>
 
