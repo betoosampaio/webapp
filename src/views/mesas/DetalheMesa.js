@@ -124,6 +124,13 @@ class DetalheMesa extends Component {
             <Card>
               <CardBody>
                 <Button
+                  className="pull-right bg-secondary"
+                  onClick={() => this.removerMesa(this.state._id)}
+                  size="sm"
+                  title="Mostrar detalhes desta mesa">
+                  <i className="icon-ban" />
+                </Button>
+                <Button
                   className="pull-right bg-danger"
                   onClick={() => this.removerMesa(this.state._id)}
                   size="sm"
@@ -137,12 +144,7 @@ class DetalheMesa extends Component {
                   title="Fechar Conta">
                   <i className="icon-basket-loaded" />
                 </Button>
-                <Button onClick={() => this.setState({modalAdicionarPagamento: true})}
-                  className="pull-right bg-success mr-1"
-                  size="sm"
-                  title="Inserir Pagamento">
-                  <i className="fa fa-money" />
-                </Button>
+
                 <div className="callout">
                   <small className="text-muted">Status</small>
                   <br />
@@ -182,6 +184,12 @@ class DetalheMesa extends Component {
                       <strong className="h4">{this.moneyFormat(this.vlrRestante())}</strong>
                       <div className="chart-wrapper">
                       </div>
+                      <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                        className="pull-right bg-success mr-1"
+                        size="sm"
+                        title="Inserir Pagamento">
+                        <i className="fa fa-money" />
+                      </Button>
                     </div>
                   </Col>
                 </Row>
@@ -208,7 +216,7 @@ class DetalheMesa extends Component {
               vlrProdutos={this.vlrProdutos()}
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
-              vlrTotal={this.vlrTotal()} 
+              vlrTotal={this.vlrTotal()}
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
 
@@ -228,7 +236,7 @@ class DetalheMesa extends Component {
         <FormaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
-       
+
           id_mesa={this.state._id}
         />
 
