@@ -58,7 +58,7 @@ class CardMesa extends Component {
             </div>
             <div className="font-xs">
               <i className="fa fa-clock-o"></i>
-              {this.dateDiff(new Date(this.props.mesa.data_abertura), new Date())}
+              {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
             </div>
           </CardBody>
         </Card>

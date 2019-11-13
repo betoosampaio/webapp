@@ -83,7 +83,7 @@ class DetalheMNesaItem extends Component {
             <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
             <ListGroupItem><b>Valor total:</b> {this.moneyFormat(item.preco * item.quantidade)} </ListGroupItem>
 
-            <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_inclusao)}</ListGroupItem>
+            <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_incluiu)}</ListGroupItem>
 
             <ListGroupItem><b>Operador que inseriu o produto:</b> {item.nome_operador}</ListGroupItem>
           </ListGroup>

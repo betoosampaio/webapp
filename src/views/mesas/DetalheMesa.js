@@ -253,11 +253,8 @@ class DetalheMesa extends Component {
         <FormaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
-
           id_mesa={this.state._id}
         />
-
-
 
         <Modal
           size="lg"
@@ -275,25 +272,15 @@ class DetalheMesa extends Component {
             <ListGroup>
               <ListGroupItem><b>Status:</b> {this.state.aberta ? "Aberta" : "Fechada"}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.nome_operador} </ListGroupItem>
-              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abertura)} </ListGroupItem>
-
+              <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abriu)} </ListGroupItem>
             </ListGroup>
-
-
-
           </Modal.Body>
           <Modal.Footer>
-
             <Button variant="primary" color="success" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
             </Button>
-
           </Modal.Footer>
-
         </Modal >
-
-
-
-      </div >
+      </div>
     );
   }
 }
