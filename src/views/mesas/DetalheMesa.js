@@ -117,46 +117,50 @@ class DetalheMesa extends Component {
   render() {
     return (
       <div>
-        <h2 className="mb-4">Mesa {this.state.numero}</h2>
+        <Row>
+          <h2 className="mb-4">Mesa {this.state.numero}</h2>
+          <ButtonGroup className="ml-4">
+            <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+              <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"> Opções </i>
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>
+                  <Button
+                    className="pull-left bg-danger mr-1"
+                    onClick={() => this.removerMesa(this.state._id)}
+                    size="sm"
+                    title="Cancelar Mesa">
+                    <i className="icon-ban" />Cancelar Mesa
+                        </Button>
+                </DropdownItem>
+                <DropdownItem>
+                  <Button
+                    className="pull-left bg-primary mr-1"
+                    onClick={() => this.fecharMesa(this.state._id)}
+                    size="sm"
+                    title="Fechar Conta">
+                    <i className="icon-basket-loaded" />Fechar Conta
+                        </Button>
+                </DropdownItem>
+                <DropdownItem>
+                  <Button
+                    className="pull-left bg-secondary mr-1"
+                    onClick={() => this.setState({ modalInfosMesa: true })}
+                    size="sm"
+                    title="Detalhes desta mesa">
+                    <i className="icon-star" />Detalhes desta mesa
+                        </Button>
+                </DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
+          </ButtonGroup>
+        </Row>
+
         <Row>
           <Col xs="12" sm="6" lg="4">
             <Card>
               <CardBody>
-                <ButtonGroup className="float-right">
-                  <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-                    <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"> Opções </i>
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        <Button
-                          className="pull-right bg-danger"
-                          onClick={() => this.removerMesa(this.state._id)}
-                          size="sm"
-                          title="Cancelar Mesa">
-                          <i className="icon-ban" />
-                        </Button>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <Button
-                          className="pull-right bg-primary mr-1"
-                          onClick={() => this.fecharMesa(this.state._id)}
-                          size="sm"
-                          title="Fechar Conta">
-                          <i className="icon-basket-loaded" />
-                        </Button>
-                      </DropdownItem>
-                      <DropdownItem>
-                        <Button
-                          className="pull-right bg-secondary mr-1"
-                          onClick={() => this.setState({ modalInfosMesa: true })}
-                          size="sm"
-                          title="Fechar Conta">
-                          <i className="icon-star" />
-                        </Button>
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </ButtonDropdown>
-                </ButtonGroup>
+
                 <div className="callout">
                   <small className="text-muted">Status</small>
                   <br />
