@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup, ButtonDropdown, ButtonGroup, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup, ButtonDropdown, ButtonGroup, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
@@ -124,32 +124,25 @@ class DetalheMesa extends Component {
               <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"> Opções </i>
               </DropdownToggle>
               <DropdownMenu float-right>
-                <DropdownItem>
-                  <Button
-                    className="pull-left bg-danger mr-1"
-                    onClick={() => this.removerMesa(this.state._id)}
-                    size="sm"
-                    title="Cancelar Mesa">
-                    <i className="icon-ban" />Cancelar Mesa
-                  </Button>
+                <DropdownItem
+                  onClick={() => this.removerMesa(this.state._id)}
+                  className="pull-left mr-1"
+                  size="sm"
+                  title="Cancelar Mesa">
+                  <i className="icon-ban" />Cancelar Mesa
                 </DropdownItem>
-                <DropdownItem>
-                  <Button
-                    className="pull-left bg-primary mr-1"
-                    onClick={() => this.fecharMesa(this.state._id)}
-                    size="sm"
-                    title="Fechar Conta">
-                    <i className="icon-basket-loaded" />Fechar Conta
-                  </Button>
+                <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
+                  className="pull-left mr-1"
+                  size="sm"
+                  title="Fechar Conta">
+                  <i className="icon-basket-loaded" />Fechar Conta
                 </DropdownItem>
-                <DropdownItem>
-                  <Button
-                    className="pull-left bg-secondary mr-1"
-                    onClick={() => this.setState({ modalInfosMesa: true })}
-                    size="sm"
-                    title="Detalhes desta mesa">
-                    <i className="icon-star" />Detalhes desta mesa
-                  </Button>
+                <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
+                  className="pull-left mr-1"
+                  size="sm"
+                  title="Detalhes desta mesa">
+                  <i className="icon-star" />Detalhes desta mesa
+              
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
