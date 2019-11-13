@@ -131,10 +131,11 @@ class DetalheMesaResumo extends Component {
   }
 
   moneyFormat = (valor) => {
-    if (valor)
+    try {
       return `R$ ${valor.toFixed(2)}`;
-    else
-      return valor;
+    } catch{
+      return "R$ 0,00";
+    }
   }
 
   render() {
@@ -177,8 +178,8 @@ class DetalheMesaResumo extends Component {
                         />
                       </InputGroup>
                       {this.state.msgValor === true &&
-                       
-                      <span style={{ color: "Red" }}>Não é o valor total</span>
+
+                        <span style={{ color: "Red" }}>Não é o valor total</span>
 
                       }
                     </Col>

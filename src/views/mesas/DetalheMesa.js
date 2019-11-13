@@ -39,47 +39,24 @@ class DetalheMesa extends Component {
     return status;
   }
 
-  vlrProdutos = () => {
-    let vl = 0;
-    vl = this.state.produtos.reduce((sum, key) =>
-      sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
-    return vl;
-  }
-
-  qtdProdutos = () => {
-    let qt = 0;
-    qt = this.state.produtos.reduce((sum, key) =>
-      sum + (key.removido ? 0 : parseInt(key.quantidade)), 0)
-    return qt;
-  }
-
-  vlrPagamentos = () => {
-    let vl = 0;
-    vl = this.state.pagamentos.reduce((sum, key) =>
-      sum + (key.removido ? 0 : key.valor), 0)
-    return vl;
-  }
-
-  vlrTxServico = () => { return parseFloat(this.state.taxa_servico) || 0 }
-  vlrDesconto = () => { return parseFloat(this.state.desconto) || 0 }
+  vlrTxServico = () => { return this.state.valor_produtos * (1-this.state.desconto) * this.state.taxa_servico }
+  vlrDesconto = () => { return this.state.valor_produtos * this.state.desconto }
 
   vlrTotal = () => {
-    let
-      vl = 0,
-      txservico = parseFloat(this.state.taxa_servico) || 0,
-      desconto = parseFloat(this.state.desconto) || 0;
-
-    vl = this.state.produtos.reduce((sum, key) =>
-      sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
-    return (vl + txservico - desconto);
+    return this.state.valor_produtos * (1 - this.state.desconto) * (1 + this.state.taxa_servico);
   }
 
   vlrRestante = () => {
-    return this.vlrTotal() - this.vlrPagamentos();
+    return this.vlrTotal() - this.state.valor_pagamentos;
   }
 
   moneyFormat = (valor) => {
-    return `R$ ${valor.toFixed(2)}`;
+    try{
+      return `R$ ${valor.toFixed(2)}`;
+    } catch{
+      return "R$ 0,00"
+    }
+    
   }
 
   itemIncluso = () => {
@@ -187,7 +164,7 @@ class DetalheMesa extends Component {
                     <div className="callout callout-success">
                       <small className="text-muted">Valor Pago</small>
                       <br />
-                      <strong className="h4">{this.moneyFormat(this.vlrPagamentos())}
+                      <strong className="h4">{this.moneyFormat(this.state.valor_pagamentos)}
                         <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
                           className="bg-success ml-2"
                           size="sm"
@@ -220,8 +197,8 @@ class DetalheMesa extends Component {
 
             <DetalheMesaProdutos
               produtos={this.state.produtos}
-              qtdProdutos={this.qtdProdutos()}
-              vlrProdutos={this.vlrProdutos()}
+              qtdProdutos={this.state.qtd_produtos}
+              vlrProdutos={this.state.valor_produtos}
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
@@ -230,7 +207,7 @@ class DetalheMesa extends Component {
 
             <DetalheMesaResumo
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
-              vlrProdutos={this.vlrProdutos()}
+              vlrProdutos={this.state.valor_produtos}
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
               vlrTotal={this.vlrTotal()}
@@ -240,7 +217,7 @@ class DetalheMesa extends Component {
             <DetalheMesaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
               pagamentos={this.state.pagamentos}
-              vlrPagamentos={this.vlrPagamentos()}
+              vlrPagamentos={this.state.valor_pagamentos}
               id_mesa={this.state._id} />
           </Col>
         </Row>
