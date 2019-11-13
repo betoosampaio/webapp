@@ -118,12 +118,12 @@ class DetalheMesa extends Component {
     return (
       <div>
         <Row>
-          <h2 className="mb-4">Mesa {this.state.numero}</h2>
+          <h2 className="ml-3">Mesa {this.state.numero}</h2>
           <ButtonGroup className="ml-4">
             <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
               <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"> Opções </i>
               </DropdownToggle>
-              <DropdownMenu right>
+              <DropdownMenu float-right>
                 <DropdownItem>
                   <Button
                     className="pull-left bg-danger mr-1"
