@@ -131,7 +131,7 @@ class DetalheMesa extends Component {
                     size="sm"
                     title="Cancelar Mesa">
                     <i className="icon-ban" />Cancelar Mesa
-                        </Button>
+                  </Button>
                 </DropdownItem>
                 <DropdownItem>
                   <Button
@@ -140,7 +140,7 @@ class DetalheMesa extends Component {
                     size="sm"
                     title="Fechar Conta">
                     <i className="icon-basket-loaded" />Fechar Conta
-                        </Button>
+                  </Button>
                 </DropdownItem>
                 <DropdownItem>
                   <Button
@@ -149,7 +149,7 @@ class DetalheMesa extends Component {
                     size="sm"
                     title="Detalhes desta mesa">
                     <i className="icon-star" />Detalhes desta mesa
-                        </Button>
+                  </Button>
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
