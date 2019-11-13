@@ -6,7 +6,7 @@ import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import SelectFormasPagamento from '../../components/SelectFormasPagamento';
 
 
-class FormaPagamento extends Component {
+class DetalheMesaPagamento extends Component {
 
 
   constructor(props) {
@@ -182,4 +182,4 @@ class FormaPagamento extends Component {
   }
 }
 
-export default FormaPagamento;
+export default DetalheMesaPagamento;

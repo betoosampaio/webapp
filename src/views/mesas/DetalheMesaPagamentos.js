@@ -63,6 +63,7 @@ class DetalheMesaPagamentos extends Component {
           onHide={() => { this.setState({ modalDetalhePagamentoItem: false }) }}
           item={this.state.DetalhePagamentoItem}
           id_mesa={id_mesa}
+          atualizou={this.props.atualizou}
         />
 
       </Card>

@@ -46,7 +46,7 @@ class DetalhePagamentoItem extends Component {
       let dados = await serverRequest.request('/mesa/pagamento/remover', { "id_mesa": id_mesa, "id_pagamento": id_pagamento });
       if (dados) {
         this.onHide();
-        this.atualizou();
+        this.props.atualizou();
       }
 
     }
@@ -66,8 +66,7 @@ class DetalhePagamentoItem extends Component {
         backdrop='static'
         show={this.props.show}
         onHide={this.onHide}
-        atualizou={() => this.obter(this.match.params.id)} 
-
+        
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes do pagamento</Modal.Title>

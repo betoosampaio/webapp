@@ -3,7 +3,7 @@ import { Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup, ButtonDropd
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
-import FormaPagamento from './FormaPagamento';
+import DetalheMesaPagamento from './DetalheMesaPagamento';
 import DetalheMesaResumo from './DetalheMesaResumo';
 import DetalheMesaProdutos from './DetalheMesaProdutos';
 import Modal from 'react-bootstrap/Modal'
@@ -235,7 +235,8 @@ class DetalheMesa extends Component {
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
               pagamentos={this.state.pagamentos}
               vlrPagamentos={this.state.valor_pagamentos}
-              id_mesa={this.state._id} />
+              id_mesa={this.state._id}
+              atualizou={() => this.obter(this.props.match.params.id)} />
           </Col>
         </Row>
         <IncluirItem
@@ -244,7 +245,7 @@ class DetalheMesa extends Component {
           id_mesa={this.state._id}
           itemincluso={this.itemIncluso} />
 
-        <FormaPagamento
+        <DetalheMesaPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
           id_mesa={this.state._id}
