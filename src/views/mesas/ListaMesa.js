@@ -33,7 +33,7 @@ class ListaMesa extends Component {
     return (
       <div>
         <Button color="success" size="sm" onClick={() => this.setState({ modalNovaMesa: true })}>
-          <i className="icon-plus mr-1"></i>Nova Mesa
+          <i className="icon-plus mr-1"></i>Abrir Mesa
         </Button>
         <p></p>
         <Row>

@@ -12,13 +12,13 @@ class NovaMesa extends Component {
     };
   }
 
-  cadastrar = async (event) => {
+  abrir = async (event) => {
     event.preventDefault();
     let obj = {
       numero: this.state.numero,
     }
 
-    let dados = await serverRequest.request('/mesa/cadastrar', obj);
+    let dados = await serverRequest.request('/mesa/abrir', obj);
     if (dados) {
       this.setState({ numero: "" });
       this.props.mesaadicionada();
@@ -43,9 +43,9 @@ class NovaMesa extends Component {
         backdrop='static'
         show={this.props.show}
         onHide={this.onHide}>
-        <form name="form" onSubmit={this.cadastrar}>
+        <form name="form" onSubmit={this.abrir}>
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">Iniciar Mesa</Modal.Title>
+            <Modal.Title id="contained-modal-title-vcenter">Abrir Mesa</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <FormGroup>
@@ -59,7 +59,7 @@ class NovaMesa extends Component {
             </FormGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" color="success"><i className="fa fa-check"></i> Incluir</Button>
+            <Button type="submit" color="success"><i className="fa fa-check"></i> Abrir</Button>
           </Modal.Footer>
         </form>
       </Modal >
