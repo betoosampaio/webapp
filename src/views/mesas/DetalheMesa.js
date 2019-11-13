@@ -32,6 +32,13 @@ class DetalheMesa extends Component {
     }
   }
 
+  statusMesa = () =>{
+    let status = "Aberta";
+    if(this.state.fechada) status = "Fechada";
+    if(this.state.encerrada) status = "Encerrada";
+    return status;
+  }
+
   vlrProdutos = () => {
     let vl = 0;
     vl = this.state.produtos.reduce((sum, key) =>
@@ -156,7 +163,7 @@ class DetalheMesa extends Component {
                 <div className="callout">
                   <small className="text-muted">Status</small>
                   <br />
-                  <strong className="h4">{this.state.aberta ? "Aberta" : "Fechada"}</strong>
+                  <strong className="h4">{this.statusMesa()}</strong>
                   <div className="chart-wrapper">
                   </div>
                 </div>
