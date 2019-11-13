@@ -88,15 +88,7 @@ class CadastrarMenu extends Component {
 
   limparStateMenu = () => {
 
-    this.setState({
-      ds_menu: '',
-      showCadastrado: false,
-      validarSeMenuExiste: '',
-
-      validacao: {
-        ds_menu: { valid: false, invalid: false, msg: '' },
-      },
-    });
+    window.location.reload();
   }
 
 
