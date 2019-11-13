@@ -23,24 +23,7 @@ class DetalheMesaResumo extends Component {
     };
   }
 
-  componentDidUpdate() {
-    if (this.props.vlrTxServico !== this.state.propsTxServico) {
-      let porcentagem = this.props.vlrTxServico / this.props.vlrProdutos * 100;
-      this.setState({
-        propsTxServico: this.props.vlrTxServico,
-        taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.', ','),
-        servicoPorcentagem: porcentagem.toFixed(0)
-      });
-    }
-    if (this.props.vlrDesconto !== this.state.propsDesconto) {
-      let porcentagem = this.props.vlrDesconto / this.props.vlrProdutos * 100;
-      this.setState({
-        propsDesconto: this.props.vlrDesconto,
-        desconto: this.props.vlrDesconto.toFixed(2).replace('.', ','),
-        descontoPorcentagem: porcentagem.toFixed(0)
-      });
-    }
-  }
+ 
 
   changeInputDesconto = (event) => {
     if (event.target.name === "desconto") {

@@ -161,24 +161,8 @@ class CadastrarProduto extends Component {
 
     this.obterProximoCodigoProduto();
 
-    this.setState({
-      showCadastrado: false,
-      codigo_produto: "",
-      nome_produto: "",
-      descricao: "",
-      preco: "",
-      id_menu: "",
-      promocao: 0,
-      imagem: "",
-      visivel: 1,
+    window.location.reload();
 
-      validacao: {
-        codigo_produto: { valid: false, invalid: false, msg: '' },
-        nome_produto: { valid: false, invalid: false, msg: '' },
-        preco: { valid: false, invalid: false, msg: '' },
-        id_menu: { valid: false, invalid: false, msg: '' }
-      },
-    });
   }
 
   changeInput = (event) => {
