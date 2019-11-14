@@ -21,7 +21,7 @@ class DetalheMesa extends Component {
       pagamentos: [],
       id_mesa: "",
       id_operador: "",
-      mostrar: '1',
+      mostrar: '3',
     };
   }
 
@@ -193,7 +193,7 @@ class DetalheMesa extends Component {
                   className="pull-left mr-1"
                   size="sm"
                   title="Detalhes desta mesa">
-                  <i className="icon-star" />Detalhes desta mesa
+                  <i className="icon-info" />Detalhes desta mesa
 
                 </DropdownItem>
               </DropdownMenu>
@@ -249,6 +249,7 @@ class DetalheMesa extends Component {
                       <i className="icon-basket-loaded" /> Encerrar Conta
                     </Button>
                   }
+
 
 
 
