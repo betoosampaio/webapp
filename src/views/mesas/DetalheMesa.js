@@ -21,7 +21,7 @@ class DetalheMesa extends Component {
       pagamentos: [],
       id_mesa: "",
       id_operador: "",
-      mostrar: '3',
+      mostrar: '1',
     };
   }
 
