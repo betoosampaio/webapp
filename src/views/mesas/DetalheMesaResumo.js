@@ -12,35 +12,61 @@ class DetalheMesaResumo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      msgDesconto: '',
-      msgValor: '',
       servicoPorcentagem: '',
       descontoPorcentagem: '',
       taxa_servico: '',
       desconto: '',
       txServicoVisivel: false,
       descontoVisivel: false,
+
+      validacao: {
+        servicoPorcentagem: { valid: false, invalid: false, msgValor: '' },
+        descontoPorcentagem: { valid: false, invalid: false, msgDesconto: '' },
+        taxa_servico: { valid: false, invalid: false, msgValor: '' },
+        desconto: { valid: false, invalid: false, msgDesconto: '' },
+      },
     };
   }
 
- /* componentDidUpdate() {
-    if (this.props.vlrTxServico !== this.state.propsTxServico) {
-      let porcentagem = this.props.vlrTxServico / this.props.vlrProdutos * 100;
-      this.setState({
-        propsTxServico: this.props.vlrTxServico,
-        taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.', ','),
-        servicoPorcentagem: porcentagem.toFixed(0)
-      });
+  /* componentDidUpdate() {
+     if (this.props.vlrTxServico !== this.state.propsTxServico) {
+       let porcentagem = this.props.vlrTxServico / this.props.vlrProdutos * 100;
+       this.setState({
+         propsTxServico: this.props.vlrTxServico,
+         taxa_servico: this.props.vlrTxServico.toFixed(2).replace('.', ','),
+         servicoPorcentagem: porcentagem.toFixed(0)
+       });
+     }
+     if (this.props.vlrDesconto !== this.state.propsDesconto) {
+       let porcentagem = this.props.vlrDesconto / this.props.vlrProdutos * 100;
+       this.setState({
+         propsDesconto: this.props.vlrDesconto,
+         desconto: this.props.vlrDesconto.toFixed(2).replace('.', ','),
+         descontoPorcentagem: porcentagem.toFixed(0)
+       });
+     }
+   }*/
+
+
+  validarDescontoPorcentagem = (event) => {
+    let valid = false, invalid = true, msgDesconto = '';
+    let val = event.target.value;
+
+    if (val <= 100) {
+      msgDesconto = 'Maxímo de 100%';
     }
-    if (this.props.vlrDesconto !== this.state.propsDesconto) {
-      let porcentagem = this.props.vlrDesconto / this.props.vlrProdutos * 100;
-      this.setState({
-        propsDesconto: this.props.vlrDesconto,
-        desconto: this.props.vlrDesconto.toFixed(2).replace('.', ','),
-        descontoPorcentagem: porcentagem.toFixed(0)
-      });
+    else {
+      valid = true;
+      invalid = false;
     }
-  }*/
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.descontoPorcentagem.valid = valid;
+    newState.descontoPorcentagem.invalid = invalid;
+    newState.descontoPorcentagem.msgValor = msgDesconto;
+    this.setState({ validacao: newState });
+  }
+
 
   changeInputDesconto = (event) => {
     if (event.target.name === "desconto") {
@@ -180,6 +206,7 @@ class DetalheMesaResumo extends Component {
                       {this.state.msgValor === true &&
 
                         <span style={{ color: "Red" }}>Não é o valor total</span>
+                        /* <FormFeedback>{this.state.validacao.nome_administrador.msgValor || 'Não é o valor total'}</FormFeedback>*/
 
                       }
                     </Col>
@@ -196,14 +223,11 @@ class DetalheMesaResumo extends Component {
                           placeholder="% Serviço"
                           maxlength="3"
 
+
                         />
 
                       </InputGroup>
-                      {this.state.msgDesconto === true &&
-
-                        <span style={{ color: "Red" }}>Maximo 100%</span>
-
-                      }
+                      <FormFeedback>{this.state.validacao.descontoPorcentagem.msg}</FormFeedback>
                     </Col>
                     <Col xs="2">
                       <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
@@ -231,11 +255,14 @@ class DetalheMesaResumo extends Component {
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
                         placeholder="Desconto"
+                        onBlur={this.validarDescontoPorcentagem}
+                        invalid={this.state.validacao.descontoPorcentagem.invalid}
+                        required
                       />
                     </InputGroup>
                     {this.state.msgValor === true &&
 
-                      <span style={{ color: "Red" }}>Não é o valor total</span>
+                      <FormFeedback>{this.state.validacao.descontoPorcentagem.msgValor}</FormFeedback>
 
                     }
                   </Col>
@@ -251,13 +278,15 @@ class DetalheMesaResumo extends Component {
                         placeholder="% Desconto"
                         maxlength="3"
                         id="informativoCodigo"
+                        onBlur={this.validarDescontoPorcentagem}
+                        invalid={this.state.validacao.descontoPorcentagem.invalid}
                       />
 
                     </InputGroup>
 
                     {this.state.msgDesconto === true &&
 
-                      <span style={{ color: "Red" }}>Maximo 100%</span>
+                      <FormFeedback>{this.state.validacao.descontoPorcentagem.msgDesconto}</FormFeedback>
 
                     }
 
