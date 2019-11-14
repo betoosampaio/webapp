@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, FormFeedback
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, FormFeedback, Input
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import MaskedNumberInput from '../../components/MaskedNumberInput';
@@ -14,28 +14,38 @@ class DetalheMesaResumo extends Component {
     this.state = {
       taxa_servico: '',
       desconto: '',
+      descontoVlr: '',
+      taxa_servicoVlr: '',
       txServicoVisivel: false,
       descontoVisivel: false,
     };
   }
 
   componentDidUpdate() {
-    let desconto = this.props.desconto;
-    let taxa_servico = this.props.taxa_servico;
-    //this.setState({desconto: desconto, taxa_servico: taxa_servico})
+    if (this.props.desconto !== this.state.descontoCadastrado)
+      this.setState({
+        descontoCadastrado: this.props.desconto,
+        desconto: String(this.props.desconto * 100).replace('.', ','),
+        descontoVlr: this.props.vlrDesconto,
+      });
+
+    if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
+      this.setState({
+        taxa_servicoCadastrada: this.props.taxa_servico,
+        taxa_servico: String(this.props.taxa_servico * 100).replace('.', ','),
+        taxa_servicoVlr: this.props.vlrTxServico,
+      });
   }
 
   changeInputDesconto = (event) => {
     let desconto = event.target.value.replace('.', '').replace(',', '.');
     let valor = desconto / 100 * this.props.vlrProdutos;
-    valor = valor.toFixed(2).replace('.', ',');
     this.setState({ desconto: event.target.value, descontoVlr: valor });
   }
 
   changeInputServico = (event) => {
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
-    let valor = taxa_servico / 100 * this.props.vlrProdutos;
-    valor = valor.toFixed(2).replace('.', ',');
+    let valor = taxa_servico / 100 * (this.props.vlrProdutos - this.props.vlrDesconto);
     this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
   }
 
@@ -72,7 +82,7 @@ class DetalheMesaResumo extends Component {
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, desconto, taxa_servico } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -108,16 +118,7 @@ class DetalheMesaResumo extends Component {
                     </InputGroup>
                   </Col>
                   <Col xs="5">
-                    <InputGroup>
-                      <InputGroupAddon addonType="append">
-                        <InputGroupText>R$</InputGroupText>
-                      </InputGroupAddon>
-                      <MaskedMoneyInput
-                        name="descontoVlr"
-                        value={this.state.descontoVlr}
-                        placeholder="R$ 0,00"
-                        disabled={true} />
-                    </InputGroup>
+                    <Input readonly value={this.moneyFormat(this.state.descontoVlr)} />
                   </Col>
                   <Col xs="2">
                     <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
@@ -148,16 +149,7 @@ class DetalheMesaResumo extends Component {
                       </InputGroup>
                     </Col>
                     <Col xs="5">
-                      <InputGroup>
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText>R$</InputGroupText>
-                        </InputGroupAddon>
-                        <MaskedMoneyInput
-                          name="taxa_servicoVlr"
-                          value={this.state.taxa_servicoVlr}
-                          placeholder="R$ 0,00"
-                          disabled={true} />
-                      </InputGroup>
+                      <Input readonly value={this.moneyFormat(this.state.taxa_servicoVlr)} />
                     </Col>
                     <Col xs="2">
                       <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>

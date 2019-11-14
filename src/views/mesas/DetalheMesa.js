@@ -280,6 +280,8 @@ class DetalheMesa extends Component {
               vlrTxServico={this.vlrTxServico()}
               vlrDesconto={this.vlrDesconto()}
               vlrTotal={this.vlrTotal()}
+              desconto={this.state.desconto}
+              taxa_servico={this.state.taxa_servico}
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
 
