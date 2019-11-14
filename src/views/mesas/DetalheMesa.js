@@ -14,11 +14,13 @@ class DetalheMesa extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       dropdownOpen: false,
       modalInfosMesa: false,
       produtos: [],
       pagamentos: [],
       id_mesa: "",
+      mostrar: '2',
     };
   }
 
@@ -142,7 +144,7 @@ class DetalheMesa extends Component {
                   size="sm"
                   title="Detalhes desta mesa">
                   <i className="icon-star" />Detalhes desta mesa
-              
+
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
@@ -157,6 +159,32 @@ class DetalheMesa extends Component {
                 <div className="callout">
                   <small className="text-muted">Status</small>
                   <br />
+
+
+
+                  {this.state.mostrar === '1' &&
+                    <Button
+                      onClick={() => this.fecharMesa(this.state._id)}
+                      className="pull-right mr-1"
+                      size="sm"               
+                      title="Fechar Conta">
+                      <i className="icon-basket-loaded" /> Fechar Conta
+                    </Button>
+                  }
+                  {this.state.mostrar === '2' &&
+
+                    <Button
+                      onClick={() => this.removerMesa(this.state._id)}
+                      className="pull-right mr-5"
+                      size="sm"
+                      title="Cancelar Mesa">
+                      <i className="icon-ban" /> Cancelar Mesa                  
+                    </Button>
+                  }
+
+
+
+
                   <strong className="h4">{this.statusMesa()}</strong>
                   <div className="chart-wrapper">
                   </div>
