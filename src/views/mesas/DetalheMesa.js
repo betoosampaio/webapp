@@ -20,7 +20,7 @@ class DetalheMesa extends Component {
       produtos: [],
       pagamentos: [],
       id_mesa: "",
-      mostrar: '1',
+      mostrar: '3',
     };
   }
 
@@ -190,7 +190,7 @@ class DetalheMesa extends Component {
                     <Button
                       onClick={() => this.fecharMesa(this.state._id)}
                       className="pull-right mr-5"
-                      size="xm"
+                      size="lg"
                       title="Fechar Conta">
                       <i className="icon-basket-loaded" /> Fechar Conta
                     </Button>
@@ -200,9 +200,18 @@ class DetalheMesa extends Component {
                     <Button
                       onClick={() => this.removerMesa(this.state._id)}
                       className="pull-right mr-5"
-                      size="xm"
+                      size="lg"
                       title="Cancelar Mesa">
                       <i className="icon-ban" /> Cancelar Mesa
+                    </Button>
+                  }
+                  {this.state.mostrar === '3' &&
+                    <Button
+                      onClick={() => this.reabrirMesa(this.state._id)}
+                      className="pull-right mr-5"
+                      size="lg"
+                      title="Reabrir Conta">
+                      <i className="icon-basket-loaded" /> Reabrir Conta
                     </Button>
                   }
 
