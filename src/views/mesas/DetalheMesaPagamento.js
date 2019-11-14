@@ -6,7 +6,7 @@ import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import SelectFormasPagamento from '../../components/SelectFormasPagamento';
 
 
-class FormaPagamento extends Component {
+class DetalheMesaPagamento extends Component {
 
 
   constructor(props) {
@@ -61,7 +61,7 @@ class FormaPagamento extends Component {
     this.setState({ selecionados: selecionados })
   }
 
-  changeInput1 = (event) => {
+  SelecionarFormaDePagamento = (event) => {
     let formaPagamento = this.state.lista.find(fm => String(fm.id_forma_pagamento) === this.state.id_forma_pagamento);
 
 
@@ -136,7 +136,7 @@ class FormaPagamento extends Component {
                 >
                 </SelectFormasPagamento >
 
-                <Button color="success" onClick={this.changeInput1}>Incluir</Button>
+                <Button color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
 
 
 
@@ -182,4 +182,4 @@ class FormaPagamento extends Component {
   }
 }
 
-export default FormaPagamento;
+export default DetalheMesaPagamento;
