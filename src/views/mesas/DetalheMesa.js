@@ -74,6 +74,11 @@ class DetalheMesa extends Component {
     this.obter(this.props.match.params.id);
   }
 
+  pagamentoIncluso = () => {
+    this.setState({ modalAdicionarPagamento: false })
+    this.obter(this.props.match.params.id);
+  }
+
   removerMesa = async (id_mesa) => {
     let confirm = await Confirm({
       title: "Confirmação",
@@ -347,6 +352,7 @@ class DetalheMesa extends Component {
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
           id_mesa={this.state._id}
+          pagamentoincluso={this.pagamentoIncluso}
         />
 
         <Modal

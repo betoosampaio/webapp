@@ -18,7 +18,6 @@ class DetalheMesaPagamento extends Component {
       nome_operador: '',
       lista: [],
       selecionados: [],
-      id_produto: "",
     };
   }
 
@@ -33,24 +32,26 @@ class DetalheMesaPagamento extends Component {
     }
   }
 
-  incluirPagamento = async () => {
-
+  incluirPagamento = async (event) => {
+    event.preventDefault();
     if (this.state.selecionados.length > 0) {
 
       let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.', '').replace(',', '.')) }))
 
       let obj = {
-
         id_mesa: this.props.id_mesa,
         pagamentos: pagamentos,
-
       }
-
-
-      console.log(pagamentos);
       let dados = await serverRequest.request('/mesa/pagamento/incluir', obj);
       if (dados) {
-
+        this.setState({
+          valor: '',
+          id_forma_pagamento: '',
+          ds_forma_pagamento: '',
+          nome_operador: '',
+          selecionados: [],
+        })
+        this.props.pagamentoincluso();
       }
     }
   }
@@ -136,7 +137,7 @@ class DetalheMesaPagamento extends Component {
                 >
                 </SelectFormasPagamento >
 
-                <Button color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
+                <Button className="ml-2" color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
 
 
 
@@ -159,7 +160,7 @@ class DetalheMesaPagamento extends Component {
 
                       <td>{obj.valor}</td>
                       <td>{obj.ds_forma_pagamento}</td>
-                  
+
 
 
                       <td>
@@ -174,7 +175,7 @@ class DetalheMesaPagamento extends Component {
             </Table>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" color="success">Incluir</Button>
+            <Button type="submit" color="success">Confirmar</Button>
           </Modal.Footer>
         </form >
       </Modal >
