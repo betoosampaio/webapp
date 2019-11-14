@@ -20,7 +20,7 @@ class DetalheMesa extends Component {
       produtos: [],
       pagamentos: [],
       id_mesa: "",
-      mostrar: '2',
+      mostrar: '1',
     };
   }
 
@@ -110,6 +110,24 @@ class DetalheMesa extends Component {
     }
   }
 
+  reabrirMesa = async (id_mesa) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja reabrir essa conta?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/reabrir', { "id_mesa": id_mesa });
+      if (dados) {
+        window.location.href = '/#/mesas'
+      }
+    }
+  }
+
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
@@ -131,13 +149,19 @@ class DetalheMesa extends Component {
                   className="pull-left mr-1"
                   size="sm"
                   title="Cancelar Mesa">
-                  <i className="icon-ban" />Cancelar Mesa
+                  <i className="icon-ban" />Cancelar Conta
                 </DropdownItem>
                 <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
                   className="pull-left mr-1"
                   size="sm"
                   title="Fechar Conta">
                   <i className="icon-basket-loaded" />Fechar Conta
+                </DropdownItem>
+                <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
+                  className="pull-left mr-1"
+                  size="sm"
+                  title="Reabrir Conta">
+                  <i className="icon-basket-loaded" />Reabrir Conta
                 </DropdownItem>
                 <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
                   className="pull-left mr-1"
@@ -165,8 +189,8 @@ class DetalheMesa extends Component {
                   {this.state.mostrar === '1' &&
                     <Button
                       onClick={() => this.fecharMesa(this.state._id)}
-                      className="pull-right mr-1"
-                      size="sm"               
+                      className="pull-right mr-5"
+                      size="xm"
                       title="Fechar Conta">
                       <i className="icon-basket-loaded" /> Fechar Conta
                     </Button>
@@ -176,9 +200,9 @@ class DetalheMesa extends Component {
                     <Button
                       onClick={() => this.removerMesa(this.state._id)}
                       className="pull-right mr-5"
-                      size="sm"
+                      size="xm"
                       title="Cancelar Mesa">
-                      <i className="icon-ban" /> Cancelar Mesa                  
+                      <i className="icon-ban" /> Cancelar Mesa
                     </Button>
                   }
 
