@@ -207,65 +207,62 @@ class DetalheMesa extends Component {
         </Row>
 
         <Row>
-          <Col xs="12" sm="6" lg="4">
+          <Col lg="4">
             <Card>
               <CardBody>
-
-                <div className="callout">
-                  <small className="text-muted">Status</small>
-                  <br />
-
-
-
-                  {this.state.mostrar === '1' &&
-                    <Button
-                      onClick={() => this.fecharMesa(this.state._id)}
-                      className="pull-right mr-5"
-                      size="lg"
-                      title="Fechar Conta">
-                      <i className="icon-calculator" /> Fechar Conta
+                <Row>
+                  <Col xs="8">
+                    <div className="callout">
+                      <small className="text-muted">Status</small>
+                      <br />
+                      <strong className="h4">{this.statusMesa()}</strong>
+                      <div className="chart-wrapper">
+                      </div>
+                    </div>
+                  </Col>
+                  <Col xs="4">
+                    {this.state.mostrar === '1' &&
+                      <Button
+                        onClick={() => this.fecharMesa(this.state._id)}
+                        style={{height:"100%"}}
+                        title="Fechar Conta">
+                        <i className="icon-calculator" /> Fechar Conta
                     </Button>
-                  }
-                  {this.state.mostrar === '2' &&
+                    }
+                    {this.state.mostrar === '2' &&
 
-                    <Button
-                      onClick={() => this.removerMesa(this.state._id)}
-                      className="pull-right mr-5"
-                      size="lg"
-                      title="Cancelar Mesa">
-                      <i className="icon-ban" /> Cancelar Mesa
+                      <Button
+                        onClick={() => this.removerMesa(this.state._id)}
+                        className="pull-right mr-5"
+                        size="lg"
+                        title="Cancelar Mesa">
+                        <i className="icon-ban" /> Cancelar Mesa
                     </Button>
-                  }
-                  {this.state.mostrar === '3' &&
-                    <Button
-                      onClick={() => this.reabrirMesa(this.state._id)}
-                      className="pull-right mr-5"
-                      size="lg"
-                      title="Reabrir Conta">
-                      <i className="icon-basket-loaded" /> Reabrir Conta
+                    }
+                    {this.state.mostrar === '3' &&
+                      <Button
+                        onClick={() => this.reabrirMesa(this.state._id)}
+                        className="pull-right mr-5"
+                        size="lg"
+                        title="Reabrir Conta">
+                        <i className="icon-basket-loaded" /> Reabrir Conta
                     </Button>
-                  }
-                  {this.state.mostrar === '4' &&
-                    <Button
-                      onClick={() => this.encerrarMesa(this.state._id)}
-                      className="pull-right mr-5"
-                      size="lg"
-                      title="Encerrar Conta">
-                      <i className="icon-basket-loaded" /> Encerrar Conta
+                    }
+                    {this.state.mostrar === '4' &&
+                      <Button
+                        onClick={() => this.encerrarMesa(this.state._id)}
+                        className="pull-right mr-5"
+                        size="lg"
+                        title="Encerrar Conta">
+                        <i className="icon-basket-loaded" /> Encerrar Conta
                     </Button>
-                  }
-
-
-
-
-                  <strong className="h4">{this.statusMesa()}</strong>
-                  <div className="chart-wrapper">
-                  </div>
-                </div>
+                    }
+                  </Col>
+                </Row>
               </CardBody>
             </Card>
           </Col>
-          <Col xs="12" sm="6" lg="8">
+          <Col lg="8">
             <Card>
               <CardBody>
                 <Row>
@@ -274,24 +271,21 @@ class DetalheMesa extends Component {
                       <small className="text-muted">Valor Total</small>
                       <br />
                       <strong className="h4">{this.moneyFormat(this.vlrTotal())}</strong>
-                      <div className="chart-wrapper">
-                      </div>
                     </div>
                   </Col>
                   <Col sm="4">
                     <div className="callout callout-success">
                       <small className="text-muted">Valor Pago</small>
                       <br />
-                      <strong className="h4">{this.moneyFormat(this.state.valor_pagamentos)}
-                        <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                          className="bg-success ml-2"
-                          size="sm"
-                          title="Inserir Pagamento">
-                          <i className="fa fa-plus" />
-                        </Button>
+                      <strong className="h4">
+                        {this.moneyFormat(this.state.valor_pagamentos)}
                       </strong>
-                      <div className="chart-wrapper">
-                      </div>
+                      <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                        className="bg-success ml-2 h4"
+                        size="sm"
+                        title="Inserir Pagamento">
+                        <i className="fa fa-plus" />
+                      </Button>
                     </div>
                   </Col>
                   <Col sm="4">
@@ -299,9 +293,6 @@ class DetalheMesa extends Component {
                       <small className="text-muted">Valor Restante</small>
                       <br />
                       <strong className="h4">{this.moneyFormat(this.vlrRestante())}</strong>
-                      <div className="chart-wrapper">
-                      </div>
-
                     </div>
                   </Col>
                 </Row>
@@ -311,7 +302,7 @@ class DetalheMesa extends Component {
         </Row>
 
         <Row>
-          <Col xs={12} md={8} lg={7}>
+          <Col md={7}>
 
             <DetalheMesaProdutos
               produtos={this.state.produtos}
@@ -321,7 +312,7 @@ class DetalheMesa extends Component {
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
           </Col>
-          <Col xs={12} md={4} lg={5}>
+          <Col md={5}>
 
             <DetalheMesaResumo
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
