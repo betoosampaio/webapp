@@ -222,13 +222,15 @@ class DetalheMesa extends Component {
                     {this.state.aberta &&
                       <Button
                         onClick={() => this.fecharMesa(this.state._id)}
+                        className="pull-right"
                         style={{ height: "100%" }}>
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
                     }
-                    {this.state.fechada &&
+                    {this.state.fechada && !this.state.encerrada &&
                       <Button
                         onClick={() => this.encerrarMesa(this.state._id)}
+                        className="pull-right"
                         style={{ height: "100%" }}>
                         <i className="icon-basket-loaded" /> Encerrar Conta
                     </Button>
