@@ -91,7 +91,7 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/remover', { "id_mesa": id_mesa });
       if (dados) {
-        window.location.href = '/#/mesas'
+        this.obter(this.props.match.params.id);
       }
 
     }
@@ -110,7 +110,7 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/fechar', { "id_mesa": id_mesa });
       if (dados) {
-        window.location.href = '/#/mesas'
+        this.obter(this.props.match.params.id);
       }
     }
   }
@@ -128,7 +128,7 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/reabrir', { "id_mesa": id_mesa });
       if (dados) {
-        window.location.href = '/#/mesas'
+        this.obter(this.props.match.params.id);
       }
     }
   }
@@ -146,7 +146,7 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/encerrar', { "id_mesa": id_mesa });
       if (dados) {
-        window.location.href = '/#/mesas'
+        this.obter(this.props.match.params.id);
       }
     }
   }
@@ -180,7 +180,7 @@ class DetalheMesa extends Component {
                     className="pull-left mr-1"
                     size="sm"
                     title="Encerrar Mesa">
-                    <i className="icon-ban" />Encerrar Conta
+                    <i className="icon-basket-loaded" />Encerrar Conta
                 </DropdownItem>
                   <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
                     className="pull-left mr-1"
@@ -192,7 +192,7 @@ class DetalheMesa extends Component {
                     className="pull-left mr-1"
                     size="sm"
                     title="Reabrir Conta">
-                    <i className="icon-basket-loaded" />Reabrir Conta
+                    <i className="icon-action-redo" />Reabrir Conta
                 </DropdownItem>
                   <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
                     className="pull-left mr-1"
