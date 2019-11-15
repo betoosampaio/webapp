@@ -152,13 +152,13 @@ class DetalheMesa extends Component {
                 <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"></i>
                 </DropdownToggle>
                 <DropdownMenu>
-                  <DropdownItem
-                    onClick={() => this.removerMesa(this.state._id)}
+                  <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
                     className="pull-left mr-1"
                     size="sm"
-                    title="Cancelar Mesa">
-                    <i className="icon-ban" />Cancelar Conta
+                    title="Detalhes desta mesa">
+                    <i className="icon-info" />Detalhes desta mesa
                 </DropdownItem>
+
                   {this.state.fechada && !this.state.encerrada &&
                     <DropdownItem
                       onClick={() => this.encerrarMesa(this.state._id)}
@@ -168,14 +168,7 @@ class DetalheMesa extends Component {
                       <i className="icon-basket-loaded" />Encerrar Conta
                 </DropdownItem>
                   }
-                  {this.state.aberta &&
-                    <DropdownItem onClick={() => this.setState({ modalFechamentoMesa: true })}
-                      className="pull-left mr-1"
-                      size="sm"
-                      title="Fechar Conta">
-                      <i className="icon-calculator" />Fechar Conta
-                </DropdownItem>
-                  }
+
                   {this.state.fechada && !this.state.encerrada &&
                     <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
                       className="pull-left mr-1"
@@ -184,11 +177,29 @@ class DetalheMesa extends Component {
                       <i className="icon-action-redo" />Reabrir Conta
                 </DropdownItem>
                   }
-                  <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
+
+                  {this.state.aberta &&
+                    <DropdownItem onClick={() => this.setState({ modalFechamentoMesa: true })}
+                      className="pull-left mr-1"
+                      size="sm"
+                      title="Fechar Conta">
+                      <i className="icon-calculator" />Fechar Conta
+                </DropdownItem>
+                  }
+
+                  <DropdownItem 
                     className="pull-left mr-1"
                     size="sm"
-                    title="Detalhes desta mesa">
-                    <i className="icon-info" />Detalhes desta mesa
+                    title="Imprimir">
+                    <i className="fa fa-print" />Imprimir
+                </DropdownItem>
+
+                  <DropdownItem
+                    onClick={() => this.removerMesa(this.state._id)}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Cancelar Mesa">
+                    <i className="icon-ban" />Cancelar Conta
                 </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
