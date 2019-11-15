@@ -56,7 +56,9 @@ class DetalheMesa extends Component {
   }
 
   vlrRestante = () => {
-    return this.vlrTotal() - this.state.valor_pagamentos;
+    let vlrRestante = this.vlrTotal() - this.state.valor_pagamentos;
+    if (vlrRestante < 0) vlrRestante = 0;
+    return vlrRestante;
   }
 
   moneyFormat = (valor) => {
@@ -78,7 +80,7 @@ class DetalheMesa extends Component {
     this.obter(this.props.match.params.id);
   }
 
-  removerMesa = async (id_mesa) => { 
+  removerMesa = async (id_mesa) => {
     let confirm = await Confirm({
       title: "Confirmação",
       message: "Tem certeza que deseja cancelar essa conta?",
@@ -197,7 +199,7 @@ class DetalheMesa extends Component {
                     className="pull-left mr-1"
                     size="sm"
                     title="Detalhes desta mesa">
-                    <i className="icon-info" />Detalhes desta mesa  
+                    <i className="icon-info" />Detalhes desta mesa
                 </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
@@ -223,7 +225,7 @@ class DetalheMesa extends Component {
                         style={{ height: "100%" }}>
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
-                    }                  
+                    }
                     {this.state.fechada &&
                       <Button
                         onClick={() => this.encerrarMesa(this.state._id)}
