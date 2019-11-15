@@ -6,6 +6,7 @@ import IncluirItem from './IncluirItem';
 import IncluirPagamento from './IncluirPagamento';
 import ResumoMesa from './ResumoMesa';
 import ListaItems from './ListaItems';
+import FechamentoMesa from './FechamentoMesa';
 import Modal from 'react-bootstrap/Modal'
 import ListaPagamentos from './ListaPagamentos';
 
@@ -98,24 +99,6 @@ class DetalheMesa extends Component {
     }
   }
 
-  fecharMesa = async (id_mesa) => {
-    let confirm = await Confirm({
-      title: "Confirmação",
-      message: "Tem certeza que deseja fechar essa conta?",
-      confirmColor: "success",
-      confirmText: "Confirmar",
-      cancelColor: "danger",
-      cancelText: "Cancelar",
-    });
-
-    if (confirm) {
-      let dados = await serverRequest.request('/mesa/fechar', { "id_mesa": id_mesa });
-      if (dados) {
-        this.obter(this.props.match.params.id);
-      }
-    }
-  }
-
   reabrirMesa = async (id_mesa) => {
     let confirm = await Confirm({
       title: "Confirmação",
@@ -186,7 +169,7 @@ class DetalheMesa extends Component {
                 </DropdownItem>
                   }
                   {this.state.aberta &&
-                    <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
+                    <DropdownItem onClick={() => this.setState({ modalFechamentoMesa: true })}
                       className="pull-left mr-1"
                       size="sm"
                       title="Fechar Conta">
@@ -227,7 +210,7 @@ class DetalheMesa extends Component {
                   <Col xs="4">
                     {this.state.aberta &&
                       <Button
-                        onClick={() => this.fecharMesa(this.state._id)}
+                        onClick={() => this.setState({ modalFechamentoMesa: true })}
                         className="pull-right"
                         style={{ height: "100%" }}>
                         <i className="icon-calculator" /> Fechar Conta
@@ -330,6 +313,22 @@ class DetalheMesa extends Component {
           id_mesa={this.state._id}
           pagamentoincluso={this.pagamentoIncluso}
         />
+        <FechamentoMesa
+          show={this.state.modalFechamentoMesa}
+          onHide={() => { this.setState({ modalFechamentoMesa: false }) }}
+          id_mesa={this.state._id}
+          item={this.state.detalheItemSelecionado}
+
+          novoProduto={() => this.setState({ modalAdicionarItem: true })}
+          vlrProdutos={this.state.valor_produtos}
+          vlrTxServico={this.vlrTxServico()}
+          vlrDesconto={this.state.desconto}
+          vlrTotal={this.vlrTotal()}
+          desconto={this.state.desconto}
+          taxa_servico={this.state.taxa_servico}
+          atualizou={() => this.obter(this.props.match.params.id)}
+
+        />
 
         <Modal
           size="lg"
@@ -355,7 +354,7 @@ class DetalheMesa extends Component {
             </Button>
           </Modal.Footer>
         </Modal >
-      </div>
+      </div >
     );
   }
 }
