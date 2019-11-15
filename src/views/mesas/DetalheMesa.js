@@ -161,51 +161,52 @@ class DetalheMesa extends Component {
   render() {
     return (
       <div>
-        <Row>
-          <h2 className="ml-3">Mesa {this.state.numero}</h2>
-          <ButtonGroup className="ml-4">
-            <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
-              <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"> Opções </i>
-              </DropdownToggle>
-              <DropdownMenu float-right>
-                <DropdownItem
-                  onClick={() => this.removerMesa(this.state._id)}
-                  className="pull-left mr-1"
-                  size="sm"
-                  title="Cancelar Mesa">
-                  <i className="icon-ban" />Cancelar Conta
+        <Row className="mb-3">
+          <h2 className="ml-3">
+            Mesa {this.state.numero}
+            <ButtonGroup className="ml-4">
+              <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
+                <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"></i>
+                </DropdownToggle>
+                <DropdownMenu float-right>
+                  <DropdownItem
+                    onClick={() => this.removerMesa(this.state._id)}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Cancelar Mesa">
+                    <i className="icon-ban" />Cancelar Conta
                 </DropdownItem>
-                <DropdownItem
-                  onClick={() => this.encerrarMesa(this.state._id)}
-                  className="pull-left mr-1"
-                  size="sm"
-                  title="Encerrar Mesa">
-                  <i className="icon-ban" />Encerrar Conta
+                  <DropdownItem
+                    onClick={() => this.encerrarMesa(this.state._id)}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Encerrar Mesa">
+                    <i className="icon-ban" />Encerrar Conta
                 </DropdownItem>
-                <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
-                  className="pull-left mr-1"
-                  size="sm"
-                  title="Fechar Conta">
-                  <i className="icon-calculator" />Fechar Conta
+                  <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Fechar Conta">
+                    <i className="icon-calculator" />Fechar Conta
                 </DropdownItem>
-                <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
-                  className="pull-left mr-1"
-                  size="sm"
-                  title="Reabrir Conta">
-                  <i className="icon-basket-loaded" />Reabrir Conta
+                  <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Reabrir Conta">
+                    <i className="icon-basket-loaded" />Reabrir Conta
                 </DropdownItem>
-                <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
-                  className="pull-left mr-1"
-                  size="sm"
-                  title="Detalhes desta mesa">
-                  <i className="icon-info" />Detalhes desta mesa
-
+                  <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Detalhes desta mesa">
+                    <i className="icon-info" />Detalhes desta mesa
+  
                 </DropdownItem>
-              </DropdownMenu>
-            </ButtonDropdown>
-          </ButtonGroup>
+                </DropdownMenu>
+              </ButtonDropdown>
+            </ButtonGroup>
+          </h2>
         </Row>
-
         <Row>
           <Col lg="4">
             <Card>
@@ -216,15 +217,13 @@ class DetalheMesa extends Component {
                       <small className="text-muted">Status</small>
                       <br />
                       <strong className="h4">{this.statusMesa()}</strong>
-                      <div className="chart-wrapper">
-                      </div>
                     </div>
                   </Col>
                   <Col xs="4">
                     {this.state.mostrar === '1' &&
                       <Button
                         onClick={() => this.fecharMesa(this.state._id)}
-                        style={{height:"100%"}}
+                        style={{ height: "100%" }}
                         title="Fechar Conta">
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
@@ -279,13 +278,14 @@ class DetalheMesa extends Component {
                       <br />
                       <strong className="h4">
                         {this.moneyFormat(this.state.valor_pagamentos)}
+                        <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                          className="bg-success ml-2"
+                          size="sm"
+                          title="Inserir Pagamento">
+                          <i className="fa fa-plus" />
+                        </Button>
                       </strong>
-                      <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                        className="bg-success ml-2 h4"
-                        size="sm"
-                        title="Inserir Pagamento">
-                        <i className="fa fa-plus" />
-                      </Button>
+
                     </div>
                   </Col>
                   <Col sm="4">
