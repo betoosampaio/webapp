@@ -78,7 +78,7 @@ class DetalheMesa extends Component {
     this.obter(this.props.match.params.id);
   }
 
-  removerMesa = async (id_mesa) => {
+  removerMesa = async (id_mesa) => { 
     let confirm = await Confirm({
       title: "Confirmação",
       message: "Tem certeza que deseja cancelar essa conta?",
@@ -91,9 +91,8 @@ class DetalheMesa extends Component {
     if (confirm) {
       let dados = await serverRequest.request('/mesa/remover', { "id_mesa": id_mesa });
       if (dados) {
-        this.obter(this.props.match.params.id);
+        this.props.history.push("/mesas");
       }
-
     }
   }
 
@@ -198,8 +197,7 @@ class DetalheMesa extends Component {
                     className="pull-left mr-1"
                     size="sm"
                     title="Detalhes desta mesa">
-                    <i className="icon-info" />Detalhes desta mesa
-  
+                    <i className="icon-info" />Detalhes desta mesa  
                 </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
@@ -219,39 +217,17 @@ class DetalheMesa extends Component {
                     </div>
                   </Col>
                   <Col xs="4">
-                    {this.state.mostrar === '1' &&
+                    {this.state.aberta &&
                       <Button
                         onClick={() => this.fecharMesa(this.state._id)}
-                        style={{ height: "100%" }}
-                        title="Fechar Conta">
+                        style={{ height: "100%" }}>
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
-                    }
-                    {this.state.mostrar === '2' &&
-
-                      <Button
-                        onClick={() => this.removerMesa(this.state._id)}
-                        className="pull-right mr-5"
-                        size="lg"
-                        title="Cancelar Mesa">
-                        <i className="icon-ban" /> Cancelar Mesa
-                    </Button>
-                    }
-                    {this.state.mostrar === '3' &&
-                      <Button
-                        onClick={() => this.reabrirMesa(this.state._id)}
-                        className="pull-right mr-5"
-                        size="lg"
-                        title="Reabrir Conta">
-                        <i className="icon-basket-loaded" /> Reabrir Conta
-                    </Button>
-                    }
-                    {this.state.mostrar === '4' &&
+                    }                  
+                    {this.state.fechada &&
                       <Button
                         onClick={() => this.encerrarMesa(this.state._id)}
-                        className="pull-right mr-5"
-                        size="lg"
-                        title="Encerrar Conta">
+                        style={{ height: "100%" }}>
                         <i className="icon-basket-loaded" /> Encerrar Conta
                     </Button>
                     }
