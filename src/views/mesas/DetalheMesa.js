@@ -3,11 +3,11 @@ import { Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup, ButtonDropd
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 import IncluirItem from './IncluirItem';
-import DetalheMesaPagamento from './DetalheMesaPagamento';
-import DetalheMesaResumo from './DetalheMesaResumo';
-import DetalheMesaProdutos from './DetalheMesaProdutos';
+import IncluirPagamento from './IncluirPagamento';
+import ResumoMesa from './ResumoMesa';
+import ListaItems from './ListaItems';
 import Modal from 'react-bootstrap/Modal'
-import DetalheMesaPagamentos from './DetalheMesaPagamentos';
+import ListaPagamentos from './ListaPagamentos';
 
 class DetalheMesa extends Component {
 
@@ -303,7 +303,7 @@ class DetalheMesa extends Component {
         <Row>
           <Col md={7}>
 
-            <DetalheMesaProdutos
+            <ListaItems
               produtos={this.state.produtos}
               qtdProdutos={this.state.qtd_produtos}
               vlrProdutos={this.state.valor_produtos}
@@ -313,7 +313,7 @@ class DetalheMesa extends Component {
           </Col>
           <Col md={5}>
 
-            <DetalheMesaResumo
+            <ResumoMesa
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
               vlrProdutos={this.state.valor_produtos}
               vlrTxServico={this.vlrTxServico()}
@@ -324,7 +324,7 @@ class DetalheMesa extends Component {
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)} />
 
-            <DetalheMesaPagamentos
+            <ListaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
               pagamentos={this.state.pagamentos}
               vlrPagamentos={this.state.valor_pagamentos}
@@ -338,7 +338,7 @@ class DetalheMesa extends Component {
           id_mesa={this.state._id}
           itemincluso={this.itemIncluso} />
 
-        <DetalheMesaPagamento
+        <IncluirPagamento
           show={this.state.modalAdicionarPagamento}
           onHide={() => { this.setState({ modalAdicionarPagamento: false }) }}
           id_mesa={this.state._id}

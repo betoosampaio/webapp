@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, Table,} from 'reactstrap';
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
-import DetalheMesaItem from './DetalheMesaItem';
+import DetalheItem from './DetalheItem';
 import serverRequest from '../../utils/serverRequest';
 
-class DetalheMesaProdutos extends Component {
+class ListaItems extends Component {
 
   constructor(props) {
     super(props);
@@ -85,7 +85,7 @@ class DetalheMesaProdutos extends Component {
 
 
         </CardFooter>
-        <DetalheMesaItem
+        <DetalheItem
           show={this.state.modalDetalheMesaItem}
           onHide={() => { this.setState({ modalDetalheMesaItem: false }) }}
           item={this.state.detalheItemSelecionado}
@@ -98,4 +98,4 @@ class DetalheMesaProdutos extends Component {
   }
 }
 
-export default DetalheMesaProdutos;
+export default ListaItems;

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, Table } from 'reactstrap';
-import DetalhePagamentoItem from './DetalhePagamentoItem';
+import DetalhePagamento from './DetalhePagamento';
 
-class DetalheMesaPagamentos extends Component {
+class ListaPagamentos extends Component {
 
   constructor(props) {
     super(props);
@@ -58,7 +58,7 @@ class DetalheMesaPagamentos extends Component {
           <b className="pull-right">{this.moneyFormat(vlrPagamentos)}</b>
         </CardFooter>
 
-        <DetalhePagamentoItem
+        <DetalhePagamento
           show={this.state.modalDetalhePagamentoItem}
           onHide={() => { this.setState({ modalDetalhePagamentoItem: false }) }}
           item={this.state.DetalhePagamentoItem}
@@ -71,4 +71,4 @@ class DetalheMesaPagamentos extends Component {
   }
 }
 
-export default DetalheMesaPagamentos;
+export default ListaPagamentos;

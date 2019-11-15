@@ -6,7 +6,7 @@ import {
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 
-class DetalheMesaResumo extends Component {
+class ResumoMesa extends Component {
 
   constructor(props) {
     super(props);
@@ -161,4 +161,4 @@ class DetalheMesaResumo extends Component {
   }
 }
 
-export default DetalheMesaResumo;
+export default ResumoMesa;

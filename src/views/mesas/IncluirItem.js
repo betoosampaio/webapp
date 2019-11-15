@@ -7,7 +7,7 @@ import MultipleSelect from '../../components/MultipleSelect';
 import ReactDOMServer from 'react-dom/server';
 import Foto from '../../components/Foto';
 
-class DetalheMesa extends Component {
+class IncluirItem extends Component {
 
   constructor(props) {
     super(props);
@@ -215,4 +215,4 @@ class DetalheMesa extends Component {
   }
 }
 
-export default DetalheMesa;
+export default IncluirItem;

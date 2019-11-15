@@ -6,7 +6,7 @@ import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
 
-class DetalheMesaItem extends Component {
+class DetalheItem extends Component {
 
   constructor(props) {
     super(props);
@@ -101,4 +101,4 @@ class DetalheMesaItem extends Component {
   }
 }
 
-export default DetalheMesaItem;
+export default DetalheItem;
