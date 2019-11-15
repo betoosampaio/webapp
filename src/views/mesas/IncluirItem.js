@@ -33,6 +33,12 @@ class IncluirItem extends Component {
     let id_produto = event.target.value[0];
     if (!id_produto) return;
 
+    let exists = this.state.selecionados.find(i => String(i.id_produto) === String(id_produto));
+    if (exists){
+      this.incrementar(exists.id);
+      return;
+    }
+      
     let selecionado = this.state.lista.filter(p => (String(p.id_produto) === String(id_produto)))[0];
     selecionado.quantidade = 1;
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
@@ -76,7 +82,7 @@ class IncluirItem extends Component {
     this.setState({ selecionados: selecionados })
   }
 
-  remover(id){
+  remover(id) {
     let selecionados = Object.assign([], this.state.selecionados);
     selecionados = selecionados.filter(p => p.id !== id);
     this.setState({ selecionados: selecionados })
@@ -111,7 +117,7 @@ class IncluirItem extends Component {
     }
 
     return (
-      
+
       <Modal
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
