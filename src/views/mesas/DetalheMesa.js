@@ -49,11 +49,10 @@ class DetalheMesa extends Component {
     return status;
   }
 
-  vlrTxServico = () => { return this.state.valor_produtos * (1 - this.state.desconto) * this.state.taxa_servico }
-  vlrDesconto = () => { return this.state.valor_produtos * this.state.desconto }
+  vlrTxServico = () => { return (this.state.valor_produtos - this.state.desconto) * this.state.taxa_servico }
 
   vlrTotal = () => {
-    return this.state.valor_produtos * (1 - this.state.desconto) * (1 + this.state.taxa_servico);
+    return (this.state.valor_produtos - this.state.desconto) * (1 + this.state.taxa_servico);
   }
 
   vlrRestante = () => {
@@ -318,7 +317,7 @@ class DetalheMesa extends Component {
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
               vlrProdutos={this.state.valor_produtos}
               vlrTxServico={this.vlrTxServico()}
-              vlrDesconto={this.vlrDesconto()}
+              vlrDesconto={this.state.desconto}
               vlrTotal={this.vlrTotal()}
               desconto={this.state.desconto}
               taxa_servico={this.state.taxa_servico}

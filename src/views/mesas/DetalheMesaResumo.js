@@ -14,7 +14,6 @@ class DetalheMesaResumo extends Component {
     this.state = {
       taxa_servico: '',
       desconto: '',
-      descontoVlr: '',
       taxa_servicoVlr: '',
       txServicoVisivel: false,
       descontoVisivel: false,
@@ -25,8 +24,7 @@ class DetalheMesaResumo extends Component {
     if (this.props.desconto !== this.state.descontoCadastrado)
       this.setState({
         descontoCadastrado: this.props.desconto,
-        desconto: String(this.props.desconto * 100).replace('.', ','),
-        descontoVlr: this.props.vlrDesconto,
+        desconto: this.props.desconto.toFixed(2).replace('.', ','),
       });
 
     if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
@@ -38,9 +36,7 @@ class DetalheMesaResumo extends Component {
   }
 
   changeInputDesconto = (event) => {
-    let desconto = event.target.value.replace('.', '').replace(',', '.');
-    let valor = desconto / 100 * this.props.vlrProdutos;
-    this.setState({ desconto: event.target.value, descontoVlr: valor });
+    this.setState({ desconto: event.target.value });
   }
 
   changeInputServico = (event) => {
@@ -51,7 +47,7 @@ class DetalheMesaResumo extends Component {
 
   editarDesconto = async () => {
     let obj = {
-      desconto: parseFloat(this.state.desconto.replace('.', '').replace(',', '.')) / 100,
+      desconto: parseFloat(this.state.desconto.replace('.', '').replace(',', '.')),
       id_mesa: this.props.id_mesa,
     }
     let dados = await serverRequest.request('/mesa/editarDesconto', obj);
@@ -82,7 +78,7 @@ class DetalheMesaResumo extends Component {
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, desconto, taxa_servico } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -105,20 +101,17 @@ class DetalheMesaResumo extends Component {
               </Button>
               {this.state.descontoVisivel
                 ? <Row className="mt-4">
-                  <Col xs="5">
+                  <Col xs="10">
                     <InputGroup>
                       <InputGroupAddon addonType="append">
-                        <InputGroupText>%</InputGroupText>
+                        <InputGroupText>R$</InputGroupText>
                       </InputGroupAddon>
                       <MaskedMoneyInput
                         name="desconto"
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
-                        placeholder="% Desconto" />
+                        placeholder="Desconto" />
                     </InputGroup>
-                  </Col>
-                  <Col xs="5">
-                    <Input readonly value={this.moneyFormat(this.state.descontoVlr)} />
                   </Col>
                   <Col xs="2">
                     <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
