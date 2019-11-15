@@ -44,6 +44,13 @@ class CardMesa extends Component {
     }
   }
 
+  statusMesa = () => {
+    let status = "Aberta";
+    if (this.fechada) status = "Fechada";
+    if (this.encerrada) status = "Encerrada";
+    return status;
+  }
+
   render() {
     return (
       <Link to={`/mesas/detalhemesa/${this.props.mesa._id}`} style={{ textDecoration: 'none', color: 'black' }}>
@@ -59,6 +66,9 @@ class CardMesa extends Component {
             <div className="font-xs">
               <i className="fa fa-clock-o"></i>
               {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
+            </div>
+            <div className="font-xs">            
+              {this.statusMesa()}
             </div>
           </CardBody>
         </Card>
