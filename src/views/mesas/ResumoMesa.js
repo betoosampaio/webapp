@@ -40,7 +40,7 @@ class ResumoMesa extends Component {
 
   changeInputServico = (event) => {
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
-    let valor = taxa_servico / 100 * (this.props.vlrProdutos - this.props.vlrDesconto);
+    let valor = taxa_servico / 100 * (this.props.vlrProdutos);
     this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
   }
 
@@ -91,34 +91,7 @@ class ResumoMesa extends Component {
                 onClick={novoProduto}>
                 {this.moneyFormat(vlrProdutos)}
               </Button>
-            </ListGroupItem>
-            <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
-                  <Button
-                className="pull-right bg-white"
-                onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
-                {this.moneyFormat(vlrDesconto)}
-              </Button>
-              {this.state.descontoVisivel
-                ? <Row className="mt-4">
-                  <Col xs="10">
-                    <InputGroup>
-                      <InputGroupAddon addonType="append">
-                        <InputGroupText>R$</InputGroupText>
-                      </InputGroupAddon>
-                      <MaskedMoneyInput
-                        name="desconto"
-                        value={this.state.desconto}
-                        onChange={this.changeInputDesconto}
-                        placeholder="Desconto" />
-                    </InputGroup>
-                  </Col>
-                  <Col xs="2">
-                    <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
-                  </Col>
-                </Row>
-                : null
-              }
-            </ListGroupItem>
+            </ListGroupItem>           
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                   <Button
                 className="pull-right bg-white"
@@ -148,6 +121,33 @@ class ResumoMesa extends Component {
                     </Col>
                   </Row>
                   : null
+              }
+            </ListGroupItem>
+            <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
+                  <Button
+                className="pull-right bg-white"
+                onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
+                {this.moneyFormat(vlrDesconto)}
+              </Button>
+              {this.state.descontoVisivel
+                ? <Row className="mt-4">
+                  <Col xs="10">
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>R$</InputGroupText>
+                      </InputGroupAddon>
+                      <MaskedMoneyInput
+                        name="desconto"
+                        value={this.state.desconto}
+                        onChange={this.changeInputDesconto}
+                        placeholder="Desconto" />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="2">
+                    <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                  </Col>
+                </Row>
+                : null
               }
             </ListGroupItem>
           </ListGroup>

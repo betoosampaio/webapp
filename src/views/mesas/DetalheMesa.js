@@ -49,10 +49,10 @@ class DetalheMesa extends Component {
     return status;
   }
 
-  vlrTxServico = () => { return (this.state.valor_produtos - this.state.desconto) * this.state.taxa_servico }
+  vlrTxServico = () => { return this.state.valor_produtos * this.state.taxa_servico }
 
   vlrTotal = () => {
-    return (this.state.valor_produtos - this.state.desconto) * (1 + this.state.taxa_servico);
+    return (this.state.valor_produtos * (1 + this.state.taxa_servico)) - this.state.desconto;
   }
 
   vlrRestante = () => {
