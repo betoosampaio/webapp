@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, Table,} from 'reactstra
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
 import DetalheItem from './DetalheItem';
+import FechamentoMesa from './FechamentoMesa';
 import serverRequest from '../../utils/serverRequest';
 
 class ListaItems extends Component {
@@ -88,6 +89,13 @@ class ListaItems extends Component {
         <DetalheItem
           show={this.state.modalDetalheMesaItem}
           onHide={() => { this.setState({ modalDetalheMesaItem: false }) }}
+          item={this.state.detalheItemSelecionado}
+          id_mesa={id_mesa}
+          atualizou={this.props.atualizou}
+        />
+        <FechamentoMesa
+          show={this.state.modalFechamentoMesa}
+          onHide={() => { this.setState({ modalFechamentoMesa: false }) }}
           item={this.state.detalheItemSelecionado}
           id_mesa={id_mesa}
           atualizou={this.props.atualizou}
