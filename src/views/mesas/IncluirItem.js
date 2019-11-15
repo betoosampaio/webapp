@@ -23,7 +23,7 @@ class IncluirItem extends Component {
   }
 
   obterDados = async () => {
-    let dados = await serverRequest.request('/produto/listar');
+    let dados = await serverRequest.request('/produto/listarAtivos');
     if (dados) {
       this.setState({ lista: dados });
     }
