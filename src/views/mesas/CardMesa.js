@@ -5,6 +5,14 @@ import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
 class CardMesa extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+
   dateDiff = (dataIni, dataFim) => {
     let delta = Math.abs(dataIni - dataFim) / 1000;
 
@@ -20,9 +28,12 @@ class CardMesa extends Component {
     return ` ${d ? d + "d" : ""} ${h ? h + "h" : ""} ${m}m`;
   }
 
-  vlrTotal = (mesa) => {
-    let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)) - mesa.desconto
-    return `R$ ${vl.toFixed(2)}`;;
+  valorProdutos = (produtos) => {
+    let vl = 0;
+    if (produtos)
+      vl = produtos.reduce((sum, key) =>
+        sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
+    return `R$ ${vl.toFixed(2)}`;
   }
 
   fecharMesa = async (id_mesa) => {
@@ -43,8 +54,8 @@ class CardMesa extends Component {
 
   statusMesa = () => {
     let status = "Aberta";
-    if (this.fechada) status = "Fechada";
-    if (this.encerrada) status = "Encerrada";
+    if (this.props.mesa.fechada) status = "Fechada";
+    if (this.props.mesa.encerrada) status = "Encerrada";
     return status;
   }
 
@@ -55,17 +66,17 @@ class CardMesa extends Component {
           <CardHeader>
             <i className="icon-calculator"></i>
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
+            <div className="pull-right">            
+              {this.statusMesa()}
+            </div>
           </CardHeader>
           <CardBody>
             <div className="text-muted font-weight-bold font-md mb-1">
-              {this.vlrTotal(this.props.mesa)}
+              {this.valorProdutos(this.props.mesa.produtos)}
             </div>
             <div className="font-xs">
               <i className="fa fa-clock-o"></i>
               {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
-            </div>
-            <div className="font-xs">            
-              {this.statusMesa()}
             </div>
           </CardBody>
         </Card>
