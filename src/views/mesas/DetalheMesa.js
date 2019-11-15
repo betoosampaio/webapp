@@ -167,7 +167,7 @@ class DetalheMesa extends Component {
               <ButtonDropdown id='card1' isOpen={this.state.card1} toggle={() => { this.setState({ card1: !this.state.card1 }); }}>
                 <DropdownToggle caret className="p-0" color="black"> <i className="icon-settings"></i>
                 </DropdownToggle>
-                <DropdownMenu float-right>
+                <DropdownMenu>
                   <DropdownItem
                     onClick={() => this.removerMesa(this.state._id)}
                     className="pull-left mr-1"

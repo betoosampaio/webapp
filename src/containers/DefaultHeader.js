@@ -45,7 +45,7 @@ class DefaultHeader extends Component {
               <DropdownItem header tag="div" className="text-center"><strong>Conta</strong></DropdownItem>
               <DropdownItem onClick={() => { window.location.href = "/#/perfil" }} ><i className="fa fa-user"></i>Perfil</DropdownItem>
               <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-              <DropdownItem onClick={() => { window.location.href = "/#/configuracaoRestaurante" }} ><i className="icon-settings"></i>Configurações do Restaurante</DropdownItem>
+              <DropdownItem onClick={() => { window.location.href = "/#/restaurante/configuracao" }} ><i className="icon-settings"></i>Configurações do Restaurante</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>

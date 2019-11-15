@@ -30,7 +30,7 @@ class PasswordInput extends Component {
             <i className={`fa ${show ? "fa-eye-slash" : "fa-eye"} form-control-feedback`} />
           </InputGroupText>
         </InputGroupAddon>
-        <FormFeedback>{this.props.feedbackMessage}</FormFeedback>
+        <FormFeedback>{this.props.feedbackmessage}</FormFeedback>
       </InputGroup>
     )
   }

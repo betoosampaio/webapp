@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { Card, CardHeader, CardBody, ListGroup, ListGroupItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { AppSwitch } from '@coreui/react'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 
-class configRestaurante extends Component {
-
-
+class Configuracao extends Component {
 
   render() {
     return (
@@ -35,4 +32,4 @@ class configRestaurante extends Component {
   }
 }
 
-export default configRestaurante;
+export default Configuracao;

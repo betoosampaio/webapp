@@ -64,7 +64,10 @@ class DetalheMesaProdutos extends Component {
               {
                 produtos.map((obj) => {
                   return (
-                    <tr onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}  key={obj.data_inclusao} style={{ cursor:"pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr 
+                    onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}  
+                    key={obj.data_incluiu} 
+                    style={{ cursor:"pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td><Foto src={obj.imagem} height="30" width="30"></Foto></td>
                       <td>{obj.nome_produto}</td>
                       <td>{obj.quantidade}</td>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, FormFeedback, Input
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
-import MaskedNumberInput from '../../components/MaskedNumberInput';
 import serverRequest from '../../utils/serverRequest';
 
 class DetalheMesaResumo extends Component {
