@@ -176,25 +176,31 @@ class DetalheMesa extends Component {
                     title="Cancelar Mesa">
                     <i className="icon-ban" />Cancelar Conta
                 </DropdownItem>
-                  <DropdownItem
-                    onClick={() => this.encerrarMesa(this.state._id)}
-                    className="pull-left mr-1"
-                    size="sm"
-                    title="Encerrar Mesa">
-                    <i className="icon-basket-loaded" />Encerrar Conta
+                  {this.state.fechada && !this.state.encerrada &&
+                    <DropdownItem
+                      onClick={() => this.encerrarMesa(this.state._id)}
+                      className="pull-left mr-1"
+                      size="sm"
+                      title="Encerrar Mesa">
+                      <i className="icon-basket-loaded" />Encerrar Conta
                 </DropdownItem>
-                  <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
-                    className="pull-left mr-1"
-                    size="sm"
-                    title="Fechar Conta">
-                    <i className="icon-calculator" />Fechar Conta
+                  }
+                  {this.state.aberta &&
+                    <DropdownItem onClick={() => this.fecharMesa(this.state._id)}
+                      className="pull-left mr-1"
+                      size="sm"
+                      title="Fechar Conta">
+                      <i className="icon-calculator" />Fechar Conta
                 </DropdownItem>
-                  <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
-                    className="pull-left mr-1"
-                    size="sm"
-                    title="Reabrir Conta">
-                    <i className="icon-action-redo" />Reabrir Conta
+                  }
+                  {this.state.fechada && !this.state.encerrada &&
+                    <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
+                      className="pull-left mr-1"
+                      size="sm"
+                      title="Reabrir Conta">
+                      <i className="icon-action-redo" />Reabrir Conta
                 </DropdownItem>
+                  }
                   <DropdownItem onClick={() => this.setState({ modalInfosMesa: true })}
                     className="pull-left mr-1"
                     size="sm"
