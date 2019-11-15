@@ -25,6 +25,17 @@ export default {
           icon: 'icon-list',
         },
       ]
+    },
+    {
+      name: 'Relatório',
+      icon: 'icon-graph',
+      children: [
+        {
+          name: 'Mesas',
+          url: '/relatorio/mesas',
+          icon: 'icon-list',
+        },       
+      ]
     }
 
 

@@ -20,12 +20,9 @@ class CardMesa extends Component {
     return ` ${d ? d + "d" : ""} ${h ? h + "h" : ""} ${m}m`;
   }
 
-  valorProdutos = (produtos) => {
-    let vl = 0;
-    if (produtos)
-      vl = produtos.reduce((sum, key) =>
-        sum + (key.removido ? 0 : key.preco * key.quantidade), 0)
-    return `R$ ${vl.toFixed(2)}`;
+  vlrTotal = (mesa) => {
+    let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)) - mesa.desconto
+    return `R$ ${vl.toFixed(2)}`;;
   }
 
   fecharMesa = async (id_mesa) => {
@@ -61,7 +58,7 @@ class CardMesa extends Component {
           </CardHeader>
           <CardBody>
             <div className="text-muted font-weight-bold font-md mb-1">
-              {this.valorProdutos(this.props.mesa.produtos)}
+              {this.vlrTotal(this.props.mesa)}
             </div>
             <div className="font-xs">
               <i className="fa fa-clock-o"></i>
