@@ -46,7 +46,7 @@ class Mesas extends Component {
       Cell: props =>
         <Link to={{ pathname: `/mesas/detalhemesa/${props.value}` }}>
           <Button color="secondary" size="sm">
-            <i className="fa fa-eye"></i>
+            <i className="fa fa-reply"></i>
           </Button>
         </Link>
     },
