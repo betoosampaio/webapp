@@ -39,7 +39,9 @@ class CadastrarProduto extends Component {
   obterProximoCodigoProduto = async () => {
     let dados = await serverRequest.request('/produto/obterProximoCodigoProduto');
     if (dados) {
-      this.setState({ codigo_produto: dados[0].codigo_produto })
+      let validacao = Object.assign({}, this.state.validacao);
+      validacao.codigo_produto = { valid: true, invalid: false, msg: '' };
+      this.setState({ codigo_produto: dados[0].codigo_produto, validacao: validacao })
     }
   }
 
@@ -140,6 +142,7 @@ class CadastrarProduto extends Component {
     let valid = true;
 
     Object.keys(this.state.validacao).forEach(p => {
+      
       if (!this.state.validacao[p].valid) {
         valid = false;
       }
@@ -153,16 +156,12 @@ class CadastrarProduto extends Component {
     let dados = await serverRequest.request('/produto/cadastrar', obj);
 
     if (dados) {
-      this.setState({ showCadastrado: true });
+      this.limparStateProduto();
     }
   }
 
   limparStateProduto = () => {
-
-    this.obterProximoCodigoProduto();
-
     window.location.reload();
-
   }
 
   changeInput = (event) => {
@@ -322,7 +321,7 @@ class CadastrarProduto extends Component {
             <p>Produto Cadastrado com sucesso!</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" onClick={this.limparStateProduto}  >Confirmar</Button>
+            <Button variant="primary" color="success">Confirmar</Button>
           </Modal.Footer>
         </Modal>
 
