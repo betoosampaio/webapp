@@ -34,6 +34,7 @@ class Operador extends Component {
       Header: 'Editar',
       accessor: 'id_operador',
       headerClassName: "text-left",
+      sortable: false,
       Cell: props =>
         <Link to={{ pathname: `/operador/editar/${props.value}` }}>
           <Button color="secondary" size="sm">
@@ -45,6 +46,7 @@ class Operador extends Component {
       Header: 'Excluir',
       accessor: 'id_operador',
       headerClassName: "text-left",
+      sortable: false,
       Cell: props =>
         <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
           <i className="icon-close"></i>

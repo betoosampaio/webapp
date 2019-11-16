@@ -21,6 +21,7 @@ class Produto extends Component {
       Header: 'Foto',
       accessor: 'imagem',
       headerClassName: "text-left",
+      sortable: false,
       Cell: props =>
         <Foto src={props.value} height="50" width="50"></Foto>
     },
@@ -61,6 +62,7 @@ class Produto extends Component {
       Header: 'Editar',
       accessor: 'id_produto',
       headerClassName: "text-left",
+      sortable: false,
       Cell: props =>
         <Link to={{ pathname: `/cardapio/produto/editar/${props.value}` }}>
           <Button color="secondary" size="sm">
@@ -72,6 +74,7 @@ class Produto extends Component {
       Header: 'Excluir',
       accessor: 'id_produto',
       headerClassName: "text-left",
+      sortable: false,
       Cell: props =>
         <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
           <i className="icon-close"></i>
