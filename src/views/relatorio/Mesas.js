@@ -29,9 +29,9 @@ class Mesas extends Component {
     },
     {
       Header: 'Valor Total',
-      accessor: 'valor_produtos',
+      accessor: 'valor_total',
+      Cell: props => <span>{props.value.toFixed(2)}</span>,
       headerClassName: "text-left",
-      Cell: props => <span>{this.vlrTotal(props.original)}</span>
     },
     {
       Header: 'Valor Pago',
@@ -70,6 +70,7 @@ class Mesas extends Component {
       dtfim: "2019-11-15 23:59:59"
     });
     if (dados) {
+      dados.forEach(r => r.valor_total = this.vlrTotal(r));
       this.setState({ dados: dados });
     }
   }
@@ -83,7 +84,7 @@ class Mesas extends Component {
 
   vlrTotal = (mesa) => {
     let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)) - mesa.desconto;
-    return vl.toFixed(2);
+    return vl;
   }
 
   dateFormat = (data) => {
