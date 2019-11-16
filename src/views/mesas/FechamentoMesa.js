@@ -1,26 +1,15 @@
 import React, { Component } from 'react';
-import { Button, ListGroup, ListGroupItem } from 'reactstrap';
+import { Button } from 'reactstrap';
 import Modal from 'react-bootstrap/Modal'
 import ResumoMesa from './ResumoMesa';
-
-import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
-
-
-
 class FechamentoMesa extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-
     };
-
   }
-
-
-
 
   moneyFormat = (preco) => {
     try {
@@ -38,12 +27,9 @@ class FechamentoMesa extends Component {
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
-
   }
 
   fecharMesa = async (id_mesa) => {
-
-
     let dados = await serverRequest.request('/mesa/fechar', { "id_mesa": id_mesa });
     if (dados) {
       this.props.atualizou();
@@ -51,13 +37,7 @@ class FechamentoMesa extends Component {
     }
   }
 
-
-
   render() {
-    const item = this.props.item || {}
-
-
-
     return (
       <Modal
         size="lg"
@@ -73,7 +53,6 @@ class FechamentoMesa extends Component {
         </Modal.Header>
         <Modal.Body>
           <ResumoMesa
-
             vlrProdutos={this.props.vlrProdutos}
             vlrTxServico={this.props.vlrTxServico}
             vlrDesconto={this.props.desconto}
@@ -82,7 +61,6 @@ class FechamentoMesa extends Component {
             taxa_servico={this.props.taxa_servico}
             id_mesa={this.props.id_mesa}
             atualizou={this.props.atualizou} />
-
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary"
@@ -97,7 +75,6 @@ class FechamentoMesa extends Component {
             className="icon-check"> Confirmar
             </Button>
         </Modal.Footer>
-
       </Modal >
     );
   }

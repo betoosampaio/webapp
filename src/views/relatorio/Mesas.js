@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Button } from 'reactstrap';
+import {
+  Card, CardHeader, CardBody, Button, FormGroup, Label, InputGroup, InputGroupAddon,
+  InputGroupText, Row, Col, Collapse
+} from 'reactstrap';
+import MaskedInput from '../../components/MaskedInput';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import moment from 'moment';
+import Modal from 'react-bootstrap/Modal'
 
 class Mesas extends Component {
 
@@ -57,6 +63,9 @@ class Mesas extends Component {
 
     this.state = {
       dados: [],
+      dtini: moment().format('DD/MM/YYYY'),
+      dtfim: moment().format('DD/MM/YYYY'),
+      showFiltros: false,
     };
   }
 
@@ -65,14 +74,21 @@ class Mesas extends Component {
   }
 
   obterDados = async () => {
-    let dados = await serverRequest.request('/mesa/consultar', {
-      dtini: "2019-11-15 00:00:00",
-      dtfim: "2019-11-15 23:59:59"
-    });
+    let params = {
+      dtini: moment(this.state.dtini, 'DD/MM/YYYY').format('YYYY-MM-DD 00:00:00.000'),
+      dtfim: moment(this.state.dtfim, 'DD/MM/YYYY').format('YYYY-MM-DD 23:59:59.999'),
+    }
+
+    let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
       dados.forEach(r => r.valor_total = this.vlrTotal(r));
       this.setState({ dados: dados });
     }
+  }
+
+  consultar = async (event) => {
+    event.preventDefault();
+    this.obterDados();
   }
 
   statusMesa = (mesa) => {
@@ -92,12 +108,80 @@ class Mesas extends Component {
     return dataRetornar;
   }
 
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
   render() {
     return (
       <div>
+        <form onSubmit={this.consultar}>
+          <Card>
+            <CardHeader>
+              <i className='fa fa-filter' />Filtros
+              <div className="card-header-actions">
+                <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
+                  <Button size="sm" color="secondary">
+                    <i className={this.state.showFiltros ? "fa fa-caret-up" : "fa fa-caret-down"} />
+                  </Button>
+                </div>
+              </div>
+            </CardHeader>
+            <Collapse isOpen={this.state.showFiltros}>
+              <CardBody>
+                <Row>
+                  <Col xs="12" sm="6">
+                    <FormGroup>
+                      <Label>Data Inicial:</Label>
+                      <InputGroup>
+                        <InputGroupAddon addonType="append">
+                          <InputGroupText><i className="icon-calendar"></i></InputGroupText>
+                        </InputGroupAddon>
+                        <MaskedInput
+                          maxLength="14"
+                          className="form-control"
+                          name="dtini"
+                          value={this.state.dtini}
+                          onChange={this.changeInput}
+                          placeholder='01/01/0001'
+                          mascara="99/99/9999"
+                          required
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="12" sm="6">
+                    <FormGroup>
+                      <Label>Data Final:</Label>
+                      <InputGroup>
+                        <InputGroupAddon addonType="append">
+                          <InputGroupText><i className="icon-calendar"></i></InputGroupText>
+                        </InputGroupAddon>
+                        <MaskedInput
+                          maxLength="14"
+                          className="form-control"
+                          name="dtfim"
+                          value={this.state.dtfim}
+                          onChange={this.changeInput}
+                          placeholder='01/01/0001'
+                          mascara="99/99/9999"
+                          required
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </CardBody>
+              <Modal.Footer>
+                <Button type="submit" className="ml-auto" color="success"><i className="fa fa-search mr-1"></i>Consultar</Button>
+              </Modal.Footer>
+            </Collapse>
+          </Card>
+        </form>
+
         <Card>
           <CardHeader>
-            <i className='icon-grid'></i>Mesas
+            <i className='icon-grid' />Mesas
             <div className="card-header-actions">
               <Button color="secondary" size="sm"
                 onClick={() => this.obterDados()}>
