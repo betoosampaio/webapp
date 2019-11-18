@@ -75,9 +75,11 @@ class Mesas extends Component {
 
   obterDados = async () => {
     let params = {
-      dtini: moment(this.state.dtini, 'DD/MM/YYYY').format('YYYY-MM-DD 00:00:00.000'),
-      dtfim: moment(this.state.dtfim, 'DD/MM/YYYY').format('YYYY-MM-DD 23:59:59.999'),
+      dtini: moment(this.state.dtini, 'DD/MM/YYYY').format('YYYY-MM-DDT00:00:00.000Z'),
+      dtfim: moment(this.state.dtfim, 'DD/MM/YYYY').format('YYYY-MM-DDT23:59:59.999Z'),
     }
+
+    console.log(params);
 
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
