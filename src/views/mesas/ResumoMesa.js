@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input, FormFeedback
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
@@ -16,10 +16,6 @@ class ResumoMesa extends Component {
       taxa_servicoVlr: '',
       txServicoVisivel: false,
       descontoVisivel: false,
-
-      validacao: {
-        taxa_servico: { invalid: false, msg: '' },
-      }
     };
   }
 
@@ -42,39 +38,13 @@ class ResumoMesa extends Component {
     this.setState({ desconto: event.target.value });
   }
 
-  changeInputServico = (event) => {
-    let invalid = false, msg = '';
+  changeInputServico = (event) => {    
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
     let valor = taxa_servico / 100 * (this.props.vlrProdutos);
-    if (taxa_servico >= 101) {
-      msg = 'O limite é 100%';
+    if (taxa_servico <= 100) {
+      this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor })
     } 
-    
-    
-    else {     
-      invalid = false;
-    }
-    
-  
   }
-
-  /*validacrTaxaServico = (event) => {
-    let invalid = false, msg = '';
-    let val = event.target.value;
-    if (!val) {
-    }
-    else if (val.length >= 101) {
-      msg = 'O limite é 100%';
-    }
-    else {
-      invalid = true;
-    }
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState.taxa_servico.invalid = invalid;
-    newState.taxa_servico.msg = msg;
-    this.setState({ validacao: newState })
-  }*/
 
   editarDesconto = async () => {
     let obj = {
@@ -142,11 +112,8 @@ class ResumoMesa extends Component {
                           name="taxa_servico"
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
-                          onBlur={this.changeInputServico}
-                          invalid={this.state.validacao.taxa_servico.invalid}
                           placeholder="% Taxa"
                           maxLength="6" />
-                        <FormFeedback>{this.state.validacao.taxa_servico.msg}</FormFeedback>
                       </InputGroup>
                     </Col>
                     <Col xs="5">
