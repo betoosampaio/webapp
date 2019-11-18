@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input, FormFeedback
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
@@ -16,6 +16,10 @@ class ResumoMesa extends Component {
       taxa_servicoVlr: '',
       txServicoVisivel: false,
       descontoVisivel: false,
+
+      validacao: {
+        taxa_servico: { invalid: false, msg: '' },
+      }
     };
   }
 
@@ -39,10 +43,47 @@ class ResumoMesa extends Component {
   }
 
   changeInputServico = (event) => {
+    let invalid = false, msg = '';
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
     let valor = taxa_servico / 100 * (this.props.vlrProdutos);
-    this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
+    if (taxa_servico >= 101) {
+      msg = 'O limite é 100%';
+    } 
+    
+    
+    else {     
+      invalid = false;
+    }
+    
+    
+    else if {
+      this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
+    }
+
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.taxa_servico.invalid = invalid;
+    newState.taxa_servico.msg = msg;
+    this.setState({ validacao: newState })
   }
+
+  /*validacrTaxaServico = (event) => {
+    let invalid = false, msg = '';
+    let val = event.target.value;
+    if (!val) {
+    }
+    else if (val.length >= 101) {
+      msg = 'O limite é 100%';
+    }
+    else {
+      invalid = true;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.taxa_servico.invalid = invalid;
+    newState.taxa_servico.msg = msg;
+    this.setState({ validacao: newState })
+  }*/
 
   editarDesconto = async () => {
     let obj = {
@@ -91,7 +132,7 @@ class ResumoMesa extends Component {
                 onClick={novoProduto}>
                 {this.moneyFormat(vlrProdutos)}
               </Button>
-            </ListGroupItem>           
+            </ListGroupItem>
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                   <Button
                 className="pull-right bg-white"
@@ -110,8 +151,11 @@ class ResumoMesa extends Component {
                           name="taxa_servico"
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
+                          onBlur={this.changeInputServico}
+                          invalid={this.state.validacao.taxa_servico.invalid}
                           placeholder="% Taxa"
                           maxLength="6" />
+                        <FormFeedback>{this.state.validacao.taxa_servico.msg}</FormFeedback>
                       </InputGroup>
                     </Col>
                     <Col xs="5">
