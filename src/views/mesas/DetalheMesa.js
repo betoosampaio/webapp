@@ -168,6 +168,12 @@ class DetalheMesa extends Component {
                       <i className="icon-basket-loaded" />Encerrar Conta
                 </DropdownItem>
                   }
+                  <DropdownItem
+                    className="pull-left mr-1"
+                    size="sm"
+                    title="Imprimir">
+                    <i className="fa fa-print" />Imprimir
+                </DropdownItem>
 
                   {this.state.fechada && !this.state.encerrada &&
                     <DropdownItem onClick={() => this.reabrirMesa(this.state._id)}
@@ -187,12 +193,7 @@ class DetalheMesa extends Component {
                 </DropdownItem>
                   }
 
-                  <DropdownItem 
-                    className="pull-left mr-1"
-                    size="sm"
-                    title="Imprimir">
-                    <i className="fa fa-print" />Imprimir
-                </DropdownItem>
+
 
                   <DropdownItem
                     onClick={() => this.removerMesa(this.state._id)}

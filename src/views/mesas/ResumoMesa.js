@@ -110,7 +110,8 @@ class ResumoMesa extends Component {
                           name="taxa_servico"
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
-                          placeholder="% Taxa" />
+                          placeholder="% Taxa"
+                          maxLength="6" />
                       </InputGroup>
                     </Col>
                     <Col xs="5">
