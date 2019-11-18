@@ -2,18 +2,16 @@ import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
   ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input
-} from 'reactstrap'; import { Link } from 'react-router-dom';
+} from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 
-
 class Configuracao extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      taxa_servico: '',
-      taxa_servicoVlr: '',
-      txServicoVisivel: false,
+   
     };
   }
 
@@ -32,6 +30,9 @@ class Configuracao extends Component {
       });
   }
 
+  changeInputDesconto = (event) => {
+    this.setState({ desconto: event.target.value });
+  }
 
   changeInputServico = (event) => {
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
@@ -39,10 +40,22 @@ class Configuracao extends Component {
     this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
   }
 
+  editarDesconto = async () => {
+    let obj = {
+      desconto: parseFloat(this.state.desconto.replace('.', '').replace(',', '.')),
+      id_mesa: this.props.id_mesa,
+    }
+    let dados = await serverRequest.request('/mesa/editarDesconto', obj);
+    if (dados) {
+      this.setState({ descontoVisivel: false });
+      this.props.atualizou();
+    }
+  }
+
   editarTxServico = async () => {
     let obj = {
-      taxa_servico: parseFloat(this.state.taxa_servico.replace('.', '').replace(',', '.')) / 100
-     
+      taxa_servico: parseFloat(this.state.taxa_servico.replace('.', '').replace(',', '.')) / 100,
+      id_mesa: this.props.id_mesa,
     }
     let dados = await serverRequest.request('/mesa/editarTaxaServico', obj);
     if (dados) {
@@ -60,25 +73,14 @@ class Configuracao extends Component {
   }
 
   render() {
-    const { vlrTxServico } = this.props;
+    const { vlrTxServico} = this.props;
     return (
-
       <Card>
-
-        <CardHeader>
-          <i className='icon-settings'></i>&nbsp;<b>Configuração do Restaurante</b>
-          <div className="card-header-actions">
-            <Link to="/perfil/editarDadosPessoais">
-
-            </Link>
-          </div>
-        </CardHeader>
+        <CardHeader><i className='icon-settings'></i> <b>Configurações do restaurante:</b>
+              </CardHeader>
         <CardBody>
           <ListGroup>
-
-            <ListGroupItem><b> Taxa de serviço padrão: </b> <MaskedMoneyInput placeholder="teste" /> </ListGroupItem>
-
-
+           
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                   <Button
                 className="pull-right bg-white"
@@ -98,28 +100,25 @@ class Configuracao extends Component {
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
                           placeholder="% Taxa"
-                          maxLength='6' />
+                          maxLength="6" />
                       </InputGroup>
                     </Col>
-                    <Col xs="5">
-                      <Input readonly value={this.moneyFormat(this.state.taxa_servicoVlr)} />
-                    </Col>
-                    <Col xs="2">
-                      <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
-                    </Col>
+                    <Button
+                    className="success"
+                    onClick={() => this.salvarTaxaPadrao(this.state.taxa_servicoVlr)}
+                    >
+                      
+                    </Button>
                   </Row>
                   : null
               }
             </ListGroupItem>
-
-
-
+          
           </ListGroup>
         </CardBody>
+       
       </Card>
-
-
-    );
+    )
   }
 }
 
