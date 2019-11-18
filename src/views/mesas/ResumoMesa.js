@@ -29,7 +29,7 @@ class ResumoMesa extends Component {
     if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
       this.setState({
         taxa_servicoCadastrada: this.props.taxa_servico,
-        taxa_servico: String(this.props.taxa_servico * 100).replace('.', ','),
+        taxa_servico: (this.props.taxa_servico * 100).toFixed(2).replace('.', ','),
         taxa_servicoVlr: this.props.vlrTxServico,
       });
   }
