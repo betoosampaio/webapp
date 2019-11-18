@@ -55,16 +55,7 @@ class ResumoMesa extends Component {
       invalid = false;
     }
     
-    
-    else if {
-      this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor });
-    }
-
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState.taxa_servico.invalid = invalid;
-    newState.taxa_servico.msg = msg;
-    this.setState({ validacao: newState })
+  
   }
 
   /*validacrTaxaServico = (event) => {
