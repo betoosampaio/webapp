@@ -262,7 +262,7 @@ class DetalheMesa extends Component {
                 <Row>
                   <Col sm="4">
                     <div className="callout callout-info">
-                      <small className="text-muted">Valor Total</small>
+                      <small className="text-muted">Valor Final</small>
                       <br />
                       <strong className="h4">{this.moneyFormat(this.vlrTotal())}</strong>
                     </div>

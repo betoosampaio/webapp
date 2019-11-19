@@ -82,7 +82,7 @@ class ListaItems extends Component {
         </CardBody>
         <CardFooter>
           <b>{qtdProdutos} items</b>
-          <b className="pull-right">{this.moneyFormat(vlrProdutos)}</b>
+          <b className="pull-right">Valor total: {this.moneyFormat(vlrProdutos)}</b>
 
 
         </CardFooter>
