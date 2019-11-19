@@ -4,6 +4,7 @@ import {
   InputGroupText, Row, Col, Collapse
 } from 'reactstrap';
 import MaskedInput from '../../components/MaskedInput';
+import DateRangeInput from '../../components/DateRangeInput';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import ReactTable from 'react-table';
