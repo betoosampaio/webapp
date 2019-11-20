@@ -30,7 +30,8 @@ class DetalheMesa extends Component {
   }
 
   notify = () => toast.error("Todos os valores devem ser pagos.");
- 
+  notify = () => toast.success("Sucesso :).");
+
 
 
 
@@ -130,9 +131,7 @@ class DetalheMesa extends Component {
     if (this.state.valor_pagamentos < this.vlrTotal()) {
       toast.error("Todos os valores devem ser pagos.");
     }
-// toastfy virá aqui 
     else {
-
 
       let confirm = await Confirm({
         title: "Confirmação",
