@@ -40,7 +40,7 @@ class IncluirPagamento extends Component {
   incluirPagamento = async (event) => {
     event.preventDefault();
 
-    
+
     if (this.state.selecionados.length > 0) {
 
       let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.', '').replace(',', '.')) }))
@@ -105,12 +105,13 @@ class IncluirPagamento extends Component {
         backdrop='static'
         show={this.props.show}
         onHide={this.props.onHide}>
-        <form onSubmit={this.incluirPagamento}>
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">Adicionar Pagamento</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
 
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">Adicionar Pagamento</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+          <form onSubmit={this.SelecionarFormaDePagamento} >
             <FormGroup>
               <Label>Valor:</Label>
               <InputGroup>
@@ -143,42 +144,44 @@ class IncluirPagamento extends Component {
                   required
                 >
                 </SelectFormasPagamento>
-                <Button className="ml-2" color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
+                <Button className="ml-2" color="success" type="submit">Incluir</Button>
               </InputGroup>
             </FormGroup>
+          </form>
+          <Table striped bordered hover responsive>
+            <thead className="thead-light">
+              <tr>
 
-            <Table striped bordered hover responsive>
-              <thead className="thead-light">
-                <tr>
+                <th>Valor</th>
+                <th>Forma de Pagamento</th>
+                <th>Remover</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.selecionados.map(obj => {
+                return (
+                  <tr key={obj.id}>
 
-                  <th>Valor</th>
-                  <th>Forma de Pagamento</th>
-                  <th>Remover</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.selecionados.map(obj => {
-                  return (
-                    <tr key={obj.id}>
+                    <td>{obj.valor}</td>
+                    <td>{obj.ds_forma_pagamento}</td>
 
-                      <td>{obj.valor}</td>
-                      <td>{obj.ds_forma_pagamento}</td>
-
-                      <td>
-                        <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
-                          <i className="icon-close"></i>
-                        </Button>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </Table>
-          </Modal.Body>
-          <Modal.Footer>
+                    <td>
+                      <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
+                        <i className="icon-close"></i>
+                      </Button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </Table>
+        </Modal.Body>
+        <Modal.Footer>
+          <form onSubmit={this.incluirPagamento}>
             <Button type="submit" color="success">Confirmar</Button>
-          </Modal.Footer>
-        </form >
+          </form >
+        </Modal.Footer>
+
       </Modal >
     );
   }

@@ -29,9 +29,8 @@ class DetalheMesa extends Component {
     };
   }
 
-  notify = () => toast("Erro ao executar! Tente novamente");
-  notifyA = () => toast('Não é possível encerrar esta mesa!', { containerId: 'A' });
-  notifyB = () => toast('Operação realizada com sucesso!', { containerId: 'B' });
+  notify = () => toast.error("Todos os valores devem ser pagos.");
+ 
 
 
 
@@ -128,8 +127,8 @@ class DetalheMesa extends Component {
 
   encerrarMesa = async (id_mesa) => {
 
-    if (this.state.valor_pagamentos >= this.vlrTotal()) {
-      alert('teste')
+    if (this.state.valor_pagamentos < this.vlrTotal()) {
+      toast.error("Todos os valores devem ser pagos.");
     }
 // toastfy virá aqui 
     else {
