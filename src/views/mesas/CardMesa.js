@@ -52,24 +52,7 @@ class CardMesa extends Component {
     }
   }
 
-  moneyFormat = (valor) => {
-    try {
-      return `R$ ${valor.toFixed(2)}`;
-    } catch{
-      return "R$ 0,00"
-    }
 
-  }
-
-  vlrTotal = () => {
-    return (this.props.valor_produtos * (1 + this.props.taxa_servico)) - this.props.desconto;
-  }
-
-  vlrRestante = () => {
-    let vlrRestante = this.vlrTotal() - this.state.valor_pagamentos;
-    if (vlrRestante < 0) vlrRestante = 0;
-    return vlrRestante;
-  }
 
   statusMesa = () => {
     let status = "Aberta";
@@ -97,30 +80,18 @@ class CardMesa extends Component {
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
           </CardHeader>
           <CardBody>
-            <div className="text-muted font-weight-bold font-md mb-1">
-              {this.valorProdutos(this.props.mesa.produtos)}
-            </div>
-            <div className="font-xs">
-              <i className="fa fa-clock-o"></i>
-              {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
-            </div>
             <div className={"callout callout-" + classeStatus()}>
               {this.statusMesa()}
+
+              <div className="text-muted font-weight-bold font-md mb-1">
+                {this.valorProdutos(this.props.mesa.produtos)}
+              </div>
+
+              <div className="font-xs">
+                <i className="fa fa-clock-o"></i>
+                {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
+              </div>
             </div>
-
-            <small className="text-muted">Valor Final</small>
-            <br />
-            <div className="h6">{this.moneyFormat(this.vlrTotal())}</div>
-
-            <small className="text-muted">Valor Pago</small>
-            <br />
-            <div className="h6">
-              {this.moneyFormat(this.state.valor_pagamentos)}</div>
-
-            <small className="text-muted">Valor Restante</small>
-            <br />
-            <div className="h6">{this.moneyFormat(this.vlrRestante())}</div>
-
           </CardBody>
         </Card>
       </Link>
