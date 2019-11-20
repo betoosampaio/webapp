@@ -25,7 +25,7 @@ class Mesas extends Component {
       accessor: "aberta",
       headerClassName: "text-left",
       sortable: false,
-      Cell: props => <span>{this.statusMesa(props.original)}</span>
+      Cell: props => <span>{props.original.status}</span>
     },
     {
       Header: 'Produtos',
@@ -66,6 +66,7 @@ class Mesas extends Component {
       dtini: new Date(),
       dtfim: new Date(),
       showFiltros: false,
+      filtroStatus: "",
     };
   }
 
@@ -80,7 +81,10 @@ class Mesas extends Component {
     }
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
-      dados.forEach(r => r.valor_total = this.vlrTotal(r));
+      dados.forEach(r => {
+        r.valor_total = this.vlrTotal(r);
+        r.status = this.statusMesa(r);
+      });
       this.setState({ dados: dados, showFiltros: false });
     }
   }
@@ -108,6 +112,13 @@ class Mesas extends Component {
   }
 
   render() {
+
+    let dados = this.state.dados
+    if (this.state.filtrarStatus) {
+      dados = dados.filter(row => String(row.status) === String(this.state.filtrarStatus))
+    }
+
+
     return (
       <div>
         <Card>
@@ -169,8 +180,20 @@ class Mesas extends Component {
             </div>
           </CardHeader>
           <CardBody>
+            <FormGroup className="mr-3">
+              <Label className="mr-2">Filtrar Status:</Label>
+              <select
+                value={this.state.filtrarMenu}
+                onChange={e => this.setState({ filtrarStatus: e.target.value })}>
+                <option value="">Tudo</option>
+                <option value="Aberta">Aberta</option>
+                <option value="Fechada">Fechada</option>
+                <option value="Encerrada">Encerrada</option>
+                <option value="Cancelada">Cancelada</option>
+              </select>
+            </FormGroup>
             <ReactTable
-              data={this.state.dados}
+              data={dados}
               columns={this.columns}
               minRows={0}
               previousText="Anterior"
