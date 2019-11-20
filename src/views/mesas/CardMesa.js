@@ -52,6 +52,25 @@ class CardMesa extends Component {
     }
   }
 
+  moneyFormat = (valor) => {
+    try {
+      return `R$ ${valor.toFixed(2)}`;
+    } catch{
+      return "R$ 0,00"
+    }
+
+  }
+
+  vlrTotal = () => {
+    return (this.props.valor_produtos * (1 + this.props.taxa_servico)) - this.props.desconto;
+  }
+
+  vlrRestante = () => {
+    let vlrRestante = this.vlrTotal() - this.state.valor_pagamentos;
+    if (vlrRestante < 0) vlrRestante = 0;
+    return vlrRestante;
+  }
+
   statusMesa = () => {
     let status = "Aberta";
     if (this.props.mesa.fechada) status = "Fechada";
@@ -88,6 +107,20 @@ class CardMesa extends Component {
             <div className={"callout callout-" + classeStatus()}>
               {this.statusMesa()}
             </div>
+
+            <small className="text-muted">Valor Final</small>
+            <br />
+            <div className="h6">{this.moneyFormat(this.vlrTotal())}</div>
+
+            <small className="text-muted">Valor Pago</small>
+            <br />
+            <div className="h6">
+              {this.moneyFormat(this.state.valor_pagamentos)}</div>
+
+            <small className="text-muted">Valor Restante</small>
+            <br />
+            <div className="h6">{this.moneyFormat(this.vlrRestante())}</div>
+
           </CardBody>
         </Card>
       </Link>
