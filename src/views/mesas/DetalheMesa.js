@@ -152,6 +152,10 @@ class DetalheMesa extends Component {
         return "danger";
     }
 
+
+   /* let notShow = () => {this.state.fechada &&
+      this.state({ modalAdicionarItem: false })}*/
+
     return (
       <div>
         <Row className="mb-3">
@@ -203,8 +207,6 @@ class DetalheMesa extends Component {
                 </DropdownItem>
                   }
 
-
-
                   <DropdownItem
                     onClick={() => this.removerMesa(this.state._id)}
                     className="pull-left mr-1"
@@ -226,7 +228,7 @@ class DetalheMesa extends Component {
                     <div className={"callout callout-" + classeStatus()}>
                       <small className="text-muted pull-left">Status</small>
                       <br />
-                      <strong className="h4">                        
+                      <strong className="h4">
                         {this.statusMesa()}
                       </strong>
                     </div>
@@ -326,11 +328,12 @@ class DetalheMesa extends Component {
               atualizou={() => this.obter(this.props.match.params.id)} />
           </Col>
         </Row>
-        <IncluirItem
-          show={this.state.modalAdicionarItem}
-          onHide={() => { this.setState({ modalAdicionarItem: false }) }}
-          id_mesa={this.state._id}
-          itemincluso={this.itemIncluso} />
+        <IncluirItem        
+           
+        show={this.state.modalAdicionarItem}
+        onHide={() => { this.setState({ modalAdicionarItem: false }) }}
+        id_mesa={this.state._id}
+        itemincluso={this.itemIncluso} />
 
         <IncluirPagamento
           show={this.state.modalAdicionarPagamento}
@@ -369,7 +372,7 @@ class DetalheMesa extends Component {
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
-              <ListGroupItem><b>Status:</b> {this.state.aberta ? "Aberta" : "Fechada"}</ListGroupItem>
+              <ListGroupItem><b>Status:</b>{this.statusMesa()}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.nome_operador} </ListGroupItem>
               <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abriu)} </ListGroupItem>
             </ListGroup>
