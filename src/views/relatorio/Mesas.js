@@ -45,6 +45,11 @@ class Mesas extends Component {
       headerClassName: "text-left",
     },
     {
+      Header: 'Nº Mesa',
+      accessor: 'numero',
+      headerClassName: "text-left",
+    },
+    {
       Header: 'Acessar',
       accessor: '_id',
       headerClassName: "text-left",
