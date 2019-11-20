@@ -20,6 +20,8 @@ class IncluirPagamento extends Component {
 
       validacao: {
         valor: { valid: false, invalid: false, msg: '' },
+        id_forma_pagamento: { valid: false, invalid: false, msg: '' },
+        ds_forma_pagamento: { valid: false, invalid: false, msg: '' },
       }
     };
   }

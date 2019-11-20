@@ -128,7 +128,7 @@ class DetalheMesa extends Component {
 
   encerrarMesa = async (id_mesa) => {
 
-    if (this.state.valor_pagamentos === this.vlrTotal()) {
+    if (this.state.valor_pagamentos >= this.vlrTotal()) {
       alert('teste')
     }
 // toastfy virá aqui 
