@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import { Card, CardHeader, CardBody, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import Confirm from 'reactstrap-confirm';
@@ -76,11 +76,6 @@ class CardMesa extends Component {
           <CardHeader>
             <i className="icon-calculator"></i>
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
-
-            
-            <div className={"callout callout-" + classeStatus()}>   
-              {this.statusMesa()}
-            </div>
           </CardHeader>
           <CardBody>
             <div className="text-muted font-weight-bold font-md mb-1">
@@ -89,6 +84,9 @@ class CardMesa extends Component {
             <div className="font-xs">
               <i className="fa fa-clock-o"></i>
               {this.dateDiff(new Date(this.props.mesa.data_abriu), new Date())}
+            </div>
+            <div className={"callout callout-" + classeStatus()}>
+              {this.statusMesa()}
             </div>
           </CardBody>
         </Card>
