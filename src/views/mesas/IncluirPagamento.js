@@ -114,12 +114,10 @@ class IncluirPagamento extends Component {
                   name="valor"
                   value={this.state.valor}
                   onChange={this.changeInput}
+                  autocomplete="off"
                 />
-
-
               </InputGroup>
             </FormGroup>
-
 
             <FormGroup>
               <Label>Forma de Pagamento:</Label>
@@ -128,18 +126,13 @@ class IncluirPagamento extends Component {
                   <InputGroupText><i className='fa fa-money'></i></InputGroupText>
                 </InputGroupAddon>
 
-
                 <SelectFormasPagamento
                   name="id_forma_pagamento"
                   value={this.state.id_forma_pagamento}
                   onChange={this.changeInput}
                 >
-                </SelectFormasPagamento >
-
+                </SelectFormasPagamento>
                 <Button className="ml-2" color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
-
-
-
               </InputGroup>
             </FormGroup>
 
@@ -159,8 +152,6 @@ class IncluirPagamento extends Component {
 
                       <td>{obj.valor}</td>
                       <td>{obj.ds_forma_pagamento}</td>
-
-
 
                       <td>
                         <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >

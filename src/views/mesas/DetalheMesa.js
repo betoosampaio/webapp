@@ -213,10 +213,24 @@ class DetalheMesa extends Component {
               <CardBody>
                 <Row>
                   <Col xs="8">
-                    <div className="callout">
-                      <small className="text-muted">Status</small>
+                    <div>
+                      <small className="text-muted pull-left">Status</small>
                       <br />
-                      <strong className="h4">{this.statusMesa()}</strong>
+                      <strong className="h4">
+                        {this.state.aberta &&
+                          <i className="callout callout-success" />
+                        }
+
+                        {this.state.fechada &&
+                          <i className="callout callout-warning" />
+                        } 
+
+                        {this.state.encerrada &&
+                          <i className="callout callout-danger" />
+                        }
+
+                        {this.statusMesa()}
+                      </strong>
                     </div>
                   </Col>
                   <Col xs="4">
@@ -224,7 +238,8 @@ class DetalheMesa extends Component {
                       <Button
                         onClick={() => this.setState({ modalFechamentoMesa: true })}
                         className="pull-right"
-                        style={{ height: "100%" }}>
+                        style={{ height: "100%" }}
+                      >
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
                     }
@@ -247,7 +262,7 @@ class DetalheMesa extends Component {
                 <Row>
                   <Col sm="4">
                     <div className="callout callout-info">
-                      <small className="text-muted">Valor Total</small>
+                      <small className="text-muted">Valor Final</small>
                       <br />
                       <strong className="h4">{this.moneyFormat(this.vlrTotal())}</strong>
                     </div>
