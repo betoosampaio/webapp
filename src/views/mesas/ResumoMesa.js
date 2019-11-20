@@ -24,6 +24,7 @@ class ResumoMesa extends Component {
       this.setState({
         descontoCadastrado: this.props.desconto,
         desconto: this.props.desconto.toFixed(2).replace('.', ','),
+        descontoPrt: (this.props.desconto / (this.props.vlrProdutos+this.props.vlrTxServico) * 100).toFixed(2).replace('.',','),
       });
 
     if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
@@ -35,7 +36,16 @@ class ResumoMesa extends Component {
   }
 
   changeInputDesconto = (event) => {
-    this.setState({ desconto: event.target.value });
+    if(event.target.name == "desconto"){
+      let vlr = event.target.value.replace('.', '').replace(',', '.');
+      let prt = (vlr / (this.props.vlrProdutos+this.props.vlrTxServico) * 100).toFixed(2).replace('.',',');
+      this.setState({ desconto: event.target.value, descontoPrt: prt });
+    }
+    else{
+      let prt = event.target.value.replace('.', '').replace(',', '.');
+      let vlr = (prt / 100 * (this.props.vlrProdutos+this.props.vlrTxServico)).toFixed(2).replace('.',',');
+      this.setState({ desconto: vlr, descontoPrt: event.target.value });
+    }   
   }
 
   changeInputServico = (event) => {
@@ -136,7 +146,7 @@ class ResumoMesa extends Component {
               </Button>
               {this.state.descontoVisivel
                 ? <Row className="mt-4">
-                  <Col xs="10">
+                  <Col xs="5">
                     <InputGroup>
                       <InputGroupAddon addonType="append">
                         <InputGroupText>R$</InputGroupText>
@@ -144,6 +154,18 @@ class ResumoMesa extends Component {
                       <MaskedMoneyInput
                         name="desconto"
                         value={this.state.desconto}
+                        onChange={this.changeInputDesconto}
+                        placeholder="Desconto" />
+                    </InputGroup>
+                  </Col>
+                  <Col xs="5">
+                    <InputGroup>
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>%</InputGroupText>
+                      </InputGroupAddon>
+                      <MaskedMoneyInput
+                        name="descontoPrt"
+                        value={this.state.descontoPrt}
                         onChange={this.changeInputDesconto}
                         placeholder="Desconto" />
                     </InputGroup>
