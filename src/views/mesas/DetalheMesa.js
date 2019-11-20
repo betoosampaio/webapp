@@ -30,7 +30,7 @@ class DetalheMesa extends Component {
   }
 
   notify = () => toast.error("Todos os valores devem ser pagos.");
-  notify = () => toast.success("Sucesso :).");
+  notify2 = () => toast.success("Sucesso.");
 
 
 
@@ -104,11 +104,14 @@ class DetalheMesa extends Component {
       let dados = await serverRequest.request('/mesa/remover', { "id_mesa": id_mesa });
       if (dados) {
         this.props.history.push("/mesas");
+
       }
     }
   }
 
   reabrirMesa = async (id_mesa) => {
+    
+    
     let confirm = await Confirm({
       title: "Confirmação",
       message: "Tem certeza que deseja reabrir essa conta?",
@@ -122,6 +125,7 @@ class DetalheMesa extends Component {
       let dados = await serverRequest.request('/mesa/reabrir', { "id_mesa": id_mesa });
       if (dados) {
         this.obter(this.props.match.params.id);
+        toast.success("Mesa reaberta com sucesso!");
       }
     }
   }
@@ -175,13 +179,7 @@ class DetalheMesa extends Component {
 
     return (
       <div>
-
-        <button onClick={this.notifyB}>Notify !</button>
         <ToastContainer />
-
-
-
-
         <Row className="mb-3">
           <h2 className="ml-3">
             Mesa {this.state.numero}
