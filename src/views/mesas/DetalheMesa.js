@@ -327,7 +327,8 @@ class DetalheMesa extends Component {
               vlrProdutos={this.state.valor_produtos}
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
               id_mesa={this.state._id}
-              atualizou={() => this.obter(this.props.match.params.id)} />
+              atualizou={() => this.obter(this.props.match.params.id)}
+              aberta={this.state.aberta} />
           </Col>
           <Col md={5}>
 
@@ -347,7 +348,8 @@ class DetalheMesa extends Component {
               pagamentos={this.state.pagamentos}
               vlrPagamentos={this.state.valor_pagamentos}
               id_mesa={this.state._id}
-              atualizou={() => this.obter(this.props.match.params.id)} />
+              atualizou={() => this.obter(this.props.match.params.id)}
+              encerrada={this.state.encerrada} />
           </Col>
         </Row>
         <IncluirItem

@@ -19,15 +19,18 @@ class ListaPagamentos extends Component {
   }
 
   render() {
-    const { pagamentos, vlrPagamentos, adicionarPagamento, id_mesa } = this.props;
+    const { pagamentos, vlrPagamentos, adicionarPagamento, id_mesa, encerrada } = this.props;
     return (
       <Card>
 
         <CardHeader><i className='fa fa-money'></i>
           Pagamentos
-          <Button onClick={adicionarPagamento} className="pull-right" color="success" size="sm">
-            <i className="icon-plus mr-1"></i>Incluir
+          {!encerrada &&
+            <Button onClick={adicionarPagamento} className="pull-right" color="success" size="sm">
+              <i className="icon-plus mr-1"></i>Incluir
                 </Button>
+          }
+
         </CardHeader>
         <CardBody>
           <Table striped bordered hover responsive>
@@ -35,20 +38,20 @@ class ListaPagamentos extends Component {
               <tr>
                 <th>Forma</th>
                 <th>Valor</th>
-               
+
               </tr>
             </thead>
             <tbody>
               {
                 pagamentos.map((obj) => {
                   return (
-                    <tr 
-                    onClick={() => this.setState({ modalDetalhePagamentoItem: true, DetalhePagamentoItem: obj })} 
-                    key={obj.data_incluiu} 
-                    style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr
+                      onClick={() => this.setState({ modalDetalhePagamentoItem: true, DetalhePagamentoItem: obj })}
+                      key={obj.data_incluiu}
+                      style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td>{obj.ds_forma_pagamento}</td>
                       <td>{this.moneyFormat(obj.valor)}</td>
-                      
+
                     </tr>
                   );
                 })
