@@ -142,6 +142,16 @@ class DetalheMesa extends Component {
   }
 
   render() {
+
+    let classeStatus = () => {
+      if (this.state.aberta)
+        return "success";
+      else if (this.state.fechada && !this.state.encerrada)
+        return "warning";
+      else if (this.state.encerrada)
+        return "danger";
+    }
+
     return (
       <div>
         <Row className="mb-3">
@@ -213,22 +223,10 @@ class DetalheMesa extends Component {
               <CardBody>
                 <Row>
                   <Col xs="8">
-                    <div>
+                    <div className={"callout callout-" + classeStatus()}>
                       <small className="text-muted pull-left">Status</small>
                       <br />
-                      <strong className="h4">
-                        {this.state.aberta &&
-                          <i className="callout callout-success" />
-                        }
-
-                        {this.state.fechada &&
-                          <i className="callout callout-warning" />
-                        } 
-
-                        {this.state.encerrada &&
-                          <i className="callout callout-danger" />
-                        }
-
+                      <strong className="h4">                        
                         {this.statusMesa()}
                       </strong>
                     </div>
