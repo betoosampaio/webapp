@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, Button, FormGroup, Label, InputGroup, InputGroupAddon,
-  InputGroupText, Row, Col, Collapse
+  InputGroupText, Collapse, Form
 } from 'reactstrap';
-import MaskedInput from '../../components/MaskedInput';
-import DateRangeInput from '../../components/DateRangeInput';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import moment from 'moment';
-import Modal from 'react-bootstrap/Modal'
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 class Mesas extends Component {
 
@@ -64,8 +63,8 @@ class Mesas extends Component {
 
     this.state = {
       dados: [],
-      dtini: moment().format('DD/MM/YYYY'),
-      dtfim: moment().format('DD/MM/YYYY'),
+      dtini: new Date(),
+      dtfim: new Date(),
       showFiltros: false,
     };
   }
@@ -76,16 +75,13 @@ class Mesas extends Component {
 
   obterDados = async () => {
     let params = {
-      dtini: moment(this.state.dtini, 'DD/MM/YYYY').format('YYYY-MM-DDT00:00:00.000Z'),
-      dtfim: moment(this.state.dtfim, 'DD/MM/YYYY').format('YYYY-MM-DDT23:59:59.999Z'),
+      dtini: moment(this.state.dtini).format('YYYY-MM-DDT00:00:00.000Z'),
+      dtfim: moment(this.state.dtfim).format('YYYY-MM-DDT23:59:59.999Z'),
     }
-
-    console.log(params);
-
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
       dados.forEach(r => r.valor_total = this.vlrTotal(r));
-      this.setState({ dados: dados });
+      this.setState({ dados: dados, showFiltros: false });
     }
   }
 
@@ -111,76 +107,56 @@ class Mesas extends Component {
     return dataRetornar;
   }
 
-  changeInput = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
   render() {
     return (
       <div>
-        <form onSubmit={this.consultar}>
-          <Card>
-            <CardHeader>
-              <i className='fa fa-filter' />Filtros
+        <Card>
+          <CardHeader>
+            <i className='fa fa-filter' />Filtros
               <div className="card-header-actions">
-                <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
-                  <Button size="sm" color="secondary">
-                    <i className={this.state.showFiltros ? "fa fa-caret-up" : "fa fa-caret-down"} />
-                  </Button>
-                </div>
+              <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
+                <Button size="sm" color="secondary">
+                  <i className={this.state.showFiltros ? "fa fa-caret-up" : "fa fa-caret-down"} />
+                </Button>
               </div>
-            </CardHeader>
-            <Collapse isOpen={this.state.showFiltros}>
-              <CardBody>
-                <Row>
-                  <Col xs="12" sm="6">
-                    <FormGroup>
-                      <Label>Data Inicial:</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText><i className="icon-calendar"></i></InputGroupText>
-                        </InputGroupAddon>
-                        <MaskedInput
-                          maxLength="14"
-                          className="form-control"
-                          name="dtini"
-                          value={this.state.dtini}
-                          onChange={this.changeInput}
-                          placeholder='01/01/0001'
-                          mascara="99/99/9999"
-                          required
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                  </Col>
-                  <Col xs="12" sm="6">
-                    <FormGroup>
-                      <Label>Data Final:</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="append">
-                          <InputGroupText><i className="icon-calendar"></i></InputGroupText>
-                        </InputGroupAddon>
-                        <MaskedInput
-                          maxLength="14"
-                          className="form-control"
-                          name="dtfim"
-                          value={this.state.dtfim}
-                          onChange={this.changeInput}
-                          placeholder='01/01/0001'
-                          mascara="99/99/9999"
-                          required
-                        />
-                      </InputGroup>
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </CardBody>
-              <Modal.Footer>
+            </div>
+          </CardHeader>
+          <Collapse isOpen={this.state.showFiltros}>
+            <CardBody>
+              <Form inline onSubmit={this.consultar}>
+                <FormGroup className="mr-3">
+                  <Label className="mr-2">Data Inicial:</Label>
+                  <InputGroup>
+                    <InputGroupAddon addonType="append">
+                      <InputGroupText><i className="icon-calendar"></i></InputGroupText>
+                    </InputGroupAddon>
+                    <DatePicker
+                      className="form-control w-100"
+                      selected={this.state.dtini}
+                      onChange={date => this.setState({ dtini: date })}
+                      dateFormat="dd/MM/yyyy" />
+                  </InputGroup>
+                </FormGroup>
+
+                <FormGroup className="mr-3">
+                  <Label className="mr-2">Data Final:</Label>
+                  <InputGroup>
+                    <InputGroupAddon addonType="append">
+                      <InputGroupText><i className="icon-calendar"></i></InputGroupText>
+                    </InputGroupAddon>
+                    <DatePicker
+                      className="form-control"
+                      selected={this.state.dtfim}
+                      onChange={date => this.setState({ dtfim: date })}
+                      dateFormat="dd/MM/yyyy" />
+                  </InputGroup>
+                </FormGroup>
                 <Button type="submit" className="ml-auto" color="success"><i className="fa fa-search mr-1"></i>Consultar</Button>
-              </Modal.Footer>
-            </Collapse>
-          </Card>
-        </form>
+              </Form>
+            </CardBody>
+          </Collapse>
+        </Card>
+
 
         <Card>
           <CardHeader>
