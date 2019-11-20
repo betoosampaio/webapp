@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, CardFooter, Button, Row, Col, ListGroup,
-  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Input
+  ListGroupItem, InputGroup, InputGroupAddon, InputGroupText, Label
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
@@ -38,12 +38,12 @@ class ResumoMesa extends Component {
     this.setState({ desconto: event.target.value });
   }
 
-  changeInputServico = (event) => {    
+  changeInputServico = (event) => {
     let taxa_servico = event.target.value.replace('.', '').replace(',', '.');
     let valor = taxa_servico / 100 * (this.props.vlrProdutos);
     if (taxa_servico <= 100) {
       this.setState({ taxa_servico: event.target.value, taxa_servicoVlr: valor })
-    } 
+    }
   }
 
   editarDesconto = async () => {
@@ -117,7 +117,9 @@ class ResumoMesa extends Component {
                       </InputGroup>
                     </Col>
                     <Col xs="5">
-                      <Input readonly value={this.moneyFormat(this.state.taxa_servicoVlr)} />
+                      <Label className="my-1 font-weight-bold">
+                        {this.moneyFormat(this.state.taxa_servicoVlr)}
+                      </Label>
                     </Col>
                     <Col xs="2">
                       <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
