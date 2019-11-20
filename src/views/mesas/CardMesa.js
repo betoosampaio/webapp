@@ -60,13 +60,25 @@ class CardMesa extends Component {
   }
 
   render() {
+
+    let classeStatus = () => {
+      if (this.props.mesa.aberta)
+        return "success";
+      else if (this.props.mesa.fechada && !this.props.mesa.encerrada)
+        return "warning";
+      else if (this.props.mesa.encerrada)
+        return "danger";
+    }
+
     return (
       <Link to={`/mesas/detalhemesa/${this.props.mesa._id}`} style={{ textDecoration: 'none', color: 'black' }}>
         <Card>
           <CardHeader>
             <i className="icon-calculator"></i>
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
-            <div className="pull-right">            
+
+            
+            <div className={"callout callout-" + classeStatus()}>   
               {this.statusMesa()}
             </div>
           </CardHeader>
