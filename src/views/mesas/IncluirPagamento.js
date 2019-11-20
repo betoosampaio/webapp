@@ -17,6 +17,10 @@ class IncluirPagamento extends Component {
       nome_operador: '',
       lista: [],
       selecionados: [],
+
+      validacao: {
+        valor: { valid: false, invalid: false, msg: '' },
+      }
     };
   }
 
@@ -33,6 +37,8 @@ class IncluirPagamento extends Component {
 
   incluirPagamento = async (event) => {
     event.preventDefault();
+
+    
     if (this.state.selecionados.length > 0) {
 
       let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.', '').replace(',', '.')) }))
@@ -63,6 +69,7 @@ class IncluirPagamento extends Component {
 
   SelecionarFormaDePagamento = (event) => {
     let formaPagamento = this.state.lista.find(fm => String(fm.id_forma_pagamento) === this.state.id_forma_pagamento);
+
 
 
     let selecionado = {
@@ -115,6 +122,7 @@ class IncluirPagamento extends Component {
                   value={this.state.valor}
                   onChange={this.changeInput}
                   autocomplete="off"
+                  required
                 />
               </InputGroup>
             </FormGroup>
@@ -130,6 +138,7 @@ class IncluirPagamento extends Component {
                   name="id_forma_pagamento"
                   value={this.state.id_forma_pagamento}
                   onChange={this.changeInput}
+                  required
                 >
                 </SelectFormasPagamento>
                 <Button className="ml-2" color="success" onClick={this.SelecionarFormaDePagamento}>Incluir</Button>
