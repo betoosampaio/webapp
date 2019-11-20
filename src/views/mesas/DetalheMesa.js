@@ -9,6 +9,8 @@ import ListaItems from './ListaItems';
 import FechamentoMesa from './FechamentoMesa';
 import Modal from 'react-bootstrap/Modal'
 import ListaPagamentos from './ListaPagamentos';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class DetalheMesa extends Component {
 
@@ -23,8 +25,15 @@ class DetalheMesa extends Component {
       id_mesa: "",
       id_operador: "",
       mostrar: '1',
+
     };
   }
+
+  notify = () => toast("Erro ao executar! Tente novamente");
+  notifyA = () => toast('Não é possível encerrar esta mesa!', { containerId: 'A' });
+  notifyB = () => toast('Operação realizada com sucesso!', { containerId: 'B' });
+
+
 
   toggle() {
     this.setState({
@@ -118,19 +127,29 @@ class DetalheMesa extends Component {
   }
 
   encerrarMesa = async (id_mesa) => {
-    let confirm = await Confirm({
-      title: "Confirmação",
-      message: "Tem certeza que deseja encerrar essa conta?",
-      confirmColor: "success",
-      confirmText: "Confirmar",
-      cancelColor: "danger",
-      cancelText: "Cancelar",
-    });
 
-    if (confirm) {
-      let dados = await serverRequest.request('/mesa/encerrar', { "id_mesa": id_mesa });
-      if (dados) {
-        this.obter(this.props.match.params.id);
+    if (this.state.valor_pagamentos === this.vlrTotal()) {
+      alert('teste')
+    }
+// toastfy virá aqui 
+    else {
+
+
+      let confirm = await Confirm({
+        title: "Confirmação",
+        message: "Tem certeza que deseja encerrar essa conta?",
+        confirmColor: "success",
+        confirmText: "Confirmar",
+        cancelColor: "danger",
+        cancelText: "Cancelar",
+      });
+
+      if (confirm) {
+        let dados = await serverRequest.request('/mesa/encerrar', { "id_mesa": id_mesa });
+        if (dados) {
+          this.obter(this.props.match.params.id);
+
+        }
       }
     }
   }
@@ -153,11 +172,18 @@ class DetalheMesa extends Component {
     }
 
 
-   /* let notShow = () => {this.state.fechada &&
-      this.state({ modalAdicionarItem: false })}*/
+    /* let notShow = () => {this.state.fechada &&
+       this.state({ modalAdicionarItem: false })}*/
 
     return (
       <div>
+
+        <button onClick={this.notifyB}>Notify !</button>
+        <ToastContainer />
+
+
+
+
         <Row className="mb-3">
           <h2 className="ml-3">
             Mesa {this.state.numero}
@@ -328,12 +354,12 @@ class DetalheMesa extends Component {
               atualizou={() => this.obter(this.props.match.params.id)} />
           </Col>
         </Row>
-        <IncluirItem        
-           
-        show={this.state.modalAdicionarItem}
-        onHide={() => { this.setState({ modalAdicionarItem: false }) }}
-        id_mesa={this.state._id}
-        itemincluso={this.itemIncluso} />
+        <IncluirItem
+
+          show={this.state.modalAdicionarItem}
+          onHide={() => { this.setState({ modalAdicionarItem: false }) }}
+          id_mesa={this.state._id}
+          itemincluso={this.itemIncluso} />
 
         <IncluirPagamento
           show={this.state.modalAdicionarPagamento}
