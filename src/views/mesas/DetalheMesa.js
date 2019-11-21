@@ -341,7 +341,8 @@ class DetalheMesa extends Component {
               desconto={this.state.desconto}
               taxa_servico={this.state.taxa_servico}
               id_mesa={this.state._id}
-              atualizou={() => this.obter(this.props.match.params.id)} />
+              atualizou={() => this.obter(this.props.match.params.id)}
+              aberta={this.state.aberta} />
 
             <ListaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
