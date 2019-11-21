@@ -34,11 +34,11 @@ class IncluirItem extends Component {
     if (!id_produto) return;
 
     let exists = this.state.selecionados.find(i => String(i.id_produto) === String(id_produto));
-    if (exists){
+    if (exists) {
       this.incrementar(exists.id);
       return;
     }
-      
+
     let selecionado = this.state.lista.filter(p => (String(p.id_produto) === String(id_produto)))[0];
     selecionado.quantidade = 1;
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
@@ -93,7 +93,7 @@ class IncluirItem extends Component {
     this.props.onHide();
   }
 
-  render() {
+  render() {    
 
     const multipleSelectOptions = {
       filter: true,
@@ -117,6 +117,7 @@ class IncluirItem extends Component {
     }
 
     return (
+      
 
       <Modal
         size="lg"
@@ -201,10 +202,10 @@ class IncluirItem extends Component {
                           </InputGroup>
                         </FormGroup>
                       </td>
-                      <td>
-                        <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
-                          <i className="icon-close"></i>
-                        </Button>
+                      <td>                  
+                          <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
+                            <i className="icon-close"></i>
+                          </Button>                 
                       </td>
                     </tr>
                   )

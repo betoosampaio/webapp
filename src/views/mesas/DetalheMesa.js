@@ -29,10 +29,6 @@ class DetalheMesa extends Component {
     };
   }
 
-  notify = () => toast.error("Todos os valores devem ser pagos.");
-  notify2 = () => toast.success("Sucesso.");
-
-
 
 
   toggle() {
@@ -52,12 +48,6 @@ class DetalheMesa extends Component {
     }
   }
 
-  statusMesa = () => {
-    let status = "Aberta";
-    if (this.state.fechada) status = "Fechada";
-    if (this.state.encerrada) status = "Encerrada";
-    return status;
-  }
 
   vlrTxServico = () => { return this.state.valor_produtos * this.state.taxa_servico }
 
@@ -110,8 +100,8 @@ class DetalheMesa extends Component {
   }
 
   reabrirMesa = async (id_mesa) => {
-    
-    
+
+
     let confirm = await Confirm({
       title: "Confirmação",
       message: "Tem certeza que deseja reabrir essa conta?",
@@ -125,7 +115,7 @@ class DetalheMesa extends Component {
       let dados = await serverRequest.request('/mesa/reabrir', { "id_mesa": id_mesa });
       if (dados) {
         this.obter(this.props.match.params.id);
-        toast.success("Mesa reaberta com sucesso!");
+        toast("Mesa reaberta com sucesso!", { className: "toast-success" });
       }
     }
   }
@@ -133,7 +123,7 @@ class DetalheMesa extends Component {
   encerrarMesa = async (id_mesa) => {
 
     if (this.state.valor_pagamentos < this.vlrTotal()) {
-      toast.error("Todos os valores devem ser pagos.");
+      toast("Há pagamentos pendentes.", { className: "toast-danger" });
     }
     else {
 
@@ -173,12 +163,9 @@ class DetalheMesa extends Component {
         return "danger";
     }
 
-
-    /* let notShow = () => {this.state.fechada &&
-       this.state({ modalAdicionarItem: false })}*/
-
     return (
       <div>
+
         <ToastContainer />
         <Row className="mb-3">
           <h2 className="ml-3">
@@ -251,7 +238,7 @@ class DetalheMesa extends Component {
                       <small className="text-muted pull-left">Status</small>
                       <br />
                       <strong className="h4">
-                        {this.statusMesa()}
+                        {this.state.status}
                       </strong>
                     </div>
                   </Col>
@@ -265,7 +252,7 @@ class DetalheMesa extends Component {
                         <i className="icon-calculator" /> Fechar Conta
                     </Button>
                     }
-                    {this.state.fechada && !this.state.encerrada &&
+                    {this.state.fechada && !this.state.encerrada && this.vlrRestante() <= 0 &&
                       <Button
                         onClick={() => this.encerrarMesa(this.state._id)}
                         className="pull-right"
@@ -295,12 +282,16 @@ class DetalheMesa extends Component {
                       <br />
                       <strong className="h4">
                         {this.moneyFormat(this.state.valor_pagamentos)}
-                        <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                          className="bg-success ml-2"
-                          size="sm"
-                          title="Inserir Pagamento">
-                          <i className="fa fa-plus" />
-                        </Button>
+                        {/*!this.state.encerrada &&
+
+                          <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                            className="bg-success ml-2"
+                            size="sm"
+                            title="Inserir Pagamento">
+                            <i className="fa fa-plus" />
+                          </Button>
+                        */}
+
                       </strong>
 
                     </div>
@@ -329,8 +320,6 @@ class DetalheMesa extends Component {
               id_mesa={this.state._id}
               atualizou={() => this.obter(this.props.match.params.id)}
               aberta={this.state.aberta} />
-          </Col>
-          <Col md={5}>
 
             <ResumoMesa
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
@@ -341,7 +330,13 @@ class DetalheMesa extends Component {
               desconto={this.state.desconto}
               taxa_servico={this.state.taxa_servico}
               id_mesa={this.state._id}
+              fechada={this.state.fechada}
+              aberta={this.state.aberta}
               atualizou={() => this.obter(this.props.match.params.id)} />
+          </Col>
+          <Col md={5}>
+
+
 
             <ListaPagamentos
               adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
@@ -370,7 +365,6 @@ class DetalheMesa extends Component {
           onHide={() => { this.setState({ modalFechamentoMesa: false }) }}
           id_mesa={this.state._id}
           item={this.state.detalheItemSelecionado}
-
           novoProduto={() => this.setState({ modalAdicionarItem: true })}
           vlrProdutos={this.state.valor_produtos}
           vlrTxServico={this.vlrTxServico()}
@@ -396,13 +390,13 @@ class DetalheMesa extends Component {
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
-              <ListGroupItem><b>Status:</b>{this.statusMesa()}</ListGroupItem>
+              <ListGroupItem><b>Status:</b> {this.state.status}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.nome_operador} </ListGroupItem>
               <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abriu)} </ListGroupItem>
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
+            <Button onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
             </Button>
           </Modal.Footer>
         </Modal >

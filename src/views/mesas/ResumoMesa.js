@@ -20,12 +20,14 @@ class ResumoMesa extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.desconto !== this.state.descontoCadastrado)
+    if (this.props.desconto !== this.state.descontoCadastrado) {
+      let descontoPrt = (this.props.desconto / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ',');
       this.setState({
         descontoCadastrado: this.props.desconto,
         desconto: this.props.desconto.toFixed(2).replace('.', ','),
-        descontoPrt: (this.props.desconto / (this.props.vlrProdutos+this.props.vlrTxServico) * 100).toFixed(2).replace('.',','),
+        descontoPrt: isNaN (descontoPrt)? "0,00": descontoPrt,
       });
+    }
 
     if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
       this.setState({
@@ -36,16 +38,22 @@ class ResumoMesa extends Component {
   }
 
   changeInputDesconto = (event) => {
-    if(event.target.name == "desconto"){
+    if (event.target.name == "desconto") {
       let vlr = event.target.value.replace('.', '').replace(',', '.');
-      let prt = (vlr / (this.props.vlrProdutos+this.props.vlrTxServico) * 100).toFixed(2).replace('.',',');
-      this.setState({ desconto: event.target.value, descontoPrt: prt });
+
+
+      let prt = (vlr / (this.props.vlrProdutos + this.props.vlrTxServico).toFixed(2)/1 * 100).toFixed(2).replace('.', ',');
+      if (vlr <= (this.props.vlrProdutos + this.props.vlrTxServico).toFixed(2)/1) {
+        this.setState({ desconto: event.target.value, descontoPrt: prt });
+      }
     }
-    else{
+    else {
       let prt = event.target.value.replace('.', '').replace(',', '.');
-      let vlr = (prt / 100 * (this.props.vlrProdutos+this.props.vlrTxServico)).toFixed(2).replace('.',',');
-      this.setState({ desconto: vlr, descontoPrt: event.target.value });
-    }   
+      let vlr = (prt / 100 * (this.props.vlrProdutos + this.props.vlrTxServico)).toFixed(2).replace('.', ',');
+      if (prt <= 100) {
+        this.setState({ desconto: vlr, descontoPrt: event.target.value });
+      }
+    }
   }
 
   changeInputServico = (event) => {
@@ -89,7 +97,7 @@ class ResumoMesa extends Component {
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, aberta, fechada } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -98,12 +106,16 @@ class ResumoMesa extends Component {
           <ListGroup>
             <ListGroupItem>
               <i className="fa fa-cutlery mr-2 text-muted" />Produtos
-                  <Button
+
+                <Button
                 className="pull-right bg-white"
-                onClick={novoProduto}>
+                onClick={novoProduto}
+                disabled={fechada}>
                 {this.moneyFormat(vlrProdutos)}
               </Button>
+
             </ListGroupItem>
+
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                   <Button
                 className="pull-right bg-white"
@@ -123,6 +135,7 @@ class ResumoMesa extends Component {
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
                           placeholder="% Taxa"
+                          disabled={fechada}
                           maxLength="6" />
                       </InputGroup>
                     </Col>
@@ -132,18 +145,21 @@ class ResumoMesa extends Component {
                       </Label>
                     </Col>
                     <Col xs="2">
-                      <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
+                      {aberta &&
+                        <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>}
                     </Col>
                   </Row>
                   : null
               }
             </ListGroupItem>
+
             <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
-                  <Button
+                <Button
                 className="pull-right bg-white"
                 onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
                 {this.moneyFormat(vlrDesconto)}
               </Button>
+
               {this.state.descontoVisivel
                 ? <Row className="mt-4">
                   <Col xs="5">
@@ -155,8 +171,10 @@ class ResumoMesa extends Component {
                         name="desconto"
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
+                        disabled={fechada}
                         placeholder="Desconto" />
                     </InputGroup>
+
                   </Col>
                   <Col xs="5">
                     <InputGroup>
@@ -167,11 +185,14 @@ class ResumoMesa extends Component {
                         name="descontoPrt"
                         value={this.state.descontoPrt}
                         onChange={this.changeInputDesconto}
+                        disabled={fechada}
                         placeholder="Desconto" />
                     </InputGroup>
                   </Col>
                   <Col xs="2">
-                    <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                    {aberta &&
+                      <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                    }
                   </Col>
                 </Row>
                 : null

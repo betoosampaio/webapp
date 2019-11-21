@@ -52,15 +52,6 @@ class CardMesa extends Component {
     }
   }
 
-
-
-  statusMesa = () => {
-    let status = "Aberta";
-    if (this.props.mesa.fechada) status = "Fechada";
-    if (this.props.mesa.encerrada) status = "Encerrada";
-    return status;
-  }
-
   render() {
 
     let classeStatus = () => {
@@ -81,7 +72,7 @@ class CardMesa extends Component {
           </CardHeader>
           <CardBody>
             <div className={"callout callout-" + classeStatus()}>
-              {this.statusMesa()}
+              {this.props.mesa.status}
 
               <div className="text-muted font-weight-bold font-md mb-1">
                 {this.valorProdutos(this.props.mesa.produtos)}

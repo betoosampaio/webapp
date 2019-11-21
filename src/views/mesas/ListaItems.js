@@ -94,6 +94,8 @@ class ListaItems extends Component {
           item={this.state.detalheItemSelecionado}
           id_mesa={id_mesa}
           atualizou={this.props.atualizou}
+          aberta={this.props.aberta}
+         
         />
         <FechamentoMesa
           show={this.state.modalFechamentoMesa}

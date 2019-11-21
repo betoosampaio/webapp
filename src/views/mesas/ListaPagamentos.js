@@ -70,6 +70,7 @@ class ListaPagamentos extends Component {
           item={this.state.DetalhePagamentoItem}
           id_mesa={id_mesa}
           atualizou={this.props.atualizou}
+          encerrada={this.props.encerrada}
         />
 
       </Card>

@@ -59,8 +59,7 @@ class DetalheItem extends Component {
 
   render() {
     const item = this.props.item || {}
-
-
+    const { aberta } = this.props;
 
     return (
       <Modal
@@ -82,20 +81,17 @@ class DetalheItem extends Component {
             <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
             <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>
             <ListGroupItem><b>Valor total:</b> {this.moneyFormat(item.preco * item.quantidade)} </ListGroupItem>
-
             <ListGroupItem><b>Data e hora de inserção do produto:</b> {this.dateFormat(item.data_incluiu)}</ListGroupItem>
-
             <ListGroupItem><b>Operador que inseriu o produto:</b> {item.nome_operador}</ListGroupItem>
           </ListGroup>
         </Modal.Body>
-        <Modal.Footer>
-
-          <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)}
-            className="icon-close"> Excluir produto
+        {aberta &&
+          <Modal.Footer>
+            <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)}
+              className="icon-close"> Excluir produto
             </Button>
-
-        </Modal.Footer>
-
+          </Modal.Footer>
+        }
       </Modal >
     );
   }

@@ -26,7 +26,25 @@
 input::-webkit-input-placeholder {
     color: #a2a2a2 !important;
     font-style: italic;
-} 
+}
+
+.toast-success .Toastify__toast-body {
+    
+    color: #4dbd74;
+}
+
+.toast-success .Toastify__progress-bar{
+    background: #4dbd74;
+}
+
+.toast-danger .Toastify__toast-body {
+    
+    color: #f86c6b;
+}
+
+.toast-danger .Toastify__progress-bar{
+    background: #f86c6b;
+}
 
     
 .fs-10{

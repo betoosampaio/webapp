@@ -37,9 +37,7 @@ class IncluirPagamento extends Component {
     }
   }
 
-  incluirPagamento = async (event) => {
-    event.preventDefault();
-
+  incluirPagamento = async () => {
 
     if (this.state.selecionados.length > 0) {
 
@@ -177,9 +175,9 @@ class IncluirPagamento extends Component {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <form onSubmit={this.incluirPagamento}>
-            <Button type="submit" color="success">Confirmar</Button>
-          </form >
+
+          <Button color="success" onClick={() => this.incluirPagamento()} >Confirmar</Button>
+
         </Modal.Footer>
 
       </Modal >
