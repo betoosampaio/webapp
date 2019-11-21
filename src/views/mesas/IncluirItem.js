@@ -202,12 +202,10 @@ class IncluirItem extends Component {
                           </InputGroup>
                         </FormGroup>
                       </td>
-                      <td>
-                        {!this.state.aberta &&
+                      <td>                  
                           <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
                             <i className="icon-close"></i>
-                          </Button>
-                        }
+                          </Button>                 
                       </td>
                     </tr>
                   )

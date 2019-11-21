@@ -89,7 +89,7 @@ class ResumoMesa extends Component {
   }
 
   render() {
-    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, aberta } = this.props;
+    const { novoProduto, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal, aberta, fechada } = this.props;
     return (
       <Card>
         <CardHeader><i className='icon-calculator'></i>Resumo
@@ -104,7 +104,7 @@ class ResumoMesa extends Component {
                 {this.moneyFormat(vlrProdutos)}
               </Button>
             </ListGroupItem>
-            {aberta&&
+
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
                   <Button
                 className="pull-right bg-white"
@@ -124,6 +124,7 @@ class ResumoMesa extends Component {
                           value={this.state.taxa_servico}
                           onChange={this.changeInputServico}
                           placeholder="% Taxa"
+                          disabled={fechada}
                           maxLength="6" />
                       </InputGroup>
                     </Col>
@@ -133,21 +134,20 @@ class ResumoMesa extends Component {
                       </Label>
                     </Col>
                     <Col xs="2">
-                      <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>
+                      {aberta &&
+                        <Button onClick={() => this.editarTxServico(this.state._id, this.state.taxa_servico)}>OK</Button>}
                     </Col>
                   </Row>
                   : null
               }
             </ListGroupItem>
-               }
-            {aberta&&
+
             <ListGroupItem><i className="fa fa-dollar mr-2 text-muted" />Desconto
-              
                 <Button
-                  className="pull-right bg-white"
-                  onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
-                  {this.moneyFormat(vlrDesconto)}
-                </Button>         
+                className="pull-right bg-white"
+                onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
+                {this.moneyFormat(vlrDesconto)}
+              </Button>
 
               {this.state.descontoVisivel
                 ? <Row className="mt-4">
@@ -160,6 +160,7 @@ class ResumoMesa extends Component {
                         name="desconto"
                         value={this.state.desconto}
                         onChange={this.changeInputDesconto}
+                        disabled={fechada}
                         placeholder="Desconto" />
                     </InputGroup>
 
@@ -173,17 +174,19 @@ class ResumoMesa extends Component {
                         name="descontoPrt"
                         value={this.state.descontoPrt}
                         onChange={this.changeInputDesconto}
+                        disabled={fechada}                    
                         placeholder="Desconto" />
                     </InputGroup>
                   </Col>
                   <Col xs="2">
-                    <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                    {aberta &&
+                      <Button onClick={() => this.editarDesconto(this.state._id, this.state.desconto)}>OK</Button>
+                    }
                   </Col>
                 </Row>
                 : null
               }
             </ListGroupItem>
-               }
           </ListGroup>
         </CardBody>
         <CardFooter>
