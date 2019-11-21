@@ -147,9 +147,7 @@ class ResumoMesa extends Component {
                   className="pull-right bg-white"
                   onClick={() => this.setState({ descontoVisivel: !this.state.descontoVisivel })}>
                   {this.moneyFormat(vlrDesconto)}
-                </Button>
-           
-
+                </Button>         
 
               {this.state.descontoVisivel
                 ? <Row className="mt-4">
@@ -164,7 +162,6 @@ class ResumoMesa extends Component {
                         onChange={this.changeInputDesconto}
                         placeholder="Desconto" />
                     </InputGroup>
-
 
                   </Col>
                   <Col xs="5">

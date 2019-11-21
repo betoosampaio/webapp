@@ -29,7 +29,7 @@ class DetalheMesa extends Component {
     };
   }
 
-  notify = () => toast.error("Todos os valores devem ser pagos.");
+  notify = () => toast.error("Há pagamentos pendentes.");
   notify2 = () => toast.success("Sucesso.");
 
 
@@ -133,7 +133,7 @@ class DetalheMesa extends Component {
   encerrarMesa = async (id_mesa) => {
 
     if (this.state.valor_pagamentos < this.vlrTotal()) {
-      toast.error("Todos os valores devem ser pagos.");
+      toast.error("Há pagamentos pendentes.");
     }
     else {
 
@@ -371,7 +371,6 @@ class DetalheMesa extends Component {
           onHide={() => { this.setState({ modalFechamentoMesa: false }) }}
           id_mesa={this.state._id}
           item={this.state.detalheItemSelecionado}
-
           novoProduto={() => this.setState({ modalAdicionarItem: true })}
           vlrProdutos={this.state.valor_produtos}
           vlrTxServico={this.vlrTxServico()}

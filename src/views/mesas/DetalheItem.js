@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
+import DetalheMesa from './DetalheMesa';
 
 
 class DetalheItem extends Component {
@@ -59,6 +60,7 @@ class DetalheItem extends Component {
 
   render() {
     const item = this.props.item || {}
+    const { aberta } = this.props;
 
 
 
@@ -89,11 +91,11 @@ class DetalheItem extends Component {
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
-
-          <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)}
-            className="icon-close"> Excluir produto
+          {aberta &&
+            <Button variant="primary" color="danger" onClick={() => this.removerItem(this.props.id_mesa, item.id_item)}
+              className="icon-close"> Excluir produto
             </Button>
-
+          }
         </Modal.Footer>
 
       </Modal >
