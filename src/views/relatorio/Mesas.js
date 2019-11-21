@@ -10,6 +10,9 @@ import 'react-table/react-table.css';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import alasql from 'alasql';
 
 class Mesas extends Component {
 
@@ -83,7 +86,7 @@ class Mesas extends Component {
   }
 
   componentDidMount() {
-    this.obterDados();
+    this.obterDados();  
   }
 
   obterDados = async () => {
@@ -141,6 +144,31 @@ class Mesas extends Component {
       dados = dados.filter(row => String(row.status) === String(this.state.filtrarStatus))
     }
 
+    const options = {
+      chart: {
+        type: 'pie',
+        height: 180,
+      },
+      title: {
+        text: ''
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}'
+          }
+        }
+      },
+      series: [{
+        name: 'Qtd Mesas',
+        colorByPoint: true,
+        data: alasql('select status name, count(*) y from ? group by status',[dados])
+      }],
+      credits: false,
+    }
 
     return (
       <div>
@@ -197,29 +225,50 @@ class Mesas extends Component {
           </CardHeader>
           <CardBody>
             <Row>
-              <Col sm={4}>
-                <div className="text-muted">Mesas</div>
-                <strong>{this.state.mesas}</strong>
+              <Col md={8}>
+                <Row>
+                  <Col sm={4}>
+                    <Card className="py-2" color="secondary">
+                      <div className="text-center">Mesas</div>
+                      <h3 className="text-center">{this.state.mesas}</h3>
+                    </Card>
+                  </Col>
+                  <Col sm={4}>
+                    <Card className="py-2" color="cyan">
+                      <div className="text-center">Total</div>
+                      <h3 className="text-center">R$ {this.state.vlrFinal.toFixed(2)}</h3>
+                    </Card>
+                  </Col>
+                  <Col sm={4} >
+                    <Card className="py-2" color="green">
+                      <div className="text-center">Pago</div>
+                      <h3 className="text-center">R$ {this.state.vlrPago.toFixed(2)}</h3>
+                    </Card>
+                  </Col>
+                  <Col sm={4}>
+                    <Card className="py-1" color="light">
+                      <div className="text-muted text-center">Produtos</div>
+                      <h3 className="text-center">R$ {this.state.vlrProdutos.toFixed(2)}</h3>
+                    </Card>
+                  </Col>
+                  <Col sm={4}>
+                    <Card className="py-1" color="light">
+                      <div className="text-muted text-center">Taxa Serviço</div>
+                      <h3 className="text-center">R$ {this.state.vlrTxServico.toFixed(2)}</h3>
+                    </Card>
+                  </Col>
+                  <Col sm={4}>
+                    <Card className="py-1" color="light">
+                      <div className="text-muted text-center">Desconto</div>
+                      <h3 className="text-center">R$ {this.state.vlrDesconto.toFixed(2)}</h3>
+                    </Card>
+                  </Col>                 
+                </Row>
               </Col>
-              <Col sm={4}>
-                <div className="text-muted">Produtos</div>
-                <strong>{this.state.produtos} (R$ {this.state.vlrProdutos.toFixed(2)})</strong>
-              </Col>            
-              <Col sm={4}>
-                <div className="text-muted">Valor Taxa Serviço</div>
-                <strong>R$ {this.state.vlrTxServico.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4}>
-                <div className="text-muted">Valor Desconto</div>
-                <strong>R$ {this.state.vlrDesconto.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4}>
-                <div className="text-muted">Valor Final</div>
-                <strong>R$ {this.state.vlrFinal.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4} >
-                <div className="text-muted">Valor Pago</div>
-                <strong>R$ {this.state.vlrPago.toFixed(2)}</strong>
+              <Col md={4}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={options} />
               </Col>
             </Row>
           </CardBody>
