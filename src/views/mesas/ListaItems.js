@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button, Table,} from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button, Table, } from 'reactstrap';
 import Foto from '../../components/Foto';
 import Confirm from 'reactstrap-confirm';
 import DetalheItem from './DetalheItem';
@@ -42,14 +42,16 @@ class ListaItems extends Component {
   }
 
   render() {
-    const { produtos, qtdProdutos, vlrProdutos, novoProduto, id_mesa } = this.props;
+    const { produtos, qtdProdutos, vlrProdutos, novoProduto, id_mesa, aberta } = this.props;
     return (
       <Card>
         <CardHeader>
           <i className='fa fa-cutlery'></i>Produtos
-                <Button onClick={novoProduto} className="pull-right" color="success" size="sm">
-            <i className="icon-plus mr-1"></i>Incluir
+          {aberta &&
+            <Button onClick={novoProduto} className="pull-right" color="success" size="sm">
+              <i className="icon-plus mr-1"></i>Incluir
                 </Button>
+          }
         </CardHeader>
         <CardBody>
           <Table striped bordered hover responsive>
@@ -65,10 +67,10 @@ class ListaItems extends Component {
               {
                 produtos.map((obj) => {
                   return (
-                    <tr 
-                    onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}  
-                    key={obj.data_incluiu} 
-                    style={{ cursor:"pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
+                    <tr
+                      onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}
+                      key={obj.data_incluiu}
+                      style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                       <td><Foto src={obj.imagem} height="30" width="30"></Foto></td>
                       <td>{obj.nome_produto}</td>
                       <td>{obj.quantidade}</td>
