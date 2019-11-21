@@ -38,13 +38,19 @@ class ResumoMesa extends Component {
   changeInputDesconto = (event) => {
     if (event.target.name == "desconto") {
       let vlr = event.target.value.replace('.', '').replace(',', '.');
+
+
       let prt = (vlr / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ',');
-      this.setState({ desconto: event.target.value, descontoPrt: prt });
+      if (vlr <= 100) {
+        this.setState({ desconto: event.target.value, descontoPrt: prt });
+      }
     }
     else {
       let prt = event.target.value.replace('.', '').replace(',', '.');
       let vlr = (prt / 100 * (this.props.vlrProdutos + this.props.vlrTxServico)).toFixed(2).replace('.', ',');
-      this.setState({ desconto: vlr, descontoPrt: event.target.value });
+      if (prt <= 100) {
+        this.setState({ desconto: vlr, descontoPrt: event.target.value });
+      }
     }
   }
 

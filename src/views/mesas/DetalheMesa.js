@@ -396,13 +396,13 @@ class DetalheMesa extends Component {
           </Modal.Header>
           <Modal.Body>
             <ListGroup>
-              <ListGroupItem><b>Status:</b>{this.statusMesa()}</ListGroupItem>
+              <ListGroupItem><b>Status:</b> {this.statusMesa()}</ListGroupItem>
               <ListGroupItem><b>Operador que abriu a mesa:</b> {this.state.nome_operador} </ListGroupItem>
               <ListGroupItem><b>Data e hora de abertura da mesa:</b> {this.dateFormat(this.state.data_abriu)} </ListGroupItem>
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" color="success" className="icon-arrow-left" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
+            <Button variant="primary" color="success" onClick={() => this.setState({ modalInfosMesa: false })} > Voltar
             </Button>
           </Modal.Footer>
         </Modal >
