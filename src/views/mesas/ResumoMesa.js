@@ -41,7 +41,7 @@ class ResumoMesa extends Component {
 
 
       let prt = (vlr / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ',');
-      if (vlr <= 100) {
+      if (vlr <= (this.props.vlrProdutos + this.props.vlrTxServico)) {
         this.setState({ desconto: event.target.value, descontoPrt: prt });
       }
     }
