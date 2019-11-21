@@ -86,7 +86,7 @@ class Mesas extends Component {
   }
 
   componentDidMount() {
-    this.obterDados();  
+    this.obterDados();
   }
 
   obterDados = async () => {
@@ -147,10 +147,10 @@ class Mesas extends Component {
     const options = {
       chart: {
         type: 'pie',
-        height: 180,
+        height: 168,
       },
       title: {
-        text: ''
+        text: 'Status'
       },
       plotOptions: {
         pie: {
@@ -165,7 +165,7 @@ class Mesas extends Component {
       series: [{
         name: 'Qtd Mesas',
         colorByPoint: true,
-        data: alasql('select status name, count(*) y from ? group by status',[dados])
+        data: alasql('select status name, count(*) y from ? group by status', [dados])
       }],
       credits: false,
     }
@@ -174,7 +174,7 @@ class Mesas extends Component {
       <div>
         <Card>
           <CardHeader>
-            <i className='fa fa-filter' />Filtros
+            <i className='fa fa-calendar' />Período
               <div className="card-header-actions">
               <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
                 <Button size="sm" color="secondary">
@@ -219,66 +219,8 @@ class Mesas extends Component {
           </Collapse>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <i className='icon-chart' />Resumo
-          </CardHeader>
-          <CardBody>
-            <Row>
-              <Col md={8}>
-                <Row>
-                  <Col sm={4}>
-                    <Card className="py-2" color="secondary">
-                      <div className="text-center">Mesas</div>
-                      <h3 className="text-center">{this.state.mesas}</h3>
-                    </Card>
-                  </Col>
-                  <Col sm={4}>
-                    <Card className="py-2" color="cyan">
-                      <div className="text-center">Total</div>
-                      <h3 className="text-center">R$ {this.state.vlrFinal.toFixed(2)}</h3>
-                    </Card>
-                  </Col>
-                  <Col sm={4} >
-                    <Card className="py-2" color="green">
-                      <div className="text-center">Pago</div>
-                      <h3 className="text-center">R$ {this.state.vlrPago.toFixed(2)}</h3>
-                    </Card>
-                  </Col>
-                  <Col sm={4}>
-                    <Card className="py-1" color="light">
-                      <div className="text-muted text-center">Produtos</div>
-                      <h3 className="text-center">R$ {this.state.vlrProdutos.toFixed(2)}</h3>
-                    </Card>
-                  </Col>
-                  <Col sm={4}>
-                    <Card className="py-1" color="light">
-                      <div className="text-muted text-center">Taxa Serviço</div>
-                      <h3 className="text-center">R$ {this.state.vlrTxServico.toFixed(2)}</h3>
-                    </Card>
-                  </Col>
-                  <Col sm={4}>
-                    <Card className="py-1" color="light">
-                      <div className="text-muted text-center">Desconto</div>
-                      <h3 className="text-center">R$ {this.state.vlrDesconto.toFixed(2)}</h3>
-                    </Card>
-                  </Col>                 
-                </Row>
-              </Col>
-              <Col md={4}>
-                <HighchartsReact
-                  highcharts={Highcharts}
-                  options={options} />
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <i className='icon-grid' />Mesas
-          </CardHeader>
-          <CardBody>
+        <Row>
+          <Col xs={12}>
             <FormGroup className="mr-3">
               <Label className="mr-2">Filtrar Status:</Label>
               <select
@@ -291,6 +233,62 @@ class Mesas extends Component {
                 <option value="Removida">Removida</option>
               </select>
             </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={8}>
+            <Row>
+              <Col sm={4}>
+                <Card className="py-2" color="secondary">
+                  <div className="text-center">Mesas</div>
+                  <h3 className="text-center">{this.state.mesas}</h3>
+                </Card>
+              </Col>
+              <Col sm={4}>
+                <Card className="py-2" color="cyan">
+                  <div className="text-center">Total</div>
+                  <h3 className="text-center">R$ {this.state.vlrFinal.toFixed(2)}</h3>
+                </Card>
+              </Col>
+              <Col sm={4} >
+                <Card className="py-2" color="green">
+                  <div className="text-center">Pago</div>
+                  <h3 className="text-center">R$ {this.state.vlrPago.toFixed(2)}</h3>
+                </Card>
+              </Col>
+              <Col sm={4}>
+                <Card className="py-1" color="light">
+                  <div className="text-muted text-center">Produtos</div>
+                  <h3 className="text-center">R$ {this.state.vlrProdutos.toFixed(2)}</h3>
+                </Card>
+              </Col>
+              <Col sm={4}>
+                <Card className="py-1" color="light">
+                  <div className="text-muted text-center">Taxa Serviço</div>
+                  <h3 className="text-center">R$ {this.state.vlrTxServico.toFixed(2)}</h3>
+                </Card>
+              </Col>
+              <Col sm={4}>
+                <Card className="py-1" color="light">
+                  <div className="text-muted text-center">Desconto</div>
+                  <h3 className="text-center">R$ {this.state.vlrDesconto.toFixed(2)}</h3>
+                </Card>
+              </Col>
+            </Row>
+          </Col>
+          <Col md={4}>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options} />
+          </Col>
+        </Row>
+
+        <Card>
+          <CardHeader>
+            <i className='icon-grid' />Mesas
+          </CardHeader>
+          <CardBody>
             <ReactTable
               data={dados}
               columns={this.columns}
