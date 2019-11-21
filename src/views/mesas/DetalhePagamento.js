@@ -55,6 +55,7 @@ class DetalhePagamento extends Component {
 
   render() {
     const item = this.props.item || {}
+    const { encerrada } = this.props;
 
 
 
@@ -66,7 +67,7 @@ class DetalhePagamento extends Component {
         backdrop='static'
         show={this.props.show}
         onHide={this.onHide}
-        
+
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter" className="callout">Detalhes do pagamento</Modal.Title>
@@ -79,11 +80,12 @@ class DetalhePagamento extends Component {
             <ListGroupItem><b>Operador:</b> {item.nome_operador}</ListGroupItem>
           </ListGroup>
         </Modal.Body>
-        <Modal.Footer>
 
-          <Button variant="primary" color="danger" className="icon-close" onClick={() => this.removerItem(this.props.id_mesa, item.id_pagamento)} > Excluir pagamento</Button>
-
-        </Modal.Footer>
+        {!encerrada &&
+          <Modal.Footer>
+            <Button variant="primary" color="danger" className="icon-close" onClick={() => this.removerItem(this.props.id_mesa, item.id_pagamento)} > Excluir pagamento</Button>
+          </Modal.Footer>
+        }
 
       </Modal >
     );
