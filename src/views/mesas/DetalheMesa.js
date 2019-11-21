@@ -110,8 +110,8 @@ class DetalheMesa extends Component {
   }
 
   reabrirMesa = async (id_mesa) => {
-    
-    
+
+
     let confirm = await Confirm({
       title: "Confirmação",
       message: "Tem certeza que deseja reabrir essa conta?",
@@ -172,10 +172,6 @@ class DetalheMesa extends Component {
       else if (this.state.encerrada)
         return "danger";
     }
-
-
-    /* let notShow = () => {this.state.fechada &&
-       this.state({ modalAdicionarItem: false })}*/
 
     return (
       <div>
@@ -295,12 +291,16 @@ class DetalheMesa extends Component {
                       <br />
                       <strong className="h4">
                         {this.moneyFormat(this.state.valor_pagamentos)}
-                        <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                          className="bg-success ml-2"
-                          size="sm"
-                          title="Inserir Pagamento">
-                          <i className="fa fa-plus" />
-                        </Button>
+                        {!this.state.encerrada &&
+
+                          <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
+                            className="bg-success ml-2"
+                            size="sm"
+                            title="Inserir Pagamento">
+                            <i className="fa fa-plus" />
+                          </Button>
+                        }
+
                       </strong>
 
                     </div>
