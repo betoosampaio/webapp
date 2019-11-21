@@ -17,6 +17,8 @@ const ListaMesa = React.lazy(() => import('./views/mesas/ListaMesa'));
 const DetalheMesa = React.lazy(() => import('./views/mesas/DetalheMesa'));
 const ConfigRestaurante = React.lazy(() => import('./views/restaurante/Configuracao'));
 const RelatorioMesas = React.lazy(() => import('./views/relatorio/Mesas'));
+const RelatorioProdutos = React.lazy(() => import('./views/relatorio/Produtos'));
+const RelatorioPagamentos = React.lazy(() => import('./views/relatorio/Pagamentos'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -38,6 +40,8 @@ const routes = [
   { path: '/mesas', exact: true, name: 'Mesas', component: ListaMesa },
   { path: '/mesas/detalhemesa/:id', name: 'Detalhe Mesa', component: DetalheMesa },
   { path: '/relatorio/mesas', name: 'Relatório Mesas', component: RelatorioMesas },
+  { path: '/relatorio/produtos', name: 'Relatório Produtos', component: RelatorioProdutos },
+  { path: '/relatorio/pagamentos', name: 'Relatório Pagamentos', component: RelatorioPagamentos },
   
 ];
 

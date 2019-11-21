@@ -11,46 +11,49 @@ import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-class Mesas extends Component {
+class Produtos extends Component {
 
   columns = [
     {
-      Header: 'Data Abertura',
-      accessor: "data_abriu",
+      Header: 'Número Mesa',
+      accessor: "numero",
+      filterable: true,
       headerClassName: "text-left",
-      Cell: props => <span>{this.dateFormat(props.original.data_abriu)}</span>
     },
     {
-      Header: 'Status',
-      accessor: "aberta",
+      Header: 'Data Inclusão',
+      accessor: "data_incluiu",
       headerClassName: "text-left",
-      sortable: false,
-      Cell: props => <span>{props.original.status}</span>
+      filterable: true,
+      Cell: props => <span>{this.dateFormat(props.original.data_incluiu)}</span>
+    }, 
+    {
+      Header: 'Código',
+      accessor: "codigo_produto",
+      filterable: true,
+      headerClassName: "text-left",
     },
     {
-      Header: 'Produtos',
-      accessor: 'qtd_produtos',
+      Header: 'Produto',
+      accessor: 'nome_produto',
+      filterable: true,
       headerClassName: "text-left",
 
     },
     {
-      Header: 'Valor Total',
-      accessor: 'valor_total',
-      Cell: props => <span>{props.value.toFixed(2)}</span>,
+      Header: 'Quantidade',
+      accessor: 'quantidade',
+      filterable: true,
       headerClassName: "text-left",
     },
     {
-      Header: 'Valor Pago',
-      accessor: 'valor_pagamentos',
+      Header: 'Preço',
+      accessor: 'preco',
+      filterable: true,
       headerClassName: "text-left",
     },
     {
-      Header: 'Nº Mesa',
-      accessor: 'numero',
-      headerClassName: "text-left",
-    },
-    {
-      Header: 'Acessar',
+      Header: 'Acessar Mesa',
       accessor: '_id',
       headerClassName: "text-left",
       sortable: false,
@@ -67,18 +70,10 @@ class Mesas extends Component {
     super(props);
 
     this.state = {
-      dados: [],
+      produtos: [],
       dtini: new Date(),
       dtfim: new Date(),
       showFiltros: true,
-      filtroStatus: "",
-      mesas: 0,
-      produtos: 0,
-      vlrProdutos: 0,
-      vlrTxServico: 0,
-      vlrDesconto: 0,
-      vlrFinal: 0,
-      vlrPago: 0,
     };
   }
 
@@ -94,28 +89,16 @@ class Mesas extends Component {
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
 
-      let totals = {
-        mesas: dados.length,
-        produtos: 0,
-        vlrProdutos: 0,
-        vlrTxServico: 0,
-        vlrDesconto: 0,
-        vlrFinal: 0,
-        vlrPago: 0,
-      }
-
-      dados.forEach(r => {
-        r.valor_total = this.vlrTotal(r);
-        totals.produtos += r.qtd_produtos;
-        totals.vlrProdutos += r.valor_produtos;
-        totals.vlrTxServico += r.valor_produtos * r.taxa_servico;
-        totals.vlrDesconto += r.desconto;
-        totals.vlrPago += r.valor_pagamentos;
+      let produtos = [];
+      dados.forEach(r => { 
+        r.produtos.forEach(p =>{
+          p._id = r._id;
+          p.numero = r.numero;
+          produtos.push(p);
+        })
       });
 
-      totals.vlrFinal = totals.vlrProdutos + totals.vlrTxServico - totals.vlrDesconto;
-
-      this.setState({ dados: dados, ...totals });
+      this.setState({ produtos: produtos });
     }
   }
 
@@ -124,24 +107,12 @@ class Mesas extends Component {
     this.obterDados();
   }
 
-  vlrTotal = (mesa) => {
-    let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)) - mesa.desconto;
-    return vl;
-  }
-
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
   }
 
   render() {
-
-    let dados = this.state.dados
-    if (this.state.filtrarStatus) {
-      dados = dados.filter(row => String(row.status) === String(this.state.filtrarStatus))
-    }
-
-
     return (
       <div>
         <Card>
@@ -193,57 +164,11 @@ class Mesas extends Component {
 
         <Card>
           <CardHeader>
-            <i className='icon-chart' />Resumo
+            <i className='icon-tag' />Produtos
           </CardHeader>
-          <CardBody>
-            <Row>
-              <Col sm={4}>
-                <div className="text-muted">Mesas</div>
-                <strong>{this.state.mesas}</strong>
-              </Col>
-              <Col sm={4}>
-                <div className="text-muted">Produtos</div>
-                <strong>{this.state.produtos} (R$ {this.state.vlrProdutos.toFixed(2)})</strong>
-              </Col>            
-              <Col sm={4}>
-                <div className="text-muted">Valor Taxa Serviço</div>
-                <strong>R$ {this.state.vlrTxServico.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4}>
-                <div className="text-muted">Valor Desconto</div>
-                <strong>R$ {this.state.vlrDesconto.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4}>
-                <div className="text-muted">Valor Final</div>
-                <strong>R$ {this.state.vlrFinal.toFixed(2)}</strong>
-              </Col>
-              <Col sm={4} >
-                <div className="text-muted">Valor Pago</div>
-                <strong>R$ {this.state.vlrPago.toFixed(2)}</strong>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <i className='icon-grid' />Mesas
-          </CardHeader>
-          <CardBody>
-            <FormGroup className="mr-3">
-              <Label className="mr-2">Filtrar Status:</Label>
-              <select
-                value={this.state.filtrarMenu}
-                onChange={e => this.setState({ filtrarStatus: e.target.value })}>
-                <option value="">Tudo</option>
-                <option value="Aberta">Aberta</option>
-                <option value="Fechada">Fechada</option>
-                <option value="Encerrada">Encerrada</option>
-                <option value="Removida">Removida</option>
-              </select>
-            </FormGroup>
+          <CardBody>          
             <ReactTable
-              data={dados}
+              data={this.state.produtos}
               columns={this.columns}
               minRows={0}
               previousText="Anterior"
@@ -262,4 +187,4 @@ class Mesas extends Component {
   }
 }
 
-export default Mesas;
+export default Produtos;

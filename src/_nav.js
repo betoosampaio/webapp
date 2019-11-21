@@ -34,7 +34,17 @@ export default {
           name: 'Mesas',
           url: '/relatorio/mesas',
           icon: 'icon-list',
-        },       
+        }, 
+        {
+          name: 'Produtos',
+          url: '/relatorio/produtos',
+          icon: 'icon-tag',
+        }, 
+        {
+          name: 'Pagamentos',
+          url: '/relatorio/pagamentos',
+          icon: 'fa fa-dollar',
+        },      
       ]
     }
 
