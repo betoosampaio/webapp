@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, Button, FormGroup, Label, InputGroup, InputGroupAddon,
-  InputGroupText, Collapse, Form
+  InputGroupText, Collapse, Form, Row, Col
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
@@ -70,8 +70,15 @@ class Mesas extends Component {
       dados: [],
       dtini: new Date(),
       dtfim: new Date(),
-      showFiltros: false,
+      showFiltros: true,
       filtroStatus: "",
+      mesas: 0,
+      produtos: 0,
+      vlrProdutos: 0,
+      vlrTxServico: 0,
+      vlrDesconto: 0,
+      vlrFinal: 0,
+      vlrPago: 0,
     };
   }
 
@@ -86,24 +93,35 @@ class Mesas extends Component {
     }
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
+
+      let totals = {
+        mesas: dados.length,
+        produtos: 0,
+        vlrProdutos: 0,
+        vlrTxServico: 0,
+        vlrDesconto: 0,
+        vlrFinal: 0,
+        vlrPago: 0,
+      }
+
       dados.forEach(r => {
         r.valor_total = this.vlrTotal(r);
-        r.status = this.statusMesa(r);
+        totals.produtos += r.qtd_produtos;
+        totals.vlrProdutos += r.valor_produtos;
+        totals.vlrTxServico += r.valor_produtos * r.taxa_servico;
+        totals.vlrDesconto += r.desconto;
+        totals.vlrPago += r.valor_pagamentos;
       });
-      this.setState({ dados: dados, showFiltros: false });
+
+      totals.vlrFinal = totals.vlrProdutos + totals.vlrTxServico - totals.vlrDesconto;
+
+      this.setState({ dados: dados, ...totals });
     }
   }
 
   consultar = async (event) => {
     event.preventDefault();
     this.obterDados();
-  }
-
-  statusMesa = (mesa) => {
-    let status = "Aberta";
-    if (mesa.fechada) status = "Fechada";
-    if (mesa.encerrada) status = "Encerrada";
-    return status;
   }
 
   vlrTotal = (mesa) => {
@@ -173,16 +191,43 @@ class Mesas extends Component {
           </Collapse>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <i className='icon-chart' />Resumo
+          </CardHeader>
+          <CardBody>
+            <Row>
+              <Col sm={4}>
+                <div className="text-muted">Mesas</div>
+                <strong>{this.state.mesas}</strong>
+              </Col>
+              <Col sm={4}>
+                <div className="text-muted">Produtos</div>
+                <strong>{this.state.produtos} (R$ {this.state.vlrProdutos.toFixed(2)})</strong>
+              </Col>            
+              <Col sm={4}>
+                <div className="text-muted">Valor Taxa Serviço</div>
+                <strong>R$ {this.state.vlrTxServico.toFixed(2)}</strong>
+              </Col>
+              <Col sm={4}>
+                <div className="text-muted">Valor Desconto</div>
+                <strong>R$ {this.state.vlrDesconto.toFixed(2)}</strong>
+              </Col>
+              <Col sm={4}>
+                <div className="text-muted">Valor Final</div>
+                <strong>R$ {this.state.vlrFinal.toFixed(2)}</strong>
+              </Col>
+              <Col sm={4} >
+                <div className="text-muted">Valor Pago</div>
+                <strong>R$ {this.state.vlrPago.toFixed(2)}</strong>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
 
         <Card>
           <CardHeader>
             <i className='icon-grid' />Mesas
-            <div className="card-header-actions">
-              <Button color="secondary" size="sm"
-                onClick={() => this.obterDados()}>
-                <i className="fa fa-refresh"></i>
-              </Button>
-            </div>
           </CardHeader>
           <CardBody>
             <FormGroup className="mr-3">
@@ -194,7 +239,7 @@ class Mesas extends Component {
                 <option value="Aberta">Aberta</option>
                 <option value="Fechada">Fechada</option>
                 <option value="Encerrada">Encerrada</option>
-                <option value="Cancelada">Cancelada</option>
+                <option value="Removida">Removida</option>
               </select>
             </FormGroup>
             <ReactTable
