@@ -221,7 +221,7 @@ class DetalheMesa extends Component {
                     className="pull-left mr-1"
                     size="sm"
                     title="Cancelar Mesa">
-                    <i className="icon-ban" />Cancelar Conta
+                    <i className="icon-ban" />Cancelar Mesa
                 </DropdownItem>
                 </DropdownMenu>
               </ButtonDropdown>
@@ -282,16 +282,6 @@ class DetalheMesa extends Component {
                       <br />
                       <strong className="h4">
                         {this.moneyFormat(this.state.valor_pagamentos)}
-                        {/*!this.state.encerrada &&
-
-                          <Button onClick={() => this.setState({ modalAdicionarPagamento: true })}
-                            className="bg-success ml-2"
-                            size="sm"
-                            title="Inserir Pagamento">
-                            <i className="fa fa-plus" />
-                          </Button>
-                        */}
-
                       </strong>
 
                     </div>
@@ -321,6 +311,17 @@ class DetalheMesa extends Component {
               atualizou={() => this.obter(this.props.match.params.id)}
               aberta={this.state.aberta} />
 
+
+          </Col>
+          <Col md={5}>
+            <ListaPagamentos
+              adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
+              pagamentos={this.state.pagamentos}
+              vlrPagamentos={this.state.valor_pagamentos}
+              id_mesa={this.state._id}
+              atualizou={() => this.obter(this.props.match.params.id)}
+              encerrada={this.state.encerrada} />
+
             <ResumoMesa
               novoProduto={() => this.setState({ modalAdicionarItem: true })}
               vlrProdutos={this.state.valor_produtos}
@@ -333,18 +334,6 @@ class DetalheMesa extends Component {
               fechada={this.state.fechada}
               aberta={this.state.aberta}
               atualizou={() => this.obter(this.props.match.params.id)} />
-          </Col>
-          <Col md={5}>
-
-
-
-            <ListaPagamentos
-              adicionarPagamento={() => this.setState({ modalAdicionarPagamento: true })}
-              pagamentos={this.state.pagamentos}
-              vlrPagamentos={this.state.valor_pagamentos}
-              id_mesa={this.state._id}
-              atualizou={() => this.obter(this.props.match.params.id)}
-              encerrada={this.state.encerrada} />
           </Col>
         </Row>
         <IncluirItem
