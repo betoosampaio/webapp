@@ -42,8 +42,8 @@ class ResumoMesa extends Component {
       let vlr = event.target.value.replace('.', '').replace(',', '.');
 
 
-      let prt = (vlr / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ',');
-      if (vlr <= (this.props.vlrProdutos + this.props.vlrTxServico)) {
+      let prt = (vlr / (this.props.vlrProdutos + this.props.vlrTxServico).toFixed(2)/1 * 100).toFixed(2).replace('.', ',');
+      if (vlr <= (this.props.vlrProdutos + this.props.vlrTxServico).toFixed(2)/1) {
         this.setState({ desconto: event.target.value, descontoPrt: prt });
       }
     }
