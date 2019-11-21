@@ -71,7 +71,7 @@ class CardMesa extends Component {
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
           </CardHeader>
           <CardBody>
-            <div className={"callout callout-" + classeStatus()}>
+            <div className={"my-0 callout callout-" + classeStatus()}>
               {this.props.mesa.status}
 
               <div className="text-muted font-weight-bold font-md mb-1">
