@@ -20,12 +20,14 @@ class ResumoMesa extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.desconto !== this.state.descontoCadastrado)
+    if (this.props.desconto !== this.state.descontoCadastrado) {
+      let descontoPrt = (this.props.desconto / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ',');
       this.setState({
         descontoCadastrado: this.props.desconto,
         desconto: this.props.desconto.toFixed(2).replace('.', ','),
-        descontoPrt: (this.props.desconto / (this.props.vlrProdutos + this.props.vlrTxServico) * 100).toFixed(2).replace('.', ','),
+        descontoPrt: isNaN (descontoPrt)? "0,00": descontoPrt,
       });
+    }
 
     if (this.props.taxa_servico !== this.state.taxa_servicoCadastrada)
       this.setState({
