@@ -98,11 +98,14 @@ class ResumoMesa extends Component {
           <ListGroup>
             <ListGroupItem>
               <i className="fa fa-cutlery mr-2 text-muted" />Produtos
-                  <Button
+
+                <Button
                 className="pull-right bg-white"
-                onClick={novoProduto}>
+                onClick={novoProduto}
+                disabled={fechada}>
                 {this.moneyFormat(vlrProdutos)}
               </Button>
+
             </ListGroupItem>
 
             <ListGroupItem><i className="fa fa-wrench mr-2 text-muted" />Taxa de Serviço
@@ -174,7 +177,7 @@ class ResumoMesa extends Component {
                         name="descontoPrt"
                         value={this.state.descontoPrt}
                         onChange={this.changeInputDesconto}
-                        disabled={fechada}                    
+                        disabled={fechada}
                         placeholder="Desconto" />
                     </InputGroup>
                   </Col>
