@@ -31,16 +31,10 @@ class Mesas extends Component {
       Cell: props => <span>{props.original.status}</span>
     },
     {
-      Header: 'Produtos',
-      accessor: 'qtd_produtos',
-      headerClassName: "text-left",
-
-    },
-    {
       Header: 'Valor Total',
-      accessor: 'valor_total',
-      Cell: props => <span>{props.value.toFixed(2)}</span>,
+      accessor: 'valor_total',   
       headerClassName: "text-left",
+      Cell: props => <span>{props.value.toFixed(2)}</span>,
     },
     {
       Header: 'Valor Pago',
@@ -75,13 +69,6 @@ class Mesas extends Component {
       dtfim: new Date(),
       showFiltros: true,
       filtroStatus: "",
-      mesas: 0,
-      produtos: 0,
-      vlrProdutos: 0,
-      vlrTxServico: 0,
-      vlrDesconto: 0,
-      vlrFinal: 0,
-      vlrPago: 0,
     };
   }
 
@@ -97,28 +84,11 @@ class Mesas extends Component {
     let dados = await serverRequest.request('/mesa/consultar', params);
     if (dados) {
 
-      let totals = {
-        mesas: dados.length,
-        produtos: 0,
-        vlrProdutos: 0,
-        vlrTxServico: 0,
-        vlrDesconto: 0,
-        vlrFinal: 0,
-        vlrPago: 0,
-      }
-
       dados.forEach(r => {
         r.valor_total = this.vlrTotal(r);
-        totals.produtos += r.qtd_produtos;
-        totals.vlrProdutos += r.valor_produtos;
-        totals.vlrTxServico += r.valor_produtos * r.taxa_servico;
-        totals.vlrDesconto += r.desconto;
-        totals.vlrPago += r.valor_pagamentos;
       });
 
-      totals.vlrFinal = totals.vlrProdutos + totals.vlrTxServico - totals.vlrDesconto;
-
-      this.setState({ dados: dados, ...totals });
+      this.setState({ dados: dados });
     }
   }
 
@@ -139,12 +109,25 @@ class Mesas extends Component {
 
   render() {
 
+    const page = this;
+
     let dados = this.state.dados
     if (this.state.filtrarStatus) {
       dados = dados.filter(row => String(row.status) === String(this.state.filtrarStatus))
     }
 
-    const options = {
+    let query = `
+    select 
+      count(*) qtdMesas, 
+      sum(valor_produtos) vlrProdutos,
+      sum(desconto) vlrDesconto,
+      sum(valor_produtos*taxa_servico) vlrTxServico,
+      sum(valor_pagamentos) vlrPago,
+      sum(valor_total) vlrTotal
+    from ?`;
+    let { qtdMesas, vlrPago, vlrProdutos, vlrTxServico, vlrDesconto, vlrTotal } = alasql(query, [dados])[0];
+
+    let options = {
       chart: {
         type: 'pie',
         height: 168,
@@ -159,13 +142,21 @@ class Mesas extends Component {
           dataLabels: {
             enabled: true,
             format: '<b>{point.name}</b>: {point.y}'
-          }
+          },
         }
       },
       series: [{
         name: 'Qtd Mesas',
         colorByPoint: true,
-        data: alasql('select status name, count(*) y from ? group by status', [dados])
+        data: alasql('select status name, count(*) y from ? group by status', [this.state.dados]),
+        point: {
+          events: {
+            click: function () {
+              let status = page.state.filtrarStatus === this.name ? null : this.name;
+              page.setState({ filtrarStatus: status });
+            }
+          }
+        }
       }],
       credits: false,
     }
@@ -220,59 +211,42 @@ class Mesas extends Component {
         </Card>
 
         <Row>
-          <Col xs={12}>
-            <FormGroup className="mr-3">
-              <Label className="mr-2">Filtrar Status:</Label>
-              <select
-                value={this.state.filtrarMenu}
-                onChange={e => this.setState({ filtrarStatus: e.target.value })}>
-                <option value="">Tudo</option>
-                <option value="Aberta">Aberta</option>
-                <option value="Fechada">Fechada</option>
-                <option value="Encerrada">Encerrada</option>
-                <option value="Removida">Removida</option>
-              </select>
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row>
           <Col md={8}>
             <Row>
               <Col sm={4}>
                 <Card className="py-2" color="secondary">
                   <div className="text-center">Mesas</div>
-                  <h3 className="text-center">{this.state.mesas}</h3>
+                  <h3 className="text-center">{qtdMesas}</h3>
                 </Card>
               </Col>
               <Col sm={4}>
                 <Card className="py-2" color="cyan">
                   <div className="text-center">Total</div>
-                  <h3 className="text-center">R$ {this.state.vlrFinal.toFixed(2)}</h3>
+                  <h3 className="text-center">R$ {vlrTotal.toFixed(2)}</h3>
                 </Card>
               </Col>
               <Col sm={4} >
                 <Card className="py-2" color="green">
                   <div className="text-center">Pago</div>
-                  <h3 className="text-center">R$ {this.state.vlrPago.toFixed(2)}</h3>
+                  <h3 className="text-center">R$ {vlrPago.toFixed(2)}</h3>
                 </Card>
               </Col>
               <Col sm={4}>
                 <Card className="py-1" color="light">
                   <div className="text-muted text-center">Produtos</div>
-                  <h3 className="text-center">R$ {this.state.vlrProdutos.toFixed(2)}</h3>
+                  <h3 className="text-center">R$ {vlrProdutos.toFixed(2)}</h3>
                 </Card>
               </Col>
               <Col sm={4}>
                 <Card className="py-1" color="light">
                   <div className="text-muted text-center">Taxa Serviço</div>
-                  <h3 className="text-center">R$ {this.state.vlrTxServico.toFixed(2)}</h3>
+                  <h3 className="text-center">R$ {vlrTxServico.toFixed(2)}</h3>
                 </Card>
               </Col>
               <Col sm={4}>
                 <Card className="py-1" color="light">
                   <div className="text-muted text-center">Desconto</div>
-                  <h3 className="text-center">R$ {this.state.vlrDesconto.toFixed(2)}</h3>
+                  <h3 className="text-center">R$ {vlrDesconto.toFixed(2)}</h3>
                 </Card>
               </Col>
             </Row>
