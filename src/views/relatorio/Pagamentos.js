@@ -10,6 +10,9 @@ import 'react-table/react-table.css';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import alasql from 'alasql';
 
 class Pagamentos extends Component {
 
@@ -78,8 +81,8 @@ class Pagamentos extends Component {
     if (dados) {
 
       let pagamentos = [];
-      dados.forEach(r => { 
-        r.pagamentos.forEach(p =>{
+      dados.forEach(r => {
+        r.pagamentos.forEach(p => {
           p._id = r._id;
           p.numero = r.numero;
           pagamentos.push(p);
@@ -101,11 +104,54 @@ class Pagamentos extends Component {
   }
 
   render() {
+
+    let query = `
+    select 
+      ds_forma_pagamento, 
+      sum(valor) vlr
+    from 
+      ?
+    group by
+      ds_forma_pagamento`;
+    let dados = alasql(query, [this.state.pagamentos]);
+
+    let options = {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: dados.map(r => r.ds_forma_pagamento),
+      },
+      yAxis: {
+        visible: false,
+      },
+      legend: {
+        enabled: false,
+      },
+      series: {
+        name: 'Valor',
+        data: dados.map(r => r.vlr),
+      },
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true
+          },
+          enableMouseTracking: false
+        }
+      },
+      credits: false,
+    }
+
     return (
       <div>
         <Card>
           <CardHeader>
-            <i className='fa fa-filter' />Filtros
+            <i className='fa fa-calendar' />Período
               <div className="card-header-actions">
               <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
                 <Button size="sm" color="secondary">
@@ -152,9 +198,20 @@ class Pagamentos extends Component {
 
         <Card>
           <CardHeader>
+            <i className='icon-dollar' />Forma Pagamento
+          </CardHeader>
+          <CardBody>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options} />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <i className='fa fa-dollar' />Pagamentos
           </CardHeader>
-          <CardBody>          
+          <CardBody>
             <ReactTable
               data={this.state.pagamentos}
               columns={this.columns}

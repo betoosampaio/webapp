@@ -110,8 +110,6 @@ class Produtos extends Component {
 
   render() {
 
-    const page = this;
-
     let query = `
     select 
       nome_produto, 
