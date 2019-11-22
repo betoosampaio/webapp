@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, Button, FormGroup, Label, InputGroup, InputGroupAddon,
-  InputGroupText, Collapse, Form
+  InputGroupText, Collapse, Form, Row, Col
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
@@ -10,7 +10,9 @@ import 'react-table/react-table.css';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import alasql from 'alasql';
 class Produtos extends Component {
 
   columns = [
@@ -26,19 +28,12 @@ class Produtos extends Component {
       headerClassName: "text-left",
       filterable: true,
       Cell: props => <span>{this.dateFormat(props.original.data_incluiu)}</span>
-    }, 
-    {
-      Header: 'Código',
-      accessor: "codigo_produto",
-      filterable: true,
-      headerClassName: "text-left",
     },
     {
       Header: 'Produto',
       accessor: 'nome_produto',
       filterable: true,
       headerClassName: "text-left",
-
     },
     {
       Header: 'Quantidade',
@@ -74,6 +69,7 @@ class Produtos extends Component {
       dtini: new Date(),
       dtfim: new Date(),
       showFiltros: true,
+      visaoGrafico: "qtd",
     };
   }
 
@@ -90,8 +86,8 @@ class Produtos extends Component {
     if (dados) {
 
       let produtos = [];
-      dados.forEach(r => { 
-        r.produtos.forEach(p =>{
+      dados.forEach(r => {
+        r.produtos.forEach(p => {
           p._id = r._id;
           p.numero = r.numero;
           produtos.push(p);
@@ -113,11 +109,57 @@ class Produtos extends Component {
   }
 
   render() {
+
+    const page = this;
+
+    let query = `
+    select 
+      nome_produto, 
+      sum(quantidade) qtd,
+      sum(preco) vlr
+    from 
+      ?
+    group by
+      nome_produto`;
+    let dados = alasql(query, [this.state.produtos]);
+
+    let options = {
+      chart: {
+        type: 'column',
+        height: 300,
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        categories: dados.map(r => r.nome_produto),
+      },
+      yAxis: {
+        visible: false,
+      },
+      legend: {
+        enabled: false,
+      },
+      series: {
+        name: 'Quantidade',
+        data: dados.map(r => r[this.state.visaoGrafico]),
+      },
+      plotOptions: {
+        column: {
+          dataLabels: {
+            enabled: true
+          },
+          enableMouseTracking: false
+        }
+      },
+      credits: false,
+    }
+
     return (
       <div>
         <Card>
           <CardHeader>
-            <i className='fa fa-filter' />Filtros
+            <i className='fa fa-calendar' />Período
               <div className="card-header-actions">
               <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
                 <Button size="sm" color="secondary">
@@ -164,9 +206,27 @@ class Produtos extends Component {
 
         <Card>
           <CardHeader>
+            <i className='icon-chart' />Produtos
+            <select
+              className="small pull-right"
+              value={this.state.visaoGrafico}
+              onChange={(e) => this.setState({ visaoGrafico: e.target.value })}>
+              <option value="qtd">Quantidade</option>
+              <option value="vlr">Valor</option>
+            </select>
+          </CardHeader>
+          <CardBody>
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={options} />
+          </CardBody>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <i className='icon-tag' />Produtos
           </CardHeader>
-          <CardBody>          
+          <CardBody>
             <ReactTable
               data={this.state.produtos}
               columns={this.columns}
@@ -182,6 +242,7 @@ class Produtos extends Component {
             />
           </CardBody>
         </Card>
+
       </div>
     );
   }
