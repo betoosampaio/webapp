@@ -68,9 +68,9 @@ class IncluirPagamento extends Component {
   }
 
   SelecionarFormaDePagamento = (event) => {
+    event.preventDefault();
+
     let formaPagamento = this.state.lista.find(fm => String(fm.id_forma_pagamento) === this.state.id_forma_pagamento);
-
-
 
     let selecionado = {
       id_forma_pagamento: this.state.id_forma_pagamento,
