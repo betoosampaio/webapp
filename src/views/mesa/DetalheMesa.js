@@ -52,7 +52,9 @@ class DetalheMesa extends Component {
   vlrTxServico = () => { return this.state.valor_produtos * this.state.taxa_servico }
 
   vlrTotal = () => {
-    return (this.state.valor_produtos * (1 + this.state.taxa_servico)) - this.state.desconto;
+    let vlr = (this.state.valor_produtos * (1 + this.state.taxa_servico)).toFixed(2)/1;
+    vlr -= this.state.desconto;
+    return vlr;
   }
 
   vlrRestante = () => {
