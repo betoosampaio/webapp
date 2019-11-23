@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row, Button } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import CardMesa from './CardMesa';
-import NovaMesa from './NovaMesa';
+import IncluirMesa from './IncluirMesa';
 class ListaMesa extends Component {
 
   constructor(props) {
@@ -47,7 +47,7 @@ class ListaMesa extends Component {
             })
           }
         </Row>
-        <NovaMesa
+        <IncluirMesa
           show={this.state.modalNovaMesa}
           onHide={() => { this.setState({ modalNovaMesa: false }) }}
           mesaadicionada={this.mesaAdicionada} />

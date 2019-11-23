@@ -3,7 +3,7 @@ import { Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, InputGrou
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 
-class NovaMesa extends Component {
+class IncluirMesa extends Component {
 
   constructor(props) {
     super(props);
@@ -67,4 +67,4 @@ class NovaMesa extends Component {
   }
 }
 
-export default NovaMesa;
+export default IncluirMesa;
