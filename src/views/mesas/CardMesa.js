@@ -67,7 +67,7 @@ class CardMesa extends Component {
       <Link to={`/mesas/detalhemesa/${this.props.mesa._id}`} style={{ textDecoration: 'none', color: 'black' }}>
         <Card>
           <CardHeader>
-            <i className="icon-calculator"></i>
+            <i className="icon-note"></i>
             <span className="font-lg font-weight-bold">Mesa {this.props.mesa.numero}</span>
           </CardHeader>
           <CardBody>

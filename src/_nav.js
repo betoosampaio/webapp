@@ -2,8 +2,13 @@ export default {
   items: [
     {
       name: 'Mesas',
-      url: '/meuperfil',
+      url: '/mesas',
       icon: 'icon-grid',
+    },
+    {
+      name: 'Caixas',
+      url: '/caixas',
+      icon: 'icon-calculator',
     },
     {
       name: 'Operadores',
