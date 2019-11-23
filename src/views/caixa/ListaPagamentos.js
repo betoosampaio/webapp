@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, Table, Button} from 'reactstrap';
+import { Card, CardHeader, CardBody, Table} from 'reactstrap';
 
 class ListaPagamentos extends Component {
 

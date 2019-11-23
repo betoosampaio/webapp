@@ -66,7 +66,7 @@ class DetalheLancamento extends Component {
           </ListGroup>
         </Modal.Body>
         {
-          this.props.id_status == 1 && lancamento.descricao !== "Saldo Inicial" &&
+          this.props.id_status === 1 && lancamento.descricao !== "Saldo Inicial" &&
           <Modal.Footer>
             <Button variant="primary" color="danger" className="icon-close" onClick={() => this.remover(lancamento)}> Excluir</Button>
           </Modal.Footer>

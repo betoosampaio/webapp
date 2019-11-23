@@ -77,7 +77,7 @@ class ListaLancamentos extends Component {
       <div>
         <Card>
           <CardHeader><i className='fa fa-exchange' />Lançamentos
-          {this.props.id_status == 1 &&
+          {this.props.id_status === 1 &&
 
               <div className="card-header-actions">
                 <Button color="success" size="sm" className="mr-2" onClick={() => this.setState({ modalSuprimento: true })}>
