@@ -98,7 +98,8 @@ class Mesas extends Component {
   }
 
   vlrTotal = (mesa) => {
-    let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)) - mesa.desconto;
+    let vl = (mesa.valor_produtos * (1 + mesa.taxa_servico)).toFixed(2)/1;
+    vl -= mesa.desconto;
     return vl;
   }
 
