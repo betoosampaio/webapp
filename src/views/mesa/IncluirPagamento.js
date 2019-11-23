@@ -41,7 +41,11 @@ class IncluirPagamento extends Component {
 
     if (this.state.selecionados.length > 0) {
 
-      let pagamentos = this.state.selecionados.map(p => ({ id_forma_pagamento: p.id_forma_pagamento, valor: parseFloat(p.valor.replace('.', '').replace(',', '.')) }))
+      let pagamentos = this.state.selecionados.map(p => ({
+        id_forma_pagamento: p.id_forma_pagamento,
+        id_caixa: p.id_caixa,
+        valor: parseFloat(p.valor.replace('.', '').replace(',', '.'))
+      }))
 
       let obj = {
         id_mesa: this.props.id_mesa,
@@ -76,7 +80,7 @@ class IncluirPagamento extends Component {
       valor: this.state.valor,
       ds_forma_pagamento: formaPagamento.ds_forma_pagamento,
       id_caixa: this.state.id_caixa,
-      numero_caixa: this.state.numero_caixa,    
+      numero_caixa: this.state.numero_caixa,
     }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
@@ -93,11 +97,11 @@ class IncluirPagamento extends Component {
   }
 
   changeInputCaixa = (event) => {
-    const { value, options, selectedIndex} = event.target;
+    const { value, options, selectedIndex } = event.target;
     this.setState({ id_caixa: value, numero_caixa: options[selectedIndex].text });
   }
 
-  selecionarCaixa = (id_caixa, numero_caixa) =>{
+  selecionarCaixa = (id_caixa, numero_caixa) => {
     this.setState({ id_caixa: id_caixa, numero_caixa: numero_caixa });
   }
 
