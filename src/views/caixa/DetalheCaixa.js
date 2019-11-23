@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Row, Col, Card, CardBody, Button } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import ListaLancamentos from './ListaLancamentos';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Confirm from 'reactstrap-confirm';
 
 class DetalheCaixa extends Component {
 
@@ -25,6 +28,44 @@ class DetalheCaixa extends Component {
 
   atualizou = () => {
     this.obter(this.props.match.params.id)
+  }
+
+  reabrir = async () => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja reabrir esse caixa?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/caixa/reabrir', { "id_caixa": this.state._id });
+      if (dados) {
+        this.obter(this.props.match.params.id);
+        toast("Caixa reaberto com sucesso!", { className: "toast-success" });
+      }
+    }
+  }
+
+  fechar = async () => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja fechar esse caixa?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/caixa/fechar', { "id_caixa": this.state._id });
+      if (dados) {
+        this.obter(this.props.match.params.id);
+        toast("Caixa fechado com sucesso!", { className: "toast-success" });
+      }
+    }
   }
 
   render() {
@@ -103,13 +144,16 @@ class DetalheCaixa extends Component {
           <Col xs={12} sm={6}>
             <ListaLancamentos
               id_caixa={this.state._id}
+              id_status={this.state.id_status}
               atualizou={this.atualizou}
               saldo_inicial={this.state.saldo_inicial}
               data_abriu={this.state.data_abriu}
+              nome_operador={this.state.nome_operador}
               suprimentos={this.state.suprimentos}
               sangrias={this.state.sangrias} />
           </Col>
         </Row>
+        <ToastContainer />
       </div>
     );
   }

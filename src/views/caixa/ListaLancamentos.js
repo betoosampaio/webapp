@@ -6,6 +6,7 @@ import {
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import Modal from 'react-bootstrap/Modal';
 import serverRequest from '../../utils/serverRequest';
+import DetalheLancamento from './DetalheLancamento';
 
 class ListaLancamentos extends Component {
 
@@ -16,6 +17,8 @@ class ListaLancamentos extends Component {
       valor_sangria: "",
       modalSuprimento: false,
       valor_suprimento: "",
+      modalDetalheLancamento: false,
+      detalheLancamento: "",
     };
   }
 
@@ -56,8 +59,15 @@ class ListaLancamentos extends Component {
   }
 
   render() {
-    const { saldo_inicial, data_abriu, sangrias, suprimentos } = this.props;
-    let lancamentos = [{ data_incluiu: data_abriu || 0, descricao: "Saldo Inicial", valor: saldo_inicial }];
+    const { saldo_inicial, data_abriu, nome_operador, sangrias, suprimentos } = this.props;
+
+    let lancamentos = [{
+      data_incluiu: data_abriu || 0,
+      nome_operador: nome_operador,
+      descricao: "Saldo Inicial",
+      valor: saldo_inicial
+    }];
+
     if (sangrias)
       lancamentos = lancamentos.concat(sangrias.map(s => ({ descricao: "Sangria", ...s })))
     if (suprimentos)
@@ -67,20 +77,22 @@ class ListaLancamentos extends Component {
       <div>
         <Card>
           <CardHeader><i className='fa fa-exchange' />Lançamentos
-            <div className="card-header-actions">
-              <Button color="success" size="sm" className="mr-2" onClick={() => this.setState({ modalSuprimento: true })}>
-                <i className="icon-plus mr-1"></i>Suprimento
+          {this.props.id_status == 1 &&
+
+              <div className="card-header-actions">
+                <Button color="success" size="sm" className="mr-2" onClick={() => this.setState({ modalSuprimento: true })}>
+                  <i className="icon-plus mr-1"></i>Suprimento
               </Button>
-              <Button color="danger" size="sm" onClick={() => this.setState({ modalSangria: true })}>
-                <i className="icon-plus mr-1"></i>Sangria
+                <Button color="danger" size="sm" onClick={() => this.setState({ modalSangria: true })}>
+                  <i className="icon-plus mr-1"></i>Sangria
               </Button>
-            </div>
+              </div>
+            }
           </CardHeader>
           <CardBody>
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
-                  <th>Data</th>
                   <th>Tipo</th>
                   <th>Valor</th>
                 </tr>
@@ -91,8 +103,8 @@ class ListaLancamentos extends Component {
                     return (
                       <tr
                         key={obj.data_incluiu}
+                        onClick={() => this.setState({ modalDetalheLancamento: true, detalheLancamento: obj })}
                         style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
-                        <td>{new Date(obj.data_incluiu).toLocaleString()}</td>
                         <td>{obj.descricao}</td>
                         <td>R$ {parseFloat(obj.valor).toFixed(2)}</td>
                       </tr>
@@ -169,6 +181,13 @@ class ListaLancamentos extends Component {
             </Modal.Footer>
           </form>
         </Modal>
+        <DetalheLancamento
+          show={this.state.modalDetalheLancamento}
+          onHide={() => { this.setState({ modalDetalheLancamento: false }) }}
+          lancamento={this.state.detalheLancamento}
+          id_caixa={this.props.id_caixa}
+          id_status={this.props.id_status}
+          atualizou={this.props.atualizou} />
       </div>
     )
   }
