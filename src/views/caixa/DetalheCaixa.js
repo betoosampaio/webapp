@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Card, CardBody, Button } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import ListaLancamentos from './ListaLancamentos';
+import ListaPagamentos from './ListaPagamentos';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Confirm from 'reactstrap-confirm';
@@ -151,6 +152,9 @@ class DetalheCaixa extends Component {
               nome_operador={this.state.nome_operador}
               suprimentos={this.state.suprimentos}
               sangrias={this.state.sangrias} />
+          </Col>
+          <Col xs={12} sm={6}>
+            <ListaPagamentos/>
           </Col>
         </Row>
         <ToastContainer />
