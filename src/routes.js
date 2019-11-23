@@ -20,6 +20,7 @@ const RelatorioMesas = React.lazy(() => import('./views/relatorio/Mesas'));
 const RelatorioProdutos = React.lazy(() => import('./views/relatorio/Produtos'));
 const RelatorioPagamentos = React.lazy(() => import('./views/relatorio/Pagamentos'));
 const ListaCaixa = React.lazy(() => import('./views/caixa/ListaCaixa'));
+const DetalheCaixa = React.lazy(() => import('./views/caixa/DetalheCaixa'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -44,6 +45,7 @@ const routes = [
   { path: '/relatorio/produtos', name: 'Relatório Produtos', component: RelatorioProdutos },
   { path: '/relatorio/pagamentos', name: 'Relatório Pagamentos', component: RelatorioPagamentos },
   { path: '/caixas/', exact: true, name: 'Caixas', component: ListaCaixa },
+  { path: '/caixas/detalhe/:id', name: 'Detalhe Caixa', component: DetalheCaixa },
   
 ];
 

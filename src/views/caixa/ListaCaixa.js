@@ -32,8 +32,12 @@ class ListaCaixa extends Component {
       Header: 'Status',
       accessor: "aberta",
       headerClassName: "text-left",
-      sortable: false,
       Cell: props => <span>{props.original.status}</span>
+    },
+    {
+      Header: 'Responsável',
+      accessor: "nome_operador",
+      headerClassName: "text-left",
     },
     {
       Header: 'Acessar',
