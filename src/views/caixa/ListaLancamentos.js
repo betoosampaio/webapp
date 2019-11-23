@@ -61,12 +61,12 @@ class ListaLancamentos extends Component {
     if (sangrias)
       lancamentos = lancamentos.concat(sangrias.map(s => ({ descricao: "Sangria", ...s })))
     if (suprimentos)
-      lancamentos = lancamentos.concat(suprimentos.map(s => ({ descricao: "Suprimentos", ...s })))
+      lancamentos = lancamentos.concat(suprimentos.map(s => ({ descricao: "Suprimento", ...s })))
 
     return (
       <div>
         <Card>
-          <CardHeader><i className='fa fa-money' />Lançamentos
+          <CardHeader><i className='fa fa-exchange' />Lançamentos
             <div className="card-header-actions">
               <Button color="success" size="sm" className="mr-2" onClick={() => this.setState({ modalSuprimento: true })}>
                 <i className="icon-plus mr-1"></i>Suprimento

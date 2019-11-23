@@ -100,7 +100,7 @@ class DetalheCaixa extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12}>
+          <Col xs={12} sm={6}>
             <ListaLancamentos
               id_caixa={this.state._id}
               atualizou={this.atualizou}
