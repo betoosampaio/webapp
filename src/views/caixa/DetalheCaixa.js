@@ -23,6 +23,10 @@ class DetalheCaixa extends Component {
     }
   }
 
+  atualizou = () => {
+    this.obter(this.props.match.params.id)
+  }
+
   render() {
     return (
       <div>
@@ -97,7 +101,13 @@ class DetalheCaixa extends Component {
         </Row>
         <Row>
           <Col xs={12}>
-            <ListaLancamentos />
+            <ListaLancamentos
+              id_caixa={this.state._id}
+              atualizou={this.atualizou}
+              saldo_inicial={this.state.saldo_inicial}
+              data_abriu={this.state.data_abriu}
+              suprimentos={this.state.suprimentos}
+              sangrias={this.state.sangrias} />
           </Col>
         </Row>
       </div>

@@ -38,7 +38,7 @@ class ResumoMesa extends Component {
   }
 
   changeInputDesconto = (event) => {
-    if (event.target.name == "desconto") {
+    if (event.target.name === "desconto") {
       let vlr = event.target.value.replace('.', '').replace(',', '.');
 
 

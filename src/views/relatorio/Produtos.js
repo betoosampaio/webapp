@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Card, CardHeader, CardBody, Button, FormGroup, Label, InputGroup, InputGroupAddon,
-  InputGroupText, Collapse, Form, Row, Col
+  InputGroupText, Collapse, Form
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
