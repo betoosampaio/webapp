@@ -4,6 +4,7 @@ import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import SelectFormasPagamento from '../../components/SelectFormasPagamento';
+import SelectCaixasAbertos from '../../components/SelectCaixasAbertos';
 
 
 class IncluirPagamento extends Component {
@@ -14,7 +15,6 @@ class IncluirPagamento extends Component {
       valor: '',
       id_forma_pagamento: '',
       ds_forma_pagamento: '',
-      nome_operador: '',
       lista: [],
       selecionados: [],
 
@@ -37,7 +37,7 @@ class IncluirPagamento extends Component {
     }
   }
 
-  incluirPagamento = async () => {
+  confirmar = async () => {
 
     if (this.state.selecionados.length > 0) {
 
@@ -53,7 +53,6 @@ class IncluirPagamento extends Component {
           valor: '',
           id_forma_pagamento: '',
           ds_forma_pagamento: '',
-          nome_operador: '',
           selecionados: [],
         })
         this.props.pagamentoincluso();
@@ -67,7 +66,7 @@ class IncluirPagamento extends Component {
     this.setState({ selecionados: selecionados })
   }
 
-  SelecionarFormaDePagamento = (event) => {
+  incluir = (event) => {
     event.preventDefault();
 
     let formaPagamento = this.state.lista.find(fm => String(fm.id_forma_pagamento) === this.state.id_forma_pagamento);
@@ -76,8 +75,8 @@ class IncluirPagamento extends Component {
       id_forma_pagamento: this.state.id_forma_pagamento,
       valor: this.state.valor,
       ds_forma_pagamento: formaPagamento.ds_forma_pagamento,
-      nome_operador: formaPagamento.nome_operador,
-
+      id_caixa: this.state.id_caixa,
+      numero_caixa: this.state.numero_caixa,    
     }
     selecionado.id = this.state.selecionados.reduce((prev, cur) => (prev.id > cur.id) ? prev.id : cur.id, 0) + 1;
 
@@ -91,6 +90,15 @@ class IncluirPagamento extends Component {
 
   changeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  changeInputCaixa = (event) => {
+    const { value, options, selectedIndex} = event.target;
+    this.setState({ id_caixa: value, numero_caixa: options[selectedIndex].text });
+  }
+
+  selecionarCaixa = (id_caixa, numero_caixa) =>{
+    this.setState({ id_caixa: id_caixa, numero_caixa: numero_caixa });
   }
 
   render() {
@@ -109,7 +117,7 @@ class IncluirPagamento extends Component {
         </Modal.Header>
         <Modal.Body>
 
-          <form onSubmit={this.SelecionarFormaDePagamento} >
+          <form onSubmit={this.incluir} >
             <FormGroup>
               <Label>Valor:</Label>
               <InputGroup>
@@ -122,7 +130,7 @@ class IncluirPagamento extends Component {
                   name="valor"
                   value={this.state.valor}
                   onChange={this.changeInput}
-                  autocomplete="off"
+                  autoComplete="off"
                   required
                 />
               </InputGroup>
@@ -139,12 +147,28 @@ class IncluirPagamento extends Component {
                   name="id_forma_pagamento"
                   value={this.state.id_forma_pagamento}
                   onChange={this.changeInput}
-                  required
-                >
-                </SelectFormasPagamento>
+                  required />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Caixa:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className='icon-calculator'></i></InputGroupText>
+                </InputGroupAddon>
+
+                <SelectCaixasAbertos
+                  name="id_caixa"
+                  value={this.state.id_caixa}
+                  onChange={this.changeInputCaixa}
+                  selecionar={this.selecionarCaixa}
+                  required />
                 <Button className="ml-2" color="success" type="submit">Incluir</Button>
               </InputGroup>
             </FormGroup>
+
+
           </form>
           <Table striped bordered hover responsive>
             <thead className="thead-light">
@@ -152,6 +176,7 @@ class IncluirPagamento extends Component {
 
                 <th>Valor</th>
                 <th>Forma de Pagamento</th>
+                <th>Caixa</th>
                 <th>Remover</th>
               </tr>
             </thead>
@@ -162,7 +187,7 @@ class IncluirPagamento extends Component {
 
                     <td>{obj.valor}</td>
                     <td>{obj.ds_forma_pagamento}</td>
-
+                    <td>{obj.numero_caixa}</td>
                     <td>
                       <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
                         <i className="icon-close"></i>
@@ -176,7 +201,7 @@ class IncluirPagamento extends Component {
         </Modal.Body>
         <Modal.Footer>
 
-          <Button color="success" onClick={() => this.incluirPagamento()} >Confirmar</Button>
+          <Button color="success" onClick={() => this.confirmar()} >Confirmar</Button>
 
         </Modal.Footer>
 
