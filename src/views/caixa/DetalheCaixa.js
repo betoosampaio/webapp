@@ -142,7 +142,7 @@ class DetalheCaixa extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
+          <Col xs={12} md={5}>
             <ListaLancamentos
               id_caixa={this.state._id}
               id_status={this.state.id_status}
@@ -153,8 +153,9 @@ class DetalheCaixa extends Component {
               suprimentos={this.state.suprimentos}
               sangrias={this.state.sangrias} />
           </Col>
-          <Col xs={12} sm={6}>
-            <ListaPagamentos/>
+          <Col xs={12} md={7}>
+            <ListaPagamentos
+              pagamentos={this.state.pagamentos} />
           </Col>
         </Row>
         <ToastContainer />
