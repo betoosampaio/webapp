@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Card, CardHeader, CardBody, Table, Button,
+  Card, CardHeader, CardBody, CardFooter, Table, Button,
   FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText
 } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
@@ -59,7 +59,8 @@ class ListaLancamentos extends Component {
   }
 
   render() {
-    const { saldo_inicial, data_abriu, nome_operador, sangrias, suprimentos } = this.props;
+    const { saldo_inicial, data_abriu, nome_operador, sangrias, suprimentos,
+      valor_sangrias, valor_suprimentos } = this.props;
 
     let lancamentos = [{
       data_incluiu: data_abriu || 0,
@@ -72,6 +73,8 @@ class ListaLancamentos extends Component {
       lancamentos = lancamentos.concat(sangrias.map(s => ({ descricao: "Sangria", ...s })))
     if (suprimentos)
       lancamentos = lancamentos.concat(suprimentos.map(s => ({ descricao: "Suprimento", ...s })))
+
+    lancamentos = lancamentos.sort((a,b) => new Date(a.data_incluiu) - new Date(b.data_incluiu));
 
     return (
       <div>
@@ -106,7 +109,9 @@ class ListaLancamentos extends Component {
                         onClick={() => this.setState({ modalDetalheLancamento: true, detalheLancamento: obj })}
                         style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
                         <td>{obj.descricao}</td>
-                        <td>R$ {parseFloat(obj.valor).toFixed(2)}</td>
+                        <td style={{ color: obj.descricao === "Sangria" ? "red" : "black" }}>
+                          R$ {parseFloat(obj.valor).toFixed(2)}
+                        </td>
                       </tr>
                     );
                   })
@@ -114,6 +119,10 @@ class ListaLancamentos extends Component {
               </tbody>
             </Table>
           </CardBody>
+          <CardFooter>
+            <b>Total</b>
+            <b className="pull-right">R$ {parseFloat(saldo_inicial + valor_suprimentos - valor_sangrias).toFixed(2)}</b>
+          </CardFooter>
         </Card>
         <Modal
           size="lg"

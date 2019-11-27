@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
@@ -39,6 +39,8 @@ class ListaPagamentos extends Component {
 
   render() {
     let pagamentos = this.props.pagamentos || [];
+    let {valor_pagamentos} = this.props;
+
     return (
       <div>
         <Card>
@@ -58,6 +60,10 @@ class ListaPagamentos extends Component {
               loadingText="Carregando..."
               className="table" />
           </CardBody>
+          <CardFooter>
+            <b>Total</b>
+            <b className="pull-right">R$ {parseFloat(valor_pagamentos).toFixed(2)}</b>
+          </CardFooter>
         </Card>
       </div>
     )
