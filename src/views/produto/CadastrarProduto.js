@@ -20,6 +20,8 @@ class CadastrarProduto extends Component {
       preco: "",
       id_menu: "",
       promocao: 0,
+      vegano: 0,
+      vegetariano: 0,
       imagem: "",
       visivel: 1,
 
@@ -293,6 +295,20 @@ class CadastrarProduto extends Component {
               <Label>Em promoção:</Label>
               <InputGroup>
                 <AppSwitch name="promocao" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.promocao ? true : false} onChange={this.changeSwitch} />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Vegano:</Label>
+              <InputGroup>
+                <AppSwitch name="vegano" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.vegano ? true : false} onChange={this.changeSwitch} />
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Vegetariano:</Label>
+              <InputGroup>
+                <AppSwitch name="vegetariano" className={'mx-1'} variant={'pill'} color={'success'} checked={this.state.vegetariano ? true : false} onChange={this.changeSwitch} />
               </InputGroup>
             </FormGroup>
 
