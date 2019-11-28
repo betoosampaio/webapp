@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col, Card, CardBody, Button } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody, CardFooter, Button, ButtonGroup } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import ListaLancamentos from './ListaLancamentos';
 import ListaPagamentos from './ListaPagamentos';
+import ResumoPagamentos from './ResumoPagamentos';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Confirm from 'reactstrap-confirm';
@@ -16,6 +17,7 @@ class DetalheCaixa extends Component {
       valor_pagamentos: 0,
       valor_suprimentos: 0,
       valor_sangrias: 0,
+      visao_pagamento: "resumo",
     };
   }
 
@@ -86,6 +88,8 @@ class DetalheCaixa extends Component {
   }
 
   render() {
+    let rSelected = 1;
+
     return (
       <div>
         <Row className="mb-3">
@@ -178,9 +182,38 @@ class DetalheCaixa extends Component {
               sangrias={this.state.sangrias} />
           </Col>
           <Col xs={12} md={7}>
-            <ListaPagamentos
-              pagamentos={this.state.pagamentos}
-              valor_pagamentos={this.state.valor_pagamentos} />
+
+
+            <Card>
+              <CardHeader><i className='fa fa-dollar' /> Pagamentos
+              <div className="card-header-actions">
+                  <ButtonGroup color="info">
+                    <Button
+                      onClick={() => this.setState({ visao_pagamento: "resumo" })}
+                      active={this.state.visao_pagamento === "resumo"}>Resumo</Button>
+                    <Button
+                      onClick={() => this.setState({ visao_pagamento: "analitico" })}
+                      active={this.state.visao_pagamento === "analitico"}>Analítico</Button>
+                  </ButtonGroup>
+                </div>
+              </CardHeader>
+              <CardBody>
+                {this.state.visao_pagamento === "resumo" &&
+                  <ResumoPagamentos
+                    pagamentos={this.state.pagamentos} />
+                }
+
+                {this.state.visao_pagamento === "analitico" &&
+                  <ListaPagamentos
+                    pagamentos={this.state.pagamentos}
+                    valor_pagamentos={this.state.valor_pagamentos} />
+                }
+              </CardBody>
+              <CardFooter>
+                <b>Total</b>
+                <b className="pull-right">R$ {parseFloat(this.state.valor_pagamentos).toFixed(2)}</b>
+              </CardFooter>
+            </Card>
           </Col>
         </Row>
         <ToastContainer />

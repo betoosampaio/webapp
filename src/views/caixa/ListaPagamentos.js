@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter } from 'reactstrap';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
@@ -21,7 +20,7 @@ class ListaPagamentos extends Component {
       Header: 'Valor',
       accessor: "valor",
       headerClassName: "text-left",
-      Cell: props => <span>{this.moneyFormat(props.value)}</span>
+      Cell: props => <span>R$ {props.value.toFixed(2)}</span>
     }
   ]
 
@@ -30,42 +29,22 @@ class ListaPagamentos extends Component {
     this.state = {};
   }
 
-  moneyFormat = (valor) => {
-    if (valor)
-      return `R$ ${valor.toFixed(2)}`;
-    else
-      return valor;
-  }
-
   render() {
     let pagamentos = this.props.pagamentos || [];
-    let {valor_pagamentos} = this.props;
 
     return (
-      <div>
-        <Card>
-          <CardHeader><i className='fa fa-dollar' /> Pagamentos
-          </CardHeader>
-          <CardBody>
-            <ReactTable
-              data={pagamentos}
-              columns={this.columns}
-              minRows={0}
-              previousText="Anterior"
-              nextText="Próxima"
-              noDataText="Nenhum registro encontrado"
-              pageText="Página"
-              ofText="de"
-              rowsText="registros"
-              loadingText="Carregando..."
-              className="table" />
-          </CardBody>
-          <CardFooter>
-            <b>Total</b>
-            <b className="pull-right">R$ {parseFloat(valor_pagamentos).toFixed(2)}</b>
-          </CardFooter>
-        </Card>
-      </div>
+      <ReactTable
+        data={pagamentos}
+        columns={this.columns}
+        minRows={0}
+        previousText="Anterior"
+        nextText="Próxima"
+        noDataText="Nenhum registro encontrado"
+        pageText="Página"
+        ofText="de"
+        rowsText="registros"
+        loadingText="Carregando..."
+        className="table" />
     )
   }
 }
