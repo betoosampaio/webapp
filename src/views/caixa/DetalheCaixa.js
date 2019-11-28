@@ -13,6 +13,9 @@ class DetalheCaixa extends Component {
 
     super(props);
     this.state = {
+      valor_pagamentos: 0,
+      valor_suprimentos: 0,
+      valor_sangrias: 0,
     };
   }
 
@@ -23,6 +26,7 @@ class DetalheCaixa extends Component {
   obter = async (id) => {
     let dados = await serverRequest.request('/caixa/obter', { "id_caixa": id });
     if (dados) {
+      dados[0].valor_pagamentos = this.obterValorPagamentos(dados[0].pagamentos);
       this.setState(dados[0]);
     }
   }
@@ -67,6 +71,18 @@ class DetalheCaixa extends Component {
         toast("Caixa fechado com sucesso!", { className: "toast-success" });
       }
     }
+  }
+
+  obterValorPagamentos(pagamentos) {
+    return pagamentos.reduce((sum, p) => sum + p.valor, 0);
+  }
+
+  obterValorEntradas() {
+    return this.state.saldo_inicial + this.state.valor_suprimentos + this.state.valor_pagamentos;
+  }
+
+  obterValorTotal() {
+    return this.obterValorEntradas() - this.state.valor_sangrias;
   }
 
   render() {
@@ -119,21 +135,27 @@ class DetalheCaixa extends Component {
                     <div className="callout callout-success">
                       <small className="text-muted">Entradas</small>
                       <br />
-                      <strong className="h4"></strong>
+                      <strong className="h4">
+                        R$ {this.obterValorEntradas().toFixed(2)}
+                      </strong>
                     </div>
                   </Col>
                   <Col sm="4">
                     <div className="callout callout-danger">
                       <small className="text-muted">Saídas</small>
                       <br />
-                      <strong className="h4"></strong>
+                      <strong className="h4">
+                        R$ {this.state.valor_sangrias.toFixed(2)}
+                      </strong>
                     </div>
                   </Col>
                   <Col sm="4">
                     <div className="callout callout-info">
                       <small className="text-muted">Saldo Final</small>
                       <br />
-                      <strong className="h4"></strong>
+                      <strong className="h4">
+                        R$ {this.obterValorTotal().toFixed(2)}
+                      </strong>
                     </div>
                   </Col>
                 </Row>
@@ -142,19 +164,23 @@ class DetalheCaixa extends Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
+          <Col xs={12} md={5}>
             <ListaLancamentos
               id_caixa={this.state._id}
               id_status={this.state.id_status}
               atualizou={this.atualizou}
               saldo_inicial={this.state.saldo_inicial}
+              valor_sangrias={this.state.valor_sangrias}
+              valor_suprimentos={this.state.valor_suprimentos}
               data_abriu={this.state.data_abriu}
               nome_operador={this.state.nome_operador}
               suprimentos={this.state.suprimentos}
               sangrias={this.state.sangrias} />
           </Col>
-          <Col xs={12} sm={6}>
-            <ListaPagamentos/>
+          <Col xs={12} md={7}>
+            <ListaPagamentos
+              pagamentos={this.state.pagamentos}
+              valor_pagamentos={this.state.valor_pagamentos} />
           </Col>
         </Row>
         <ToastContainer />
