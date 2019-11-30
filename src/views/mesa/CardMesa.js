@@ -28,6 +28,13 @@ class CardMesa extends Component {
     return ` ${d ? d + "d" : ""} ${h ? h + "h" : ""} ${m}m`;
   }
 
+  componentDidMount() {
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 6000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   valorProdutos = (produtos) => {
     let vl = 0;
     if (produtos)
