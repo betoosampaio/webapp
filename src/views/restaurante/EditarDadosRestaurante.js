@@ -543,7 +543,7 @@ class EditarDadosRestaurante extends Component {
 
         </CardBody>
         <Modal.Footer>
-          <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/perfil' }} >Cancelar</Button>
+          <Button variant="primary" color="danger" onClick={() => { window.location.href = '#/restaurante' }} >Cancelar</Button>
           <Button variant="primary" color="success" onClick={this.editar}  >Confirmar</Button>
         </Modal.Footer>
       </Card>
