@@ -6,6 +6,9 @@ import SuggestMunicipio from '../../components/SuggestMunicipio';
 import SelectEspecialidade from '../../components/SelectEspecialidade';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
+import Foto from '../../components/Foto';
+import UploadFoto from '../../components/UploadFoto';
+
 
 
 class EditarDadosRestaurante extends Component {
@@ -15,6 +18,7 @@ class EditarDadosRestaurante extends Component {
     super(props);
     this.state = {
       showConfirm: false,
+      imagem: "",
       razao_social: "",
       cep: "",
       logradouro: "",
@@ -272,7 +276,7 @@ class EditarDadosRestaurante extends Component {
       obj.cnpj = obj.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
       obj.cep = obj.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 
-      this.setState( obj );
+      this.setState(obj);
 
     }
   }
@@ -340,11 +344,16 @@ class EditarDadosRestaurante extends Component {
         <CardBody>
 
           <FormGroup>
+            <Label>Foto:</Label>
+            <UploadFoto name="imagem" onChange={this.changeInput}></UploadFoto>
+          </FormGroup>
+
+          <FormGroup>
+            <Foto src={this.state.value} height="50" width="50"></Foto>
+            <p></p>
             <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
             <p></p>
             <Label><b>Razão Social do Restaurante: </b></Label>
-
-
             <InputGroup>
               <InputGroupAddon addonType="append">
                 <InputGroupText><i className="icon-cup"></i></InputGroupText>

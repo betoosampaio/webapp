@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Input, Button, FormFeedback } from 'reactstrap';
 import { UncontrolledTooltip } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
+import UploadFoto from '../../components/UploadFoto';
 const stateName = "Step4";
 
 
@@ -14,6 +15,7 @@ class Step4 extends Component {
       login: '',
       senha: '',
       validarSenha: '',
+      imagem: "",
 
       validacao: {
         codigo_restaurante: { valid: false, invalid: false, msg: '' },
@@ -22,7 +24,6 @@ class Step4 extends Component {
         validarSenha: { valid: false, invalid: false, msg: '' },
       },
     }
-
   };
 
   prosseguir = (event) => {
@@ -264,9 +265,13 @@ class Step4 extends Component {
           </InputGroup>
         </FormGroup>
 
+        <FormGroup>
+          <Label>Imagem de perfil do Restaurante:</Label>
+          <UploadFoto name="imagem" onChange={this.changeInput}></UploadFoto>
+        </FormGroup>
 
         <Button onClick={this.retornar} type="button" className="pull-left" color="secondary"><i className="icon-arrow-left"></i> Retornar</Button>
-        <Button onClick={this.cadastrarRestaurante} type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> FInalizar</Button>
+        <Button onClick={this.cadastrarRestaurante} type="submit" className="pull-right" color="success"><i className="fa fa-check"></i> Finalizar</Button>
 
       </Form>
     );
