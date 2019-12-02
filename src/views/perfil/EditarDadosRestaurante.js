@@ -315,8 +315,6 @@ class EditarDadosRestaurante extends Component {
       senha: this.state.senha,
     }
 
-    //console.log(obj);
-
     let dados = await serverRequest.request('/restaurante/editar/dadosRestaurante', obj);
     if (dados) {
       window.location.href = '#/perfil';
