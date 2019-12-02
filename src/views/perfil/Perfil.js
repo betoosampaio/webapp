@@ -1,129 +1,153 @@
 import React, { Component } from 'react';
+import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
-import { Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import Confirm from 'reactstrap-confirm';
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
 class Perfil extends Component {
+
+  columns = [
+    {
+      Header: 'Perfil',
+      accessor: 'ds_perfil',
+      headerClassName: "text-left",
+    },
+    {
+      Header: 'Ativo',
+      accessor: 'ativo',
+      headerClassName: "text-left",
+      Cell: props => <span>{props.value ? "Sim" : "Não"}</span>
+    },
+    {
+      Header: 'Editar',
+      accessor: 'id_perfil',
+      headerClassName: "text-left",
+      sortable: false,
+      Cell: props =>
+        <Link to={{ pathname: `/perfil/editar/${props.value}` }}>
+          <Button color="secondary" size="sm">
+            <i className="icon-note"></i>
+          </Button>
+        </Link>
+    },
+    {
+      Header: 'Excluir',
+      accessor: 'id_perfil',
+      headerClassName: "text-left",
+      sortable: false,
+      Cell: props =>
+        <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
+          <i className="icon-close"></i>
+        </Button>
+    },
+  ]
+
   constructor(props) {
     super(props);
 
     this.state = {
-      dados: {},
+      lista: [],
+      search: "",
+      somenteAtivos: true,
     };
   }
 
   componentDidMount() {
-    this.obterDados();
+    this.obterLista();
   }
 
-  obterDados = async () => {
-    let dados = await serverRequest.request('/restaurante/obter');
-
+  obterLista = async () => {
+    let dados = await serverRequest.request('/perfil/listar');
     if (dados) {
-
-      let obj = dados[0];
-
-
-      obj.cpf_administrador = obj.cpf_administrador.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-      obj.celular = obj.celular.toString().replace(/(\d{2})(\d{5})(\d{3})/, "($1) $2-$3");
-      obj.cnpj = obj.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
-      obj.cep = obj.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
-
-
-      this.setState({ dados: obj });
-
+      this.setState({ lista: dados });
     }
   }
 
+  remover = async (id) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja remover este perfil?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
 
-
+    if (confirm) {
+      let dados = await serverRequest.request('/perfil/remover', { "id_perfil": id });
+      if (dados) this.obterLista();
+    }
+  }
+  changeSwitch = (event) => {
+    this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
+  }
 
   render() {
+
+    let lista = this.state.lista
+    if (this.state.somenteAtivos) lista = lista.filter(row => row.ativo);
+    if (this.state.search) {
+      lista = lista.filter(row => {
+        return (new RegExp(this.state.search, "i")).test(row.ds_perfil)
+      })
+    }
+
     return (
+
       <div>
         <Card>
           <CardHeader>
-            <i className='icon-people'></i>&nbsp;<b>Dados Usuário</b>
-            <div className="card-header-actions">
-              <Link to="/perfil/editarDadosPessoais">
-                <Button color="secondary" size="sm">
-                  <i className="icon-note"></i>&nbsp;Editar
-              </Button>
+            <i className='icon-people'></i>&nbsp;Perfis Cadastrados
+          <div className="card-header-actions">
+              <Link to="/perfil/cadastrar">
+                <Button color="success" size="sm">
+                  <i className="icon-user-follow"></i>&nbsp;Cadastrar
+                </Button>
               </Link>
             </div>
           </CardHeader>
           <CardBody>
-            <ListGroup>
-              <ListGroupItem><b>Nome administrador:</b> {this.state.dados.nome_administrador}</ListGroupItem>
-              <ListGroupItem><b>CPF administrador:</b> {this.state.dados.cpf_administrador}</ListGroupItem>
-              <ListGroupItem><b>Email:</b> {this.state.dados.email}</ListGroupItem>
-              <ListGroupItem><b>Celular:</b> {this.state.dados.celular}</ListGroupItem>
-            </ListGroup>
+
+            <Form inline className="mb-3">
+              <FormGroup>
+                <Label className="mr-2">Procurar:</Label>
+                <input
+                  value={this.state.search}
+                  onChange={e => this.setState({ search: e.target.value })}
+                />
+              </FormGroup>
+
+              <FormGroup className="ml-auto">
+                <Label className="mr-2">Somente ativos:</Label>
+                <CustomInput
+                  id="somenteAtivos"
+                  type="switch"
+                  name="somenteAtivos"
+                  checked={this.state.somenteAtivos ? true : false}
+                  onChange={this.changeSwitch}
+                  valid
+                />
+              </FormGroup>
+            </Form>
+
+            <ReactTable
+              data={lista}
+              columns={this.columns}
+              minRows={0}
+              previousText="Anterior"
+              nextText="Próxima"
+              noDataText="Nenhum registro encontrado"
+              pageText="Página"
+              ofText="de"
+              rowsText="registros"
+              loadingText="Carregando..."
+              className="table"
+            />
           </CardBody>
-        </Card>
-        <Card>
-          <CardHeader>
-            <i className='icon-cup'></i>&nbsp;<b>Dados do Restaurante</b>
-            <div className="card-header-actions">
-              <Link to="/perfil/editarDadosRestaurante">
-                <Button color="secondary" size="sm">
-                  <i className="icon-note"></i>&nbsp;Editar
-              </Button>
-              </Link>
-            </div>
-          </CardHeader>
-          <CardBody>
-            <ListGroup>
-              <ListGroupItem><b>CNPJ: </b>{this.state.dados.cnpj}</ListGroupItem>
-              <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
-              <ListGroupItem><b>Razão social: </b>{this.state.dados.razao_social}</ListGroupItem>
-              <ListGroupItem><b>CEP: </b>{this.state.dados.cep}</ListGroupItem>
-              <ListGroupItem>
-                <b>Endereço: </b>{this.state.dados.logradouro}
-                <b>, </b>{this.state.dados.numero}
-                <b> </b>{this.state.dados.complemento}
-                <b> - </b>{this.state.dados.bairro}
-              </ListGroupItem>
-              <ListGroupItem><b>Munícipio: </b>{this.state.dados.municipio}
-                <b> - Estado: </b>{this.state.dados.uf}
-              </ListGroupItem>
-            </ListGroup>
-          </CardBody>
-        </Card>
-        <Card>
-          <CardHeader>
-            <i className='icon-credit-card'></i>&nbsp;<b>Dados Bancário</b>
-            <div className="card-header-actions">
-              <Link to="/perfil/editarDadosBancario">
-                <Button color="secondary" size="sm">
-                  <i className="icon-note"></i>&nbsp;Editar
-              </Button>
-              </Link>
-            </div>
-          </CardHeader>
-
-
-
-          <CardBody>
-            <ListGroup>
-              <ListGroupItem><b>Aceita pagamentos pelo App: </b> {this.state.dados.pagamento_app === 1 ? 'Sim' : 'Não'} </ListGroupItem>
-            </ListGroup>
-
-            {this.state.dados.pagamento_app === 1 &&
-              <ListGroup>
-                <ListGroupItem><b>Banco: </b>{this.state.dados.codigo_banco} - {this.state.dados.nome_banco}</ListGroupItem>
-                <ListGroupItem><b>Tipo cadastro conta: </b>{this.state.dados.tipo_cadastro_conta}</ListGroupItem>
-                <ListGroupItem><b>Tipo conta: </b>{this.state.dados.tipo_conta}</ListGroupItem>
-                <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
-                <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
-              </ListGroup>}
-
-          </CardBody>
-
-        </Card>
+        </Card>      
       </div>
-
-
     );
   }
 }

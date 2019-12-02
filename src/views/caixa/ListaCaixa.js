@@ -125,7 +125,7 @@ class ListaCaixa extends Component {
       <div>
         <Card>
           <CardHeader>
-            <i className='fa fa-calendar' />Período
+            <i className='fa fa-filter' />Filtro
               <div className="card-header-actions">
               <div onClick={() => { this.setState({ showFiltros: !this.state.showFiltros }); }}>
                 <Button size="sm" color="secondary">
@@ -134,10 +134,9 @@ class ListaCaixa extends Component {
               </div>
             </div>
           </CardHeader>
-          <CardBody>
-          </CardBody>
           <Collapse isOpen={this.state.showFiltros}>
             <CardBody>
+
               <Form inline onSubmit={this.consultar}>
                 <FormGroup>
                   <Label className="mr-2">Somente caixas abertos:</Label>

@@ -11,9 +11,20 @@ export default {
       icon: 'icon-calculator',
     },
     {
-      name: 'Operadores',
-      url: '/operador',
+      name: 'Usuários',
       icon: 'icon-people',
+      children: [
+        {
+          name: 'Operadores',
+          url: '/operador',
+          icon: 'icon-user',
+        },
+        {
+          name: 'Perfis',
+          url: '/perfil',
+          icon: 'icon-people',
+        },
+      ]
     },
     {
       name: 'Cardapio',
