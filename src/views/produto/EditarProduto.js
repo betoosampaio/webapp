@@ -4,7 +4,7 @@ import { AppSwitch } from '@coreui/react';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
-import UploadFoto from '../../components/UploadFoto';
+import UploadFotoProduto from '../../components/UploadFotoProduto';
 import Modal from 'react-bootstrap/Modal'
 
 class EditarProduto extends Component {
@@ -198,13 +198,13 @@ class EditarProduto extends Component {
 
           <FormGroup>
             <Label>Foto:</Label>
-            <UploadFoto
+            <UploadFotoProduto
               name="imagem"
               onChange={this.changeInput}
               path={this.state.imagem}
             >
 
-            </UploadFoto>
+            </UploadFotoProduto>
           </FormGroup>
 
         </CardBody>

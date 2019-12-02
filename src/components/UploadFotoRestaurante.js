@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import serverRequest from '../utils/serverRequest';
-import Foto from './Foto';
+import FotoRestaurante from './FotoRestaurante';
 
-class UploadFoto extends Component {
+class UploadFotoRestaurante extends Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ class UploadFoto extends Component {
     let form = new FormData();
     form.append('imagem', event.target.files[0]);
 
-    let dados = await serverRequest.requestForm('/produto/uploadimg', form);
+    let dados = await serverRequest.requestForm('/restaurante/uploadimg', form);
 
     this.props.onChange({ target: { name: name, value: dados } });
     this.setState({ path: dados });
@@ -44,7 +44,7 @@ class UploadFoto extends Component {
         <br />
         {
           (this.state.path || this.props.path)
-            ? <Foto src={this.state.path || this.props.path} alt=""></Foto>
+            ? <FotoRestaurante src={this.state.path || this.props.path} alt=""></FotoRestaurante>
             : <span />
         }
       </div>
@@ -53,4 +53,4 @@ class UploadFoto extends Component {
   }
 }
 
-export default UploadFoto;
+export default UploadFotoRestaurante;

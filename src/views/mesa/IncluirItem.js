@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import MaskedNumberInput from '../../components/MaskedNumberInput';
 import MultipleSelect from '../../components/MultipleSelect';
 import ReactDOMServer from 'react-dom/server';
-import Foto from '../../components/Foto';
+import FotoProduto from '../../components/FotoProduto';
 
 class IncluirItem extends Component {
 
@@ -104,7 +104,7 @@ class IncluirItem extends Component {
         if (el[0].value) {
           return ReactDOMServer.renderToStaticMarkup(
             <span>
-              <Foto src={el[0].dataset.imagem} height="30" width="30"></Foto>
+              <FotoProduto src={el[0].dataset.imagem} height="30" width="30"></FotoProduto>
               <span className="ml-2 text-muted">[{el[0].dataset.codigo}]</span>
               <span className="ml-2 font-weight-bold">{el[0].dataset.nome}</span>
               <div className="pull-right">R$ {parseFloat(el[0].dataset.preco).toFixed(2)}</div>
@@ -178,7 +178,7 @@ class IncluirItem extends Component {
                 {this.state.selecionados.map(obj => {
                   return (
                     <tr key={obj.id}>
-                      <td><Foto src={obj.imagem} height="50" width="50"></Foto></td>
+                      <td><FotoProduto src={obj.imagem} height="50" width="50"></FotoProduto></td>
                       <td>{obj.codigo_produto}</td>
                       <td>{obj.nome_produto}</td>
                       <td>R$ {parseFloat(obj.preco).toFixed(2)}</td>

@@ -6,6 +6,8 @@ import SelectEspecialidade from '../../components/SelectEspecialidade';
 import SuggestMunicipio from '../../components/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 import { UncontrolledTooltip } from 'reactstrap';
+import UploadFotoRestaurante from '../../components/UploadFotoRestaurante';
+
 
 const stateName = "Step2";
 
@@ -29,6 +31,8 @@ class Step2 extends Component {
       uf: 0,
       complemento: '',
       enderecoDisabled: false,
+      imagem: "",
+
       validacao: {
         cnpj: { valid: false, invalid: false, msg: '' },
         razao_social: { valid: false, invalid: false, msg: '' },
@@ -110,7 +114,7 @@ class Step2 extends Component {
         formNewState['uf'] = dados.uf;
         formNewState['enderecoDisabled'] = true;
 
-        let valid = {valid: true, invalid: false, msg: ''}
+        let valid = { valid: true, invalid: false, msg: '' }
         formNewState.validacao.logradouro = valid;
         formNewState.validacao.bairro = valid;
         formNewState.validacao.municipio = valid;
@@ -126,7 +130,7 @@ class Step2 extends Component {
         formNewState['uf'] = '';
         formNewState['enderecoDisabled'] = false;
 
-        let valid = {valid: false, invalid: true, msg: 'Campo obrigatório'}
+        let valid = { valid: false, invalid: true, msg: 'Campo obrigatório' }
         formNewState.validacao.logradouro = valid;
         formNewState.validacao.bairro = valid;
         formNewState.validacao.municipio = valid;
@@ -383,6 +387,16 @@ class Step2 extends Component {
       <Form name="form" onSubmit={this.prosseguir}>
 
         <h4 className="text-center">Dados do Restaurante</h4>
+
+
+        
+
+        <FormGroup>
+          <Label>Logo do restaurante:</Label>
+          <UploadFotoRestaurante name="imagem" onChange={this.changeInput}></UploadFotoRestaurante>
+        </FormGroup>
+
+
 
         <FormGroup>
           <Label>CNPJ:</Label>

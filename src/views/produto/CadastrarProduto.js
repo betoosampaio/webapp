@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
-import UploadFoto from '../../components/UploadFoto';
+import UploadFotoProduto from '../../components/UploadFotoProduto';
 import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import { UncontrolledTooltip } from 'reactstrap';
@@ -314,7 +314,7 @@ class CadastrarProduto extends Component {
 
             <FormGroup>
               <Label>Foto:</Label>
-              <UploadFoto name="imagem" onChange={this.changeInput}></UploadFoto>
+              <UploadFotoProduto name="imagem" onChange={this.changeInput}></UploadFotoProduto>
             </FormGroup>
 
           </CardBody>

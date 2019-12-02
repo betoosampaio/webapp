@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, Button, Label, Form, FormGroup, CustomInput } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
-import Foto from '../../components/Foto';
+import FotoProduto from '../../components/FotoProduto';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import SelectMenu from '../../components/SelectMenu';
@@ -23,7 +23,7 @@ class Produto extends Component {
       headerClassName: "text-left",
       sortable: false,
       Cell: props =>
-        <Foto src={props.value} height="50" width="50"></Foto>
+        <FotoProduto src={props.value} height="50" width="50"></FotoProduto>
     },
     {
       Header: 'Nome do produto',

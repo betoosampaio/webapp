@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, ListGroup, ListGroupItem } from 'reactstrap';
 import Modal from 'react-bootstrap/Modal'
-import Foto from '../../components/Foto';
+import FotoProduto from '../../components/FotoProduto';
 import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
@@ -76,7 +76,7 @@ class DetalheItem extends Component {
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
-            <ListGroupItem> <Foto src={item.imagem} height="50" width="50"></Foto> </ListGroupItem>
+            <ListGroupItem> <FotoProduto src={item.imagem} height="50" width="50"></FotoProduto> </ListGroupItem>
             <ListGroupItem><b>Código Produto:</b> {item.codigo_produto}</ListGroupItem>
             <ListGroupItem><b>Nome Produto:</b> {item.nome_produto}</ListGroupItem>
             <ListGroupItem><b>Quantidade:</b> {item.quantidade}</ListGroupItem>

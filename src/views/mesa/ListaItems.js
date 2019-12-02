@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Button, Table, } from 'reactstrap';
-import Foto from '../../components/Foto';
+import FotoProduto from '../../components/FotoProduto';
 import Confirm from 'reactstrap-confirm';
 import DetalheItem from './DetalheItem';
 import FechamentoMesa from './FechamentoMesa';
@@ -71,7 +71,7 @@ class ListaItems extends Component {
                       onClick={() => this.setState({ modalDetalheMesaItem: true, detalheItemSelecionado: obj })}
                       key={obj.data_incluiu}
                       style={{ cursor: "pointer", textDecoration: obj.removido ? "line-through" : "none" }}>
-                      <td><Foto src={obj.imagem} height="30" width="30"></Foto></td>
+                      <td><FotoProduto src={obj.imagem} height="30" width="30"></FotoProduto></td>
                       <td>{obj.nome_produto}</td>
                       <td>{obj.quantidade}</td>
                       <td>{this.moneyFormat(obj.preco * obj.quantidade)}</td>
