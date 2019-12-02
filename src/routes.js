@@ -3,6 +3,7 @@ import React from 'react';
 const Operador = React.lazy(() => import('./views/operador/Operador'));
 const CadastrarOperador = React.lazy(() => import('./views/operador/CadastrarOperador'));
 const EditarOperador = React.lazy(() => import('./views/operador/EditarOperador'));
+const Perfil = React.lazy(() => import('./views/perfil/Perfil'));
 const Produto = React.lazy(() => import('./views/produto/Produto'));
 const CadastrarProduto = React.lazy(() => import('./views/produto/CadastrarProduto'));
 const EditarProduto = React.lazy(() => import('./views/produto/EditarProduto'));
@@ -28,6 +29,7 @@ const routes = [
   { path: '/operador', exact: true, name: 'Operador', component: Operador },
   { path: '/operador/cadastrar', name: 'Cadastrar', component: CadastrarOperador },
   { path: '/operador/editar/:id', name: 'Editar', component: EditarOperador },
+  { path: '/perfil/', exact: true, name: 'Perfil', component: Perfil },
   { path: '/cardapio/', exact: true, name: 'Cardapio', component: Produto },
   { path: '/cardapio/produto', exact: true, name: 'Produto', component: Produto },
   { path: '/cardapio/produto/cadastrar', name: 'Cadastrar', component: CadastrarProduto },
