@@ -244,7 +244,7 @@ class Step4 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Confirmar Senha:</Label>
+          <Label>Confirmar senha:</Label>
           <InputGroup>
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-user"></i></InputGroupText>
@@ -266,7 +266,7 @@ class Step4 extends Component {
         </FormGroup>
 
         <FormGroup>
-          <Label>Imagem de perfil do Restaurante:</Label>
+          <Label>Logo do restaurante:</Label>
           <UploadFoto name="imagem" onChange={this.changeInput}></UploadFoto>
         </FormGroup>
 

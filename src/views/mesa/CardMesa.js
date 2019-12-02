@@ -29,7 +29,7 @@ class CardMesa extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 6000);
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 3000);
   }
   componentWillUnmount() {
     clearInterval(this.interval);
