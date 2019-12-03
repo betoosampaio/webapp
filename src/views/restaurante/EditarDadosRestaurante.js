@@ -6,8 +6,8 @@ import SuggestMunicipio from '../../components/SuggestMunicipio';
 import SelectEspecialidade from '../../components/SelectEspecialidade';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
-import Foto from '../../components/Foto';
-import UploadFoto from '../../components/UploadFoto';
+import FotoRestaurante from '../../components/FotoRestaurante';
+import UploadFotoRestaurante from '../../components/UploadFotoRestaurante';
 
 
 
@@ -342,12 +342,12 @@ class EditarDadosRestaurante extends Component {
         <CardBody>
 
           <FormGroup>
-            <Label>Foto:</Label>
-            <UploadFoto name="imagem" onChange={this.changeInput}></UploadFoto>
+            <Label>Logo do restaurante:</Label>
+            <UploadFotoRestaurante name="imagem" onChange={this.changeInput}></UploadFotoRestaurante>
           </FormGroup>
 
           <FormGroup>
-            <Foto src={this.state.value} height="50" width="50"></Foto>
+            <FotoRestaurante src={this.state.value} height="50" width="50"></FotoRestaurante>
             <p></p>
             <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
             <p></p>
