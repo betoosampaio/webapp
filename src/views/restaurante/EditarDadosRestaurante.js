@@ -10,7 +10,6 @@ import FotoRestaurante from '../../components/FotoRestaurante';
 import UploadFotoRestaurante from '../../components/UploadFotoRestaurante';
 
 
-
 class EditarDadosRestaurante extends Component {
 
   constructor(props) {
@@ -29,6 +28,8 @@ class EditarDadosRestaurante extends Component {
       uf: "",
       id_especialidade: "",
       enderecoDisabled: false,
+
+
       validacao: {
         razao_social: { valid: false, invalid: false, msg: '' },
         nome_restaurante: { valid: false, invalid: false, msg: '' },
@@ -292,6 +293,7 @@ class EditarDadosRestaurante extends Component {
       email: this.state.email,
 
       cnpj: this.state.cnpj,
+      imagem: this.state.imagem,
       razao_social: this.state.razao_social,
       nome_restaurante: this.state.nome_restaurante,
       cep: this.state.cep.replace(/\D/g, ''),
@@ -329,9 +331,6 @@ class EditarDadosRestaurante extends Component {
     this.setState({ [event.target.name]: event.target.checked ? 1 : 0 });
   }
 
-
-
-
   render() {
     return (
 
@@ -343,12 +342,13 @@ class EditarDadosRestaurante extends Component {
 
           <FormGroup>
             <Label>Logo do restaurante:</Label>
-            <UploadFotoRestaurante name="imagem" onChange={this.changeInput}></UploadFotoRestaurante>
+            <UploadFotoRestaurante name="imagem" onChange={this.changeInput} path={this.state.imagem} ></UploadFotoRestaurante>
+
+            <FotoRestaurante src={this.state.value} height="50" width="50"></FotoRestaurante>
+            <p></p>
           </FormGroup>
 
           <FormGroup>
-            <FotoRestaurante src={this.state.value} height="50" width="50"></FotoRestaurante>
-            <p></p>
             <Label><b>CNPJ do Restaurante: {this.state.cnpj} </b></Label>
             <p></p>
             <Label><b>Razão Social do Restaurante: </b></Label>

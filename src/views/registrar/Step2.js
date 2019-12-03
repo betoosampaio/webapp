@@ -393,7 +393,7 @@ class Step2 extends Component {
 
         <FormGroup>
           <Label>Logo do restaurante:</Label>
-          <UploadFotoRestaurante name="imagem" onChange={this.changeInput}></UploadFotoRestaurante>
+          <UploadFotoRestaurante name="imagem" onChange={this.changeInput} path={this.state.imagem}  ></UploadFotoRestaurante>
         </FormGroup>
 
 

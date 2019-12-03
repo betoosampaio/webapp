@@ -58,6 +58,7 @@ class Registrar extends Component {
 
       cnpj: this.state.Step2.cnpj.replace(/\D/g, ''),
       razao_social: this.state.Step2.razao_social,
+      imagem: this.state.Step2.imagem,
       nome_restaurante: this.state.Step2.nome_restaurante,
       id_especialidade: this.state.Step2.id_especialidade,
       cep: this.state.Step2.cep.replace(/\D/g, ''),
