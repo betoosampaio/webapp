@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, In
 import MaskedInput from '../../components/MaskedInput';
 import SelectUF from '../../components/SelectUf';
 import SelectEspecialidade from '../../components/SelectEspecialidade';
+import SelectTipoAtendimento from '../../components/SelectTipoAtendimento';
 import SuggestMunicipio from '../../components/SuggestMunicipio';
 import serverRequest from '../../utils/serverRequest';
 import { UncontrolledTooltip } from 'reactstrap';
@@ -23,7 +24,7 @@ class Step2 extends Component {
       razao_social: '',
       nome_restaurante: '',
       id_especialidade: '',
-      tipo_atendimento: '',
+      id_tipo_atendimento: '',
       cep: '',
       logradouro: '',
       numero: '',
@@ -39,7 +40,7 @@ class Step2 extends Component {
         razao_social: { valid: false, invalid: false, msg: '' },
         nome_restaurante: { valid: false, invalid: false, msg: '' },
         id_especialidade: { valid: false, invalid: false, msg: '' },
-        tipo_atendimento: { valid: false, invalid: false, msg: '' },
+        id_tipo_atendimento: { valid: false, invalid: false, msg: '' },
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
@@ -268,9 +269,9 @@ class Step2 extends Component {
     }
 
     let newState = Object.assign({}, this.state.validacao);
-    newState.id_especialidade.valid = valid;
-    newState.id_especialidade.invalid = invalid;
-    newState.id_especialidade.msg = msg;
+    newState.id_tipo_atendimento.valid = valid;
+    newState.id_tipo_atendimento.invalid = invalid;
+    newState.id_tipo_atendimento.msg = msg;
     this.setState({ validacao: newState });
   }
 
@@ -512,18 +513,18 @@ class Step2 extends Component {
             <InputGroupAddon addonType="append">
               <InputGroupText><i className="icon-cup"></i></InputGroupText>
             </InputGroupAddon>
-            <SelectEspecialidade
+            <SelectTipoAtendimento
               required
               onBlur={this.validarTipoAtendimento}
-              name="tipo_atendimento"
-              value={this.state.tipo_atendimento}
+              name="id_tipo_atendimento"
+              value={this.state.id_tipo_atendimento}
               onChange={this.changeInput}
               placeholder="Escreva aqui"
-              valid={this.state.validacao.tipo_atendimento.valid}
-              invalid={this.state.validacao.tipo_atendimento.invalid}
+              valid={this.state.validacao.id_tipo_atendimento.valid}
+              invalid={this.state.validacao.id_tipo_atendimento.invalid}
             >
-            </SelectEspecialidade>
-            <FormFeedback>{this.state.validacao.tipo_atendimento.msg}</FormFeedback>
+            </SelectTipoAtendimento>
+            <FormFeedback>{this.state.validacao.id_tipo_atendimento.msg}</FormFeedback>
           </InputGroup>
         </FormGroup>
 
