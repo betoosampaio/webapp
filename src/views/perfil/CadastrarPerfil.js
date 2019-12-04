@@ -75,7 +75,7 @@ class CadastrarPerfil extends Component {
     newState.ds_perfil.msg = msg;
     this.setState({ validacao: newState });
 
-    let dados = await serverRequest.request('/perfil/checarSePerfilExiste', { ds_perfil: val });
+    let dados = await serverRequest.request('/perfil/existe', { ds_perfil: val });
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
       newState.ds_perfil.valid = false;
