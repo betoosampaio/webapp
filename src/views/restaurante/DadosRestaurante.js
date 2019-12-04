@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import serverRequest from '../../utils/serverRequest';
 import { Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from 'reactstrap';
+import FotoRestaurante from '../../components/FotoRestaurante';
+
 
 class DadosRestaurante extends Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class DadosRestaurante extends Component {
 
     this.state = {
       dados: {},
+      imagem: "",
     };
   }
 
@@ -29,13 +32,10 @@ class DadosRestaurante extends Component {
       obj.cnpj = obj.cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
       obj.cep = obj.cep.replace(/(\d{5})(\d{3})/, "$1-$2");
 
-
       this.setState({ dados: obj });
 
     }
   }
-
-
 
 
   render() {
@@ -74,6 +74,9 @@ class DadosRestaurante extends Component {
           </CardHeader>
           <CardBody>
             <ListGroup>
+              <ListGroupItem> <b>Logo do restaurante: </b>               
+                <FotoRestaurante src={this.state.dados.imagem} height="50" width="50"></FotoRestaurante>
+              </ListGroupItem>
               <ListGroupItem><b>CNPJ: </b>{this.state.dados.cnpj}</ListGroupItem>
               <ListGroupItem><b>Especialidade: </b>{this.state.dados.ds_especialidade}</ListGroupItem>
               <ListGroupItem><b>Razão social: </b>{this.state.dados.razao_social}</ListGroupItem>
@@ -101,9 +104,6 @@ class DadosRestaurante extends Component {
               </Link>
             </div>
           </CardHeader>
-
-
-
           <CardBody>
             <ListGroup>
               <ListGroupItem><b>Aceita pagamentos pelo App: </b> {this.state.dados.pagamento_app === 1 ? 'Sim' : 'Não'} </ListGroupItem>
@@ -117,13 +117,9 @@ class DadosRestaurante extends Component {
                 <ListGroupItem><b>Agência: </b>{this.state.dados.agencia}</ListGroupItem>
                 <ListGroupItem><b>Conta: </b>{this.state.dados.conta} - {this.state.dados.digito}</ListGroupItem>
               </ListGroup>}
-
           </CardBody>
-
         </Card>
       </div>
-
-
     );
   }
 }
