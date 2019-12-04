@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Card, CardHeader, CardBody, ListGroup, ListGroupItem, Button, CardFooter } from 'reactstrap';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 class Configuracao extends Component {
@@ -10,8 +13,10 @@ class Configuracao extends Component {
     super(props);
     this.state = {
       taxa_servico: '',
+      mostrar: '1',
     }
   }
+
 
   componentDidMount() {
     this.obter();
@@ -37,7 +42,7 @@ class Configuracao extends Component {
     }
     let dados = await serverRequest.request('/restaurante/editar/configuracoes', obj);
     if (dados) {
-      alert('Dados atualizados');
+      toast("Dados atualizados com sucesso!", { className: "toast-success" });
     }
   }
 
@@ -53,7 +58,9 @@ class Configuracao extends Component {
 
   render() {
     return (
+
       <form onSubmit={this.editarConfiguracoes}>
+        <ToastContainer />
         <Card>
           <CardHeader>
             <i className='icon-settings'></i>&nbsp;<b>Configuração do Restaurante</b>
