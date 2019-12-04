@@ -76,7 +76,7 @@ class CadastrarMenu extends Component {
     newState.ds_menu.msg = msg;
     this.setState({ validacao: newState });
 
-    let dados = await serverRequest.request('/menu/checarSeMenuExiste', { ds_menu: val });
+    let dados = await serverRequest.request('/menu/existe', { ds_menu: val });
     if (dados.exists) {
       let newState = Object.assign({}, this.state.validacao);
       newState.ds_menu.valid = false;
