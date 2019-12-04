@@ -30,7 +30,7 @@ class SelectPerfil extends Component {
                 {
                     this.state.lista.map(obj => {
                         return (
-                            <option key={obj.id_perfil} value={obj.id_perfil}>{obj.tipo_perfil}</option>
+                            <option key={obj.id_perfil} value={obj.id_perfil}>{obj.ds_perfil}</option>
                         )
                     })
                 }

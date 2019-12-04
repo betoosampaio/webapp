@@ -16,7 +16,7 @@ class Operador extends Component {
     },
     {
       Header: 'Perfil',
-      accessor: 'tipo_perfil',
+      accessor: 'ds_perfil',
       headerClassName: "text-left",
     },
     {
