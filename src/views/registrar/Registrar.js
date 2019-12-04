@@ -61,6 +61,7 @@ class Registrar extends Component {
       imagem: this.state.Step2.imagem,
       nome_restaurante: this.state.Step2.nome_restaurante,
       id_especialidade: this.state.Step2.id_especialidade,
+      id_tipo_atendimento: this.state.Step2.id_tipo_atendimento,
       cep: this.state.Step2.cep.replace(/\D/g, ''),
       logradouro: this.state.Step2.logradouro,
       numero: this.state.Step2.numero,
