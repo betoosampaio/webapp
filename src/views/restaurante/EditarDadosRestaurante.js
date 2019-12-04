@@ -4,6 +4,7 @@ import MaskedInput from '../../components/MaskedInput';
 import SelectUF from '../../components/SelectUf';
 import SuggestMunicipio from '../../components/SuggestMunicipio';
 import SelectEspecialidade from '../../components/SelectEspecialidade';
+import SelectTipoAtendimento from '../../components/SelectTipoAtendimento';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import FotoRestaurante from '../../components/FotoRestaurante';
@@ -27,6 +28,7 @@ class EditarDadosRestaurante extends Component {
       municipio: "",
       uf: "",
       id_especialidade: "",
+      id_tipo_atendimento: "",
       enderecoDisabled: false,
 
 
@@ -34,6 +36,7 @@ class EditarDadosRestaurante extends Component {
         razao_social: { valid: false, invalid: false, msg: '' },
         nome_restaurante: { valid: false, invalid: false, msg: '' },
         id_especialidade: { valid: false, invalid: false, msg: '' },
+        id_tipo_atendimento: { valid: false, invalid: false, msg: '' },
         cep: { valid: false, invalid: false, msg: '' },
         logradouro: { valid: false, invalid: false, msg: '' },
         numero: { valid: false, invalid: false, msg: '' },
@@ -146,6 +149,25 @@ class EditarDadosRestaurante extends Component {
     newState.id_especialidade.valid = valid;
     newState.id_especialidade.invalid = invalid;
     newState.id_especialidade.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
+  validarTipoAtendimento = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.id_tipo_atendimento.valid = valid;
+    newState.id_tipo_atendimento.invalid = invalid;
+    newState.id_tipo_atendimento.msg = msg;
     this.setState({ validacao: newState });
   }
 
@@ -304,6 +326,7 @@ class EditarDadosRestaurante extends Component {
       municipio: this.state.municipio,
       uf: this.state.uf,
       id_especialidade: this.state.id_especialidade,
+      id_tipo_atendimento: this.state.id_tipo_atendimento,
 
       codigo_banco: this.state.codigo_banco || "0",
       id_tipo_cadastro_conta: this.state.id_tipo_cadastro_conta || "0",
@@ -319,7 +342,7 @@ class EditarDadosRestaurante extends Component {
 
     let dados = await serverRequest.request('/restaurante/editar/dadosRestaurante', obj);
     if (dados) {
-      window.location.href = '#/perfil';
+      window.location.href = '#/restaurante';
     }
   }
 
@@ -390,7 +413,27 @@ class EditarDadosRestaurante extends Component {
               >
               </SelectEspecialidade>
               <FormFeedback>{this.state.validacao.id_especialidade.msg}</FormFeedback>
+            </InputGroup>
+          </FormGroup>
 
+          <FormGroup>
+            <Label>Tipo de atendimento: </Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="icon-cup"></i></InputGroupText>
+              </InputGroupAddon>
+              <SelectTipoAtendimento
+                required
+                onBlur={this.validarTipoAtendimento}
+                name="id_tipo_atendimento"
+                value={this.state.id_tipo_atendimento}
+                onChange={this.changeInput}
+                placeholder="Escreva aqui"
+                valid={this.state.validacao.id_tipo_atendimento.valid}
+                invalid={this.state.validacao.id_tipo_atendimento.invalid}
+              >
+              </SelectTipoAtendimento>
+              <FormFeedback>{this.state.validacao.id_tipo_atendimento.msg}</FormFeedback>
             </InputGroup>
           </FormGroup>
 
