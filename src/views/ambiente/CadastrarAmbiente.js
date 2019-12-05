@@ -80,7 +80,7 @@ class CadastrarAmbiente extends Component {
       let newState = Object.assign({}, this.state.validacao);
       newState.ds_ambiente.valid = false;
       newState.ds_ambiente.invalid = true;
-      newState.ds_ambiente.msg = 'Esta ambiente já está cadastrado';
+      newState.ds_ambiente.msg = 'Este ambiente já está cadastrado';
       this.setState({ validacao: newState });
     }
   }

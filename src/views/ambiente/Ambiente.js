@@ -76,7 +76,7 @@ class Ambiente extends Component {
     });
 
     if (confirm) {
-      let dados = await serverRequest.request('/perfil/remover', { "id_ambiente": id });
+      let dados = await serverRequest.request('/ambiente/remover', { "id_ambiente": id });
       if (dados) this.obterLista();
     }
   }
