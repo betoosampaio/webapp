@@ -66,7 +66,14 @@ export default {
     {
       name: 'Cadastros',
       url: '/ambiente',
-      icon: 'icon-layers',
+      icon: 'icon-plus',
+      children: [
+        {
+          name: 'Ambientes',
+          url: '/ambiente/cadastrar',
+          icon: 'icon-layers',
+        },
+      ]
     },
   ],
 };
