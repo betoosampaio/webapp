@@ -6,6 +6,11 @@ const EditarOperador = React.lazy(() => import('./views/operador/EditarOperador'
 const Perfil = React.lazy(() => import('./views/perfil/Perfil'));
 const CadastrarPerfil = React.lazy(() => import('./views/perfil/CadastrarPerfil'));
 const EditarPerfil= React.lazy(() => import('./views/perfil/EditarPerfil'));
+
+const Ambiente = React.lazy(() => import('./views/ambiente/Ambiente'));
+const CadastrarAmbiente = React.lazy(() => import('./views/ambiente/CadastrarAmbiente'));
+const EditarAmbiente= React.lazy(() => import('./views/ambiente/EditarAmbiente'));
+
 const Produto = React.lazy(() => import('./views/produto/Produto'));
 const CadastrarProduto = React.lazy(() => import('./views/produto/CadastrarProduto'));
 const EditarProduto = React.lazy(() => import('./views/produto/EditarProduto'));
@@ -52,6 +57,9 @@ const routes = [
   { path: '/relatorio/pagamentos', name: 'Relatório Pagamentos', component: RelatorioPagamentos },
   { path: '/caixas/', exact: true, name: 'Caixas', component: ListaCaixa },
   { path: '/caixas/detalhe/:id', name: 'Detalhe Caixa', component: DetalheCaixa },
+  { path: '/ambiente/', exact: true, name: 'Ambiente', component: Ambiente },
+  { path: '/ambiente/cadastrar', name: 'Cadastrar', component: CadastrarAmbiente },
+  { path: '/ambiente/editar/:id', name: 'Editar', component: EditarAmbiente },
   
 ];
 

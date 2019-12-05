@@ -70,7 +70,7 @@ export default {
       children: [
         {
           name: 'Ambientes',
-          url: '/ambiente/cadastrar',
+          url: '/ambiente',
           icon: 'icon-layers',
         },
       ]
