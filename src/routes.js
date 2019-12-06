@@ -29,6 +29,7 @@ const RelatorioProdutos = React.lazy(() => import('./views/relatorio/Produtos'))
 const RelatorioPagamentos = React.lazy(() => import('./views/relatorio/Pagamentos'));
 const ListaCaixa = React.lazy(() => import('./views/caixa/ListaCaixa'));
 const DetalheCaixa = React.lazy(() => import('./views/caixa/DetalheCaixa'));
+const Permissao = React.lazy(() => import('./views/permissao/Permissao'));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -60,7 +61,7 @@ const routes = [
   { path: '/ambiente/', exact: true, name: 'Ambiente', component: Ambiente },
   { path: '/ambiente/cadastrar', name: 'Cadastrar', component: CadastrarAmbiente },
   { path: '/ambiente/editar/:id', name: 'Editar', component: EditarAmbiente },
-  
+  { path: '/permissao', exact: true, name: 'Permissões', component: Permissao },
 ];
 
 export default routes;

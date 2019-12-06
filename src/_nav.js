@@ -24,6 +24,11 @@ export default {
           url: '/perfil',
           icon: 'icon-people',
         },
+        {
+          name: 'Permissões',
+          url: '/permissao',
+          icon: 'fa fa-lock',
+        },
       ]
     },
     {
