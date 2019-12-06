@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
+import SelectAmbiente from '../../components/SelectAmbiente';
 import UploadFotoProduto from '../../components/UploadFotoProduto';
 import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
@@ -19,6 +20,7 @@ class CadastrarProduto extends Component {
       descricao: "",
       preco: "",
       id_menu: "",
+      id_ambiente: 0,
       promocao: 0,
       vegano: 0,
       vegetariano: 0,
@@ -144,7 +146,7 @@ class CadastrarProduto extends Component {
     let valid = true;
 
     Object.keys(this.state.validacao).forEach(p => {
-      
+
       if (!this.state.validacao[p].valid) {
         valid = false;
       }
@@ -286,8 +288,22 @@ class CadastrarProduto extends Component {
                   valid={this.state.validacao.id_menu.valid}
                 >
                   <FormFeedback>{this.state.validacao.id_menu.msg}</FormFeedback>
-
                 </SelectMenu>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Ambiente:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+                </InputGroupAddon>
+                <SelectAmbiente
+                  name="id_ambiente"
+                  value={this.state.id_ambiente}
+                  onChange={this.changeInput}
+                >
+                </SelectAmbiente>
               </InputGroup>
             </FormGroup>
 
