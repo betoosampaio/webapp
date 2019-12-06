@@ -47,6 +47,11 @@ class Produto extends Component {
       headerClassName: "text-left",
     },
     {
+      Header: 'Ambiente',
+      accessor: 'ds_ambiente',
+      headerClassName: "text-left",
+    },
+    {
       Header: 'Em promoção',
       accessor: 'promocao',
       headerClassName: "text-left",

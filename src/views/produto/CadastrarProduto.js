@@ -3,6 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, FormGroup, Label, Input
 import { AppSwitch } from '@coreui/react'
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
+import SelectAmbiente from '../../components/SelectAmbiente';
 import UploadFotoProduto from '../../components/UploadFotoProduto';
 import Modal from 'react-bootstrap/Modal'
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
@@ -19,6 +20,7 @@ class CadastrarProduto extends Component {
       descricao: "",
       preco: "",
       id_menu: "",
+      id_ambiente: "",
       promocao: 0,
       vegano: 0,
       vegetariano: 0,
@@ -30,6 +32,7 @@ class CadastrarProduto extends Component {
         nome_produto: { valid: false, invalid: false, msg: '' },
         preco: { valid: false, invalid: false, msg: '' },
         id_menu: { valid: false, invalid: false, msg: '' },
+        id_ambiente: { valid: false, invalid: false, msg: '' },
       },
     }
   };
@@ -117,6 +120,25 @@ class CadastrarProduto extends Component {
     this.setState({ validacao: newState });
   }
 
+  validarIdAmbiente = (event) => {
+    let valid = false, invalid = true, msg = '';
+    let val = event.target.value;
+    if (!val) {
+      msg = 'Campo obrigatório';
+    }
+
+    else {
+      valid = true;
+      invalid = false;
+    }
+
+    let newState = Object.assign({}, this.state.validacao);
+    newState.id_ambiente.valid = valid;
+    newState.id_ambiente.invalid = invalid;
+    newState.id_ambiente.msg = msg;
+    this.setState({ validacao: newState });
+  }
+
   validarPreco = (event) => {
     let valid = false, invalid = true, msg = '';
     let val = event.target.value;
@@ -144,7 +166,7 @@ class CadastrarProduto extends Component {
     let valid = true;
 
     Object.keys(this.state.validacao).forEach(p => {
-      
+
       if (!this.state.validacao[p].valid) {
         valid = false;
       }
@@ -286,8 +308,27 @@ class CadastrarProduto extends Component {
                   valid={this.state.validacao.id_menu.valid}
                 >
                   <FormFeedback>{this.state.validacao.id_menu.msg}</FormFeedback>
-
                 </SelectMenu>
+              </InputGroup>
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Ambiente:</Label>
+              <InputGroup>
+                <InputGroupAddon addonType="append">
+                  <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+                </InputGroupAddon>
+                <SelectAmbiente
+                  name="id_ambiente"
+                  value={this.state.id_ambiente}
+                  onChange={this.changeInput}
+                  required
+                  onBlur={this.validarIdAmbiente}
+                  invalid={this.state.validacao.id_ambiente.invalid}
+                  valid={this.state.validacao.id_ambiente.valid}
+                >
+                  <FormFeedback>{this.state.validacao.id_ambiente.msg}</FormFeedback>
+                </SelectAmbiente>
               </InputGroup>
             </FormGroup>
 

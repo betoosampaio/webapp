@@ -4,6 +4,7 @@ import { AppSwitch } from '@coreui/react';
 import MaskedMoneyInput from '../../components/MaskedMoneyInput';
 import serverRequest from '../../utils/serverRequest';
 import SelectMenu from '../../components/SelectMenu';
+import SelectAmbiente from '../../components/SelectAmbiente';
 import UploadFotoProduto from '../../components/UploadFotoProduto';
 import Modal from 'react-bootstrap/Modal'
 
@@ -19,6 +20,7 @@ class EditarProduto extends Component {
       descricao: "",
       preco: "",
       id_menu: "",
+      id_ambiente: "",
       promocao: "",
       vegetariano: "",
       vegano: "",
@@ -151,6 +153,22 @@ class EditarProduto extends Component {
                 required
               >
               </SelectMenu>
+            </InputGroup>
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Ambiente:</Label>
+            <InputGroup>
+              <InputGroupAddon addonType="append">
+                <InputGroupText><i className="fa fa-list-ul"></i></InputGroupText>
+              </InputGroupAddon>
+              <SelectAmbiente
+                name="id_ambiente"
+                value={this.state.id_ambiente}
+                onChange={this.changeInput}
+                required
+              >
+              </SelectAmbiente>
             </InputGroup>
           </FormGroup>
 
