@@ -26,7 +26,7 @@ class SelectAmbiente extends Component {
     render() {
         return (
             <Input type="select" {...this.props}>
-                <option value="">Selecione</option>
+                <option value="0">Nenhum</option>
                 {
                     this.state.lista.filter(m => m.ativo).map(obj => {
                         return (

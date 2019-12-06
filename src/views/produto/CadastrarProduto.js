@@ -20,7 +20,7 @@ class CadastrarProduto extends Component {
       descricao: "",
       preco: "",
       id_menu: "",
-      id_ambiente: "",
+      id_ambiente: 0,
       promocao: 0,
       vegano: 0,
       vegetariano: 0,
@@ -32,7 +32,6 @@ class CadastrarProduto extends Component {
         nome_produto: { valid: false, invalid: false, msg: '' },
         preco: { valid: false, invalid: false, msg: '' },
         id_menu: { valid: false, invalid: false, msg: '' },
-        id_ambiente: { valid: false, invalid: false, msg: '' },
       },
     }
   };
@@ -117,25 +116,6 @@ class CadastrarProduto extends Component {
     newState.id_menu.valid = valid;
     newState.id_menu.invalid = invalid;
     newState.id_menu.msg = msg;
-    this.setState({ validacao: newState });
-  }
-
-  validarIdAmbiente = (event) => {
-    let valid = false, invalid = true, msg = '';
-    let val = event.target.value;
-    if (!val) {
-      msg = 'Campo obrigatório';
-    }
-
-    else {
-      valid = true;
-      invalid = false;
-    }
-
-    let newState = Object.assign({}, this.state.validacao);
-    newState.id_ambiente.valid = valid;
-    newState.id_ambiente.invalid = invalid;
-    newState.id_ambiente.msg = msg;
     this.setState({ validacao: newState });
   }
 
@@ -322,12 +302,7 @@ class CadastrarProduto extends Component {
                   name="id_ambiente"
                   value={this.state.id_ambiente}
                   onChange={this.changeInput}
-                  required
-                  onBlur={this.validarIdAmbiente}
-                  invalid={this.state.validacao.id_ambiente.invalid}
-                  valid={this.state.validacao.id_ambiente.valid}
                 >
-                  <FormFeedback>{this.state.validacao.id_ambiente.msg}</FormFeedback>
                 </SelectAmbiente>
               </InputGroup>
             </FormGroup>
