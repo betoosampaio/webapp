@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import serverRequest from '../../utils/serverRequest';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
 import SelectPerfil from '../../components/SelectPerfil'
 
 class Permissao extends Component {
@@ -93,52 +93,60 @@ class Permissao extends Component {
         </Row>
         {this.state.id_perfil >= 1 &&
           <Row>
-            <Col xs={6}>
-              <h4>Páginas</h4>
-              {
-                this.state.listaPaginas.map(obj => {
-                  return (
-                    <div key={obj.id_pagina}>
-                      <label className="p-1">
-                        <input
-                          type="checkbox"
-                          checked={obj.permissao ? true : false}
-                          onChange={(event) => { this.editarPermissaoPagina(obj, event.target.checked) }} />
-                        <i className={obj.icone + " mx-2"} />
-                        <span>{obj.ds_pagina}</span>
-                      </label>
-                    </div>
-                  )
-                })
-              }
+            <Col sm={6}>
+              <Card>
+                <CardHeader>Páginas</CardHeader>
+                <CardBody>
+                  {
+                    this.state.listaPaginas.map(obj => {
+                      return (
+                        <div key={obj.id_pagina}>
+                          <label className="p-1">
+                            <input
+                              type="checkbox"
+                              checked={obj.permissao ? true : false}
+                              onChange={(event) => { this.editarPermissaoPagina(obj, event.target.checked) }} />
+                            <i className={obj.icone + " mx-2"} />
+                            <span>{obj.ds_pagina}</span>
+                          </label>
+                        </div>
+                      )
+                    })
+                  }
+                </CardBody>
+              </Card>
             </Col>
-            <Col xs={6}>
-              <h4>Funcionalidades</h4>
-              {
-                this.state.listaMetodos.map(f => {
-                  return (
-                    <div className="my-4" key={f.funcionalidade}>
-                      <h6 className="mb-3">{f.funcionalidade}</h6>
-                      {
-                        f.metodos.map(obj => {
-                          return (
-                            <div key={obj.id_metodo}>
-                              <label>
-                                <input
-                                  type="checkbox"
-                                  checked={obj.permissao ? true : false}
-                                  onChange={(event) => { this.editarPermissaoMetodo(obj, event.target.checked) }} />
-                                <span className="ml-1">{obj.ds_metodo}</span>
-                              </label>
-                            </div>
-                          )
+            <Col sm={6}>
+              <Card>
+                <CardHeader>Funcionalidades</CardHeader>
+                <CardBody>
+                  {
+                    this.state.listaMetodos.map(f => {
+                      return (
+                        <div className="mb-5" key={f.funcionalidade}>
+                          <h6 className="mb-3">{f.funcionalidade}</h6>
+                          {
+                            f.metodos.map(obj => {
+                              return (
+                                <div key={obj.id_metodo}>
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      checked={obj.permissao ? true : false}
+                                      onChange={(event) => { this.editarPermissaoMetodo(obj, event.target.checked) }} />
+                                    <span className="ml-1">{obj.ds_metodo}</span>
+                                  </label>
+                                </div>
+                              )
 
-                        })
-                      }
-                    </div>
-                  )
-                })
-              }
+                            })
+                          }
+                        </div>
+                      )
+                    })
+                  }
+                </CardBody>
+              </Card>
             </Col>
           </Row>
         }
