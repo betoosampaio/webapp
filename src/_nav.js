@@ -75,5 +75,10 @@ export default {
         },
       ]
     },
+    {
+      name: 'Controle de pedidos',
+      url: '/controle',
+      icon: 'icon-tag',
+    },
   ],
 };
