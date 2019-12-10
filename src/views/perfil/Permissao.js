@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import serverRequest from '../../utils/serverRequest';
 import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap';
-import SelectPerfil from '../../components/SelectPerfil'
 
 class Permissao extends Component {
   constructor(props) {
