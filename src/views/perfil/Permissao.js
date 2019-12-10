@@ -22,7 +22,13 @@ class Permissao extends Component {
     let dados;
     dados = await serverRequest.request('/permissao/listarPermissaoPaginas', { id_perfil: id_perfil });
     if (dados) {
-      this.setState({ listaPaginas: dados });
+
+      let tree = this.getNestedChildren(dados, null);
+      //tree = tree
+      //.sort((a, b) => a.ordem > b.ordem)
+      //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone, children: p.children }));
+
+      this.setState({ listaPaginas: tree});
     }
     dados = await serverRequest.request('/permissao/listarPermissaoMetodos', { id_perfil: id_perfil });
     if (dados) {
@@ -34,6 +40,23 @@ class Permissao extends Component {
       });
       this.setState({ listaMetodos: grouped });
     }
+  }
+
+  getNestedChildren = (arr, id_pai) => {
+    var out = []
+    for (var i in arr) {
+      if (arr[i].id_pai === id_pai) {
+        var children = this.getNestedChildren(arr, arr[i].id_pagina)
+        //.sort((a, b) => a.ordem > b.ordem)
+        //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone }));
+
+        if (children.length) {
+          arr[i].children = children;
+        }
+        out.push(arr[i])
+      }
+    }
+    return out
   }
 
   editarPermissaoPagina = async (item, permissao) => {
@@ -70,29 +93,38 @@ class Permissao extends Component {
     this.setState({ listaMetodos: this.state.listaMetodos });
   }
 
+  renderizarCheckPaginaRecursivo = (obj) => {
+    return (
+      <div key={obj.id_pagina}>
+        <label className="p-1">
+          <input
+            type="checkbox"
+            checked={obj.permissao ? true : false}
+            onChange={(event) => { this.editarPermissaoPagina(obj, event.target.checked) }} />
+          <i className={obj.icone + " mx-2"} />
+          <span>{obj.ds_pagina}</span>
+        </label>
+        <div className="ml-4">
+          {obj.children && obj.children.map(c => {
+            return this.renderizarCheckPaginaRecursivo(c);
+          })}
+        </div>
+      </div>
+    )
+  }
+
   render() {
     return (
-      <div>       
+      <div>
         {this.props.id_perfil >= 1 &&
           <Row>
-            <Col sm={6}>
+            <Col sm={6}>             
               <Card>
                 <CardHeader>Páginas</CardHeader>
                 <CardBody>
                   {
                     this.state.listaPaginas.map(obj => {
-                      return (
-                        <div key={obj.id_pagina}>
-                          <label className="p-1">
-                            <input
-                              type="checkbox"
-                              checked={obj.permissao ? true : false}
-                              onChange={(event) => { this.editarPermissaoPagina(obj, event.target.checked) }} />
-                            <i className={obj.icone + " mx-2"} />
-                            <span>{obj.ds_pagina}</span>
-                          </label>
-                        </div>
-                      )
+                      return this.renderizarCheckPaginaRecursivo(obj);
                     })
                   }
                 </CardBody>
