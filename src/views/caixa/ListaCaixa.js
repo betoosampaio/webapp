@@ -68,7 +68,6 @@ class ListaCaixa extends Component {
   }
 
   obterLista = async () => {
-    console.log(this.state.somenteAberto);
     if (this.state.somenteAberto) {
       let dados = await serverRequest.request('/caixa/listar');
       if (dados) {
@@ -109,18 +108,6 @@ class ListaCaixa extends Component {
   }
 
   render() {
-
-    let caixas = this.state.caixas
-    if (this.state.somenteAbertos) caixas = caixas.filter(row => row.status);
-    if (this.state.search) {
-      caixas = caixas.filter(row => {
-        return (new RegExp(this.state.search, "i")).test([row.status].join(''))
-      })
-    }
-    if (this.state.showFiltros) {
-      caixas = caixas.filter(row => String(row.status) === String(this.state.showFiltros))
-    }
-
     return (
       <div>
         <Card>

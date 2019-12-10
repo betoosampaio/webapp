@@ -38,7 +38,7 @@ class ResumoPagamentos extends Component {
         <tbody>
           {pagamentos.map(obj => {
             return (
-              <tr key={obj.forma}>
+              <tr key={obj.forma || 0}>
                 <td>{obj.forma}</td>
                 <td>R$ {obj.valor.toFixed(2)}</td>
               </tr>

@@ -88,8 +88,6 @@ class DetalheCaixa extends Component {
   }
 
   render() {
-    let rSelected = 1;
-
     return (
       <div>
         <Row className="mb-3">
