@@ -25,24 +25,40 @@ class Perfil extends Component {
       accessor: 'id_perfil',
       headerClassName: "text-left",
       sortable: false,
-      Cell: props =>
-        <Link to={{ pathname: `/perfil/editar/${props.value}` }}>
-          <Button color="secondary" size="sm">
-            <i className="icon-note"></i>
-          </Button>
-        </Link>
+      Cell: props =>this.botaoEditar(props.value)       
     },
     {
       Header: 'Excluir',
       accessor: 'id_perfil',
       headerClassName: "text-left",
       sortable: false,
-      Cell: props =>
-        <Button color="danger" size="sm" onClick={() => this.remover(props.value)}>
-          <i className="icon-close"></i>
-        </Button>
+      Cell: props => this.botaoRemover(props.value)
     },
   ]
+
+  botaoEditar(id) {
+    if (id === 1)
+      return (<></>);
+    else
+      return (
+        <Link to={{ pathname: `/perfil/editar/${id}` }}>
+          <Button color="secondary" size="sm">
+            <i className="icon-note"></i>
+          </Button>
+        </Link>
+      );
+  }
+
+  botaoRemover(id) {
+    if (id === 1)
+      return (<></>);
+    else
+      return (
+        <Button color="danger" size="sm" onClick={() => this.remover(id)}>
+          <i className="icon-close"></i>
+        </Button>
+      );
+  }
 
   constructor(props) {
     super(props);
@@ -146,7 +162,7 @@ class Perfil extends Component {
               className="table"
             />
           </CardBody>
-        </Card>      
+        </Card>
       </div>
     );
   }
