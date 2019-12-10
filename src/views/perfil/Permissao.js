@@ -7,26 +7,25 @@ class Permissao extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id_perfil: "",
       listaPaginas: [],
       listaMetodos: [],
     };
   }
 
   componentDidMount() {
-    this.obterLista();
+    this.obterLista(this.props.id_perfil);
   }
 
-  obterLista = async () => {
-    if (this.state.id_perfil <= 1)
+  obterLista = async (id_perfil) => {
+    if (id_perfil <= 1)
       return false;
 
     let dados;
-    dados = await serverRequest.request('/permissao/listarPermissaoPaginas', { id_perfil: this.state.id_perfil });
+    dados = await serverRequest.request('/permissao/listarPermissaoPaginas', { id_perfil: id_perfil });
     if (dados) {
       this.setState({ listaPaginas: dados });
     }
-    dados = await serverRequest.request('/permissao/listarPermissaoMetodos', { id_perfil: this.state.id_perfil });
+    dados = await serverRequest.request('/permissao/listarPermissaoMetodos', { id_perfil: id_perfil });
     if (dados) {
       // agrupa cada funcionalidade em uma lista
       let funcionalidades = [...new Set(dados.map(m => m.funcionalidade))];
@@ -41,13 +40,13 @@ class Permissao extends Component {
   editarPermissaoPagina = async (item, permissao) => {
     if (permissao) {
       await serverRequest.request('/permissao/incluirPermissaoPagina', {
-        id_perfil: this.state.id_perfil,
+        id_perfil: this.props.id_perfil,
         id_pagina: item.id_pagina
       });
     }
     else {
       await serverRequest.request('/permissao/removerPermissaoPagina', {
-        id_perfil: this.state.id_perfil,
+        id_perfil: this.props.id_perfil,
         id_pagina: item.id_pagina
       });
     }
@@ -58,13 +57,13 @@ class Permissao extends Component {
   editarPermissaoMetodo = async (item, permissao) => {
     if (permissao) {
       await serverRequest.request('/permissao/incluirPermissaoMetodo', {
-        id_perfil: this.state.id_perfil,
+        id_perfil: this.props.id_perfil,
         id_metodo: item.id_metodo
       });
     }
     else {
       await serverRequest.request('/permissao/removerPermissaoMetodo', {
-        id_perfil: this.state.id_perfil,
+        id_perfil: this.props.id_perfil,
         id_metodo: item.id_metodo
       });
     }
@@ -72,26 +71,10 @@ class Permissao extends Component {
     this.setState({ listaMetodos: this.state.listaMetodos });
   }
 
-  changePerfil = (event) => {
-    this.setState({ id_perfil: event.target.value }, () => {
-      this.obterLista();
-    });
-  }
-
   render() {
     return (
-      <div>
-        <Row className="mb-4">
-          <Col sm={6}>
-            <label className="mr-2">Selecione o perfil:</label>
-            <SelectPerfil
-              value={this.state.id_perfil}
-              onChange={this.changePerfil}
-              ignoraradm="true">
-            </SelectPerfil>
-          </Col>
-        </Row>
-        {this.state.id_perfil >= 1 &&
+      <div>       
+        {this.props.id_perfil >= 1 &&
           <Row>
             <Col sm={6}>
               <Card>
