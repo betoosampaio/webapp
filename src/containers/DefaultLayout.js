@@ -17,7 +17,7 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigation from '../_nav';
+//import navigation from '../_nav';
 // routes config
 import routes from '../routes';
 
@@ -27,12 +27,55 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      navigation: {
+        items: [],
+      },
+    }
+  }
+
   componentDidMount() {
     this.validarToken();
+    this.carregarMenu();
   }
 
   validarToken = async () => {
     await serverRequest.request('/validarToken');
+  }
+
+  carregarMenu = async () => {
+    let dados = await serverRequest.request('/permissao/listarMenu', { id_perfil: 1 });
+    if (dados) {
+      this.popularListaPaginaTree(dados);
+    }
+  }
+
+  popularListaPaginaTree = (dados) => {
+    let tree = this.getNestedChildren(dados, null);
+    tree = tree
+      //.filter(p => p.permissao)
+      .sort((a, b) => a.ordem > b.ordem)
+      .map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone, children: p.children }));
+    this.setState({ navigation: { items: tree } });
+  }
+
+  getNestedChildren = (arr, id_pai) => {
+    var out = []
+    for (var i in arr) {
+      if (arr[i].id_pai === id_pai) {
+        var children = this.getNestedChildren(arr, arr[i].id_pagina)
+          .sort((a, b) => a.ordem > b.ordem)
+          .map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone }));
+
+        if (children.length) {
+          arr[i].children = children;
+        }
+        out.push(arr[i])
+      }
+    }
+    return out
   }
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Carregando...</div>
@@ -55,7 +98,7 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-              <AppSidebarNav navConfig={navigation} {...this.props} router={router} />
+              <AppSidebarNav navConfig={this.state.navigation} {...this.props} router={router} />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />

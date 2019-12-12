@@ -17,9 +17,6 @@ class Permissao extends Component {
   }
 
   obterLista = async (id_perfil) => {
-    if (id_perfil <= 1)
-      return false;
-
     let dados
     dados = await serverRequest.request('/permissao/listarPermissaoPaginas', { id_perfil: id_perfil });
     if (dados) {
@@ -40,9 +37,6 @@ class Permissao extends Component {
   popularListaPaginaTree = (dados) => {
     if (!dados) dados = this.state.listaPaginas;
     let tree = this.getNestedChildren(dados, null);
-    //tree = tree
-    //.sort((a, b) => a.ordem > b.ordem)
-    //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone, children: p.children }));
     this.setState({ listaPaginasTree: tree, listaPaginas: dados });
   }
 
@@ -51,8 +45,6 @@ class Permissao extends Component {
     for (var i in arr) {
       if (arr[i].id_pai === id_pai) {
         var children = this.getNestedChildren(arr, arr[i].id_pagina)
-        //.sort((a, b) => a.ordem > b.ordem)
-        //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone }));
 
         if (children.length) {
           arr[i].children = children;
@@ -83,23 +75,7 @@ class Permissao extends Component {
       p.permissao = permissao;
     }
 
-
     this.popularListaPaginaTree();
-
-    //if (permissao) {
-    //  await serverRequest.request('/permissao/incluirPermissaoPagina', {
-    //    id_perfil: this.props.id_perfil,
-    //    id_pagina: item.id_pagina
-    //  });
-    //}
-    //else {
-    //  await serverRequest.request('/permissao/removerPermissaoPagina', {
-    //    id_perfil: this.props.id_perfil,
-    //    id_pagina: item.id_pagina
-    //  });
-    //}
-    //item.permissao = permissao;
-    //this.setState({ listaPaginas: this.state.listaPaginas });
   }
 
   getChildren = (node) => {
