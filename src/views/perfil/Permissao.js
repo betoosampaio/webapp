@@ -7,6 +7,7 @@ class Permissao extends Component {
     super(props);
     this.state = {
       listaPaginas: [],
+      listaPaginasTree: [],
       listaMetodos: [],
     };
   }
@@ -19,16 +20,10 @@ class Permissao extends Component {
     if (id_perfil <= 1)
       return false;
 
-    let dados;
+    let dados
     dados = await serverRequest.request('/permissao/listarPermissaoPaginas', { id_perfil: id_perfil });
     if (dados) {
-
-      let tree = this.getNestedChildren(dados, null);
-      //tree = tree
-      //.sort((a, b) => a.ordem > b.ordem)
-      //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone, children: p.children }));
-
-      this.setState({ listaPaginas: tree});
+      this.popularListaPaginaTree(dados);
     }
     dados = await serverRequest.request('/permissao/listarPermissaoMetodos', { id_perfil: id_perfil });
     if (dados) {
@@ -40,6 +35,15 @@ class Permissao extends Component {
       });
       this.setState({ listaMetodos: grouped });
     }
+  }
+
+  popularListaPaginaTree = (dados) => {
+    if (!dados) dados = this.state.listaPaginas;
+    let tree = this.getNestedChildren(dados, null);
+    //tree = tree
+    //.sort((a, b) => a.ordem > b.ordem)
+    //.map(p => ({ name: p.ds_pagina, url: p.url, icon: p.icone, children: p.children }));
+    this.setState({ listaPaginasTree: tree, listaPaginas: dados });
   }
 
   getNestedChildren = (arr, id_pai) => {
@@ -60,20 +64,61 @@ class Permissao extends Component {
   }
 
   editarPermissaoPagina = async (item, permissao) => {
-    if (permissao) {
-      await serverRequest.request('/permissao/incluirPermissaoPagina', {
+
+    let parents = permissao ? this.getParents(item, []) : [];
+    let children = this.getChildren(item);
+    let lista = [item, ...children, ...parents];
+
+    let url = permissao ? "/permissao/incluirPermissaoPagina" : "/permissao/removerPermissaoPagina";
+
+    let listaPaginas = this.state.listaPaginas;
+
+    for (let i = 0; i < lista.length; i++) {
+      let n = lista[i];
+      await serverRequest.request(url, {
         id_perfil: this.props.id_perfil,
-        id_pagina: item.id_pagina
+        id_pagina: n.id_pagina
       });
+      let p = listaPaginas.find(p => p.id_pagina === n.id_pagina);
+      p.permissao = permissao;
     }
-    else {
-      await serverRequest.request('/permissao/removerPermissaoPagina', {
-        id_perfil: this.props.id_perfil,
-        id_pagina: item.id_pagina
-      });
+
+
+    this.popularListaPaginaTree();
+
+    //if (permissao) {
+    //  await serverRequest.request('/permissao/incluirPermissaoPagina', {
+    //    id_perfil: this.props.id_perfil,
+    //    id_pagina: item.id_pagina
+    //  });
+    //}
+    //else {
+    //  await serverRequest.request('/permissao/removerPermissaoPagina', {
+    //    id_perfil: this.props.id_perfil,
+    //    id_pagina: item.id_pagina
+    //  });
+    //}
+    //item.permissao = permissao;
+    //this.setState({ listaPaginas: this.state.listaPaginas });
+  }
+
+  getChildren = (node) => {
+    let children = Object.assign([], node.children);
+    if (node.children) {
+      node.children.forEach(c => {
+        children.push(...this.getChildren(c));
+      })
     }
-    item.permissao = permissao;
-    this.setState({ listaPaginas: this.state.listaPaginas });
+    return children;
+  }
+
+  getParents = (node, parents) => {
+    if (node.id_pai) {
+      let parent = this.state.listaPaginas.find(p => p.id_pagina === node.id_pai);
+      parents.push(parent);
+      this.getParents(parent, parents);
+    }
+    return parents;
   }
 
   editarPermissaoMetodo = async (item, permissao) => {
@@ -118,12 +163,12 @@ class Permissao extends Component {
       <div>
         {this.props.id_perfil >= 1 &&
           <Row>
-            <Col sm={6}>             
+            <Col sm={6}>
               <Card>
-                <CardHeader>Páginas</CardHeader>
+                <CardHeader>Páginas do Sistema</CardHeader>
                 <CardBody>
                   {
-                    this.state.listaPaginas.map(obj => {
+                    this.state.listaPaginasTree.map(obj => {
                       return this.renderizarCheckPaginaRecursivo(obj);
                     })
                   }
