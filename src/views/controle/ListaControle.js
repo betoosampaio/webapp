@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Card, CardBody, Button, Row, Col, ListGroupItem, ListGroup, ButtonDropdown,
-  ButtonGroup, DropdownItem, DropdownMenu, DropdownToggle, Modal
-} from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import 'react-toastify/dist/ReactToastify.css';
 import CardControle from './CardControle';
@@ -14,7 +11,7 @@ class ListaControle extends Component {
     super(props);
     this.state = {
       modalInfoProduto: false,
-      id_produto: "",     
+      id_produto: "",
       lista: [],
 
 
@@ -44,7 +41,6 @@ class ListaControle extends Component {
 
     return (
       <>
-       
         <Row size="sm" >
           Escolha um ambiente:
         </Row>

@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import { Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap';
+import Modal from 'react-bootstrap/Modal'
+import Confirm from 'reactstrap-confirm';
+import serverRequest from '../../utils/serverRequest';
+
+
 
 class CardControle extends Component {
 
@@ -9,6 +14,11 @@ class CardControle extends Component {
 
     };
   }
+
+  onHide = () => {
+    this.props.onHide();
+  }
+
   dateDiff = (dataIni, dataFim) => {
     let delta = Math.abs(dataIni - dataFim) / 1000;
 
@@ -31,6 +41,43 @@ class CardControle extends Component {
     clearInterval(this.interval);
   }
 
+  removerItem = async (id_mesa, id_item) => {
+    let confirm = await Confirm({
+      title: "Confirmação",
+      message: "Tem certeza que deseja remover esse item ?",
+      confirmColor: "success",
+      confirmText: "Confirmar",
+      cancelColor: "danger",
+      cancelText: "Cancelar",
+    });
+
+    if (confirm) {
+      let dados = await serverRequest.request('/mesa/item/remover', { "id_mesa": id_mesa, "id_item": id_item });
+      if (dados) {
+        this.onHide();
+        this.props.atualizou();
+      }
+
+    }
+  }
+
+
+  prepararItem = async () => {
+
+    if (this.state.selecionados.length > 0) {
+      let obj = {
+        id_mesa: this.props.pedido.id_mesa,
+        produtos: this.state.pedido.selecionados,
+      }
+
+      let dados = await serverRequest.request('/mesa/item/preparar', obj);
+      if (dados) {
+        this.setState({ id_produto: "", selecionados: [] });
+      }
+    }
+  }
+
+
   render() {
 
     return (
@@ -43,10 +90,23 @@ class CardControle extends Component {
         <CardBody>
           <div>Produto: {this.props.pedido.produtos.nome_produto}
           </div>
+          <div>Quantidade: {this.props.pedido.produtos.quantidade}
+          </div>
           <div className="font-xs">
             <i className="fa fa-clock-o"></i>
             {this.dateDiff(new Date(this.props.pedido.produtos.data_incluiu), new Date())}
           </div>
+          <p></p>
+
+          <Button outline variant="primary" color="danger" onClick={() => this.removerItem(this.props.pedido.id_mesa, this.props.pedido.id_item)}
+            className="pull-left fa fa-trash-o">
+          </Button>
+
+          <Button outline variant="primary" color="success" onClick={() => this.prepararItem(this.props.pedido.id_mesa, this.props.pedido.id_item)}
+            className="pull-right fa fa-check">
+          </Button>
+
+
         </CardBody>
       </Card>
     )
