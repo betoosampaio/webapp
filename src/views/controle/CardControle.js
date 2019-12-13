@@ -3,14 +3,11 @@ import { Card, CardHeader, CardBody, Button } from 'reactstrap';
 import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
-
-
 class CardControle extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-
     };
   }
 

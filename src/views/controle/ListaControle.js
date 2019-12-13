@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, } from 'reactstrap';
+import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectAmbiente from '../../components/SelectAmbiente';
@@ -23,7 +23,7 @@ class ListaControle extends Component {
   }
 
   obterLista = async () => {
-    let dados = await serverRequest.request('/mesa/item/listaPrepararAmbiente', ({ id_ambiente: this.state.id_ambiente }));
+    let dados = await serverRequest.request('/mesa/item/listaPrepararAmbiente', ({ id_ambiente: parseInt(this.state.id_ambiente) }));
     if (dados) {
       this.setState({ lista: dados });
     }
@@ -55,6 +55,7 @@ class ListaControle extends Component {
                 name="id_ambiente"
                 value={this.state.id_ambiente}
                 onChange={this.changeInput}
+                ignorarnenhum={true}
               >
               </SelectAmbiente>
             </InputGroup>
@@ -65,7 +66,7 @@ class ListaControle extends Component {
           {
             this.state.lista.map((obj) => {
               return (
-                <Col xs="12" sm="6" lg="3" key={obj.id_item}>
+                <Col xs="12" sm="6" lg="3" key={obj}>
                   <CardControle pedido={obj} atualizar={this.obterLista} />
                 </Col>
               );
