@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Button } from 'reactstrap';
-import Modal from 'react-bootstrap/Modal'
+import { Card, CardHeader, CardBody, Button } from 'reactstrap';
 import Confirm from 'reactstrap-confirm';
 import serverRequest from '../../utils/serverRequest';
 
@@ -41,10 +40,10 @@ class CardControle extends Component {
     clearInterval(this.interval);
   }
 
-  removerItem = async (id_mesa, id_item) => {
+  cancelarPreparo = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
-      message: "Tem certeza que deseja remover esse item ?",
+      message: "Tem certeza que deseja cancelar esse preparo?",
       confirmColor: "success",
       confirmText: "Confirmar",
       cancelColor: "danger",
@@ -52,31 +51,21 @@ class CardControle extends Component {
     });
 
     if (confirm) {
-      let dados = await serverRequest.request('/mesa/item/remover', { "id_mesa": id_mesa, "id_item": id_item });
+      let dados = await serverRequest.request('/mesa/item/cancelarPreparo', { "id_mesa": id_mesa, "id_item": id_item });
       if (dados) {
-        this.onHide();
-        this.props.atualizou();
+        this.props.atualizar()
       }
-
     }
   }
 
 
-  prepararItem = async () => {
+  Preparar = async (id_mesa, id_item) => {
 
-    if (this.state.selecionados.length > 0) {
-      let obj = {
-        id_mesa: this.props.pedido.id_mesa,
-        produtos: this.state.pedido.selecionados,
-      }
-
-      let dados = await serverRequest.request('/mesa/item/preparar', obj);
-      if (dados) {
-        this.setState({ id_produto: "", selecionados: [] });
-      }
+    let dados = await serverRequest.request('/mesa/item/preparar', { "id_mesa": id_mesa, "id_item": id_item });
+    if (dados) {
+      this.props.atualizar()
     }
   }
-
 
   render() {
 
@@ -98,15 +87,13 @@ class CardControle extends Component {
           </div>
           <p></p>
 
-          <Button outline variant="primary" color="danger" onClick={() => this.removerItem(this.props.pedido.id_mesa, this.props.pedido.id_item)}
+          <Button outline variant="primary" color="danger" onClick={() => this.cancelarPreparo(this.props.pedido._id, this.props.pedido.produtos.id_item)}
             className="pull-left fa fa-trash-o">
           </Button>
 
-          <Button outline variant="primary" color="success" onClick={() => this.prepararItem(this.props.pedido.id_mesa, this.props.pedido.id_item)}
+          <Button outline variant="primary" color="success" onClick={() => this.Preparar(this.props.pedido._id, this.props.pedido.produtos.id_item)}
             className="pull-right fa fa-check">
           </Button>
-
-
         </CardBody>
       </Card>
     )

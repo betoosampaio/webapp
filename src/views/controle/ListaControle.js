@@ -14,6 +14,7 @@ class ListaControle extends Component {
     this.state = {
       id_produto: "",
       lista: [],
+      id_ambiente: 1,
     };
   }
 
@@ -22,7 +23,7 @@ class ListaControle extends Component {
   }
 
   obterLista = async () => {
-    let dados = await serverRequest.request('/mesa/item/listaPrepararAmbiente', ({ id_ambiente: 1 }));
+    let dados = await serverRequest.request('/mesa/item/listaPrepararAmbiente', ({ id_ambiente: this.state.id_ambiente }));
     if (dados) {
       this.setState({ lista: dados });
     }
@@ -33,6 +34,10 @@ class ListaControle extends Component {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
 
+  }
+
+  changeInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value }, () => { this.obterLista() });
   }
 
   render() {
@@ -47,10 +52,9 @@ class ListaControle extends Component {
               </InputGroupAddon>
               <SelectAmbiente
                 required
-                name="id_tipo_atendimento"
-                value={this.state.id_tipo_atendimento}
+                name="id_ambiente"
+                value={this.state.id_ambiente}
                 onChange={this.changeInput}
-                placeholder="Escreva aqui"
               >
               </SelectAmbiente>
             </InputGroup>
