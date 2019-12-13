@@ -35,7 +35,6 @@ class DetalheItem extends Component {
 
   }
 
-
   removerItem = async (id_mesa, id_item) => {
     let confirm = await Confirm({
       title: "Confirmação",
