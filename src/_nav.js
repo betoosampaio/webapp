@@ -77,7 +77,7 @@ export default {
     },
     {
       name: 'Controle de pedidos',
-      url: '/controle',
+      url: '/mesa/item/listaPrepararAmbiente',
       icon: 'icon-tag',
     },
   ],
