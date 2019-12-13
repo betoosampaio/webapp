@@ -37,7 +37,6 @@ class ListaControle extends Component {
 
   render() {
 
-
     return (
       <>
         <Row size="sm" >
