@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import 'react-toastify/dist/ReactToastify.css';
+import SelectAmbiente from '../../components/SelectAmbiente';
+
 import CardControle from './CardControle';
 
 
@@ -10,11 +12,8 @@ class ListaControle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalInfoProduto: false,
       id_produto: "",
       lista: [],
-
-
     };
   }
 
@@ -42,7 +41,21 @@ class ListaControle extends Component {
     return (
       <>
         <Row size="sm" >
-          Escolha um ambiente:
+          <FormGroup>
+            <InputGroup>
+              <Label>Escolha um ambiente: </Label>
+              <InputGroupAddon addonType="append">
+              </InputGroupAddon>
+              <SelectAmbiente
+                required
+                name="id_tipo_atendimento"
+                value={this.state.id_tipo_atendimento}
+                onChange={this.changeInput}
+                placeholder="Escreva aqui"
+              >
+              </SelectAmbiente>
+            </InputGroup>
+          </FormGroup>
         </Row>
         <p></p>
         <Row>
