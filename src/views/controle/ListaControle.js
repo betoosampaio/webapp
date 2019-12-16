@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon, Footer } from 'reactstrap';
+import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import 'react-toastify/dist/ReactToastify.css';
 import SelectAmbiente from '../../components/SelectAmbiente';
