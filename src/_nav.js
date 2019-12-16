@@ -76,14 +76,18 @@ export default {
       ]
     },
     {
-      name: 'Controle de pedidos',
-      url: '/mesa/item/listaPrepararAmbiente',
-      icon: 'icon-tag',
+      name: 'Controle de pedidos',    
+      icon: 'icon-plus',
       children: [
         {
-          name: 'Pedidos prontos',
-          url: '/listaPreparados',
+          name: 'Preparando',
+          url: '/mesa/item/listaPrepararAmbiente',
           icon: 'icon-layers',
+        },
+        {
+          name: 'Preparados',
+          url: '/mesa/item/listaPreparados',
+          icon: 'icon-tag',
         },
       ]
     },
