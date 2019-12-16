@@ -79,6 +79,13 @@ export default {
       name: 'Controle de pedidos',
       url: '/mesa/item/listaPrepararAmbiente',
       icon: 'icon-tag',
+      children: [
+        {
+          name: 'Ambientes',
+          url: '/mesa/item/listaPreparados',
+          icon: 'icon-layers',
+        },
+      ]
     },
   ],
 };
