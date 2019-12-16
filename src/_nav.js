@@ -81,8 +81,8 @@ export default {
       icon: 'icon-tag',
       children: [
         {
-          name: 'Ambientes',
-          url: '/mesa/item/listaPreparados',
+          name: 'Pedidos prontos',
+          url: '/listaPreparados',
           icon: 'icon-layers',
         },
       ]

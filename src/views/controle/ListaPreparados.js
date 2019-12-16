@@ -6,7 +6,6 @@ import SelectAmbiente from '../../components/SelectAmbiente';
 
 import CardPreparados from './CardPreparados';
 
-
 class ListaPreparados extends Component {
 
   constructor(props) {
@@ -73,6 +72,7 @@ class ListaPreparados extends Component {
             })
           }
         </Row>
+        
       </>
     );
   }
