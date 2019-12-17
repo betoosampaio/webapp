@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Table } from 'reactstrap';
+import { Button, FormGroup, Label, InputGroup, InputGroupAddon, InputGroupText, Table, Input } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
 import Modal from 'react-bootstrap/Modal'
 import MaskedNumberInput from '../../components/MaskedNumberInput';
@@ -93,7 +93,7 @@ class IncluirItem extends Component {
     this.props.onHide();
   }
 
-  render() {    
+  render() {
 
     const multipleSelectOptions = {
       filter: true,
@@ -117,7 +117,7 @@ class IncluirItem extends Component {
     }
 
     return (
-      
+
 
       <Modal
         size="lg"
@@ -172,7 +172,9 @@ class IncluirItem extends Component {
                   <th>Preço Total</th>
                   <th>Quantidade</th>
                   <th>Remover</th>
+                  <th>Observação (opcional)</th>
                 </tr>
+
               </thead>
               <tbody>
                 {this.state.selecionados.map(obj => {
@@ -202,10 +204,22 @@ class IncluirItem extends Component {
                           </InputGroup>
                         </FormGroup>
                       </td>
-                      <td>                  
-                          <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
-                            <i className="icon-close"></i>
-                          </Button>                 
+                      <td>
+                        <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
+                          <i className="icon-close"></i>
+                        </Button>
+                      </td>
+
+                      <td>
+                        <FormGroup>
+                          <Input
+                            type='text'
+                            placeholder='Ex: sem tomate, com queijo extra...'
+                            name="observacao"
+                            value={this.state.observacao}
+                            onChange={this.changeInput}
+                          />
+                        </FormGroup>
                       </td>
                     </tr>
                   )
