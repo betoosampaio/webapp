@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
-import 'react-toastify/dist/ReactToastify.css';
 import SelectAmbiente from '../../components/SelectAmbiente';
-
 import CardControle from './CardControle';
-
 
 class ListaControle extends Component {
 
@@ -29,11 +26,9 @@ class ListaControle extends Component {
     }
   }
 
-
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
-
   }
 
   changeInput = (event) => {

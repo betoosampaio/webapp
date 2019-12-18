@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, FormGroup, Label, InputGroup, InputGroupAddon } from 'reactstrap';
 import serverRequest from '../../utils/serverRequest';
-import 'react-toastify/dist/ReactToastify.css';
 import SelectAmbiente from '../../components/SelectAmbiente';
-
 import CardPreparados from './CardPreparados';
 
 class ListaPreparados extends Component {
@@ -28,11 +26,9 @@ class ListaPreparados extends Component {
     }
   }
 
-
   dateFormat = (data) => {
     let dataRetornar = new Date(data).toLocaleString();
     return dataRetornar;
-
   }
 
   changeInput = (event) => {
@@ -71,8 +67,7 @@ class ListaPreparados extends Component {
               );
             })
           }
-        </Row>
-        
+        </Row>        
       </>
     );
   }
