@@ -172,7 +172,6 @@ class IncluirItem extends Component {
                   <th>Preço Total</th>
                   <th>Quantidade</th>
                   <th>Remover</th>
-                  <th>Observação (opcional)</th>
                 </tr>
 
               </thead>
@@ -208,18 +207,6 @@ class IncluirItem extends Component {
                         <Button color="danger" size="sm" onClick={() => this.remover(obj.id)} >
                           <i className="icon-close"></i>
                         </Button>
-                      </td>
-
-                      <td>
-                        <FormGroup>
-                          <Input
-                            type='text'
-                            placeholder='Ex: sem tomate, com queijo extra...'
-                            name="observacao"
-                            value={this.state.observacao}
-                            onChange={this.changeInput}
-                          />
-                        </FormGroup>
                       </td>
                     </tr>
                   )
