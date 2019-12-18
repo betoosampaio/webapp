@@ -4,39 +4,39 @@ import serverRequest from '../utils/serverRequest';
 
 class SelectAmbiente extends Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            lista: [],
-        };
+    this.state = {
+      lista: [],
+    };
+  }
+
+  componentDidMount() {
+    this.obterDados();
+  }
+
+  obterDados = async () => {
+    let dados = await serverRequest.request('/ambiente/listar');
+    if (dados) {
+      this.setState({ lista: dados });
     }
+  }
 
-    componentDidMount() {
-        this.obterDados();
-    }
-
-    obterDados = async () => {
-        let dados = await serverRequest.request('/ambiente/listar');
-        if (dados) {
-            this.setState({ lista: dados });
+  render() {
+    return (
+      <Input type="select" {...this.props}>
+        {!this.props.ignorarnenhum && <option value="0">Nenhum</option>}
+        {
+          this.state.lista.filter(m => m.ativo).map(obj => {
+            return (
+              <option key={obj.id_ambiente} value={obj.id_ambiente}>{obj.ds_ambiente}</option>
+            )
+          })
         }
-    }
-
-    render() {
-        return (
-            <Input type="select" {...this.props}>
-                {!this.props.ignorarnenhum && <option value="0">Nenhum</option>}
-                {
-                    this.state.lista.filter(m => m.ativo).map(obj => {
-                        return (
-                            <option key={obj.id_ambiente} value={obj.id_ambiente}>{obj.ds_ambiente}</option>
-                        )
-                    })
-                }
-            </Input>
-        )
-    }
+      </Input>
+    )
+  }
 }
 
 export default SelectAmbiente;
