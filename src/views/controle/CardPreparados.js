@@ -90,10 +90,8 @@ class CardPreparados extends Component {
           <Button outline variant="primary" color="success" onClick={() => this.Entregue(this.props.pedido._id, this.props.pedido.produtos.id_item)}
             className="pull-right fa fa-check">
           </Button>
-
         </CardBody>
-      </Card>
-      
+      </Card>      
     )
   }
 }

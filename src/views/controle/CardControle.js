@@ -83,7 +83,6 @@ class CardControle extends Component {
             {this.dateDiff(new Date(this.props.pedido.produtos.data_incluiu), new Date())}
           </div>
           <p></p>
-
           <Button outline variant="primary" color="danger" onClick={() => this.cancelarPreparo(this.props.pedido._id, this.props.pedido.produtos.id_item)}
             className="pull-left fa fa-trash-o">
           </Button>
